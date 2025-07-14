@@ -24,9 +24,9 @@ const Hero = () => {
           </span>
         ))}
       </div>
-      <div className="text-xl md:text-2xl text-foreground">
+      <h1><div className="text-xl md:text-2xl text-foreground">
         Empowering Tech Savvy Kids
-      </div>
+      </div></h1>
     </div>
   );
 };
