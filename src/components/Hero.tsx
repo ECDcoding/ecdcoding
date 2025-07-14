@@ -18,7 +18,7 @@ const Hero = () => {
           <span
             key={index}
             className={`inline-block ${item.color} ${item.delay} animate-glow`}
-            style={{ animationDelay: `${index * 0.2}s` }}
+            style={{ animationDelay: `${index * 0.203}s` }}
           >
             {item.letter}
           </span>
