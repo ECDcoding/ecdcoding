@@ -116,7 +116,7 @@ All colors MUST be HSL.
 
   @keyframes glow {
     10%, 90% {
-      color: rgb(17 24 39);
+      color: hsl(120 60% 15%);
       text-shadow: none;
     }
   }
