@@ -56,6 +56,13 @@ const Register = () => {
 
         <Card>
           <CardHeader className="text-center">
+            <div className="mb-6">
+              <img 
+                src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" 
+                alt="ECDcoding Logo - Empowering Tech Savvy Kids" 
+                className="mx-auto h-32 w-auto"
+              />
+            </div>
             <CardTitle className="text-2xl">Membership Registration for a Learner(s)</CardTitle>
             <p className="text-muted-foreground">
               R250.00 Per Month | or R3000.00 Per Year
