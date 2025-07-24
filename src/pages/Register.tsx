@@ -54,7 +54,7 @@ const Register = () => {
           </Link>
         </div>
 
-        <Card>
+        <Card className="border-2 border-foreground">
           <CardHeader className="text-center">
             <div className="mb-6">
               <img 
@@ -70,7 +70,7 @@ const Register = () => {
           </CardHeader>
           
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-8 text-foreground font-semibold">
               {/* Parent/Guardian Information */}
               <div className="space-y-6">
                 <h3 className="text-lg font-semibold">Parent/Guardian Information</h3>
