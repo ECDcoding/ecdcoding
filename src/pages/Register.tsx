@@ -24,6 +24,8 @@ const Register = () => {
     phone3: "",
     state: "",
     country: "",
+    username: "",
+    password: "",
     
     // Parent/Learner specific
     institution: "",
@@ -83,7 +85,17 @@ const Register = () => {
   const getFormSubtitle = () => {
     switch (registrationType) {
       case 'parent':
-        return 'R250.00 Per Month | or R3000.00 Per Year';
+        return (
+          <div className="space-y-2">
+            <div>R250.00 /month | or R3000.00 /annual</div>
+            <div className="text-lime-500 font-bold">
+              Target Market: ECD Centers | Pre-schools | Home Schools | and Primary Schools
+            </div>
+            <div className="text-blue-600 font-medium">
+              24 months future payment exemption for 'early bird registrations' who will start paying upfront. Pay Here
+            </div>
+          </div>
+        );
       case 'ecd-manager':
         return 'Join our network of Early Childhood Development partners';
       case 'tech-teacher':
@@ -189,14 +201,30 @@ const Register = () => {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="institution">Name of Learning Institution *</Label>
-          <Input
-            id="institution"
-            value={formData.institution}
-            onChange={(e) => handleInputChange("institution", e.target.value)}
-            required
-          />
+        {/* Username and Password Creation */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="username">Create Username *</Label>
+            <Input
+              id="username"
+              value={formData.username || ''}
+              onChange={(e) => handleInputChange("username", e.target.value)}
+              placeholder="Enter desired username"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Create Password *</Label>
+            <Input
+              id="password"
+              type="password"
+              value={formData.password || ''}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              placeholder="One capital letter, a number, and a punctuation"
+              required
+            />
+            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+          </div>
         </div>
       </div>
 
@@ -612,6 +640,18 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="resume">Upload One Page Resume *</Label>
+          <Input
+            id="resume"
+            type="file"
+            accept=".pdf,.doc,.docx"
+            className="w-full p-3 border rounded-md"
+            required
+          />
+          <p className="text-sm text-gray-600">Please upload your resume (PDF, DOC, or DOCX format, max 1 page)</p>
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="programmingLanguages">Programming Languages Known</Label>
           <Input
             id="programmingLanguages"
@@ -724,6 +764,32 @@ const Register = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8 text-foreground font-semibold">
               {renderForm()}
+
+              {/* Payment Section */}
+              {registrationType === 'tech-teacher' && (
+                <div className="bg-blue-50 p-6 rounded-lg border-2 border-blue-200 text-center">
+                  <h3 className="text-lg font-semibold mb-2">Registration Fee</h3>
+                  <p className="text-xl font-bold text-blue-600 mb-4">R500.00 /annual</p>
+                  <Button type="button" className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Pay Here
+                  </Button>
+                </div>
+              )}
+
+              {registrationType === 'parent' && (
+                <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200 text-center">
+                  <h3 className="text-lg font-semibold mb-2">Membership Fee</h3>
+                  <p className="text-xl font-bold text-green-600 mb-4">
+                    R250.00 /month | or R3000.00 /annual
+                  </p>
+                  <p className="text-blue-600 font-medium mb-4">
+                    24 months future payment exemption for 'early bird registrations' who will start paying upfront
+                  </p>
+                  <Button type="button" className="bg-green-600 hover:bg-green-700 text-white">
+                    Pay Here
+                  </Button>
+                </div>
+              )}
 
               <div className="flex justify-center pt-6">
                 <Button type="submit" size="lg" className="w-full max-w-md">
