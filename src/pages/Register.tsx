@@ -191,15 +191,6 @@ const Register = () => {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="institution">Name of Learning Institution *</Label>
-          <Input
-            id="institution"
-            value={formData.institution}
-            onChange={(e) => handleInputChange("institution", e.target.value)}
-            required
-          />
-        </div>
 
         {/* Username and Password Creation */}
         <div className="grid grid-cols-2 gap-4">
@@ -297,6 +288,16 @@ const Register = () => {
       {/* Learner Information */}
       <div className="space-y-6">
         <h3 className="text-lg font-semibold">ECD Learner Information</h3>
+        
+        <div className="space-y-2">
+          <Label htmlFor="institution">Name of Learning Institution *</Label>
+          <Input
+            id="institution"
+            value={formData.institution}
+            onChange={(e) => handleInputChange("institution", e.target.value)}
+            required
+          />
+        </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -756,8 +757,11 @@ const Register = () => {
               />
             </div>
             <CardTitle className="text-2xl">{getFormTitle()}</CardTitle>
+            {registrationType === 'tech-teacher' && (
+              <p className="text-green-500 font-semibold">Registration Free</p>
+            )}
             <p className="text-muted-foreground">
-              {getFormSubtitle()}
+              {registrationType === 'parent' ? 'ECD Centers | Pre-Schools | Creches | Primary Schools and Other' : getFormSubtitle()}
             </p>
           </CardHeader>
           
@@ -776,6 +780,16 @@ const Register = () => {
                 </div>
               )}
 
+              {registrationType === 'parent' && (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <h3 className="font-semibold mb-2">Registration Fee</h3>
+                    <p className="text-sm mb-2">R250.00 /month | or R3000.00 /annual</p>
+                    <p className="text-sm text-green-600 mb-2">24 months future payment exemption for 'early bird registrations' who will start paying upfront</p>
+                    <Button variant="outline" className="w-full">Pay Here</Button>
+                  </div>
+                </div>
+              )}
 
               <div className="flex justify-center pt-6">
                 <Button type="submit" size="lg" className="w-full max-w-md">

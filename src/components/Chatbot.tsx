@@ -7,7 +7,7 @@ import { MessageCircle, X, Send } from 'lucide-react';
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'bot', content: 'Hi! I\'m Talk n Teach. I can help you with tech teacher jobs, application forms, and advice for employers, parents, ECD managers, and tech teachers. How can I assist you today?' }
+    { role: 'bot', content: 'Hi! I\'m Talk n Teach. I can help you with finding tech teacher jobs, job posting forms, ECD tech courses, tech teacher placement among other. How can I assist you today?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
 
