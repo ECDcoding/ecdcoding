@@ -85,17 +85,7 @@ const Register = () => {
   const getFormSubtitle = () => {
     switch (registrationType) {
       case 'parent':
-        return (
-          <div className="space-y-2">
-            <div>R250.00 /month | or R3000.00 /annual</div>
-            <div className="text-lime-500 font-bold">
-              Target Market: ECD Centers | Pre-schools | Home Schools | and Primary Schools
-            </div>
-            <div className="text-blue-600 font-medium">
-              24 months future payment exemption for 'early bird registrations' who will start paying upfront. Pay Here
-            </div>
-          </div>
-        );
+        return 'Register your child for our learning programs';
       case 'ecd-manager':
         return 'Join our network of Early Childhood Development partners';
       case 'tech-teacher':
@@ -197,6 +187,16 @@ const Register = () => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="institution">Name of Learning Institution *</Label>
+          <Input
+            id="institution"
+            value={formData.institution}
+            onChange={(e) => handleInputChange("institution", e.target.value)}
             required
           />
         </div>
@@ -776,20 +776,6 @@ const Register = () => {
                 </div>
               )}
 
-              {registrationType === 'parent' && (
-                <div className="bg-green-50 p-6 rounded-lg border-2 border-green-200 text-center">
-                  <h3 className="text-lg font-semibold mb-2">Membership Fee</h3>
-                  <p className="text-xl font-bold text-green-600 mb-4">
-                    R250.00 /month | or R3000.00 /annual
-                  </p>
-                  <p className="text-blue-600 font-medium mb-4">
-                    24 months future payment exemption for 'early bird registrations' who will start paying upfront
-                  </p>
-                  <Button type="button" className="bg-green-600 hover:bg-green-700 text-white">
-                    Pay Here
-                  </Button>
-                </div>
-              )}
 
               <div className="flex justify-center pt-6">
                 <Button type="submit" size="lg" className="w-full max-w-md">

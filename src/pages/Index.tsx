@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
+import Chatbot from "@/components/Chatbot";
 
 const Index = () => {
   return (
@@ -10,6 +11,7 @@ const Index = () => {
         <Hero />
         <CallToAction />
       </div>
+      <Chatbot />
     </div>
   );
 };
