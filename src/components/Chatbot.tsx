@@ -7,7 +7,7 @@ import { MessageCircle, X, Send } from 'lucide-react';
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'bot', content: 'Hi! I\'m Talk n Teach. I can help you with finding tech teacher jobs, job posting forms, ECD tech courses, tech teacher placement among other. How can I assist you today?' }
+    { role: 'bot', content: 'All ECD Employers seeking to hire tech teachers are welcome to talk to us... It is however important to register as a Parent, and ECD School Manager, as well as a Tech Teacher candidate looking for employment.' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
 
@@ -46,13 +46,18 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button with Waving Hand */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg z-50"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg z-50 group"
         size="icon"
       >
-        <MessageCircle className="h-6 w-6" />
+        <div className="relative">
+          <MessageCircle className="h-6 w-6 text-white" />
+          <div className="absolute -top-1 -right-1 text-lg animate-[wave_1s_ease-in-out_infinite]">
+            👋
+          </div>
+        </div>
       </Button>
 
       {/* Chat Window */}
@@ -60,7 +65,7 @@ const Chatbot = () => {
         <Card className="fixed bottom-24 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-lg">Talk n Teach</CardTitle>
+              <CardTitle className="text-lg">Important Notice</CardTitle>
               <Button
                 variant="ghost"
                 size="icon"
