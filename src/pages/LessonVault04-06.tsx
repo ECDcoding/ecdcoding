@@ -72,9 +72,15 @@ const LessonVault0406 = () => {
               <Home className="h-6 w-6" />
               <span>Home</span>
             </Link>
-            <h1 className="text-2xl font-bold">Lesson Vault - Ages 04-06</h1>
+            <h1 className="text-2xl font-bold">Lesson Vault for Kids Aged 04 - 06</h1>
           </div>
           <div className="flex items-center gap-4">
+            <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              Settings
+            </Button>
+            <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              Users
+            </Button>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
@@ -89,7 +95,7 @@ const LessonVault0406 = () => {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-4">STEM Courses for Early Learners</h2>
+          <h2 className="text-3xl font-bold mb-4">Trending Lessons</h2>
           <p className="text-muted-foreground text-lg">
             Designed specifically for ECD Centers | Pre-Schools | Creches | Primary Schools
           </p>
@@ -124,10 +130,29 @@ const LessonVault0406 = () => {
           })}
         </div>
 
-        {/* Target Market Banner */}
-        <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg text-center">
-          <h3 className="text-xl font-bold mb-2">Target Market</h3>
-          <p className="text-lg">ECD Centers | Pre-Schools | Creches | Primary Schools</p>
+        {/* Target Lessons Banner */}
+        <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
+          <h3 className="text-xl font-bold mb-4 text-center">Target Lessons</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Emojis Class
+            </Button>
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Icons Class
+            </Button>
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Arithmetic Operators
+            </Button>
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Columns IDs
+            </Button>
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Color IDs
+            </Button>
+            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+              Cryptography
+            </Button>
+          </div>
         </div>
       </main>
     </div>

@@ -523,6 +523,28 @@ const Register = () => {
             placeholder="What are your goals for introducing technology education?"
           />
         </div>
+
+        <div className="space-y-4">
+          <Label>Motivation for Participation *</Label>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <input type="checkbox" id="introduce-tech" className="rounded border-border" />
+              <Label htmlFor="introduce-tech">Introduce Tech Lessons at My School</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <input type="checkbox" id="hire-teachers" className="rounded border-border" />
+              <Label htmlFor="hire-teachers">Hire Tech Teachers</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <input type="checkbox" id="adaptation" className="rounded border-border" />
+              <Label htmlFor="adaptation">Adaptation</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <input type="checkbox" id="other-motivation" className="rounded border-border" />
+              <Label htmlFor="other-motivation">Other</Label>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -757,9 +779,6 @@ const Register = () => {
               />
             </div>
             <CardTitle className="text-2xl">{getFormTitle()}</CardTitle>
-            {registrationType === 'tech-teacher' && (
-              <p className="text-green-500 font-semibold">Registration Free</p>
-            )}
             <p className="text-muted-foreground">
               {registrationType === 'parent' ? 'ECD Centers | Pre-Schools | Creches | Primary Schools and Other' : getFormSubtitle()}
             </p>

@@ -49,7 +49,7 @@ const Chatbot = () => {
       {/* Chat Button with Waving Hand */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg z-50 group"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg z-50 group"
         size="icon"
       >
         <div className="relative">
