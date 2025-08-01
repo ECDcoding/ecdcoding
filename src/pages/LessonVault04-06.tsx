@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LessonVault0406 = () => {
+  const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -120,19 +122,20 @@ const LessonVault0406 = () => {
         {/* Lessons Banner */}
         <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Select>
+            <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
                 <SelectValue placeholder="Emoji Group" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 {Object.entries(emojiCategories).map(([category, emojis]) => (
-                  <SelectItem key={category} value={category.toLowerCase().replace(/\s+/g, '-')}>
+                  <SelectItem key={category} value={category} className="hover:bg-gray-100">
                     <div className="flex flex-col">
                       <span className="font-medium">{category}</span>
                       <div className="flex gap-1 mt-1">
-                        {emojis.map((emoji, index) => (
+                        {emojis.slice(0, 5).map((emoji, index) => (
                           <span key={index} className="text-lg">{emoji}</span>
                         ))}
+                        <span className="text-sm text-gray-500">...</span>
                       </div>
                     </div>
                   </SelectItem>
@@ -143,17 +146,17 @@ const LessonVault0406 = () => {
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
                 <SelectValue placeholder="Icons Lab" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="home">🏠 Home</SelectItem>
-                <SelectItem value="settings">⚙️ Settings</SelectItem>
-                <SelectItem value="user">👤 User</SelectItem>
-                <SelectItem value="search">🔍 Search</SelectItem>
-                <SelectItem value="star">⭐ Star</SelectItem>
-                <SelectItem value="heart">❤️ Heart</SelectItem>
-                <SelectItem value="clock">🕐 Clock</SelectItem>
-                <SelectItem value="folder">📁 Folder</SelectItem>
-                <SelectItem value="phone">📞 Phone</SelectItem>
-                <SelectItem value="mail">📧 Mail</SelectItem>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <SelectItem value="home" className="hover:bg-gray-100">🏠 Home</SelectItem>
+                <SelectItem value="settings" className="hover:bg-gray-100">⚙️ Settings</SelectItem>
+                <SelectItem value="user" className="hover:bg-gray-100">👤 User</SelectItem>
+                <SelectItem value="search" className="hover:bg-gray-100">🔍 Search</SelectItem>
+                <SelectItem value="star" className="hover:bg-gray-100">⭐ Star</SelectItem>
+                <SelectItem value="heart" className="hover:bg-gray-100">❤️ Heart</SelectItem>
+                <SelectItem value="clock" className="hover:bg-gray-100">🕐 Clock</SelectItem>
+                <SelectItem value="folder" className="hover:bg-gray-100">📁 Folder</SelectItem>
+                <SelectItem value="phone" className="hover:bg-gray-100">📞 Phone</SelectItem>
+                <SelectItem value="mail" className="hover:bg-gray-100">📧 Mail</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
@@ -163,34 +166,34 @@ const LessonVault0406 = () => {
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
                 <SelectValue placeholder="Columns IDs" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="col-a">Column A</SelectItem>
-                <SelectItem value="col-b">Column B</SelectItem>
-                <SelectItem value="col-c">Column C</SelectItem>
-                <SelectItem value="col-d">Column D</SelectItem>
-                <SelectItem value="col-e">Column E</SelectItem>
-                <SelectItem value="col-f">Column F</SelectItem>
-                <SelectItem value="col-g">Column G</SelectItem>
-                <SelectItem value="col-h">Column H</SelectItem>
-                <SelectItem value="col-i">Column I</SelectItem>
-                <SelectItem value="col-j">Column J</SelectItem>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <SelectItem value="col-a" className="hover:bg-gray-100">Column A</SelectItem>
+                <SelectItem value="col-b" className="hover:bg-gray-100">Column B</SelectItem>
+                <SelectItem value="col-c" className="hover:bg-gray-100">Column C</SelectItem>
+                <SelectItem value="col-d" className="hover:bg-gray-100">Column D</SelectItem>
+                <SelectItem value="col-e" className="hover:bg-gray-100">Column E</SelectItem>
+                <SelectItem value="col-f" className="hover:bg-gray-100">Column F</SelectItem>
+                <SelectItem value="col-g" className="hover:bg-gray-100">Column G</SelectItem>
+                <SelectItem value="col-h" className="hover:bg-gray-100">Column H</SelectItem>
+                <SelectItem value="col-i" className="hover:bg-gray-100">Column I</SelectItem>
+                <SelectItem value="col-j" className="hover:bg-gray-100">Column J</SelectItem>
               </SelectContent>
             </Select>
             <Select>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
                 <SelectValue placeholder="Color IDs" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="red">🔴 Red</SelectItem>
-                <SelectItem value="blue">🔵 Blue</SelectItem>
-                <SelectItem value="green">🟢 Green</SelectItem>
-                <SelectItem value="yellow">🟡 Yellow</SelectItem>
-                <SelectItem value="orange">🟠 Orange</SelectItem>
-                <SelectItem value="purple">🟣 Purple</SelectItem>
-                <SelectItem value="pink">🩷 Pink</SelectItem>
-                <SelectItem value="brown">🤎 Brown</SelectItem>
-                <SelectItem value="black">⚫ Black</SelectItem>
-                <SelectItem value="white">⚪ White</SelectItem>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <SelectItem value="red" className="hover:bg-gray-100">🔴 Red</SelectItem>
+                <SelectItem value="blue" className="hover:bg-gray-100">🔵 Blue</SelectItem>
+                <SelectItem value="green" className="hover:bg-gray-100">🟢 Green</SelectItem>
+                <SelectItem value="yellow" className="hover:bg-gray-100">🟡 Yellow</SelectItem>
+                <SelectItem value="orange" className="hover:bg-gray-100">🟠 Orange</SelectItem>
+                <SelectItem value="purple" className="hover:bg-gray-100">🟣 Purple</SelectItem>
+                <SelectItem value="pink" className="hover:bg-gray-100">🩷 Pink</SelectItem>
+                <SelectItem value="brown" className="hover:bg-gray-100">🤎 Brown</SelectItem>
+                <SelectItem value="black" className="hover:bg-gray-100">⚫ Black</SelectItem>
+                <SelectItem value="white" className="hover:bg-gray-100">⚪ White</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
@@ -198,6 +201,35 @@ const LessonVault0406 = () => {
             </Button>
           </div>
         </div>
+
+        {/* Full Page Emoji View */}
+        {selectedEmojiCategory && (
+          <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+            <div className="max-w-6xl mx-auto p-6">
+              <div className="flex items-center gap-4 mb-8">
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedEmojiCategory(null)}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+                <h1 className="text-3xl font-bold">{selectedEmojiCategory}</h1>
+              </div>
+              
+              <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 lg:grid-cols-16 gap-4">
+                {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
+                  <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow">
+                    <CardContent className="p-0 flex items-center justify-center h-full">
+                      <span className="text-4xl">{emoji}</span>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
