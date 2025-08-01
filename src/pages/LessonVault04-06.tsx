@@ -116,33 +116,6 @@ const LessonVault0406 = () => {
           </p>
         </div>
 
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stemCourses.map((course) => {
-            const IconComponent = course.icon;
-            return (
-              <Card key={course.id} className="hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className={`${course.color} p-3 rounded-lg`}>
-                      <IconComponent className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg">{course.title}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{course.description}</p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">{course.lessons} lessons</span>
-                    <span className="text-sm text-muted-foreground">{course.duration}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
 
         {/* Lessons Banner */}
         <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
