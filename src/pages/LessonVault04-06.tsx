@@ -1,10 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LessonVault0406 = () => {
+  const languages = [
+    "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
+    "Setswana", "Sepedi", "Xitsonga", "Venda"
+  ];
+
+  const emojiCategories = {
+    "Smileys and People": ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇"],
+    "Activities": ["⚽", "🏀", "🏈", "⚾", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸"],
+    "Objects": ["📱", "💻", "⌨️", "🖥️", "🖨️", "📷", "📹", "📞", "☎️", "📠"],
+    "Travel and Places": ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐"],
+    "Food and Drink": ["🍎", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑"],
+    "Animals and Nature": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯"]
+  };
+
   const stemCourses = [
     {
       id: 1,
@@ -75,6 +90,18 @@ const LessonVault0406 = () => {
             <h1 className="text-2xl font-bold">Lesson Vault for Kids Aged 04 - 06</h1>
           </div>
           <div className="flex items-center gap-4">
+            <Select>
+              <SelectTrigger className="w-32 bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {languages.map((language) => (
+                  <SelectItem key={language} value={language.toLowerCase()}>
+                    {language}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
               Settings
             </Button>
@@ -95,7 +122,7 @@ const LessonVault0406 = () => {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-4">Trending Lessons</h2>
+          <h2 className="text-3xl font-bold mb-4">Learning the Basics</h2>
           <p className="text-muted-foreground text-lg">
             Designed specifically for ECD Centers | Pre-Schools | Creches | Primary Schools
           </p>
@@ -134,9 +161,25 @@ const LessonVault0406 = () => {
         <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
           <h3 className="text-xl font-bold mb-4 text-center">Target Lessons</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Emojis Class
-            </Button>
+            <Select>
+              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+                <SelectValue placeholder="Emojis Class" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(emojiCategories).map(([category, emojis]) => (
+                  <SelectItem key={category} value={category.toLowerCase().replace(/\s+/g, '-')}>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{category}</span>
+                      <div className="flex gap-1 mt-1">
+                        {emojis.map((emoji, index) => (
+                          <span key={index} className="text-lg">{emoji}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
               Icons Class
             </Button>
