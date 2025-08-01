@@ -90,18 +90,6 @@ const LessonVault0406 = () => {
             <h1 className="text-2xl font-bold">Lesson Vault for Kids Aged 04 - 06</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Select>
-              <SelectTrigger className="w-32 bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
-                <SelectValue placeholder="Language" />
-              </SelectTrigger>
-              <SelectContent>
-                {languages.map((language) => (
-                  <SelectItem key={language} value={language.toLowerCase()}>
-                    {language}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
             <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
               Settings
             </Button>
@@ -146,24 +134,22 @@ const LessonVault0406 = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">{course.lessons} lessons</span>
                     <span className="text-sm text-muted-foreground">{course.duration}</span>
                   </div>
-                  <Button className="w-full">Start Learning</Button>
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        {/* Target Lessons Banner */}
+        {/* Lessons Banner */}
         <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
-          <h3 className="text-xl font-bold mb-4 text-center">Target Lessons</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Select>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
-                <SelectValue placeholder="Emojis Class" />
+                <SelectValue placeholder="Emoji Group" />
               </SelectTrigger>
               <SelectContent>
                 {Object.entries(emojiCategories).map(([category, emojis]) => (
@@ -180,18 +166,60 @@ const LessonVault0406 = () => {
                 ))}
               </SelectContent>
             </Select>
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Icons Class
-            </Button>
+            <Select>
+              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+                <SelectValue placeholder="Icons Lab" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="home">🏠 Home</SelectItem>
+                <SelectItem value="settings">⚙️ Settings</SelectItem>
+                <SelectItem value="user">👤 User</SelectItem>
+                <SelectItem value="search">🔍 Search</SelectItem>
+                <SelectItem value="star">⭐ Star</SelectItem>
+                <SelectItem value="heart">❤️ Heart</SelectItem>
+                <SelectItem value="clock">🕐 Clock</SelectItem>
+                <SelectItem value="folder">📁 Folder</SelectItem>
+                <SelectItem value="phone">📞 Phone</SelectItem>
+                <SelectItem value="mail">📧 Mail</SelectItem>
+              </SelectContent>
+            </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
               Arithmetic Operators
             </Button>
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Columns IDs
-            </Button>
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Color IDs
-            </Button>
+            <Select>
+              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+                <SelectValue placeholder="Columns IDs" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="col-a">Column A</SelectItem>
+                <SelectItem value="col-b">Column B</SelectItem>
+                <SelectItem value="col-c">Column C</SelectItem>
+                <SelectItem value="col-d">Column D</SelectItem>
+                <SelectItem value="col-e">Column E</SelectItem>
+                <SelectItem value="col-f">Column F</SelectItem>
+                <SelectItem value="col-g">Column G</SelectItem>
+                <SelectItem value="col-h">Column H</SelectItem>
+                <SelectItem value="col-i">Column I</SelectItem>
+                <SelectItem value="col-j">Column J</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+                <SelectValue placeholder="Color IDs" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="red">🔴 Red</SelectItem>
+                <SelectItem value="blue">🔵 Blue</SelectItem>
+                <SelectItem value="green">🟢 Green</SelectItem>
+                <SelectItem value="yellow">🟡 Yellow</SelectItem>
+                <SelectItem value="orange">🟠 Orange</SelectItem>
+                <SelectItem value="purple">🟣 Purple</SelectItem>
+                <SelectItem value="pink">🩷 Pink</SelectItem>
+                <SelectItem value="brown">🤎 Brown</SelectItem>
+                <SelectItem value="black">⚫ Black</SelectItem>
+                <SelectItem value="white">⚪ White</SelectItem>
+              </SelectContent>
+            </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
               Cryptography
             </Button>

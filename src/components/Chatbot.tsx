@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { MessageCircle, X, Send } from 'lucide-react';
 
 const Chatbot = () => {
@@ -10,6 +11,11 @@ const Chatbot = () => {
     { role: 'bot', content: 'All ECD Employers seeking to hire tech teachers are welcome to talk to us... It is however important to register as a Parent, and ECD School Manager, as well as a Tech Teacher candidate looking for employment.' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+
+  const languages = [
+    "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
+    "Setswana", "Sepedi", "Xitsonga", "Venda"
+  ];
 
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
@@ -78,6 +84,22 @@ const Chatbot = () => {
           </CardHeader>
           
           <CardContent className="flex-1 flex flex-col p-4">
+            {/* Language Dropdown */}
+            <div className="mb-4">
+              <Select>
+                <SelectTrigger className="w-full bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
+                  <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {languages.map((language) => (
+                    <SelectItem key={language} value={language.toLowerCase()}>
+                      {language}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             {/* Messages */}
             <div className="flex-1 overflow-y-auto space-y-3 mb-4">
               {messages.map((message, index) => (
