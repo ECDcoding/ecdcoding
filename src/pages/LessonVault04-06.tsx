@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
+  const [selectedObjectCategory, setSelectedObjectCategory] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -15,6 +18,23 @@ const LessonVault0406 = () => {
 
   const emojiCategories = {
     "Facial Recognition": ["👦", "👦", "👦", "👦", "👧", "😀", "😀", "😀", "😀", "😃", "👨", "👨", "👨", "👨", "👩", "😊", "😊", "😊", "😊", "😄", "👶", "👶", "👶", "👶", "🧒"]
+  };
+
+  const objectCategories = {
+    "Food": ["🍎", "🍎", "🍎", "🍎", "🍌", "🥛", "🥛", "🥛", "🥛", "🧀", "🍞", "🍞", "🍞", "🍞", "🥕", "🍕", "🍕", "🍕", "🍕", "🍔", "🥚", "🥚", "🥚", "🥚", "🍗"],
+    "Transport": ["🚗", "🚗", "🚗", "🚗", "🚌", "✈️", "✈️", "✈️", "✈️", "🚲", "🚂", "🚂", "🚂", "🚂", "🛵", "🚁", "🚁", "🚁", "🚁", "⛵", "🚜", "🚜", "🚜", "🚜", "🏍️"],
+    "Animals": ["🐶", "🐶", "🐶", "🐶", "🐱", "🐴", "🐴", "🐴", "🐴", "🐮", "🐷", "🐷", "🐷", "🐷", "🐸", "🐰", "🐰", "🐰", "🐰", "🦆", "🐔", "🐔", "🐔", "🐔", "🐯"]
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const stemCourses = [
@@ -75,7 +95,7 @@ const LessonVault0406 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-lime-400">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -87,9 +107,46 @@ const LessonVault0406 = () => {
             <h1 className="text-2xl font-bold">Lesson Vault for Kids Aged 04 - 06</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              Settings
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                  Settings
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-white">
+                <DialogHeader>
+                  <DialogTitle>Profile Settings</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Profile Image</label>
+                    <div className="flex items-center gap-4">
+                      {profileImage && (
+                        <img src={profileImage} alt="Profile" className="w-16 h-16 rounded-full object-cover" />
+                      )}
+                      <div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          id="profile-upload"
+                        />
+                        <Button asChild variant="outline">
+                          <label htmlFor="profile-upload" className="cursor-pointer flex items-center gap-2">
+                            <Upload className="h-4 w-4" />
+                            Upload Image
+                          </label>
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Update profile as your child advances with age
+                    </p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
             <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
               Users
             </Button>
@@ -191,15 +248,32 @@ const LessonVault0406 = () => {
                 <SelectItem value="white" className="hover:bg-gray-100">⚪ White</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Cryptography
-            </Button>
+            <Select onValueChange={(value) => setSelectedObjectCategory(value)}>
+              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+                <SelectValue placeholder="Object IDs" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                {Object.entries(objectCategories).map(([category, objects]) => (
+                  <SelectItem key={category} value={category} className="hover:bg-gray-100">
+                    <div className="flex flex-col">
+                      <span className="font-medium">{category}</span>
+                      <div className="flex gap-1 mt-1">
+                        {objects.slice(0, 5).map((object, index) => (
+                          <span key={index} className="text-lg">{object}</span>
+                        ))}
+                        <span className="text-sm text-gray-500">...</span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         {/* Full Page Emoji View */}
         {selectedEmojiCategory && (
-          <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+          <div className="fixed inset-0 bg-lime-400 z-50 overflow-y-auto">
             <div className="max-w-6xl mx-auto p-6">
               <div className="flex items-center gap-4 mb-8">
                 <Button
@@ -218,6 +292,35 @@ const LessonVault0406 = () => {
                    <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
                      <CardContent className="p-0 flex items-center justify-center h-full">
                        <span className="text-8xl">{emoji}</span>
+                     </CardContent>
+                   </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full Page Object View */}
+        {selectedObjectCategory && (
+          <div className="fixed inset-0 bg-lime-400 z-50 overflow-y-auto">
+            <div className="max-w-6xl mx-auto p-6">
+              <div className="flex items-center gap-4 mb-8">
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedObjectCategory(null)}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+                <h1 className="text-3xl font-bold">{selectedObjectCategory}</h1>
+              </div>
+              
+              <div className="grid grid-cols-5 gap-8">
+                {objectCategories[selectedObjectCategory as keyof typeof objectCategories]?.map((object, index) => (
+                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
+                     <CardContent className="p-0 flex items-center justify-center h-full">
+                       <span className="text-8xl">{object}</span>
                      </CardContent>
                    </Card>
                 ))}
