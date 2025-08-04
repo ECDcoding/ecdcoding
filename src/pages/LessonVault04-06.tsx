@@ -147,9 +147,6 @@ const LessonVault0406 = () => {
                 </div>
               </DialogContent>
             </Dialog>
-            <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              Users
-            </Button>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
@@ -157,6 +154,9 @@ const LessonVault0406 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
+            {profileImage && (
+              <img src={profileImage} alt="Profile" className="w-10 h-10 rounded-full object-cover border-2 border-primary-foreground" />
+            )}
           </div>
         </div>
       </header>
