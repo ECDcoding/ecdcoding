@@ -154,9 +154,13 @@ const LessonVault0406 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
-            {profileImage && (
-              <img src={profileImage} alt="Profile" className="w-10 h-10 rounded-full object-cover border-2 border-primary-foreground" />
-            )}
+            <div className="w-10 h-10 rounded-full border-2 border-primary-foreground bg-primary-foreground/10 flex items-center justify-center">
+              {profileImage ? (
+                <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
+              ) : (
+                <span className="text-primary-foreground text-xs">Photo</span>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -216,19 +220,19 @@ const LessonVault0406 = () => {
             </Button>
             <Select>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
-                <SelectValue placeholder="Columns IDs" />
+                <SelectValue placeholder="Video Lab" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <SelectItem value="col-a" className="hover:bg-gray-100">Column A</SelectItem>
-                <SelectItem value="col-b" className="hover:bg-gray-100">Column B</SelectItem>
-                <SelectItem value="col-c" className="hover:bg-gray-100">Column C</SelectItem>
-                <SelectItem value="col-d" className="hover:bg-gray-100">Column D</SelectItem>
-                <SelectItem value="col-e" className="hover:bg-gray-100">Column E</SelectItem>
-                <SelectItem value="col-f" className="hover:bg-gray-100">Column F</SelectItem>
-                <SelectItem value="col-g" className="hover:bg-gray-100">Column G</SelectItem>
-                <SelectItem value="col-h" className="hover:bg-gray-100">Column H</SelectItem>
-                <SelectItem value="col-i" className="hover:bg-gray-100">Column I</SelectItem>
-                <SelectItem value="col-j" className="hover:bg-gray-100">Column J</SelectItem>
+                <SelectItem value="upload-video" className="hover:bg-gray-100">📹 Upload Video</SelectItem>
+                <SelectItem value="story-videos" className="hover:bg-gray-100">📚 Story Videos</SelectItem>
+                <SelectItem value="math-videos" className="hover:bg-gray-100">🔢 Math Videos</SelectItem>
+                <SelectItem value="science-videos" className="hover:bg-gray-100">🔬 Science Videos</SelectItem>
+                <SelectItem value="art-videos" className="hover:bg-gray-100">🎨 Art Videos</SelectItem>
+                <SelectItem value="music-videos" className="hover:bg-gray-100">🎵 Music Videos</SelectItem>
+                <SelectItem value="exercise-videos" className="hover:bg-gray-100">🏃 Exercise Videos</SelectItem>
+                <SelectItem value="language-videos" className="hover:bg-gray-100">🗣️ Language Videos</SelectItem>
+                <SelectItem value="cooking-videos" className="hover:bg-gray-100">👩‍🍳 Cooking Videos</SelectItem>
+                <SelectItem value="nature-videos" className="hover:bg-gray-100">🌱 Nature Videos</SelectItem>
               </SelectContent>
             </Select>
             <Select>
