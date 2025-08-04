@@ -14,7 +14,7 @@ const LessonVault0406 = () => {
   ];
 
   const emojiCategories = {
-    "Smileys and People": ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇"],
+    "Facial Recognition": ["👦", "👦", "👦", "👦", "👧", "😀", "😀", "😀", "😀", "😃", "👨", "👨", "👨", "👨", "👩", "😊", "😊", "😊", "😊", "😄", "👶", "👶", "👶", "👶", "🧒"],
     "Activities": ["⚽", "🏀", "🏈", "⚾", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸"],
     "Objects": ["📱", "💻", "⌨️", "🖥️", "🖨️", "📷", "📹", "📞", "☎️", "📠"],
     "Travel and Places": ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐"],
@@ -124,7 +124,7 @@ const LessonVault0406 = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
-                <SelectValue placeholder="Emoji Group" />
+                <SelectValue placeholder="Emoji Science" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 {Object.entries(emojiCategories).map(([category, emojis]) => (
