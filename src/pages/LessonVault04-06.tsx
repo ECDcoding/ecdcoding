@@ -14,12 +14,7 @@ const LessonVault0406 = () => {
   ];
 
   const emojiCategories = {
-    "Facial Recognition": ["👦", "👦", "👦", "👦", "👧", "😀", "😀", "😀", "😀", "😃", "👨", "👨", "👨", "👨", "👩", "😊", "😊", "😊", "😊", "😄", "👶", "👶", "👶", "👶", "🧒"],
-    "Activities": ["⚽", "🏀", "🏈", "⚾", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸"],
-    "Objects": ["📱", "💻", "⌨️", "🖥️", "🖨️", "📷", "📹", "📞", "☎️", "📠"],
-    "Travel and Places": ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐"],
-    "Food and Drink": ["🍎", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑"],
-    "Animals and Nature": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯"]
+    "Facial Recognition": ["👦", "👦", "👦", "👦", "👧", "😀", "😀", "😀", "😀", "😃", "👨", "👨", "👨", "👨", "👩", "😊", "😊", "😊", "😊", "😄", "👶", "👶", "👶", "👶", "🧒"]
   };
 
   const stemCourses = [
@@ -80,7 +75,7 @@ const LessonVault0406 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-lime-400">
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -218,13 +213,13 @@ const LessonVault0406 = () => {
                 <h1 className="text-3xl font-bold">{selectedEmojiCategory}</h1>
               </div>
               
-              <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 lg:grid-cols-16 gap-4">
+              <div className="grid grid-cols-5 gap-8">
                 {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
-                  <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow">
-                    <CardContent className="p-0 flex items-center justify-center h-full">
-                      <span className="text-4xl">{emoji}</span>
-                    </CardContent>
-                  </Card>
+                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
+                     <CardContent className="p-0 flex items-center justify-center h-full">
+                       <span className="text-8xl">{emoji}</span>
+                     </CardContent>
+                   </Card>
                 ))}
               </div>
             </div>
