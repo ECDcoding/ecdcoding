@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LessonVault0406 = () => {
@@ -18,9 +18,9 @@ const LessonVault0406 = () => {
 
   const emojiCategories = {
     "Facial Recognition": ["👧", "👦", "👦", "👦", "👦", "😀", "😃", "😀", "😀", "😀", "👩", "👨", "👨", "👨", "👨", "😊", "😄", "😊", "😊", "😊", "👶", "👶", "👶", "👶", "🧒"],
-    "Food": ["🍎", "🍎", "🍎", "🍎", "🍌", "🥛", "🥛", "🥛", "🥛", "🧀", "🍞", "🍞", "🍞", "🍞", "🥕", "🍕", "🍕", "🍕", "🍕", "🍔", "🥚", "🥚", "🥚", "🥚", "🍗"],
-    "Transport": ["🚗", "🚗", "🚗", "🚗", "🚌", "✈️", "✈️", "✈️", "✈️", "🚲", "🚂", "🚂", "🚂", "🚂", "🛵", "🚁", "🚁", "🚁", "🚁", "⛵", "🚜", "🚜", "🚜", "🚜", "🏍️"],
-    "Animals": ["🐶", "🐶", "🐶", "🐶", "🐱", "🐴", "🐴", "🐴", "🐴", "🐮", "🐷", "🐷", "🐷", "🐷", "🐸", "🐰", "🐰", "🐰", "🐰", "🦆", "🐔", "🐔", "🐔", "🐔", "🐯"]
+    "Fruit Recognition": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
+    "Transport Recognition": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
+    "Animal Recognition": ["🐶", "🐱", "🐶", "🐶", "🐶", "🐴", "🐮", "🐴", "🐴", "🐴", "🐷", "🐸", "🐷", "🐷", "🐷", "🐰", "🦆", "🐰", "🐰", "🐰", "🐔", "🐯", "🐔", "🐔", "🐔"]
   };
 
   const mediaCategories = {
@@ -106,7 +106,7 @@ const LessonVault0406 = () => {
               <Home className="h-6 w-6" />
               <span>Home</span>
             </Link>
-            <h1 className="text-2xl font-bold">Lesson Vault for Kids Aged 04 - 06</h1>
+            <h1 className="text-2xl font-bold">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
             <Dialog>
@@ -156,13 +156,36 @@ const LessonVault0406 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
-            <div className="w-10 h-10 rounded-full border-2 border-primary-foreground bg-primary-foreground/10 flex items-center justify-center">
-              {profileImage ? (
-                <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
-              ) : (
-                <span className="text-primary-foreground text-xs">Photo</span>
-              )}
-            </div>
+            <Select>
+              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-primary-foreground bg-primary-foreground/10 flex items-center justify-center">
+                {profileImage ? (
+                  <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
+                ) : (
+                  <span className="text-primary-foreground text-xs">Photo</span>
+                )}
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <SelectItem value="profile" className="hover:bg-gray-100 flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Profile
+                </SelectItem>
+                <SelectItem value="change-password" className="hover:bg-gray-100 flex items-center gap-2">
+                  <Key className="h-4 w-4" />
+                  Change Password
+                </SelectItem>
+                <SelectItem value="contact-details" className="hover:bg-gray-100 flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  Contact Details
+                </SelectItem>
+                <SelectItem value="settings" className="hover:bg-gray-100 flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </SelectItem>
+                <SelectItem value="logout" className="hover:bg-gray-100 text-red-600">
+                  Logout
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </header>
@@ -170,8 +193,12 @@ const LessonVault0406 = () => {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-4">Learning the Basics</h2>
-          <p className="text-muted-foreground text-lg">
+          <div className="flex justify-center mb-8">
+            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-64 h-48 object-contain" />
+          </div>
+          <div className="mb-16"></div>
+          <h2 className="text-3xl font-bold mb-4 text-center">Learning the Basics</h2>
+          <p className="text-muted-foreground text-lg text-center">
             Designed specifically for ECD Centers | Pre-Schools | Creches | Primary Schools
           </p>
         </div>
@@ -334,7 +361,125 @@ const LessonVault0406 = () => {
             </div>
           </div>
         )}
+
+        {/* Tailormade Lessons Carousel */}
+        <div className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-lime-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+              Tailormade Lessons
+            </h1>
+            <Button 
+              className="mb-8 px-8 py-3 bg-transparent text-turquoise border-2 border-dashed border-current hover:bg-turquoise hover:text-white transition-all"
+              style={{ color: 'turquoise' }}
+            >
+              Register to View All Listed Lesson
+            </Button>
+          </div>
+          
+          <div className="overflow-hidden w-full relative">
+            <div 
+              className="flex gap-8 animate-scroll"
+              style={{
+                animation: 'scroll-horizontal 40s linear infinite',
+                width: 'max-content'
+              }}
+            >
+              {/* First set of cards */}
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-yellow-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>HTML Basics</h3>
+                  <h4 className="text-lg italic mb-4">Bright ideas wrapped in yellow</h4>
+                  <p className="text-base mb-4">A vision powered by creativity and a splash of light-hearted boldness.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-yellow-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
+                  <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
+                  <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-pink-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Binary Numbers</h3>
+                  <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
+                  <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-teal-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Cryptogram</h3>
+                  <h4 className="text-lg italic mb-4">Think deep, build deeper</h4>
+                  <p className="text-base mb-4">Where calm logic meets complex flows beneath the surface of design.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-teal-600">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-blue-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>IoT</h3>
+                  <h4 className="text-lg italic mb-4">Fast ideas in a faster world</h4>
+                  <p className="text-base mb-4">Move with clarity, build with momentum. You're ready for the climb.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-blue-500">Read more</a>
+                </CardContent>
+              </Card>
+              
+              {/* Duplicate cards for infinite loop */}
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-yellow-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>HTML Basics</h3>
+                  <h4 className="text-lg italic mb-4">Bright ideas wrapped in yellow</h4>
+                  <p className="text-base mb-4">A vision powered by creativity and a splash of light-hearted boldness.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-yellow-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
+                  <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
+                  <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-pink-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Binary Numbers</h3>
+                  <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
+                  <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-teal-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Cryptogram</h3>
+                  <h4 className="text-lg italic mb-4">Think deep, build deeper</h4>
+                  <p className="text-base mb-4">Where calm logic meets complex flows beneath the surface of design.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-teal-600">Read more</a>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-blue-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>IoT</h3>
+                  <h4 className="text-lg italic mb-4">Fast ideas in a faster world</h4>
+                  <p className="text-base mb-4">Move with clarity, build with momentum. You're ready for the climb.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-blue-500">Read more</a>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
       </main>
+      
     </div>
   );
 };
