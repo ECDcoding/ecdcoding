@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
-  const [selectedObjectCategory, setSelectedObjectCategory] = useState<string | null>(null);
+  const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
@@ -17,13 +17,15 @@ const LessonVault0406 = () => {
   ];
 
   const emojiCategories = {
-    "Facial Recognition": ["👧", "👦", "👦", "👦", "👦", "😀", "😃", "😀", "😀", "😀", "👩", "👨", "👨", "👨", "👨", "😊", "😄", "😊", "😊", "😊", "👶", "🧒", "👶", "👶", "🤓"]
-  };
-
-  const objectCategories = {
+    "Facial Recognition": ["👧", "👦", "👦", "👦", "👦", "😀", "😃", "😀", "😀", "😀", "👩", "👨", "👨", "👨", "👨", "😊", "😄", "😊", "😊", "😊", "👶", "👶", "👶", "👶", "🧒"],
     "Food": ["🍎", "🍎", "🍎", "🍎", "🍌", "🥛", "🥛", "🥛", "🥛", "🧀", "🍞", "🍞", "🍞", "🍞", "🥕", "🍕", "🍕", "🍕", "🍕", "🍔", "🥚", "🥚", "🥚", "🥚", "🍗"],
     "Transport": ["🚗", "🚗", "🚗", "🚗", "🚌", "✈️", "✈️", "✈️", "✈️", "🚲", "🚂", "🚂", "🚂", "🚂", "🛵", "🚁", "🚁", "🚁", "🚁", "⛵", "🚜", "🚜", "🚜", "🚜", "🏍️"],
     "Animals": ["🐶", "🐶", "🐶", "🐶", "🐱", "🐴", "🐴", "🐴", "🐴", "🐮", "🐷", "🐷", "🐷", "🐷", "🐸", "🐰", "🐰", "🐰", "🐰", "🦆", "🐔", "🐔", "🐔", "🐔", "🐯"]
+  };
+
+  const mediaCategories = {
+    "Social Media": ["📘", "📷", "🐦", "📺", "💬", "📱", "🎵", "📹", "🌐", "💻", "📞", "📧", "🔗", "📲", "💾", "🖥️", "⌨️", "🖱️", "📀", "💿", "📼", "📻", "🎙️", "🎧", "📢"],
+    "AI Engines": ["🤖", "🧠", "⚡", "🔍", "💡", "🎯", "🚀", "⭐", "🔥", "💎", "🎲", "🎭", "🎨", "🎪", "🎊", "🎉", "🎈", "🎁", "🏆", "🥇", "🏅", "⚙️", "🔧", "🛠️", "⚒️"]
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,7 +182,7 @@ const LessonVault0406 = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
-                <SelectValue placeholder="Emoji Science" />
+                <SelectValue placeholder="Emoji AI" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 {Object.entries(emojiCategories).map(([category, emojis]) => (
@@ -252,12 +254,12 @@ const LessonVault0406 = () => {
                 <SelectItem value="white" className="hover:bg-gray-100">⚪ White</SelectItem>
               </SelectContent>
             </Select>
-            <Select onValueChange={(value) => setSelectedObjectCategory(value)}>
+            <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
-                <SelectValue placeholder="Object IDs" />
+                <SelectValue placeholder="Popular Media IDs" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                {Object.entries(objectCategories).map(([category, objects]) => (
+                {Object.entries(mediaCategories).map(([category, objects]) => (
                   <SelectItem key={category} value={category} className="hover:bg-gray-100">
                     <div className="flex flex-col">
                       <span className="font-medium">{category}</span>
@@ -304,24 +306,24 @@ const LessonVault0406 = () => {
           </div>
         )}
 
-        {/* Full Page Object View */}
-        {selectedObjectCategory && (
+        {/* Full Page Media View */}
+        {selectedMediaCategory && (
           <div className="fixed inset-0 bg-lime-400 z-50 overflow-y-auto">
             <div className="max-w-6xl mx-auto p-6">
               <div className="flex items-center gap-4 mb-8">
                 <Button
                   variant="outline"
-                  onClick={() => setSelectedObjectCategory(null)}
+                  onClick={() => setSelectedMediaCategory(null)}
                   className="flex items-center gap-2"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Back
                 </Button>
-                <h1 className="text-3xl font-bold">{selectedObjectCategory}</h1>
+                <h1 className="text-3xl font-bold">{selectedMediaCategory}</h1>
               </div>
               
               <div className="grid grid-cols-5 gap-8">
-                {objectCategories[selectedObjectCategory as keyof typeof objectCategories]?.map((object, index) => (
+                {mediaCategories[selectedMediaCategory as keyof typeof mediaCategories]?.map((object, index) => (
                    <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
                      <CardContent className="p-0 flex items-center justify-center h-full">
                        <span className="text-8xl">{object}</span>
