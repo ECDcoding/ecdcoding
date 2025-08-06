@@ -97,58 +97,15 @@ const LessonVault0406 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground p-6 shadow-lg">
+    <div className="min-h-screen tailormade-lessons-texture">
+      {/* Navigation Bar */}
+      <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-80">
-              <Home className="h-6 w-6" />
-              <span>Home</span>
-            </Link>
+            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-16 h-12 object-contain" />
             <h1 className="text-2xl font-bold">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                  Settings
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="bg-white">
-                <DialogHeader>
-                  <DialogTitle>Profile Settings</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Profile Image</label>
-                    <div className="flex items-center gap-4">
-                      {profileImage && (
-                        <img src={profileImage} alt="Profile" className="w-16 h-16 rounded-full object-cover" />
-                      )}
-                      <div>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                          className="hidden"
-                          id="profile-upload"
-                        />
-                        <Button asChild variant="outline">
-                          <label htmlFor="profile-upload" className="cursor-pointer flex items-center gap-2">
-                            <Upload className="h-4 w-4" />
-                            Upload Image
-                          </label>
-                        </Button>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      Update profile as your child advances with age
-                    </p>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
@@ -157,11 +114,11 @@ const LessonVault0406 = () => {
               />
             </div>
             <Select>
-              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-primary-foreground bg-primary-foreground/10 flex items-center justify-center">
+              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-white/10 flex items-center justify-center">
                 {profileImage ? (
                   <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
                 ) : (
-                  <span className="text-primary-foreground text-xs">Photo</span>
+                  <span className="text-white text-xs">Photo</span>
                 )}
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -177,10 +134,6 @@ const LessonVault0406 = () => {
                   <Phone className="h-4 w-4" />
                   Contact Details
                 </SelectItem>
-                <SelectItem value="settings" className="hover:bg-gray-100 flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Settings
-                </SelectItem>
                 <SelectItem value="logout" className="hover:bg-gray-100 text-red-600">
                   Logout
                 </SelectItem>
@@ -188,16 +141,12 @@ const LessonVault0406 = () => {
             </Select>
           </div>
         </div>
-      </header>
+      </nav>
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
         <div className="mb-8">
-          <div className="flex justify-center mb-8">
-            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-64 h-48 object-contain" />
-          </div>
-          <div className="mb-16"></div>
-          <h2 className="text-3xl font-bold mb-4 text-center">Learning the Basics</h2>
+          <h2 className="text-4xl font-bold mb-4 text-center text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
           <p className="text-muted-foreground text-lg text-center">
             Designed specifically for ECD Centers | Pre-Schools | Creches | Primary Schools
           </p>
@@ -245,7 +194,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
-              Arithmetic Operators
+              Arithmetics
             </Button>
             <Select>
               <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
