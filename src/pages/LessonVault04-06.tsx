@@ -102,7 +102,7 @@ const LessonVault0406 = () => {
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-16 h-12 object-contain" />
+            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-28 h-20 md:w-32 md:h-24 object-contain" />
             <h1 className="text-2xl font-bold">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
@@ -145,19 +145,16 @@ const LessonVault0406 = () => {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
-        <div className="mb-8">
-          <h2 className="text-4xl font-bold mb-4 text-center text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
-          <p className="text-muted-foreground text-lg text-center">
-            Designed specifically for ECD Centers | Pre-Schools | Creches | Primary Schools
-          </p>
-        </div>
+          <div className="mb-8 mt-12">
+            <h2 className="text-4xl font-bold text-left text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
+          </div>
 
 
         {/* Lessons Banner */}
-        <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg">
+        <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
-              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Emoji AI" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -177,12 +174,12 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Icons Lab" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <SelectItem value="home" className="hover:bg-gray-100">🏠 Home</SelectItem>
-                <SelectItem value="settings" className="hover:bg-gray-100">⚙️ Settings</SelectItem>
+                
                 <SelectItem value="user" className="hover:bg-gray-100">👤 User</SelectItem>
                 <SelectItem value="search" className="hover:bg-gray-100">🔍 Search</SelectItem>
                 <SelectItem value="star" className="hover:bg-gray-100">⭐ Star</SelectItem>
@@ -193,11 +190,11 @@ const LessonVault0406 = () => {
                 <SelectItem value="mail" className="hover:bg-gray-100">📧 Mail</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" className="bg-white text-black border-black hover:bg-gray-100">
+            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
               Arithmetics
             </Button>
             <Select>
-              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Video Lab" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -214,7 +211,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Color IDs" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -231,7 +228,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
-              <SelectTrigger className="bg-white text-black border-black hover:bg-gray-100">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Popular Media IDs" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -255,7 +252,7 @@ const LessonVault0406 = () => {
 
         {/* Full Page Emoji View */}
         {selectedEmojiCategory && (
-          <div className="fixed inset-0 bg-lime-400 z-50 overflow-y-auto">
+          <div className="fixed inset-0 tailormade-lessons-texture z-50 overflow-y-auto">
             <div className="max-w-6xl mx-auto p-6">
               <div className="flex items-center gap-4 mb-8">
                 <Button
@@ -284,7 +281,7 @@ const LessonVault0406 = () => {
 
         {/* Full Page Media View */}
         {selectedMediaCategory && (
-          <div className="fixed inset-0 bg-lime-400 z-50 overflow-y-auto">
+          <div className="fixed inset-0 tailormade-lessons-texture z-50 overflow-y-auto">
             <div className="max-w-6xl mx-auto p-6">
               <div className="flex items-center gap-4 mb-8">
                 <Button
@@ -314,15 +311,12 @@ const LessonVault0406 = () => {
         {/* Tailormade Lessons Carousel */}
         <div className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-lime-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+            <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
               Tailormade Lessons
             </h1>
-            <Button 
-              className="mb-8 px-8 py-3 bg-transparent text-turquoise border-2 border-dashed border-current hover:bg-turquoise hover:text-white transition-all"
-              style={{ color: 'turquoise' }}
-            >
-              Register to View All Listed Lesson
-            </Button>
+            <p className="mt-6 text-foreground/90">
+              Outsourced from Reputable Service Providers
+            </p>
           </div>
           
           <div className="overflow-hidden w-full relative">
