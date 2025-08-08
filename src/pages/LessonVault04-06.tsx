@@ -11,6 +11,7 @@ const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [pictureActive, setPictureActive] = useState<boolean>(false);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -102,7 +103,7 @@ const LessonVault0406 = () => {
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-28 h-20 md:w-32 md:h-24 object-contain" />
+            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
             <h1 className="text-2xl font-bold">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
@@ -145,14 +146,17 @@ const LessonVault0406 = () => {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
-          <div className="mb-8 mt-12">
-            <h2 className="text-4xl font-bold text-left text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
+          <div className="mb-8 mt-12 text-center">
+            <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
           </div>
 
 
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              Arithmetics
+            </Button>
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Emoji AI" />
@@ -190,9 +194,6 @@ const LessonVault0406 = () => {
                 <SelectItem value="mail" className="hover:bg-gray-100">📧 Mail</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
-              Arithmetics
-            </Button>
             <Select>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
                 <SelectValue placeholder="Video Lab" />
@@ -229,7 +230,7 @@ const LessonVault0406 = () => {
             </Select>
             <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
-                <SelectValue placeholder="Popular Media IDs" />
+                <SelectValue placeholder="Media Icons" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 {Object.entries(mediaCategories).map(([category, objects]) => (
@@ -297,7 +298,11 @@ const LessonVault0406 = () => {
               
               <div className="grid grid-cols-5 gap-8">
                 {mediaCategories[selectedMediaCategory as keyof typeof mediaCategories]?.map((object, index) => (
-                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
+                   <Card 
+                     key={index} 
+                     onClick={() => { if (object === "📷") setPictureActive((prev) => !prev); }}
+                     className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32 ${object === "📷" && pictureActive ? "bg-brand-green text-foreground" : ""}`}
+                   >
                      <CardContent className="p-0 flex items-center justify-center h-full">
                        <span className="text-8xl">{object}</span>
                      </CardContent>
