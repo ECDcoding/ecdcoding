@@ -7,12 +7,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pictureActive, setPictureActive] = useState<boolean>(false);
+  const [countingOpen, setCountingOpen] = useState(false);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -103,9 +105,9 @@ const LessonVault0406 = () => {
       {/* Navigation Bar */}
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-end gap-4">
             <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
-            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors self-center">
+            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors">
               <Home className="h-8 w-8" />
             </Link>
             <h1 className="text-2xl font-bold">Lesson Vault</h1>
@@ -158,9 +160,19 @@ const LessonVault0406 = () => {
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left">
-              Arithmetics
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Arithmetics
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem onClick={() => setCountingOpen(true)} className="font-medium">
+                  Counting
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Emoji AI" />
@@ -460,7 +472,39 @@ const LessonVault0406 = () => {
             </div>
           </div>
         </div>
-      </main>
+        {/* Counting Dialog */}
+        <Dialog open={countingOpen} onOpenChange={setCountingOpen}>
+          <DialogContent className="max-w-3xl">
+            <DialogHeader>
+              <DialogTitle>Counting</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold">Binary Numbers</h3>
+                <p className="text-muted-foreground">Learning the Basic Logic of Numbers</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (
+                  <div
+                    key={n}
+                    className={[
+                      "aspect-square rounded-xl text-5xl sm:text-6xl font-bold flex items-center justify-center shadow-md transition-transform hover:scale-105",
+                      n % 4 === 1 ? "bg-primary text-primary-foreground" : "",
+                      n % 4 === 2 ? "bg-brand-orange text-foreground" : "",
+                      n % 4 === 3 ? "bg-brand-green text-foreground" : "",
+                      n % 4 === 0 ? "bg-accent text-accent-foreground" : "",
+                    ].join(" ")}
+                    aria-label={`Number ${n}`}
+                  >
+                    {n}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+       </main>
       
     </div>
   );
