@@ -784,7 +784,7 @@ const Register = () => {
             </p>
           </CardHeader>
           
-          <CardContent>
+          <CardContent className="register-form-theme">
             <form onSubmit={handleSubmit} className="space-y-8 text-foreground font-semibold">
               {renderForm()}
 

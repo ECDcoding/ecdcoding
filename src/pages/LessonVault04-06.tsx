@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -104,10 +105,10 @@ const LessonVault0406 = () => {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
-            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors">
-              <Home className="h-6 w-6" />
+            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors self-center">
+              <Home className="h-8 w-8" />
             </Link>
-            <h1 className="text-2xl font-bold mt-4 md:mt-6">Lesson Vault</h1>
+            <h1 className="text-2xl font-bold">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -321,6 +322,24 @@ const LessonVault0406 = () => {
                     loading="lazy"
                     className="mx-auto max-w-xl w-full h-auto rounded-md shadow"
                   />
+
+                  <div className="mt-6 flex items-center justify-center gap-6">
+                    <button aria-label="Facebook" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
+                      <SiFacebook size={28} />
+                    </button>
+                    <button aria-label="X" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
+                      <SiX size={28} />
+                    </button>
+                    <button aria-label="TikTok" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
+                      <SiTiktok size={28} />
+                    </button>
+                    <button aria-label="LinkedIn" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
+                      <SiLinkedin size={28} />
+                    </button>
+                    <button aria-label="Bluesky" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
+                      <SiBluesky size={28} />
+                    </button>
+                  </div>
                 </div>
               )}
 

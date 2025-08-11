@@ -150,3 +150,19 @@ All colors MUST be HSL.
     animation: scroll-horizontal 40s linear infinite;
   }
 }
+
+/* App-specific form surface styling */
+@layer base {
+  :root { --surface: 0 0% 100%; }
+  .dark { --surface: 0 0% 15%; }
+}
+
+@layer components {
+  .register-form-theme input,
+  .register-form-theme textarea,
+  .register-form-theme [role="combobox"],
+  .register-form-theme select {
+    background-color: hsl(var(--surface)) !important;
+    color: hsl(var(--foreground));
+  }
+}
