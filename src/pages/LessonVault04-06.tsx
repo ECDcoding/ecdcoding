@@ -104,7 +104,10 @@ const LessonVault0406 = () => {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
-            <h1 className="text-2xl font-bold">Lesson Vault</h1>
+            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors">
+              <Home className="h-6 w-6" />
+            </Link>
+            <h1 className="text-2xl font-bold mt-4 md:mt-6">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -154,11 +157,11 @@ const LessonVault0406 = () => {
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+            <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left">
               Arithmetics
             </Button>
             <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Emoji AI" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -178,7 +181,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Icons Lab" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -195,7 +198,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Video Lab" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -212,7 +215,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Color IDs" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -229,7 +232,7 @@ const LessonVault0406 = () => {
               </SelectContent>
             </Select>
             <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20">
+              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Media Icons" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
@@ -309,6 +312,18 @@ const LessonVault0406 = () => {
                    </Card>
                 ))}
               </div>
+
+              {selectedMediaCategory === "Social Media" && (
+                <div className="mt-10">
+                  <img
+                    src="/lovable-uploads/b7647a0f-f531-4bd1-82fe-d8b4d9c54fc1.png"
+                    alt="Media icons: Facebook, X, LinkedIn, YouTube, WhatsApp, Google Plus, Instagram, Pinterest, Snapchat"
+                    loading="lazy"
+                    className="mx-auto max-w-xl w-full h-auto rounded-md shadow"
+                  />
+                </div>
+              )}
+
             </div>
           </div>
         )}
