@@ -17,6 +17,25 @@ const LessonVault0406 = () => {
   const [pictureActive, setPictureActive] = useState<boolean>(false);
   const [countingOpen, setCountingOpen] = useState(false);
   const [parentsOpen, setParentsOpen] = useState(false);
+  
+  const numberWords = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", 
+    "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", 
+    "twenty-four", "twenty-five"
+  ];
+
+  const speakNumber = (number: number) => {
+    // For now using Web Speech API, can be replaced with ElevenLabs
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(numberWords[number - 1]);
+      utterance.rate = 0.8; // Slower rate for kids
+      utterance.pitch = 1.2; // Higher pitch for child-friendly voice
+      utterance.volume = 0.8;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -505,6 +524,8 @@ const LessonVault0406 = () => {
                           '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
                         ][number % 5]
                       }}
+                      onMouseEnter={() => speakNumber(number)}
+                      title={`Number ${number} - ${numberWords[number - 1]}`}
                     >
                       {number}
                     </div>
