@@ -105,12 +105,12 @@ const LessonVault0406 = () => {
       {/* Navigation Bar */}
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-end gap-4">
             <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
-            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors">
+            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors mb-1">
               <Home className="h-8 w-8" />
             </Link>
-            <h1 className="text-2xl font-bold">Lesson Vault</h1>
+            <h1 className="text-2xl font-bold mb-1">Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -210,23 +210,25 @@ const LessonVault0406 = () => {
                 <SelectItem value="mail" className="hover:bg-gray-100">📧 Mail</SelectItem>
               </SelectContent>
             </Select>
-            <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Video Lab" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <SelectItem value="upload-video" className="hover:bg-gray-100">📹 Upload Video</SelectItem>
-                <SelectItem value="story-videos" className="hover:bg-gray-100">📚 Story Videos</SelectItem>
-                <SelectItem value="math-videos" className="hover:bg-gray-100">🔢 Math Videos</SelectItem>
-                <SelectItem value="science-videos" className="hover:bg-gray-100">🔬 Science Videos</SelectItem>
-                <SelectItem value="art-videos" className="hover:bg-gray-100">🎨 Art Videos</SelectItem>
-                <SelectItem value="music-videos" className="hover:bg-gray-100">🎵 Music Videos</SelectItem>
-                <SelectItem value="exercise-videos" className="hover:bg-gray-100">🏃 Exercise Videos</SelectItem>
-                <SelectItem value="language-videos" className="hover:bg-gray-100">🗣️ Language Videos</SelectItem>
-                <SelectItem value="cooking-videos" className="hover:bg-gray-100">👩‍🍳 Cooking Videos</SelectItem>
-                <SelectItem value="nature-videos" className="hover:bg-gray-100">🌱 Nature Videos</SelectItem>
-              </SelectContent>
-            </Select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Notes to
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  👨‍👩‍👧‍👦 Parents
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  🎓 Tech Teachers
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  🏫 ECD Institutions
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Select>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Color IDs" />
@@ -483,18 +485,16 @@ const LessonVault0406 = () => {
                 <h3 className="text-2xl font-bold">Binary Numbers</h3>
                 <p className="text-muted-foreground">Learning the Basic Logic of Numbers</p>
               </div>
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
                 {Array.from({ length: 25 }, (_, i) => i + 1).map((n) => (
                   <div
                     key={n}
                     className={[
-                      "aspect-square rounded-xl text-5xl sm:text-6xl font-bold flex items-center justify-center shadow-md transition-transform hover:scale-105",
-                      n % 4 === 1 ? "bg-primary text-primary-foreground" : "",
-                      n % 4 === 2 ? "bg-brand-orange text-foreground" : "",
-                      n % 4 === 3 ? "bg-brand-green text-foreground" : "",
-                      n % 4 === 0 ? "bg-accent text-accent-foreground" : "",
+                      "w-24 h-24 md:w-28 md:h-28 flex items-center justify-center text-2xl md:text-3xl font-bold rounded-xl text-white cursor-pointer hover:scale-105 transition-transform shadow-lg",
+                      n % 4 === 1 ? "bg-[#3a86ff]" : 
+                      n % 4 === 2 ? "bg-[#e76f51]" : 
+                      n % 4 === 3 ? "bg-[#00afb9]" : "bg-[#ca6702]"
                     ].join(" ")}
-                    aria-label={`Number ${n}`}
                   >
                     {n}
                   </div>
