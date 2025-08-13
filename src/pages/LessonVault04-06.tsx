@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -15,6 +16,7 @@ const LessonVault0406 = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pictureActive, setPictureActive] = useState<boolean>(false);
   const [countingOpen, setCountingOpen] = useState(false);
+  const [parentsOpen, setParentsOpen] = useState(false);
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -169,7 +171,7 @@ const LessonVault0406 = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setCountingOpen(true)} className="font-medium">
-                  Counting
+                  Basic Counting
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -218,7 +220,7 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100">
                   👨‍👩‍👧‍👦 Parents
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium hover:bg-gray-100">
@@ -474,35 +476,83 @@ const LessonVault0406 = () => {
             </div>
           </div>
         </div>
-        {/* Counting Dialog */}
-        <Dialog open={countingOpen} onOpenChange={setCountingOpen}>
-          <DialogContent className="max-w-3xl">
-            <DialogHeader>
-              <DialogTitle>Counting</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-6">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold">Binary Numbers</h3>
-                <p className="text-muted-foreground">Learning the Basic Logic of Numbers</p>
+        {/* Basic Counting Full Overlay */}
+        {countingOpen && (
+          <div className="fixed inset-0 bg-[#395B50] z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/20">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Basic Counting
+                </h1>
+                <button 
+                  onClick={() => setCountingOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-                {Array.from({ length: 25 }, (_, i) => i + 1).map((n) => (
-                  <div
-                    key={n}
-                    className={[
-                      "w-24 h-24 md:w-28 md:h-28 flex items-center justify-center text-2xl md:text-3xl font-bold rounded-xl text-white cursor-pointer hover:scale-105 transition-transform shadow-lg",
-                      n % 4 === 1 ? "bg-[#3a86ff]" : 
-                      n % 4 === 2 ? "bg-[#e76f51]" : 
-                      n % 4 === 3 ? "bg-[#00afb9]" : "bg-[#ca6702]"
-                    ].join(" ")}
-                  >
-                    {n}
-                  </div>
-                ))}
+              
+              {/* Content */}
+              <div className="flex-1 p-6">
+                <div className="grid grid-cols-5 gap-4 max-w-6xl mx-auto">
+                  {Array.from({ length: 25 }, (_, index) => index + 1).map((number) => (
+                    <div 
+                      key={number}
+                      className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                      style={{
+                        backgroundColor: [
+                          '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                        ][number % 5]
+                      }}
+                    >
+                      {number}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          </div>
+        )}
+
+        {/* Parents Notes Full Overlay */}
+        {parentsOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Notes to Parents
+                </h1>
+                <button 
+                  onClick={() => setParentsOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-4xl mx-auto">
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">1. Get Involved Offline</h2>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    Parents must get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <img 
+                    src={kidWritingLogic} 
+                    alt="Child writing logical concepts on paper" 
+                    className="mx-auto rounded-lg shadow-lg max-w-2xl w-full"
+                  />
+                  <p className="text-gray-600 mt-4 italic">A child practicing logical thinking and problem-solving on paper</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
        </main>
       
