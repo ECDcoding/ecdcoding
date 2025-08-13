@@ -105,7 +105,7 @@ const LessonVault0406 = () => {
       {/* Navigation Bar */}
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-end gap-4">
+          <div className="flex items-center gap-4">
             <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
             <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors">
               <Home className="h-8 w-8" />
@@ -366,7 +366,7 @@ const LessonVault0406 = () => {
               Tailormade Lessons
             </h1>
             <p className="mt-6 text-foreground/90">
-              Outsourced from Reputable Service Providers
+              Outsourced from Reputable Service Providers and Researchers
             </p>
           </div>
           
@@ -483,8 +483,8 @@ const LessonVault0406 = () => {
                 <h3 className="text-2xl font-bold">Binary Numbers</h3>
                 <p className="text-muted-foreground">Learning the Basic Logic of Numbers</p>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (
+              <div className="grid grid-cols-5 gap-4">
+                {Array.from({ length: 25 }, (_, i) => i + 1).map((n) => (
                   <div
                     key={n}
                     className={[
