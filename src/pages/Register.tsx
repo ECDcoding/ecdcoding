@@ -7,7 +7,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowLeft, FileText } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 
 const Register = () => {
@@ -58,6 +60,9 @@ const Register = () => {
     availableHours: "",
     salary: "",
     startDate: "",
+    
+    // Terms agreement
+    agreeToTerms: false,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,7 +70,7 @@ const Register = () => {
     console.log("Form submitted:", formData, "Type:", registrationType);
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -810,8 +815,129 @@ const Register = () => {
                 </div>
               )}
 
+              {/* Terms and Policy Agreement */}
+              <div className="flex items-start space-x-3 p-4 border rounded-lg bg-muted/50">
+                <Checkbox
+                  id="terms"
+                  checked={formData.agreeToTerms}
+                  onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
+                  className="mt-1"
+                />
+                <div className="space-y-1">
+                  <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+                    I agree to the{" "}
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <span className="text-primary underline cursor-pointer hover:text-primary/80">
+                          Terms and Policy
+                        </span>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5" />
+                            ECDcoding Terms and Policy
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4 text-sm">
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">1. Terms of Service</h3>
+                            <p className="mb-2">
+                              By registering with ECDcoding, you agree to comply with these terms and conditions. 
+                              Our platform provides technology education services for early childhood development.
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>All users must provide accurate information during registration</li>
+                              <li>Services are subject to availability and may change without notice</li>
+                              <li>Users are responsible for maintaining account security</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">2. Privacy Policy</h3>
+                            <p className="mb-2">
+                              We are committed to protecting your privacy and the privacy of the children in our programs.
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>Personal information is collected only for educational and administrative purposes</li>
+                              <li>Child data is protected according to applicable child protection laws</li>
+                              <li>Information is not shared with third parties without consent</li>
+                              <li>Parents have the right to access and update their child's information</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">3. Payment Terms</h3>
+                            <p className="mb-2">
+                              Registration fees are required to access our services:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>Parent/Guardian: R250/month or R3000/annual</li>
+                              <li>Tech Teacher: R500/annual</li>
+                              <li>Early bird registrations receive 24-month payment exemptions</li>
+                              <li>Refunds are subject to our refund policy terms</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">4. Educational Content</h3>
+                            <p className="mb-2">
+                              Our educational materials and programs are designed for children aged 4-10:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>Content is age-appropriate and pedagogically sound</li>
+                              <li>All materials are the intellectual property of ECDcoding</li>
+                              <li>Unauthorized reproduction or distribution is prohibited</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">5. Child Safety</h3>
+                            <p className="mb-2">
+                              Child safety is our top priority:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>All staff and teachers undergo background checks</li>
+                              <li>Online sessions are monitored and recorded for quality assurance</li>
+                              <li>Inappropriate behavior will result in immediate suspension</li>
+                              <li>Parents must supervise children during online activities</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">6. Limitation of Liability</h3>
+                            <p className="mb-2">
+                              ECDcoding's liability is limited to the extent permitted by law. We are not responsible for:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-4">
+                              <li>Technical issues beyond our control</li>
+                              <li>Individual learning outcomes</li>
+                              <li>Third-party content or services</li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3 className="font-semibold text-base mb-2">7. Contact Information</h3>
+                            <p>
+                              For questions about these terms or our services, please contact us through our website 
+                              or email support. We are committed to addressing your concerns promptly.
+                            </p>
+                          </section>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                    {" "}of ECDcoding *
+                  </Label>
+                </div>
+              </div>
+
               <div className="flex justify-center pt-6">
-                <Button type="submit" size="lg" className="w-full max-w-md">
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full max-w-md"
+                  disabled={!formData.agreeToTerms}
+                >
                   {registrationType === 'tech-teacher' ? 'Submit Application' : 'Submit Registration'}
                 </Button>
               </div>
