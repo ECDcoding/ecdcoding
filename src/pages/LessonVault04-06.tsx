@@ -71,13 +71,23 @@ const LessonVault0406 = () => {
     }
   };
 
+  const speakInstruction = (instruction: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(instruction);
+      utterance.rate = 0.7;
+      utterance.pitch = 1.1;
+      utterance.volume = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
   ];
 
   const emojiCategories = {
-    "Facial Recognition": ["👧", "👦", "👦", "👦", "👦", "😀", "😃", "😀", "😀", "😀", "👩", "👨", "👨", "👨", "👨", "😊", "😄", "😊", "😊", "😊", "👶", "👶", "👶", "👶", "🧒"],
+    "Facial Recognition": ["👦", "👦", "👦", "👦", "👧"], // 4 similar boys and 1 different girl
     "Fruit Recognition": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
     "Transport Recognition": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
     "Animal Recognition": ["🐶", "🐱", "🐶", "🐶", "🐶", "🐴", "🐮", "🐴", "🐴", "🐴", "🐷", "🐸", "🐷", "🐷", "🐷", "🐰", "🦆", "🐰", "🐰", "🐰", "🐔", "🐯", "🐔", "🐔", "🐔"]
@@ -377,17 +387,51 @@ const LessonVault0406 = () => {
                   Back
                 </Button>
                 <h1 className="text-3xl font-bold">{selectedEmojiCategory}</h1>
+                {selectedEmojiCategory === "Facial Recognition" && (
+                  <Button
+                    variant="outline"
+                    onClick={() => speakInstruction("Look carefully at these faces. Can you find the one that is different? Click on the face that looks different from the others.")}
+                    className="ml-4 bg-blue-500 text-white hover:bg-blue-600"
+                  >
+                    🔊 Play Instructions
+                  </Button>
+                )}
               </div>
               
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
-                {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
-                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32">
-                     <CardContent className="p-0 flex items-center justify-center h-full">
-                       <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
-                     </CardContent>
-                   </Card>
-                ))}
-              </div>
+              {selectedEmojiCategory === "Facial Recognition" ? (
+                <div className="text-center mb-8">
+                  <p className="text-xl mb-4">Find the odd face! One of these faces is different from the others.</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
+                    {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
+                       <Card 
+                         key={index} 
+                         className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full max-w-32"
+                         onClick={() => {
+                           if (index === 4) { // The girl is the odd one (last item)
+                             speakInstruction("Correct! The girl is different from the boys. Well done!");
+                           } else {
+                             speakInstruction("Try again! Look for the face that is different from the others.");
+                           }
+                         }}
+                       >
+                         <CardContent className="p-0 flex items-center justify-center h-full">
+                           <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
+                         </CardContent>
+                       </Card>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
+                  {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
+                     <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32">
+                       <CardContent className="p-0 flex items-center justify-center h-full">
+                         <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
+                       </CardContent>
+                     </Card>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
