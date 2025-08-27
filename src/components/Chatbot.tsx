@@ -221,18 +221,19 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
 
       {/* Terms and Conditions Dialog */}
       <Dialog open={showTerms} onOpenChange={() => {}}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm border border-gray-200">
           <DialogHeader>
-            <DialogTitle>Terms and Conditions</DialogTitle>
+            <DialogTitle className="text-lg font-semibold">Terms and Conditions</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-gray-700 leading-relaxed">
               By clicking "Accept," and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as described in the Privacy Policy. If you do not wish to have your conversations recorded, please refrain from using this service.
             </p>
             <div className="flex gap-2 justify-end">
               <Button
                 variant="outline"
                 onClick={() => setShowTerms(false)}
+                className="border-gray-300 text-gray-700 hover:bg-gray-50"
               >
                 Decline
               </Button>
