@@ -202,35 +202,51 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  1 - 10
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium hover:bg-gray-100 flex items-center justify-between cursor-pointer">
+                      Number Counting
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" className="bg-white border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      1 - 10
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("11-20"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      11 - 20
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("21-30"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      21 - 30
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("31-40"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      31 - 40
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("41-50"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      41 - 50
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("51-60"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      51 - 60
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("61-70"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      61 - 70
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("71-80"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      71 - 80
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("81-90"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      81 - 90
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("91-100"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                      91 - 100
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  Problem Solving
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("11-20"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  11 - 20
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("21-30"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  21 - 30
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("31-40"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  31 - 40
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("41-50"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  41 - 50
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("51-60"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  51 - 60
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("61-70"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  61 - 70
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("71-80"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  71 - 80
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("81-90"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  81 - 90
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("91-100"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  91 - 100
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  Shapes
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
