@@ -775,44 +775,47 @@ const LessonVault0406 = () => {
                  <div className="mt-8"></div>
                  <div className="mt-8"></div>
                  
-                 <div className="max-w-6xl mx-auto flex justify-between items-center">
-                   <button 
-                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                     className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-                   >
-                      <ArrowLeft className="h-6 w-6" />
-                      Back
-                   </button>
+                 
+                 <div className="max-w-6xl mx-auto px-4 relative">
+                   <div className="flex justify-between items-center">
+                     <button 
+                       onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                       className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                     >
+                        <ArrowLeft className="h-6 w-6" />
+                        Back
+                     </button>
+                     
+                     {/* Continue to 11-20 button - only show when on 1-10 range */}
+                     {selectedCountingRange === "1-10" && (
+                       <button 
+                         onClick={() => setSelectedCountingRange("11-20")}
+                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                       >
+                         Continue to 11-20
+                         <span className="text-2xl">🚀</span>
+                       </button>
+                     )}
+                   </div>
                    
-                   {/* Auto-counting controls aligned with Back button */}
+                   {/* Auto-counting controls aligned with numbers 2 and 7 */}
                    {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="flex gap-4">
+                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 mt-4">
                        <Button
                          onClick={startAutoCounting}
                          disabled={isAutoCounting}
-                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
+                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 lg:col-start-2 md:col-start-2 sm:col-start-2 col-start-2"
                        >
                          {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
                        </Button>
                        <Button
                          onClick={stopAutoCounting}
                          disabled={!isAutoCounting}
-                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
+                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 lg:col-start-7 md:col-start-4 sm:col-start-3 col-start-1"
                        >
                          Stop
                        </Button>
                      </div>
-                   )}
-                   
-                   {/* Continue to 11-20 button - only show when on 1-10 range */}
-                   {selectedCountingRange === "1-10" && (
-                     <button 
-                       onClick={() => setSelectedCountingRange("11-20")}
-                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-                     >
-                       Continue to 11-20
-                       <span className="text-2xl">🚀</span>
-                     </button>
                    )}
                  </div>
               </div>
