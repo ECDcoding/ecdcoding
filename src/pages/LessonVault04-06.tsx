@@ -193,7 +193,7 @@ const LessonVault0406 = () => {
 
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
@@ -357,11 +357,11 @@ const LessonVault0406 = () => {
                 <h1 className="text-3xl font-bold">{selectedEmojiCategory}</h1>
               </div>
               
-              <div className="grid grid-cols-5 gap-8">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
                 {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
-                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32">
+                   <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32">
                      <CardContent className="p-0 flex items-center justify-center h-full">
-                       <span className="text-8xl">{emoji}</span>
+                       <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
                      </CardContent>
                    </Card>
                 ))}
@@ -386,15 +386,15 @@ const LessonVault0406 = () => {
                 <h1 className="text-3xl font-bold">{selectedMediaCategory}</h1>
               </div>
               
-              <div className="grid grid-cols-5 gap-8">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
                 {mediaCategories[selectedMediaCategory as keyof typeof mediaCategories]?.map((object, index) => (
                    <Card 
                      key={index} 
                      onClick={() => { if (object === "📷") setPictureActive((prev) => !prev); }}
-                     className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow h-32 w-32 ${object === "📷" && pictureActive ? "bg-brand-green text-foreground" : ""}`}
+                     className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32 ${object === "📷" && pictureActive ? "bg-brand-green text-foreground" : ""}`}
                    >
                      <CardContent className="p-0 flex items-center justify-center h-full">
-                       <span className="text-8xl">{object}</span>
+                       <span className="text-4xl sm:text-6xl md:text-8xl">{object}</span>
                      </CardContent>
                    </Card>
                 ))}
@@ -574,14 +574,14 @@ const LessonVault0406 = () => {
               
               {/* Content */}
               <div className="flex-1 p-6">
-                 <div className="grid grid-cols-5 gap-4 max-w-6xl mx-auto">
+                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
                    {(() => {
                      if (selectedCountingRange === "vowels") {
                        const vowels = ['a', 'e', 'i', 'o', 'u'];
                        return vowels.map((vowel, index) => (
                          <div 
                            key={vowel}
-                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                            className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
                            style={{
                              backgroundColor: [
                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
@@ -597,7 +597,7 @@ const LessonVault0406 = () => {
                        return alphabet.map((letter, index) => (
                          <div 
                            key={letter}
-                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                           className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
                            style={{
                              backgroundColor: [
                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
@@ -613,7 +613,7 @@ const LessonVault0406 = () => {
                        return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
                          <div 
                            key={number}
-                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                           className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
                            style={{
                              backgroundColor: [
                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
