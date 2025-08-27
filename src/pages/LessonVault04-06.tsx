@@ -87,7 +87,18 @@ const LessonVault0406 = () => {
   ];
 
   const emojiCategories = {
-    "Facial Recognition": ["👦", "👦", "👦", "👦", "👧"], // 4 similar boys and 1 different girl
+    "Facial Recognition": [
+      // Row 1: Boys and one girl (7 faces)
+      "👦", "👦", "👦", "👦", "👧", "👦", "👦",
+      // Row 2: Women and one man (7 faces) 
+      "👩", "👩", "👩", "👩", "👨", "👩", "👩",
+      // Row 3: Babies and one child (7 faces)
+      "👶", "👶", "👶", "👶", "🧒", "👶", "👶",
+      // Row 4: Happy faces and one different expression (7 faces)
+      "😊", "😊", "😊", "😊", "😄", "😊", "😊",
+      // Row 5: Smiling faces and one different expression (7 faces)
+      "😀", "😀", "😀", "😀", "😃", "😀", "😀"
+    ],
     "Fruit Recognition": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
     "Transport Recognition": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
     "Animal Recognition": ["🐶", "🐱", "🐶", "🐶", "🐶", "🐴", "🐮", "🐴", "🐴", "🐴", "🐷", "🐸", "🐷", "🐷", "🐷", "🐰", "🦆", "🐰", "🐰", "🐰", "🐔", "🐯", "🐔", "🐔", "🐔"]
@@ -400,25 +411,32 @@ const LessonVault0406 = () => {
               
               {selectedEmojiCategory === "Facial Recognition" ? (
                 <div className="text-center mb-8">
-                  <p className="text-xl mb-4">Find the odd face! One of these faces is different from the others.</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
-                    {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
-                       <Card 
-                         key={index} 
-                         className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full max-w-32"
-                         onClick={() => {
-                           if (index === 4) { // The girl is the odd one (last item)
-                             speakInstruction("Correct! The girl is different from the boys. Well done!");
-                           } else {
-                             speakInstruction("Try again! Look for the face that is different from the others.");
-                           }
-                         }}
-                       >
-                         <CardContent className="p-0 flex items-center justify-center h-full">
-                           <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
-                         </CardContent>
-                       </Card>
-                    ))}
+                  <p className="text-xl mb-4">Find the odd faces! Look for faces that are different from the others in each row.</p>
+                  <div className="grid grid-cols-7 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+                    {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
+                      // Define which faces are odd in each row (7 faces per row)
+                      const oddFaces = [4, 11, 18, 25, 32]; // Girl, Man, Child, 😄, 😃
+                      const isOddFace = oddFaces.includes(index);
+                      
+                      return (
+                        <Card 
+                          key={index} 
+                          className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full"
+                          onClick={() => {
+                            if (isOddFace) {
+                              const rowNumber = Math.floor(index / 7) + 1;
+                              speakInstruction(`Correct! You found the odd face in row ${rowNumber}. Well done!`);
+                            } else {
+                              speakInstruction("Try again! Look for the face that is different from the others in this row.");
+                            }
+                          }}
+                        >
+                          <CardContent className="p-0 flex items-center justify-center h-full">
+                            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{emoji}</span>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </div>
               ) : (
