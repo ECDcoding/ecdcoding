@@ -537,13 +537,6 @@ const LessonVault0406 = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
                 <div className="flex items-center gap-4">
-                  <button 
-                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                    className="text-white hover:text-yellow-400 transition-colors flex items-center gap-2"
-                  >
-                    <ArrowLeft className="h-8 w-8" />
-                    <span className="text-lg font-semibold">Back to Numeracy</span>
-                  </button>
                    <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
                      {selectedCountingRange === "vowels" ? "Vowels" : 
                       selectedCountingRange === "alphabets" ? "Alphabets" : 
