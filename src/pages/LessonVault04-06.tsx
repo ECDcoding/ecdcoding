@@ -190,7 +190,13 @@ const LessonVault0406 = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setCountingOpen(true)} className="font-medium">
-                  Number Counting
+                  <div className="flex flex-col">
+                    <span className="font-medium">Number Counting</span>
+                    <div className="text-xs text-gray-500 mt-1">
+                      <div>1-10, 11-20, 21-30, 31-40, 41-50</div>
+                      <div>51-60, 61-70, 71-80, 81-90, 91-100</div>
+                    </div>
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

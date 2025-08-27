@@ -113,7 +113,7 @@ const Register = () => {
               id="firstName"
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -123,7 +123,7 @@ const Register = () => {
               id="lastName"
               value={formData.lastName}
               onChange={(e) => handleInputChange("lastName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -135,7 +135,7 @@ const Register = () => {
             id="state"
             value={formData.state}
             onChange={(e) => handleInputChange("state", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -160,7 +160,7 @@ const Register = () => {
           <Label>Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone1}
@@ -169,7 +169,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone2}
@@ -178,7 +178,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black"
+              className="w-24 text-black bg-white"
               placeholder="####"
               maxLength={4}
               value={formData.phone3}
@@ -195,7 +195,7 @@ const Register = () => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -210,7 +210,7 @@ const Register = () => {
               value={formData.username || ''}
               onChange={(e) => handleInputChange("username", e.target.value)}
               placeholder="Enter desired username"
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -222,7 +222,7 @@ const Register = () => {
               value={formData.password || ''}
               onChange={(e) => handleInputChange("password", e.target.value)}
               placeholder="One capital letter, a number, and a punctuation"
-              className="text-black"
+              className="text-black bg-white"
               required
             />
             <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
@@ -278,7 +278,7 @@ const Register = () => {
             id="hearAbout"
             value={formData.hearAbout}
             onChange={(e) => handleInputChange("hearAbout", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -291,6 +291,7 @@ const Register = () => {
             value={formData.aspiration}
             onChange={(e) => handleInputChange("aspiration", e.target.value)}
             placeholder="Share your aspirations for your child's tech education..."
+            className="text-black bg-white"
           />
         </div>
       </div>
@@ -307,7 +308,7 @@ const Register = () => {
             id="institution"
             value={formData.institution}
             onChange={(e) => handleInputChange("institution", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -319,7 +320,7 @@ const Register = () => {
               id="learnerFirstName"
               value={formData.learnerFirstName}
               onChange={(e) => handleInputChange("learnerFirstName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -329,7 +330,7 @@ const Register = () => {
               id="learnerLastName"
               value={formData.learnerLastName}
               onChange={(e) => handleInputChange("learnerLastName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -342,7 +343,7 @@ const Register = () => {
             value={formData.relationship}
             onChange={(e) => handleInputChange("relationship", e.target.value)}
             placeholder="e.g., Parent, Guardian, Teacher"
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -351,7 +352,7 @@ const Register = () => {
           <Label>ECD Institution Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.ecdPhone1}
@@ -360,7 +361,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.ecdPhone2}
@@ -369,7 +370,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black"
+              className="w-24 text-black bg-white"
               placeholder="####"
               maxLength={4}
               value={formData.ecdPhone3}
@@ -386,7 +387,7 @@ const Register = () => {
             type="email"
             value={formData.ecdEmail}
             onChange={(e) => handleInputChange("ecdEmail", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -407,7 +408,7 @@ const Register = () => {
               id="firstName"
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -417,7 +418,7 @@ const Register = () => {
               id="lastName"
               value={formData.lastName}
               onChange={(e) => handleInputChange("lastName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -430,7 +431,7 @@ const Register = () => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -439,7 +440,7 @@ const Register = () => {
           <Label>Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone1}
@@ -448,7 +449,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone2}
@@ -457,7 +458,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black"
+              className="w-24 text-black bg-white"
               placeholder="####"
               maxLength={4}
               value={formData.phone3}
@@ -480,7 +481,7 @@ const Register = () => {
             id="facilityName"
             value={formData.facilityName}
             onChange={(e) => handleInputChange("facilityName", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -508,7 +509,7 @@ const Register = () => {
             type="number"
             value={formData.numberOfLearners}
             onChange={(e) => handleInputChange("numberOfLearners", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -520,7 +521,7 @@ const Register = () => {
             value={formData.ageGroups}
             onChange={(e) => handleInputChange("ageGroups", e.target.value)}
             placeholder="e.g., 3-6 years"
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -533,6 +534,7 @@ const Register = () => {
             value={formData.currentPrograms}
             onChange={(e) => handleInputChange("currentPrograms", e.target.value)}
             placeholder="Describe your current educational programs..."
+            className="text-black bg-white"
           />
         </div>
 
@@ -544,6 +546,7 @@ const Register = () => {
             value={formData.techGoals}
             onChange={(e) => handleInputChange("techGoals", e.target.value)}
             placeholder="What are your goals for introducing technology education?"
+            className="text-black bg-white"
           />
         </div>
 
@@ -597,7 +600,7 @@ const Register = () => {
               id="firstName"
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -607,7 +610,7 @@ const Register = () => {
               id="lastName"
               value={formData.lastName}
               onChange={(e) => handleInputChange("lastName", e.target.value)}
-              className="text-black"
+              className="text-black bg-white"
               required
             />
           </div>
@@ -620,7 +623,7 @@ const Register = () => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
@@ -629,7 +632,7 @@ const Register = () => {
           <Label>Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone1}
@@ -638,7 +641,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black"
+              className="w-20 text-black bg-white"
               placeholder="###"
               maxLength={3}
               value={formData.phone2}
@@ -647,7 +650,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black"
+              className="w-24 text-black bg-white"
               placeholder="####"
               maxLength={4}
               value={formData.phone3}
@@ -672,6 +675,7 @@ const Register = () => {
             value={formData.qualifications}
             onChange={(e) => handleInputChange("qualifications", e.target.value)}
             placeholder="List your degrees, certifications, and relevant qualifications..."
+            className="text-black bg-white"
             required
           />
         </div>
@@ -684,6 +688,7 @@ const Register = () => {
             value={formData.experience}
             onChange={(e) => handleInputChange("experience", e.target.value)}
             placeholder="Describe your teaching experience, especially with children..."
+            className="text-black bg-white"
             required
           />
         </div>
@@ -696,6 +701,7 @@ const Register = () => {
             value={formData.techSkills}
             onChange={(e) => handleInputChange("techSkills", e.target.value)}
             placeholder="List your technical skills relevant to teaching kids..."
+            className="text-black bg-white"
             required
           />
         </div>
@@ -719,7 +725,7 @@ const Register = () => {
             value={formData.programmingLanguages}
             onChange={(e) => handleInputChange("programmingLanguages", e.target.value)}
             placeholder="e.g., Scratch, Python, JavaScript, HTML/CSS"
-            className="text-black"
+            className="text-black bg-white"
           />
         </div>
 
@@ -731,6 +737,7 @@ const Register = () => {
             value={formData.teachingPhilosophy}
             onChange={(e) => handleInputChange("teachingPhilosophy", e.target.value)}
             placeholder="Describe your approach to teaching technology to young learners..."
+            className="text-black bg-white"
             required
           />
         </div>
@@ -778,7 +785,7 @@ const Register = () => {
             type="date"
             value={formData.startDate}
             onChange={(e) => handleInputChange("startDate", e.target.value)}
-            className="text-black"
+            className="text-black bg-white"
             required
           />
         </div>
