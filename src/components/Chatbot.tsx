@@ -33,11 +33,21 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
     setSelectedLanguage(language);
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (inputMessage.trim()) {
       setMessages(prev => [...prev, { role: 'user', content: inputMessage }]);
+      
+      // Send message to voice agent if voice mode is active
+      if (useVoiceMode && conversation.status === 'connected') {
+        try {
+          // Send the text message to the voice agent
+          await conversation.sendUserMessage(inputMessage);
+        } catch (error) {
+          console.error('Failed to send message to voice agent:', error);
+        }
+      }
+      
       setInputMessage('');
-      // Here you would typically send the message to your chat system
     }
   };
 
