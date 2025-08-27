@@ -88,10 +88,10 @@ const LessonVault0406 = () => {
 
   const emojiCategories = {
     "Facial Recognition": [
-      // Row 1: Boys and one girl (7 faces)
-      "👦", "👦", "👦", "👦", "👧", "👦", "👦",
-      // Row 2: Women and one man (7 faces) 
-      "👩", "👩", "👨", "👩", "👩", "👩", "👩",
+      // Row 1: Boys and one man (7 faces)
+      "👦", "👦", "👦", "👦", "👨", "👦", "👦",
+      // Row 2: Women and one girl (7 faces) 
+      "👩", "👩", "👧", "👩", "👩", "👩", "👩",
       // Row 3: Babies and one child (7 faces)
       "👶", "👶", "👶", "🧒", "👶", "👶", "👶",
       // Row 4: Happy faces and one different expression (7 faces)
