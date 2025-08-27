@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
@@ -5,14 +6,16 @@ import Chatbot from "@/components/Chatbot";
 import { Copyright, Mail } from "lucide-react";
 
 const Index = () => {
+  const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
       <Header />
       <div className="flex-1 flex flex-col items-center justify-center px-4">
-        <Hero />
+        <Hero isHidden={isVoiceModeActive} />
         <CallToAction />
       </div>
-      <Chatbot />
+      <Chatbot onVoiceModeChange={setIsVoiceModeActive} />
       
       {/* Footer */}
       <footer className="w-full bg-background border-t border-border py-6">

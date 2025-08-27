@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { MessageCircle, X, Mic, MicOff } from 'lucide-react';
 
-const Chatbot = () => {
+const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [messages, setMessages] = useState([]);
@@ -36,6 +36,7 @@ const Chatbot = () => {
     if (useVoiceMode) {
       await conversation.endSession();
       setUseVoiceMode(false);
+      onVoiceModeChange?.(false);
     } else {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -43,6 +44,7 @@ const Chatbot = () => {
           agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez'
         });
         setUseVoiceMode(true);
+        onVoiceModeChange?.(true);
       } catch (error) {
         console.error('Failed to start voice conversation:', error);
         alert('Please allow microphone access to use voice mode.');
