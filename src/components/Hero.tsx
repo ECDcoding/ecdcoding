@@ -1,5 +1,4 @@
-const Hero = ({ isHidden = false }: { isHidden?: boolean }) => {
-  if (isHidden) return null;
+const Hero = () => {
   const letters = [
     { letter: "E", color: "text-brand-red", delay: "delay-0", static: true },
     { letter: "C", color: "text-brand-green", delay: "delay-200", static: true },

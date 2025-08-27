@@ -142,25 +142,27 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
               )}
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+            {/* Messages - Hidden during voice mode */}
+            {!useVoiceMode && (
+              <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+                {messages.map((message, index) => (
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                      message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground'
-                    }`}
+                    key={index}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    {message.content}
+                    <div
+                      className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                        message.role === 'user'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground'
+                      }`}
+                    >
+                      {message.content}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {/* Text Input */}
             <div className="flex gap-2">
