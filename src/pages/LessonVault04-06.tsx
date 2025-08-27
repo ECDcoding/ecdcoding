@@ -92,8 +92,8 @@ const LessonVault0406 = () => {
       "👦", "👦", "👦", "👦", "👨", "👦", "👦",
       // Row 2: Women and one girl (7 faces) 
       "👩", "👩", "👧", "👩", "👩", "👩", "👩",
-      // Row 3: Babies and one child (7 faces)
-      "👶", "👶", "👶", "🧒", "👶", "👶", "👶",
+      // Row 3: All babies (7 faces)
+      "👶", "👶", "👶", "👶", "👶", "👶", "👶",
       // Row 4: Happy faces and one different expression (7 faces)
       "😄", "😊", "😊", "😊", "😊", "😊", "😊",
       // Row 5: Smiling faces and one different expression (7 faces)
@@ -415,7 +415,7 @@ const LessonVault0406 = () => {
                   <div className="grid grid-cols-7 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
                     {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
                       // Define which faces are odd in each row (7 faces per row)
-                      const oddFaces = [4, 9, 17, 21, 32]; // Girl, Man, Child, 😄, 😃
+                      const oddFaces = [4, 9, 21, 32]; // Man, Girl, 😄, 😃
                       const isOddFace = oddFaces.includes(index);
                       
                       return (
