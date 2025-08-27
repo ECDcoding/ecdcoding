@@ -617,21 +617,23 @@ const LessonVault0406 = () => {
                           </div>
                         ));
                      } else if (selectedCountingRange === "alphabets") {
-                       const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(97 + i));
-                       return alphabet.map((letter, index) => (
-                         <div 
-                           key={letter}
-                           className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
-                           style={{
-                             backgroundColor: [
-                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                             ][index % 5]
-                           }}
-                           title={`Letter ${letter.toUpperCase()}`}
-                         >
-                           {letter}
-                         </div>
-                       ));
+                        const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)); // Capital letters A-Z
+                        return alphabet.map((letter, index) => (
+                          <div 
+                            key={letter}
+                            className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                            style={{
+                              backgroundColor: [
+                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                              ][index % 5]
+                            }}
+                            onClick={() => speakVowel(letter)}
+                            onMouseEnter={() => speakVowel(letter)}
+                            title={`Letter ${letter} - Click to hear pronunciation`}
+                          >
+                            {letter}
+                          </div>
+                        ));
                      } else {
                        const [start, end] = selectedCountingRange.split('-').map(Number);
                        return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
