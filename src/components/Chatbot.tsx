@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useConversation } from '@11labs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { MessageCircle, X, Mic, MicOff, Send } from 'lucide-react';
 
 const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean) => void }) => {
@@ -11,8 +12,33 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [showTerms, setShowTerms] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   
   const [useVoiceMode, setUseVoiceMode] = useState(false);
+
+  // Check if terms were previously accepted
+  useEffect(() => {
+    const accepted = localStorage.getItem('chatbot-terms-accepted');
+    if (accepted === 'true') {
+      setTermsAccepted(true);
+    }
+  }, []);
+
+  const handleChatOpen = () => {
+    if (!termsAccepted) {
+      setShowTerms(true);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const handleAcceptTerms = () => {
+    setTermsAccepted(true);
+    localStorage.setItem('chatbot-terms-accepted', 'true');
+    setShowTerms(false);
+    setIsOpen(true);
+  };
 
   const conversation = useConversation({
     onConnect: () => console.log('Voice agent connected'),
@@ -84,7 +110,7 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
     <>
       {/* Chat Button with Waving Hand */}
       <Button
-        onClick={() => setIsOpen(true)}
+        onClick={handleChatOpen}
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg z-50 group"
         size="icon"
       >
@@ -192,6 +218,34 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
           </CardContent>
         </Card>
       )}
+
+      {/* Terms and Conditions Dialog */}
+      <Dialog open={showTerms} onOpenChange={() => {}}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Terms and Conditions</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              By clicking "Accept," and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as described in the Privacy Policy. If you do not wish to have your conversations recorded, please refrain from using this service.
+            </p>
+            <div className="flex gap-2 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => setShowTerms(false)}
+              >
+                Decline
+              </Button>
+              <Button
+                onClick={handleAcceptTerms}
+                className="bg-lime-500 hover:bg-lime-600 text-white"
+              >
+                Accept
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
