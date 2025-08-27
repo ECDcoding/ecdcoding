@@ -587,7 +587,7 @@ const LessonVault0406 = () => {
                 <div className="mt-8"></div>
                 <div className="mt-8"></div>
                 
-                <div className="flex justify-center">
+                <div className="flex justify-start">
                   <button 
                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
                     className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
