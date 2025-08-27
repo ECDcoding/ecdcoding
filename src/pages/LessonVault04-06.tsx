@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,9 @@ const LessonVault0406 = () => {
   const [countingOpen, setCountingOpen] = useState(false);
   const [selectedCountingRange, setSelectedCountingRange] = useState<string | null>(null);
   const [parentsOpen, setParentsOpen] = useState(false);
+  const [isAutoCounting, setIsAutoCounting] = useState(false);
+  const [currentAutoIndex, setCurrentAutoIndex] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -80,6 +83,56 @@ const LessonVault0406 = () => {
       window.speechSynthesis.speak(utterance);
     }
   };
+
+  // Auto-counting functionality
+  const startAutoCounting = () => {
+    if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
+    
+    const [start, end] = selectedCountingRange.split('-').map(Number);
+    const totalNumbers = end - start + 1;
+    
+    setIsAutoCounting(true);
+    setCurrentAutoIndex(0);
+    
+    let index = 0;
+    intervalRef.current = setInterval(() => {
+      const currentNumber = start + index;
+      speakNumber(currentNumber);
+      setCurrentAutoIndex(index);
+      
+      index++;
+      if (index >= totalNumbers) {
+        // Stop after completing the range
+        clearInterval(intervalRef.current!);
+        setIsAutoCounting(false);
+        setCurrentAutoIndex(0);
+      }
+    }, 2000); // 2-second interval
+  };
+
+  const stopAutoCounting = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setIsAutoCounting(false);
+    setCurrentAutoIndex(0);
+  };
+
+  // Cleanup interval on component unmount or when counting overlay closes
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!countingOpen) {
+      stopAutoCounting();
+    }
+  }, [countingOpen]);
 
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
@@ -649,9 +702,29 @@ const LessonVault0406 = () => {
                 </div>
               </div>
               
-              {/* Content */}
-              <div className="flex-1 p-6">
-                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
+               {/* Content */}
+               <div className="flex-1 p-6">
+                 {/* Auto-counting controls - only show for number ranges */}
+                 {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                   <div className="flex justify-center gap-4 mb-6">
+                     <Button
+                       onClick={startAutoCounting}
+                       disabled={isAutoCounting}
+                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg disabled:opacity-50"
+                     >
+                       {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
+                     </Button>
+                     <Button
+                       onClick={stopAutoCounting}
+                       disabled={!isAutoCounting}
+                       className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg disabled:opacity-50"
+                     >
+                       Stop
+                     </Button>
+                   </div>
+                 )}
+                 
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
                    {(() => {
                       if (selectedCountingRange === "vowels") {
                         const vowelsArray = ['a', 'e', 'i', 'o', 'u'];
@@ -689,23 +762,31 @@ const LessonVault0406 = () => {
                             {letter}
                           </div>
                         ));
-                     } else {
-                       const [start, end] = selectedCountingRange.split('-').map(Number);
-                       return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
-                         <div 
-                           key={number}
-                           className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                           style={{
-                             backgroundColor: [
-                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                             ][number % 5]
-                           }}
-                           onMouseEnter={() => speakNumber(number)}
-                           title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
-                         >
-                           {number}
-                         </div>
-                       ));
+                      } else {
+                        const [start, end] = selectedCountingRange.split('-').map(Number);
+                        return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number, arrayIndex) => {
+                          const isCurrentlyPlaying = isAutoCounting && arrayIndex === currentAutoIndex;
+                          return (
+                            <div 
+                              key={number}
+                              className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer ${
+                                isCurrentlyPlaying ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
+                              }`}
+                              style={{
+                                backgroundColor: isCurrentlyPlaying 
+                                  ? '#fbbf24' // Yellow when active
+                                  : [
+                                      '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                                    ][number % 5]
+                              }}
+                              onMouseEnter={() => !isAutoCounting && speakNumber(number)}
+                              onClick={() => !isAutoCounting && speakNumber(number)}
+                              title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
+                            >
+                              {number}
+                            </div>
+                          );
+                        });
                      }
                    })()}
                  </div>
