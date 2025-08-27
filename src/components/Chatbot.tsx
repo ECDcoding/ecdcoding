@@ -88,7 +88,19 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
       {isOpen && (
         <Card className="fixed bottom-24 right-6 w-80 h-52 shadow-xl z-50 flex flex-col">
           <CardHeader className="pb-2">
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-between">
+              <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-32 h-8 bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
+                  <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-lg z-[60]">
+                  {languages.map((language) => (
+                    <SelectItem key={language} value={language} className="hover:bg-gray-100">
+                      {language}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Button
                 variant="ghost"
                 size="icon"
@@ -101,21 +113,8 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
           </CardHeader>
           
           <CardContent className="flex-1 flex flex-col p-4">
-            {/* Language Dropdown and Voice Toggle */}
-            <div className="mb-4 space-y-2">
-              <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
-                <SelectTrigger className="w-full bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
-                  <SelectValue placeholder="Language" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                  {languages.map((language) => (
-                    <SelectItem key={language} value={language} className="hover:bg-gray-100">
-                      {language}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
+            {/* Voice Toggle */}
+            <div className="mb-4">
               <Button
                 onClick={toggleVoiceMode}
                 variant={useVoiceMode ? "destructive" : "secondary"}
