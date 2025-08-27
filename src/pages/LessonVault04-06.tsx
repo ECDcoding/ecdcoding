@@ -571,6 +571,19 @@ const LessonVault0406 = () => {
                     ));
                   })()}
                 </div>
+                
+                <div className="mt-8"></div>
+                <div className="mt-8"></div>
+                
+                <div className="flex justify-center">
+                  <button 
+                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                  >
+                    <ArrowLeft className="h-6 w-6" />
+                    Back to Numeracy
+                  </button>
+                </div>
               </div>
             </div>
           </div>
