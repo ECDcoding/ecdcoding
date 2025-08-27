@@ -184,13 +184,13 @@ const LessonVault0406 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Arithmetics
+                  Numeracy
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setCountingOpen(true)} className="font-medium">
-                  Basic Counting
+                  Number Counting
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -216,7 +216,7 @@ const LessonVault0406 = () => {
             </Select>
             <Select>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Icons Lab" />
+                <SelectValue placeholder="Literacy" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <SelectItem value="home" className="hover:bg-gray-100">🏠 Home</SelectItem>
@@ -252,7 +252,7 @@ const LessonVault0406 = () => {
             </DropdownMenu>
             <Select>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Color IDs" />
+                <SelectValue placeholder="Arts" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
                 <SelectItem value="red" className="hover:bg-gray-100">🔴 Red</SelectItem>
@@ -501,9 +501,14 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Basic Counting
-                </h1>
+                <div className="flex items-center gap-4">
+                  <Link to="/" className="text-white hover:text-yellow-400 transition-colors">
+                    <ArrowLeft className="h-8 w-8" />
+                  </Link>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Basic Counting
+                  </h1>
+                </div>
                 <button 
                   onClick={() => setCountingOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
