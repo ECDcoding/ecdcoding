@@ -41,12 +41,25 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
   };
 
   const conversation = useConversation({
-    onConnect: () => console.log('Voice agent connected'),
-    onDisconnect: () => console.log('Voice agent disconnected'),
-    onError: (error) => console.error('Voice agent error:', error),
+    onConnect: () => {
+      console.log('Voice agent connected');
+      // Add a bot welcome message when connected
+      setMessages(prev => [...prev, { role: 'bot', content: 'Voice chat is now active. I can hear you and respond both with voice and text.' }]);
+    },
+    onDisconnect: () => {
+      console.log('Voice agent disconnected');
+      setMessages(prev => [...prev, { role: 'bot', content: 'Voice chat ended.' }]);
+    },
+    onError: (error) => {
+      console.error('Voice agent error:', error);
+      setMessages(prev => [...prev, { role: 'bot', content: 'Sorry, there was an error with the voice connection.' }]);
+    },
     onMessage: (message) => {
-      // Add voice messages to the chat
-      setMessages(prev => [...prev, { role: 'bot', content: message.message }]);
+      console.log('Received message from voice agent:', message);
+      // Add voice messages to the chat - both transcriptions and responses
+      if (message.message && message.message.trim()) {
+        setMessages(prev => [...prev, { role: 'bot', content: message.message }]);
+      }
     }
   });
 
@@ -124,7 +137,7 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-80 h-52 shadow-xl z-50 flex flex-col">
+        <Card className="fixed bottom-24 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
@@ -179,27 +192,25 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
               )}
             </div>
 
-            {/* Messages - Hidden during voice mode */}
-            {!useVoiceMode && (
-              <div className="flex-1 overflow-y-auto space-y-3 mb-4">
-                {messages.map((message, index) => (
+            {/* Messages - Now visible in voice mode too */}
+            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
                   <div
-                    key={index}
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                      message.role === 'user'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted text-muted-foreground'
+                    }`}
                   >
-                    <div
-                      className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                        message.role === 'user'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-muted-foreground'
-                      }`}
-                    >
-                      {message.content}
-                    </div>
+                    {message.content}
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
 
             {/* Text Input */}
             <div className="flex gap-2">
