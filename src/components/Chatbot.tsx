@@ -56,6 +56,8 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
     } else {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Clear any existing messages when starting voice mode
+        setMessages([]);
         await conversation.startSession({
           agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez'
         });
