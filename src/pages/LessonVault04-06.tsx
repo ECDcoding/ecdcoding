@@ -234,43 +234,54 @@ const LessonVault0406 = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Select onValueChange={(value) => setSelectedEmojiCategory(value)}>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Emoji AI" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                {Object.entries(emojiCategories).map(([category, emojis]) => (
-                  <SelectItem key={category} value={category} className="hover:bg-gray-100">
-                    <div className="flex flex-col">
-                      <span className="font-medium">{category}</span>
-                      <div className="flex gap-1 mt-1">
-                        {emojis.slice(0, 5).map((emoji, index) => (
-                          <span key={index} className="text-lg">{emoji}</span>
-                        ))}
-                        <span className="text-sm text-gray-500">...</span>
-                      </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Emoji AI
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium hover:bg-gray-100">
+                  Facial Recognition
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Transport Groups")} className="font-medium hover:bg-gray-100">
+                  Transport Groups
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Literacy
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  <div className="flex flex-col">
+                    <span className="font-medium">Vowels</span>
+                    <div className="flex gap-2 mt-1 text-lg">
+                      <span>a</span>
+                      <span>e</span>
+                      <span>i</span>
+                      <span>o</span>
+                      <span>u</span>
                     </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Literacy" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <SelectItem value="home" className="hover:bg-gray-100">🏠 Home</SelectItem>
-                
-                <SelectItem value="user" className="hover:bg-gray-100">👤 User</SelectItem>
-                <SelectItem value="search" className="hover:bg-gray-100">🔍 Search</SelectItem>
-                <SelectItem value="star" className="hover:bg-gray-100">⭐ Star</SelectItem>
-                <SelectItem value="heart" className="hover:bg-gray-100">❤️ Heart</SelectItem>
-                <SelectItem value="clock" className="hover:bg-gray-100">🕐 Clock</SelectItem>
-                <SelectItem value="folder" className="hover:bg-gray-100">📁 Folder</SelectItem>
-                <SelectItem value="phone" className="hover:bg-gray-100">📞 Phone</SelectItem>
-                <SelectItem value="mail" className="hover:bg-gray-100">📧 Mail</SelectItem>
-              </SelectContent>
-            </Select>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  <div className="flex flex-col">
+                    <span className="font-medium">Alphabets</span>
+                    <div className="flex gap-1 mt-1 text-sm flex-wrap max-w-[200px]">
+                      {Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)).map((letter, index) => (
+                        <span key={index}>{letter}</span>
+                      ))}
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
