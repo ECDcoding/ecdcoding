@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useConversation } from '@11labs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff } from 'lucide-react';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,17 @@ const Chatbot = () => {
     { role: 'bot', content: 'All ECD Employers seeking to hire tech teachers are welcome to talk to us... It is however important to register as a Parent, and ECD School Manager, as well as a Tech Teacher candidate looking for employment.' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [useVoiceMode, setUseVoiceMode] = useState(false);
+
+  const conversation = useConversation({
+    onConnect: () => console.log('Voice agent connected'),
+    onDisconnect: () => console.log('Voice agent disconnected'),
+    onError: (error) => console.error('Voice agent error:', error),
+    onMessage: (message) => {
+      // Add voice messages to the chat
+      setMessages(prev => [...prev, { role: 'bot', content: message.message }]);
+    }
+  });
 
   const languages = [
     "English", "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
@@ -87,6 +99,24 @@ const Chatbot = () => {
     }
   };
 
+  const toggleVoiceMode = async () => {
+    if (useVoiceMode) {
+      await conversation.endSession();
+      setUseVoiceMode(false);
+    } else {
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        await conversation.startSession({
+          agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez'
+        });
+        setUseVoiceMode(true);
+      } catch (error) {
+        console.error('Failed to start voice conversation:', error);
+        alert('Please allow microphone access to use voice mode.');
+      }
+    }
+  };
+
   return (
     <>
       {/* Chat Button with Waving Hand */}
@@ -121,8 +151,8 @@ const Chatbot = () => {
           </CardHeader>
           
           <CardContent className="flex-1 flex flex-col p-4">
-            {/* Language Dropdown */}
-            <div className="mb-4">
+            {/* Language Dropdown and Voice Toggle */}
+            <div className="mb-4 space-y-2">
               <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
                 <SelectTrigger className="w-full bg-lime-500 text-black border-lime-600 hover:bg-lime-600">
                   <SelectValue placeholder="Language" />
@@ -135,6 +165,31 @@ const Chatbot = () => {
                   ))}
                 </SelectContent>
               </Select>
+              
+              <Button
+                onClick={toggleVoiceMode}
+                variant={useVoiceMode ? "destructive" : "secondary"}
+                className="w-full"
+                disabled={conversation.status === 'connecting'}
+              >
+                {useVoiceMode ? (
+                  <>
+                    <MicOff className="h-4 w-4 mr-2" />
+                    End Voice Chat
+                  </>
+                ) : (
+                  <>
+                    <Mic className="h-4 w-4 mr-2" />
+                    Start Voice Chat
+                  </>
+                )}
+              </Button>
+              
+              {useVoiceMode && (
+                <div className="text-center text-sm text-muted-foreground">
+                  {conversation.isSpeaking ? '🗣️ Agent is speaking...' : '🎤 Listening...'}
+                </div>
+              )}
             </div>
 
             {/* Messages */}
@@ -157,19 +212,21 @@ const Chatbot = () => {
               ))}
             </div>
 
-            {/* Input */}
-            <div className="flex gap-2">
-              <Input
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder={(translations[selectedLanguage as keyof typeof translations] || translations.English).placeholder}
-                className="flex-1"
-              />
-              <Button onClick={handleSendMessage} size="icon">
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+            {/* Input - Only show when not in voice mode */}
+            {!useVoiceMode && (
+              <div className="flex gap-2">
+                <Input
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder={(translations[selectedLanguage as keyof typeof translations] || translations.English).placeholder}
+                  className="flex-1"
+                />
+                <Button onClick={handleSendMessage} size="icon">
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
