@@ -83,7 +83,7 @@ const Chatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
+        <Card className="fixed bottom-24 right-6 w-72 h-60 shadow-xl z-50 flex flex-col">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Important Notice</CardTitle>
