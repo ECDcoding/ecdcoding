@@ -52,34 +52,19 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Chat Button with Waving Hand and Text */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-        {/* Text near the button */}
-        <div className="mb-3 max-w-xs">
-          <div className="bg-white rounded-lg shadow-lg p-4 border">
-            <h3 className="font-semibold text-sm mb-2">Important Notice</h3>
-            <p className="text-xs text-gray-600 leading-relaxed">
-              All ECD Employers seeking to hire tech teachers are welcome to talk to us... 
-              It is however important to register as a Parent, and ECD School Manager, 
-              as well as a Tech Teacher candidate looking for employment.
-            </p>
+      {/* Chat Button with Waving Hand */}
+      <Button
+        onClick={() => setIsOpen(true)}
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg z-50 group"
+        size="icon"
+      >
+        <div className="relative">
+          <MessageCircle className="h-6 w-6 text-white" />
+          <div className="absolute -top-1 -right-1 text-lg animate-[wave_1s_ease-in-out_infinite]">
+            👋
           </div>
         </div>
-        
-        {/* Chat Button */}
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg group"
-          size="icon"
-        >
-          <div className="relative">
-            <MessageCircle className="h-6 w-6 text-white" />
-            <div className="absolute -top-1 -right-1 text-lg animate-[wave_1s_ease-in-out_infinite]">
-              👋
-            </div>
-          </div>
-        </Button>
-      </div>
+      </Button>
 
       {/* Chat Window */}
       {isOpen && (
