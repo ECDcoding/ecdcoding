@@ -537,11 +537,14 @@ const LessonVault0406 = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
                 <div className="flex items-center gap-4">
-                   <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                   <h1 className="text-3xl font-bold text-yellow-400 text-left" style={{fontFamily: 'Bungee Shade, cursive'}}>
                      {selectedCountingRange === "vowels" ? "Vowels" : 
                       selectedCountingRange === "alphabets" ? "Alphabets" : 
-                      `Number Counting (${selectedCountingRange})`}
+                      "Number Counting"}
                    </h1>
+                   {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                     <span className="text-2xl font-bold text-white">({selectedCountingRange})</span>
+                   )}
                 </div>
                 <button 
                   onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
