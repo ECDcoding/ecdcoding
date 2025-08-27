@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useConversation } from '@11labs/react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MessageCircle, X, Mic, MicOff } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { MessageCircle, X, Mic, MicOff, Send } from 'lucide-react';
 
 const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
   
   const [useVoiceMode, setUseVoiceMode] = useState(false);
 
@@ -29,6 +31,20 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
 
   const handleLanguageChange = (language: string) => {
     setSelectedLanguage(language);
+  };
+
+  const sendMessage = () => {
+    if (inputMessage.trim()) {
+      setMessages(prev => [...prev, { role: 'user', content: inputMessage }]);
+      setInputMessage('');
+      // Here you would typically send the message to your chat system
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
   };
 
 
@@ -71,9 +87,8 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
       {/* Chat Window */}
       {isOpen && (
         <Card className="fixed bottom-24 right-6 w-80 h-52 shadow-xl z-50 flex flex-col">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg">Important Notice</CardTitle>
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-end">
               <Button
                 variant="ghost"
                 size="icon"
@@ -145,6 +160,20 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Text Input */}
+            <div className="flex gap-2">
+              <Input
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your message..."
+                className="flex-1"
+              />
+              <Button onClick={sendMessage} size="icon" variant="default">
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
 
           </CardContent>
