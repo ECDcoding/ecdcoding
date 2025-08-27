@@ -681,49 +681,56 @@ const LessonVault0406 = () => {
           <div className="fixed inset-0 bg-[#395B50] z-[100] overflow-y-auto">
             <div className="min-h-screen flex flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/20">
-                <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                     <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                       {selectedCountingRange === "vowels" ? "Vowels" : 
-                        selectedCountingRange === "alphabets" ? "Alphabets" : 
-                        "Number Counting"}
-                     </h1>
-                     {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                       <span className="text-2xl font-bold text-white">({selectedCountingRange})</span>
-                     )}
+              <div className="p-6 border-b border-white/20">
+                <div className="max-w-6xl mx-auto px-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 relative h-12">
+                    {/* Back button aligned with position 1 */}
+                    <button 
+                      onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                      className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-lg transition-colors flex items-center gap-2 col-start-1"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Back
+                    </button>
+                    
+                    {/* Title aligned with position 6 - spans multiple columns on smaller screens */}
+                    <h1 className="text-2xl font-bold text-yellow-400 flex items-center lg:col-start-6 md:col-start-4 sm:col-start-3 col-start-2" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                      {selectedCountingRange === "vowels" ? "Vowels" : 
+                       selectedCountingRange === "alphabets" ? "Alphabets" : 
+                       "Number Counting"}
+                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                        <span className="text-lg font-bold text-white ml-2">({selectedCountingRange})</span>
+                      )}
+                    </h1>
                   </div>
-                  <button 
-                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                    className="text-white hover:text-yellow-400 transition-colors"
-                  >
-                    <X className="h-8 w-8" />
-                  </button>
                 </div>
               </div>
               
                 {/* Content */}
-               <div className="flex-1 p-6">
-                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4 relative">
-                   {/* Auto-counting controls positioned at numbers 2 and 7 */}
-                   {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <>
-                       <Button
-                         onClick={startAutoCounting}
-                         disabled={isAutoCounting}
-                         className="absolute top-[calc(100%+1rem)] left-[calc(20%)] bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 z-10"
-                       >
-                         {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
-                       </Button>
-                       <Button
-                         onClick={stopAutoCounting}
-                         disabled={!isAutoCounting}
-                         className="absolute top-[calc(100%+1rem)] left-[calc(140%)] bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 z-10"
-                       >
-                         Stop
-                       </Button>
-                     </>
-                   )}
+               <div className="flex-1 p-6 relative">
+                 {/* Auto-counting controls positioned to align with Back button row and numbers 2 and 7 */}
+                 {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl px-4 z-10">
+                     <Button
+                       onClick={startAutoCounting}
+                       disabled={isAutoCounting}
+                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                       style={{ gridColumn: '2' }}
+                     >
+                       {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
+                     </Button>
+                     <Button
+                       onClick={stopAutoCounting}
+                       disabled={!isAutoCounting}
+                       className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                       style={{ gridColumn: '7' }}
+                     >
+                       Stop
+                     </Button>
+                   </div>
+                 )}
+                 
+                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4 mt-16">
                    {(() => {
                       if (selectedCountingRange === "vowels") {
                         const vowelsArray = ['a', 'e', 'i', 'o', 'u'];
