@@ -536,22 +536,24 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
-                <div className="flex items-center gap-4">
-                   <h1 className="text-3xl font-bold text-yellow-400 text-left" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                     {selectedCountingRange === "vowels" ? "Vowels" : 
-                      selectedCountingRange === "alphabets" ? "Alphabets" : 
-                      "Number Counting"}
-                   </h1>
-                   {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <span className="text-2xl font-bold text-white">({selectedCountingRange})</span>
-                   )}
+                <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                     <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                       {selectedCountingRange === "vowels" ? "Vowels" : 
+                        selectedCountingRange === "alphabets" ? "Alphabets" : 
+                        "Number Counting"}
+                     </h1>
+                     {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                       <span className="text-2xl font-bold text-white">({selectedCountingRange})</span>
+                     )}
+                  </div>
+                  <button 
+                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                    className="text-white hover:text-yellow-400 transition-colors"
+                  >
+                    <X className="h-8 w-8" />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                  className="text-white hover:text-yellow-400 transition-colors"
-                >
-                  <X className="h-8 w-8" />
-                </button>
               </div>
               
               {/* Content */}
