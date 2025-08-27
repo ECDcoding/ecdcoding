@@ -16,6 +16,7 @@ const LessonVault0406 = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pictureActive, setPictureActive] = useState<boolean>(false);
   const [countingOpen, setCountingOpen] = useState(false);
+  const [selectedCountingRange, setSelectedCountingRange] = useState<string | null>(null);
   const [parentsOpen, setParentsOpen] = useState(false);
   
   const numberWords = [
@@ -189,14 +190,35 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => setCountingOpen(true)} className="font-medium">
-                  <div className="flex flex-col">
-                    <span className="font-medium">Number Counting</span>
-                    <div className="text-xs text-gray-500 mt-1">
-                      <div>1-10, 11-20, 21-30, 31-40, 41-50</div>
-                      <div>51-60, 61-70, 71-80, 81-90, 91-100</div>
-                    </div>
-                  </div>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  1 - 10
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("11-20"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  11 - 20
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("21-30"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  21 - 30
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("31-40"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  31 - 40
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("41-50"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  41 - 50
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("51-60"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  51 - 60
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("61-70"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  61 - 70
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("71-80"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  71 - 80
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("81-90"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  81 - 90
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("91-100"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  91 - 100
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -501,8 +523,8 @@ const LessonVault0406 = () => {
             </div>
           </div>
         </div>
-        {/* Basic Counting Full Overlay */}
-        {countingOpen && (
+        {/* Number Counting Full Overlay */}
+        {countingOpen && selectedCountingRange && (
           <div className="fixed inset-0 bg-[#395B50] z-[100] overflow-y-auto">
             <div className="min-h-screen flex flex-col">
               {/* Header */}
@@ -512,11 +534,11 @@ const LessonVault0406 = () => {
                     <ArrowLeft className="h-8 w-8" />
                   </Link>
                   <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Basic Counting
+                    Number Counting ({selectedCountingRange})
                   </h1>
                 </div>
                 <button 
-                  onClick={() => setCountingOpen(false)}
+                  onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
                   className="text-white hover:text-yellow-400 transition-colors"
                 >
                   <X className="h-8 w-8" />
@@ -526,21 +548,24 @@ const LessonVault0406 = () => {
               {/* Content */}
               <div className="flex-1 p-6">
                 <div className="grid grid-cols-5 gap-4 max-w-6xl mx-auto">
-                  {Array.from({ length: 25 }, (_, index) => index + 1).map((number) => (
-                    <div 
-                      key={number}
-                      className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                      style={{
-                        backgroundColor: [
-                          '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                        ][number % 5]
-                      }}
-                      onMouseEnter={() => speakNumber(number)}
-                      title={`Number ${number} - ${numberWords[number - 1]}`}
-                    >
-                      {number}
-                    </div>
-                  ))}
+                  {(() => {
+                    const [start, end] = selectedCountingRange.split('-').map(Number);
+                    return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
+                      <div 
+                        key={number}
+                        className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        style={{
+                          backgroundColor: [
+                            '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                          ][number % 5]
+                        }}
+                        onMouseEnter={() => speakNumber(number)}
+                        title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
+                      >
+                        {number}
+                      </div>
+                    ));
+                  })()}
                 </div>
               </div>
             </div>
