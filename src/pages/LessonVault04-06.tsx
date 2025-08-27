@@ -49,6 +49,28 @@ const LessonVault0406 = () => {
     }
   };
 
+  const vowels = ["A", "E", "I", "O", "U"];
+  
+  const speakVowel = (vowel: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(vowel);
+      utterance.rate = 0.6; // Even slower for vowel pronunciation
+      utterance.volume = 0.8;
+      
+      // Different pitch for each vowel to create distinct tones
+      const vowelTones: Record<string, number> = {
+        "A": 0.8, // Lower tone
+        "E": 1.0, // Mid-low tone  
+        "I": 1.4, // Higher tone
+        "O": 0.9, // Low-mid tone
+        "U": 0.7  // Lowest tone
+      };
+      
+      utterance.pitch = vowelTones[vowel] || 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
@@ -576,22 +598,24 @@ const LessonVault0406 = () => {
               <div className="flex-1 p-6">
                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
                    {(() => {
-                     if (selectedCountingRange === "vowels") {
-                       const vowels = ['a', 'e', 'i', 'o', 'u'];
-                       return vowels.map((vowel, index) => (
-                         <div 
-                           key={vowel}
-                            className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
-                           style={{
-                             backgroundColor: [
-                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                             ][index % 5]
-                           }}
-                           title={`Vowel ${vowel.toUpperCase()}`}
-                         >
-                           {vowel}
-                         </div>
-                       ));
+                      if (selectedCountingRange === "vowels") {
+                        const vowelsArray = ['a', 'e', 'i', 'o', 'u'];
+                        return vowelsArray.map((vowel, index) => (
+                          <div 
+                            key={vowel}
+                             className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                            style={{
+                              backgroundColor: [
+                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                              ][index % 5]
+                            }}
+                            onClick={() => speakVowel(vowel.toUpperCase())}
+                            onMouseEnter={() => speakVowel(vowel.toUpperCase())}
+                            title={`Vowel ${vowel.toUpperCase()} - Click to hear tone`}
+                          >
+                            {vowel}
+                          </div>
+                        ));
                      } else if (selectedCountingRange === "alphabets") {
                        const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(97 + i));
                        return alphabet.map((letter, index) => (
