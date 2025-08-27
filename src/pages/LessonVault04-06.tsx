@@ -349,16 +349,9 @@ const LessonVault0406 = () => {
                 <SelectValue placeholder="Arts" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <SelectItem value="red" className="hover:bg-gray-100">🔴 Red</SelectItem>
-                <SelectItem value="blue" className="hover:bg-gray-100">🔵 Blue</SelectItem>
-                <SelectItem value="green" className="hover:bg-gray-100">🟢 Green</SelectItem>
-                <SelectItem value="yellow" className="hover:bg-gray-100">🟡 Yellow</SelectItem>
-                <SelectItem value="orange" className="hover:bg-gray-100">🟠 Orange</SelectItem>
-                <SelectItem value="purple" className="hover:bg-gray-100">🟣 Purple</SelectItem>
-                <SelectItem value="pink" className="hover:bg-gray-100">🩷 Pink</SelectItem>
-                <SelectItem value="brown" className="hover:bg-gray-100">🤎 Brown</SelectItem>
-                <SelectItem value="black" className="hover:bg-gray-100">⚫ Black</SelectItem>
-                <SelectItem value="white" className="hover:bg-gray-100">⚪ White</SelectItem>
+                <SelectItem value="music" className="hover:bg-gray-100">🎵 Music</SelectItem>
+                <SelectItem value="drama" className="hover:bg-gray-100">🎭 Drama</SelectItem>
+                <SelectItem value="visual-art" className="hover:bg-gray-100">🎨 Visual Art</SelectItem>
               </SelectContent>
             </Select>
             <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
