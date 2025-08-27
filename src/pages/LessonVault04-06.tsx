@@ -258,27 +258,11 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
-                  <div className="flex flex-col">
-                    <span className="font-medium">Vowels</span>
-                    <div className="flex gap-2 mt-1 text-lg">
-                      <span>a</span>
-                      <span>e</span>
-                      <span>i</span>
-                      <span>o</span>
-                      <span>u</span>
-                    </div>
-                  </div>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  Vowels
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
-                  <div className="flex flex-col">
-                    <span className="font-medium">Alphabets</span>
-                    <div className="flex gap-1 mt-1 text-sm flex-wrap max-w-[200px]">
-                      {Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)).map((letter, index) => (
-                        <span key={index}>{letter}</span>
-                      ))}
-                    </div>
-                  </div>
+                <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  Alphabets
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -560,9 +544,11 @@ const LessonVault0406 = () => {
                     <ArrowLeft className="h-8 w-8" />
                     <span className="text-lg font-semibold">Back to Numeracy</span>
                   </button>
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Number Counting ({selectedCountingRange})
-                  </h1>
+                   <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                     {selectedCountingRange === "vowels" ? "Vowels" : 
+                      selectedCountingRange === "alphabets" ? "Alphabets" : 
+                      `Number Counting (${selectedCountingRange})`}
+                   </h1>
                 </div>
                 <button 
                   onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
@@ -574,26 +560,60 @@ const LessonVault0406 = () => {
               
               {/* Content */}
               <div className="flex-1 p-6">
-                <div className="grid grid-cols-5 gap-4 max-w-6xl mx-auto">
-                  {(() => {
-                    const [start, end] = selectedCountingRange.split('-').map(Number);
-                    return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
-                      <div 
-                        key={number}
-                        className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                        style={{
-                          backgroundColor: [
-                            '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                          ][number % 5]
-                        }}
-                        onMouseEnter={() => speakNumber(number)}
-                        title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
-                      >
-                        {number}
-                      </div>
-                    ));
-                  })()}
-                </div>
+                 <div className="grid grid-cols-5 gap-4 max-w-6xl mx-auto">
+                   {(() => {
+                     if (selectedCountingRange === "vowels") {
+                       const vowels = ['a', 'e', 'i', 'o', 'u'];
+                       return vowels.map((vowel, index) => (
+                         <div 
+                           key={vowel}
+                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                           style={{
+                             backgroundColor: [
+                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                             ][index % 5]
+                           }}
+                           title={`Vowel ${vowel.toUpperCase()}`}
+                         >
+                           {vowel}
+                         </div>
+                       ));
+                     } else if (selectedCountingRange === "alphabets") {
+                       const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(97 + i));
+                       return alphabet.map((letter, index) => (
+                         <div 
+                           key={letter}
+                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
+                           style={{
+                             backgroundColor: [
+                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                             ][index % 5]
+                           }}
+                           title={`Letter ${letter.toUpperCase()}`}
+                         >
+                           {letter}
+                         </div>
+                       ));
+                     } else {
+                       const [start, end] = selectedCountingRange.split('-').map(Number);
+                       return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number) => (
+                         <div 
+                           key={number}
+                           className="w-full aspect-square text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                           style={{
+                             backgroundColor: [
+                               '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                             ][number % 5]
+                           }}
+                           onMouseEnter={() => speakNumber(number)}
+                           title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
+                         >
+                           {number}
+                         </div>
+                       ));
+                     }
+                   })()}
+                 </div>
                 
                 <div className="mt-8"></div>
                 <div className="mt-8"></div>
@@ -603,8 +623,8 @@ const LessonVault0406 = () => {
                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
                     className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                   >
-                    <ArrowLeft className="h-6 w-6" />
-                    Back to Numeracy
+                     <ArrowLeft className="h-6 w-6" />
+                     {selectedCountingRange === "vowels" || selectedCountingRange === "alphabets" ? "Back to Literacy" : "Back to Numeracy"}
                   </button>
                 </div>
               </div>
