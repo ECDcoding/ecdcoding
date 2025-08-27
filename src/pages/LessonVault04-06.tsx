@@ -624,7 +624,7 @@ const LessonVault0406 = () => {
                     className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                   >
                      <ArrowLeft className="h-6 w-6" />
-                     {selectedCountingRange === "vowels" || selectedCountingRange === "alphabets" ? "Back to Literacy" : "Back to Numeracy"}
+                     {selectedCountingRange === "vowels" || selectedCountingRange === "alphabets" ? "Back to Literacy" : "Back"}
                   </button>
                 </div>
               </div>
