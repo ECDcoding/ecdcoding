@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const CallToAction = () => {
+const CallToAction = ({ isHidden = false }: { isHidden?: boolean }) => {
+  if (isHidden) return null;
+  
   return (
     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
       <Link to="/lesson-vault-04-06">
