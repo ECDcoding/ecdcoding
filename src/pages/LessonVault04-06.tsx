@@ -773,47 +773,48 @@ const LessonVault0406 = () => {
                 
                  <div className="mt-8"></div>
                  <div className="mt-8"></div>
+                 <div className="mt-8"></div>
                  
-                  <div className="max-w-6xl mx-auto flex justify-between items-center">
-                    <button 
-                      onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                      className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-                    >
-                       <ArrowLeft className="h-6 w-6" />
-                       Back
-                    </button>
-                    
-                    {/* Auto-counting controls aligned with Back button */}
-                    {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                      <div className="flex gap-4">
-                        <Button
-                          onClick={startAutoCounting}
-                          disabled={isAutoCounting}
-                          className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
-                        >
-                          {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
-                        </Button>
-                        <Button
-                          onClick={stopAutoCounting}
-                          disabled={!isAutoCounting}
-                          className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
-                        >
-                          Stop
-                        </Button>
-                      </div>
-                    )}
-                    
-                    {/* Continue to 11-20 button - only show when on 1-10 range */}
-                    {selectedCountingRange === "1-10" && (
-                      <button 
-                        onClick={() => setSelectedCountingRange("11-20")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-                      >
-                        Continue to 11-20
-                        <span className="text-2xl">🚀</span>
-                      </button>
-                    )}
-                  </div>
+                 <div className="max-w-6xl mx-auto flex justify-between items-center">
+                   <button 
+                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                     className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                   >
+                      <ArrowLeft className="h-6 w-6" />
+                      Back
+                   </button>
+                   
+                   {/* Auto-counting controls aligned with Back button */}
+                   {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                     <div className="flex gap-4">
+                       <Button
+                         onClick={startAutoCounting}
+                         disabled={isAutoCounting}
+                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
+                       >
+                         {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
+                       </Button>
+                       <Button
+                         onClick={stopAutoCounting}
+                         disabled={!isAutoCounting}
+                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
+                       >
+                         Stop
+                       </Button>
+                     </div>
+                   )}
+                   
+                   {/* Continue to 11-20 button - only show when on 1-10 range */}
+                   {selectedCountingRange === "1-10" && (
+                     <button 
+                       onClick={() => setSelectedCountingRange("11-20")}
+                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                     >
+                       Continue to 11-20
+                       <span className="text-2xl">🚀</span>
+                     </button>
+                   )}
+                 </div>
               </div>
             </div>
           </div>
