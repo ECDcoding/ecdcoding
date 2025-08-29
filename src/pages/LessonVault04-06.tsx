@@ -717,12 +717,12 @@ const LessonVault0406 = () => {
                        </div>
                      )}
                    </div>
-                  <button 
-                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                    className="text-white hover:text-yellow-400 transition-colors"
-                  >
-                    <X className="h-8 w-8" />
-                  </button>
+                   <button 
+                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                     className="text-white hover:text-yellow-400 transition-colors ml-4"
+                   >
+                     <X className="h-8 w-8" />
+                   </button>
                 </div>
               </div>
               
