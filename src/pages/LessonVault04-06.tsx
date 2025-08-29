@@ -689,10 +689,26 @@ const LessonVault0406 = () => {
                         selectedCountingRange === "alphabets" ? "Alphabets" : 
                         "Number Counting"}
                      </h1>
+                     {/* Auto-counting controls in header */}
                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                       <span className="text-2xl font-bold text-white">({selectedCountingRange})</span>
+                       <div className="flex gap-4">
+                         <Button
+                           onClick={startAutoCounting}
+                           disabled={isAutoCounting}
+                           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                         >
+                           {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
+                         </Button>
+                         <Button
+                           onClick={stopAutoCounting}
+                           disabled={!isAutoCounting}
+                           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                         >
+                           Stop
+                         </Button>
+                       </div>
                      )}
-                  </div>
+                   </div>
                   <button 
                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
                     className="text-white hover:text-yellow-400 transition-colors"
@@ -785,40 +801,6 @@ const LessonVault0406 = () => {
                       Back
                    </button>
                    
-                    {/* Auto-counting controls aligned under number 7 and 8 */}
-                    {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 w-full">
-                        {/* Empty spaces for positions 1-6 */}
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        
-                        {/* Start button in position 7 */}
-                        <Button
-                          onClick={startAutoCounting}
-                          disabled={isAutoCounting}
-                          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 text-sm"
-                        >
-                          {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
-                        </Button>
-                        
-                        {/* Stop button in position 8 */}
-                        <Button
-                          onClick={stopAutoCounting}
-                          disabled={!isAutoCounting}
-                          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 text-sm"
-                        >
-                          Stop
-                        </Button>
-                        
-                        {/* Empty spaces to maintain grid layout */}
-                        <div></div>
-                        <div></div>
-                      </div>
-                    )}
                    
                    {/* Continue to 11-20 button - only show when on 1-10 range */}
                    {selectedCountingRange === "1-10" && (
