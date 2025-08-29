@@ -10,11 +10,15 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ArrowLeft, FileText } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Register = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const registrationType = searchParams.get('type') || 'parent';
+  const { signUp } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
     // Common fields
@@ -65,9 +69,32 @@ const Register = () => {
     agreeToTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData, "Type:", registrationType);
+    setIsSubmitting(true);
+    
+    try {
+      const { data, error } = await signUp(
+        formData.email,
+        formData.password,
+        {
+          ...formData,
+          registrationType,
+        }
+      );
+      
+      if (data && !error) {
+        navigate('/', { 
+          state: { 
+            message: 'Registration successful! Please check your email to verify your account.' 
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -467,6 +494,61 @@ const Register = () => {
             />
           </div>
         </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">Province / State / Region *</Label>
+          <Input
+            id="state"
+            value={formData.state}
+            onChange={(e) => handleInputChange("state", e.target.value)}
+            className="text-black bg-white"
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="country">Country *</Label>
+          <Select onValueChange={(value) => handleInputChange("country", value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ZA">South Africa</SelectItem>
+              <SelectItem value="US">United States</SelectItem>
+              <SelectItem value="CA">Canada</SelectItem>
+              <SelectItem value="GB">United Kingdom</SelectItem>
+              <SelectItem value="AU">Australia</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Username and Password Creation */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="username-ecd">Create Username *</Label>
+            <Input
+              id="username-ecd"
+              value={formData.username}
+              onChange={(e) => handleInputChange("username", e.target.value)}
+              placeholder="Enter desired username"
+              className="text-black bg-white"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password-ecd">Create Password *</Label>
+            <Input
+              id="password-ecd"
+              type="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              placeholder="One capital letter, a number, and a punctuation"
+              className="text-black bg-white"
+              required
+            />
+            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+          </div>
+        </div>
       </div>
 
       <Separator />
@@ -657,6 +739,61 @@ const Register = () => {
               onChange={(e) => handleInputChange("phone3", e.target.value)}
               required
             />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state-tech">Province / State / Region *</Label>
+          <Input
+            id="state-tech"
+            value={formData.state}
+            onChange={(e) => handleInputChange("state", e.target.value)}
+            className="text-black bg-white"
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="country-tech">Country *</Label>
+          <Select onValueChange={(value) => handleInputChange("country", value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ZA">South Africa</SelectItem>
+              <SelectItem value="US">United States</SelectItem>
+              <SelectItem value="CA">Canada</SelectItem>
+              <SelectItem value="GB">United Kingdom</SelectItem>
+              <SelectItem value="AU">Australia</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Username and Password Creation */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="username-tech">Create Username *</Label>
+            <Input
+              id="username-tech"
+              value={formData.username}
+              onChange={(e) => handleInputChange("username", e.target.value)}
+              placeholder="Enter desired username"
+              className="text-black bg-white"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password-tech">Create Password *</Label>
+            <Input
+              id="password-tech"
+              type="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              placeholder="One capital letter, a number, and a punctuation"
+              className="text-black bg-white"
+              required
+            />
+            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
           </div>
         </div>
       </div>
@@ -978,9 +1115,10 @@ const Register = () => {
                   type="submit" 
                   size="lg" 
                   className="w-full max-w-md"
-                  disabled={!formData.agreeToTerms}
+                  disabled={!formData.agreeToTerms || isSubmitting}
                 >
-                  {registrationType === 'tech-teacher' ? 'Submit Application' : 'Submit Registration'}
+                  {isSubmitting ? 'Submitting...' : 
+                   registrationType === 'tech-teacher' ? 'Submit Application' : 'Submit Registration'}
                 </Button>
               </div>
             </form>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,8 +8,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import SignIn from "./SignIn";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
+  const [signInOpen, setSignInOpen] = useState(false);
+  const { user, signOut } = useAuth();
+
   return (
     <header className="absolute top-0 right-0 p-4 z-10">
       <div className="flex gap-4">
@@ -39,12 +45,25 @@ const Header = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button 
-          variant="outline" 
-          className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-        >
-          Sign in
-        </Button>
+        {user ? (
+          <Button 
+            variant="outline" 
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            onClick={signOut}
+          >
+            Sign out
+          </Button>
+        ) : (
+          <Button 
+            variant="outline" 
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            onClick={() => setSignInOpen(true)}
+          >
+            Sign in
+          </Button>
+        )}
+        
+        <SignIn open={signInOpen} onOpenChange={setSignInOpen} />
       </div>
     </header>
   );
