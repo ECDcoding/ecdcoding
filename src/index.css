@@ -50,6 +50,7 @@ All colors MUST be HSL.
     --brand-green: 120 95% 14%;
     --brand-purple: 276 89% 32%;
     --ecd-orange: 22 95% 49%;
+    --registration-fee-green: 158 31% 28%;
 
     --radius: 0.5rem;
 
@@ -162,7 +163,20 @@ All colors MUST be HSL.
   .register-form-theme textarea,
   .register-form-theme [role="combobox"],
   .register-form-theme select {
-    background-color: hsl(var(--surface)) !important;
-    color: hsl(var(--foreground));
+    background-color: hsl(var(--registration-fee-green)) !important;
+    color: hsl(0 0% 100%) !important;
+    border-color: hsl(var(--registration-fee-green)) !important;
+  }
+  
+  .register-form-theme input::placeholder,
+  .register-form-theme textarea::placeholder {
+    color: hsl(0 0% 80%) !important;
+  }
+  
+  /* Override any existing individual styling */
+  .register-form-theme input.text-black,
+  .register-form-theme input.bg-green-50 {
+    background-color: hsl(var(--registration-fee-green)) !important;
+    color: hsl(0 0% 100%) !important;
   }
 }

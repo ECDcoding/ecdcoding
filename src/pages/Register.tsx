@@ -140,7 +140,6 @@ const Register = () => {
               id="firstName"
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="text-black bg-green-50"
               required
             />
           </div>
@@ -150,7 +149,6 @@ const Register = () => {
               id="lastName"
               value={formData.lastName}
               onChange={(e) => handleInputChange("lastName", e.target.value)}
-              className="text-black bg-green-50"
               required
             />
           </div>
@@ -162,7 +160,6 @@ const Register = () => {
             id="state"
             value={formData.state}
             onChange={(e) => handleInputChange("state", e.target.value)}
-            className="text-black bg-green-50"
             required
           />
         </div>
@@ -187,7 +184,7 @@ const Register = () => {
           <Label>Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black bg-green-50"
+              className="w-20"
               placeholder="###"
               maxLength={3}
               value={formData.phone1}
@@ -196,7 +193,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black bg-green-50"
+              className="w-20"
               placeholder="###"
               maxLength={3}
               value={formData.phone2}
@@ -205,7 +202,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black bg-green-50"
+              className="w-24"
               placeholder="####"
               maxLength={4}
               value={formData.phone3}
@@ -222,7 +219,6 @@ const Register = () => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
-            className="text-black bg-green-50"
             required
           />
         </div>
@@ -237,7 +233,6 @@ const Register = () => {
               value={formData.username || ''}
               onChange={(e) => handleInputChange("username", e.target.value)}
               placeholder="Enter desired username"
-              className="text-black bg-green-50"
               required
             />
           </div>
@@ -249,7 +244,6 @@ const Register = () => {
               value={formData.password || ''}
               onChange={(e) => handleInputChange("password", e.target.value)}
               placeholder="One capital letter, a number, and a punctuation"
-              className="text-black bg-green-50"
               required
             />
             <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
@@ -305,7 +299,6 @@ const Register = () => {
             id="hearAbout"
             value={formData.hearAbout}
             onChange={(e) => handleInputChange("hearAbout", e.target.value)}
-            className="text-black bg-green-50"
             required
           />
         </div>
@@ -318,7 +311,6 @@ const Register = () => {
             value={formData.aspiration}
             onChange={(e) => handleInputChange("aspiration", e.target.value)}
             placeholder="Share your aspirations for your child's tech education..."
-            className="text-black bg-green-50"
           />
         </div>
       </div>
@@ -335,7 +327,6 @@ const Register = () => {
             id="institution"
             value={formData.institution}
             onChange={(e) => handleInputChange("institution", e.target.value)}
-            className="text-black bg-green-50"
             required
           />
         </div>
@@ -347,7 +338,6 @@ const Register = () => {
               id="learnerFirstName"
               value={formData.learnerFirstName}
               onChange={(e) => handleInputChange("learnerFirstName", e.target.value)}
-              className="text-black bg-green-50"
               required
             />
           </div>
@@ -357,7 +347,6 @@ const Register = () => {
               id="learnerLastName"
               value={formData.learnerLastName}
               onChange={(e) => handleInputChange("learnerLastName", e.target.value)}
-              className="text-black bg-green-50"
               required
             />
           </div>
@@ -370,7 +359,6 @@ const Register = () => {
             value={formData.relationship}
             onChange={(e) => handleInputChange("relationship", e.target.value)}
             placeholder="e.g., Parent, Guardian, Teacher"
-            className="text-black bg-green-50"
             required
           />
         </div>
@@ -379,7 +367,7 @@ const Register = () => {
           <Label>ECD Institution Phone Number *</Label>
           <div className="flex gap-2">
             <Input
-              className="w-20 text-black bg-green-50"
+              className="w-20"
               placeholder="###"
               maxLength={3}
               value={formData.ecdPhone1}
@@ -388,7 +376,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-20 text-black bg-green-50"
+              className="w-20"
               placeholder="###"
               maxLength={3}
               value={formData.ecdPhone2}
@@ -397,7 +385,7 @@ const Register = () => {
             />
             <span className="flex items-center">-</span>
             <Input
-              className="w-24 text-black bg-green-50"
+              className="w-24"
               placeholder="####"
               maxLength={4}
               value={formData.ecdPhone3}
@@ -414,7 +402,6 @@ const Register = () => {
             type="email"
             value={formData.ecdEmail}
             onChange={(e) => handleInputChange("ecdEmail", e.target.value)}
-            className="text-black bg-green-50"
             required
           />
         </div>
