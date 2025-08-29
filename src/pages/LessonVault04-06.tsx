@@ -683,26 +683,33 @@ const LessonVault0406 = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
                 <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-between w-full">
                      <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
                        {selectedCountingRange === "vowels" ? "Vowels" : 
                         selectedCountingRange === "alphabets" ? "Alphabets" : 
                         "Number Counting"}
                      </h1>
-                     {/* Auto-counting controls in header */}
+                     {/* Auto-counting controls aligned from position 3 */}
                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                       <div className="flex gap-4">
+                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
+                         {/* Empty spaces for positions 1-2 */}
+                         <div></div>
+                         <div></div>
+                         
+                         {/* Start button in position 3 */}
                          <Button
                            onClick={startAutoCounting}
                            disabled={isAutoCounting}
-                           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 text-sm"
                          >
                            {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
                          </Button>
+                         
+                         {/* Stop button in position 4 */}
                          <Button
                            onClick={stopAutoCounting}
                            disabled={!isAutoCounting}
-                           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
+                           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 text-sm"
                          >
                            Stop
                          </Button>
