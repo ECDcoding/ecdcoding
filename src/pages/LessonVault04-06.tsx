@@ -85,8 +85,8 @@ const LessonVault0406 = () => {
     }
   };
 
-  const speakWhatToExpect = () => {
-    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting.";
+  const speakWhatToExpected = () => {
+    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Emoji AI, we expect your child to identify odd objects that have been placed in every row; with Literacy, your child will learn Vowels, and Alphabets;";
     speakInstruction(message);
   };
 
@@ -292,7 +292,7 @@ const LessonVault0406 = () => {
             <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
             <div className="mt-4">
               <Button 
-                onClick={speakWhatToExpect}
+                onClick={speakWhatToExpected}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2 mx-auto"
               >
                 <Volume2 className="h-5 w-5" />
