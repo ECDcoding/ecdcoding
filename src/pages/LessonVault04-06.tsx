@@ -785,27 +785,36 @@ const LessonVault0406 = () => {
                       Back
                    </button>
                    
-                   {/* Auto-counting controls aligned with positions 2 and 7 */}
-                   {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute left-1/2 transform -translate-x-1/2 flex gap-4">
-                       <Button
-                         onClick={startAutoCounting}
-                         disabled={isAutoCounting}
-                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
-                         style={{ marginLeft: '-120px' }}
-                       >
-                         {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
-                       </Button>
-                       <Button
-                         onClick={stopAutoCounting}
-                         disabled={!isAutoCounting}
-                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
-                         style={{ marginLeft: '120px' }}
-                       >
-                         Stop
-                       </Button>
-                     </div>
-                   )}
+                    {/* Auto-counting controls aligned under number 7 and 8 */}
+                    {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 w-full">
+                        {/* Empty spaces for positions 1-6 */}
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        
+                        {/* Start button in position 7 */}
+                        <Button
+                          onClick={startAutoCounting}
+                          disabled={isAutoCounting}
+                          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 text-sm"
+                        >
+                          {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
+                        </Button>
+                        
+                        {/* Stop button in position 8 */}
+                        <Button
+                          onClick={stopAutoCounting}
+                          disabled={!isAutoCounting}
+                          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50 text-sm"
+                        >
+                          Stop
+                        </Button>
+                      </div>
+                    )}
                    
                    {/* Continue to 11-20 button - only show when on 1-10 range */}
                    {selectedCountingRange === "1-10" && (
