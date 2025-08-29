@@ -27,7 +27,7 @@ const Header = () => {
               Register <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-background border border-border">
+          <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
             <DropdownMenuItem asChild>
               <Link to="/register?type=parent" className="cursor-pointer">
                 Parent
