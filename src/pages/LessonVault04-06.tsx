@@ -689,14 +689,15 @@ const LessonVault0406 = () => {
                         selectedCountingRange === "alphabets" ? "Alphabets" : 
                         "Number Counting"}
                      </h1>
-                     {/* Auto-counting controls aligned from position 3 */}
+                     {/* Auto-counting controls aligned from position 4 */}
                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
-                         {/* Empty spaces for positions 1-2 */}
+                         {/* Empty spaces for positions 1-3 */}
+                         <div></div>
                          <div></div>
                          <div></div>
                          
-                         {/* Start button in position 3 */}
+                         {/* Start button in position 4 */}
                          <Button
                            onClick={startAutoCounting}
                            disabled={isAutoCounting}
@@ -705,7 +706,7 @@ const LessonVault0406 = () => {
                            {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
                          </Button>
                          
-                         {/* Stop button in position 4 */}
+                         {/* Stop button in position 5 */}
                          <Button
                            onClick={stopAutoCounting}
                            disabled={!isAutoCounting}
