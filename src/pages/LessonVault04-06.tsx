@@ -21,6 +21,7 @@ const LessonVault0406 = () => {
   const [isAutoCounting, setIsAutoCounting] = useState(false);
   const [currentAutoIndex, setCurrentAutoIndex] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -459,30 +460,44 @@ const LessonVault0406 = () => {
                 <div className="text-center mb-8">
                   <p className="text-xl mb-4">Find the odd faces! Look for faces that are different from the others in each row.</p>
                   <div className="grid grid-cols-7 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
-                    {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
-                      // Define which faces are odd in each row (7 faces per row)
-                      const oddFaces = [4, 9, 17, 21, 32]; // Man, Girl, Brown baby, 😄, 😃
-                      const isOddFace = oddFaces.includes(index);
-                      
-                      return (
-                        <Card 
-                          key={index} 
-                          className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full"
-                          onClick={() => {
-                            if (isOddFace) {
-                              const rowNumber = Math.floor(index / 7) + 1;
-                              speakInstruction(`Correct! You found the odd face in row ${rowNumber}. Well done!`);
-                            } else {
-                              speakInstruction("Try again! Look for the face that is different from the others in this row.");
-                            }
-                          }}
-                        >
-                          <CardContent className="p-0 flex items-center justify-center h-full">
-                            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{emoji}</span>
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
+                     {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
+                       // Define which faces are odd in each row (7 faces per row)
+                       const oddFaces = [4, 9, 17, 21, 32]; // Man, Girl, Brown baby, 😄, 😃
+                       const isOddFace = oddFaces.includes(index);
+                       
+                       return (
+                         <Card 
+                           key={index} 
+                           className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full relative ${starAnimations[index] ? 'animate-pulse' : ''}`}
+                           onClick={() => {
+                             if (isOddFace) {
+                               const rowNumber = Math.floor(index / 7) + 1;
+                               speakInstruction(`Correct! You found the odd face in row ${rowNumber}. Well done!`);
+                               // Trigger star animation
+                               setStarAnimations(prev => ({...prev, [index]: true}));
+                               setTimeout(() => {
+                                 setStarAnimations(prev => ({...prev, [index]: false}));
+                               }, 2000);
+                             } else {
+                               speakInstruction("Try again! Look for the face that is different from the others in this row.");
+                             }
+                           }}
+                         >
+                           <CardContent className="p-0 flex items-center justify-center h-full">
+                             <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{emoji}</span>
+                           </CardContent>
+                           {starAnimations[index] && (
+                             <div className="absolute inset-0 pointer-events-none">
+                               <div className="absolute top-2 left-2 text-yellow-400 text-2xl animate-bounce">⭐</div>
+                               <div className="absolute top-2 right-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.1s'}}>⭐</div>
+                               <div className="absolute bottom-2 left-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.2s'}}>⭐</div>
+                               <div className="absolute bottom-2 right-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.3s'}}>⭐</div>
+                               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-yellow-400 text-3xl animate-pulse">🌟</div>
+                             </div>
+                           )}
+                         </Card>
+                       );
+                     })}
                   </div>
                 </div>
               ) : (
