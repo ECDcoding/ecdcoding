@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -83,6 +83,11 @@ const LessonVault0406 = () => {
       utterance.volume = 0.9;
       window.speechSynthesis.speak(utterance);
     }
+  };
+
+  const speakWhatToExpect = () => {
+    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting.";
+    speakInstruction(message);
   };
 
   // Auto-counting functionality
@@ -281,10 +286,19 @@ const LessonVault0406 = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
+        {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
           <div className="mb-8 mt-12 text-center">
             <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
+            <div className="mt-4">
+              <Button 
+                onClick={speakWhatToExpect}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2 mx-auto"
+              >
+                <Volume2 className="h-5 w-5" />
+                What to Expect
+              </Button>
+            </div>
           </div>
 
 
