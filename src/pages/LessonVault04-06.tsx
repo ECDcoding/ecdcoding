@@ -813,6 +813,10 @@ const LessonVault0406 = () => {
                         >
                           Stop
                         </Button>
+                        
+                        {/* Empty spaces to maintain grid layout */}
+                        <div></div>
+                        <div></div>
                       </div>
                     )}
                    
