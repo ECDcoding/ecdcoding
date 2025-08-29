@@ -4,8 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 
 interface SignInProps {
   open: boolean;
@@ -81,13 +88,45 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
               
               <div className="text-center text-sm">
                 <span className="text-muted-foreground">Don't have an account? </span>
-                <Link 
-                  to="/register?type=parent" 
-                  className="text-primary hover:underline"
-                  onClick={() => onOpenChange(false)}
-                >
-                  Register here
-                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="link" 
+                      className="text-primary hover:underline p-0 h-auto font-normal text-sm"
+                    >
+                      Register here <ChevronDown className="ml-1 h-3 w-3" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=parent" 
+                        className="cursor-pointer"
+                        onClick={() => onOpenChange(false)}
+                      >
+                        Parent
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=ecd-manager" 
+                        className="cursor-pointer"
+                        onClick={() => onOpenChange(false)}
+                      >
+                        ECD Manager
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=tech-teacher" 
+                        className="cursor-pointer"
+                        onClick={() => onOpenChange(false)}
+                      >
+                        Tech Teacher
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </form>
           </CardContent>
