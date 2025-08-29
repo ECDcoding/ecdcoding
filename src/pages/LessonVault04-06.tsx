@@ -810,16 +810,97 @@ const LessonVault0406 = () => {
                    </button>
                    
                    
-                   {/* Continue to 11-20 button - only show when on 1-10 range */}
-                   {selectedCountingRange === "1-10" && (
-                     <button 
-                       onClick={() => setSelectedCountingRange("11-20")}
-                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
-                     >
-                       Continue to 11-20
-                       <span className="text-2xl">🚀</span>
-                     </button>
-                   )}
+                    {/* Continue to next range buttons */}
+                    {selectedCountingRange === "1-10" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("11-20")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 11-20
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "11-20" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("21-30")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 21-30
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "21-30" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("31-40")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 31-40
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "31-40" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("41-50")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 41-50
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "41-50" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("51-60")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 51-60
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "51-60" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("61-70")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 61-70
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "61-70" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("71-80")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 71-80
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "71-80" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("81-90")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 81-90
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "81-90" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("91-100")}
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Continue to 91-100
+                        <span className="text-2xl">🚀</span>
+                      </button>
+                    )}
+                    {selectedCountingRange === "91-100" && (
+                      <button 
+                        onClick={() => setSelectedCountingRange("1-10")}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        Start Over (1-10)
+                        <span className="text-2xl">🔄</span>
+                      </button>
+                    )}
                  </div>
               </div>
             </div>
