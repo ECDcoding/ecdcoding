@@ -43,12 +43,9 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
   const conversation = useConversation({
     onConnect: () => {
       console.log('Voice agent connected');
-      // Add a bot welcome message when connected
-      setMessages(prev => [...prev, { role: 'bot', content: 'Voice chat is now active. I can hear you and respond both with voice and text.' }]);
     },
     onDisconnect: () => {
       console.log('Voice agent disconnected');
-      setMessages(prev => [...prev, { role: 'bot', content: 'Voice chat ended.' }]);
     },
     onError: (error) => {
       console.error('Voice agent error:', error);
