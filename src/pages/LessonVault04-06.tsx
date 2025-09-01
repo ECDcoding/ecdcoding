@@ -86,12 +86,7 @@ const LessonVault0406 = () => {
   };
 
   const speakWhatToExpected = () => {
-    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy, your child will learn Vowels, and Alphabets;";
-    speakInstruction(message);
-  };
-
-  const speakNotesToParents = () => {
-    const message = "Notes to Parents: Parents are encouraged among other, to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
+    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy, your child will learn Vowels, and Alphabets; Notes to Parents: Parents are encouraged among other, to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
     speakInstruction(message);
   };
 
@@ -1040,18 +1035,9 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <div className="flex items-center gap-4">
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Notes to Parents
-                  </h1>
-                  <Button 
-                    onClick={speakNotesToParents}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-full flex items-center gap-2"
-                  >
-                    <Volume2 className="h-4 w-4" />
-                    Listen
-                  </Button>
-                </div>
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Notes to Parents
+                </h1>
                 <button 
                   onClick={() => setParentsOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
