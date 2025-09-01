@@ -392,25 +392,47 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Object AI
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
-                      Facial Recognition
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Food Verification")} className="font-medium text-white hover:bg-white/20">
-                      Food Verification
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("My Body Parts")} className="font-medium text-white hover:bg-white/20">
-                      My Body Parts (boy or girl under 06 years)
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                        Emoji AI
+                        <ChevronDown className="h-4 w-4" />
+                      </DropdownMenuItem>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
+                        Facial Recognition
+                      </DropdownMenuItem>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                            Food Verification
+                            <ChevronDown className="h-4 w-4" />
+                          </DropdownMenuItem>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            🍞🍞🍞🍞🍔 (4 Bread + Burger)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            🍎🍎🍎🍎🍌 (4 Apples + Banana)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            🥛🥛🥛🥛💧 (4 Milk + Water)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            🍪🍪🍪🍪🧁 (4 Cookies + Cupcake)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            🥕🥕🥕🥕🍅 (4 Carrots + Tomato)
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("My Body Parts")} className="font-medium text-white hover:bg-white/20">
+                        My Body
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
