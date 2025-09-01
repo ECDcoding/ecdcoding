@@ -392,12 +392,41 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Transportation")} className="font-medium text-white hover:bg-white/20">
-                  Transportation
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Body Types")} className="font-medium text-white hover:bg-white/20">
-                  Body Types
-                </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Transportation
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Four Wheels
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Two Wheels
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Rail
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Body Types
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Boy
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Girl
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
