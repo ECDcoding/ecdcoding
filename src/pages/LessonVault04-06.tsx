@@ -360,9 +360,28 @@ const LessonVault0406 = () => {
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   Problem Solving
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  Shapes
-                </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Shapes
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Square
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Triangle
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Circle
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Rectangle
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -436,7 +455,7 @@ const LessonVault0406 = () => {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
                   Vowels
                 </DropdownMenuItem>
@@ -452,7 +471,7 @@ const LessonVault0406 = () => {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100">
                   👨‍👩‍👧‍👦 Parents
                 </DropdownMenuItem>
@@ -468,7 +487,7 @@ const LessonVault0406 = () => {
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Arts" />
               </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+              <SelectContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <SelectItem value="music" className="hover:bg-gray-100">🎵 Music</SelectItem>
                 <SelectItem value="drama" className="hover:bg-gray-100">🎭 Drama</SelectItem>
                 <SelectItem value="visual-art" className="hover:bg-gray-100">🎨 Visual Art</SelectItem>
@@ -478,7 +497,7 @@ const LessonVault0406 = () => {
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Media Icons" />
               </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+              <SelectContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 {Object.entries(mediaCategories).map(([category, objects]) => (
                   <SelectItem key={category} value={category} className="hover:bg-gray-100">
                     <div className="flex flex-col">
