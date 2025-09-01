@@ -90,6 +90,11 @@ const LessonVault0406 = () => {
     speakInstruction(message);
   };
 
+  const speakNotesToParents = () => {
+    const message = "Notes to Parents: Parents are encouraged among other, to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
+    speakInstruction(message);
+  };
+
   // Auto-counting functionality
   const startAutoCounting = () => {
     if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
@@ -1035,9 +1040,18 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Notes to Parents
-                </h1>
+                <div className="flex items-center gap-4">
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Notes to Parents
+                  </h1>
+                  <Button 
+                    onClick={speakNotesToParents}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-full flex items-center gap-2"
+                  >
+                    <Volume2 className="h-4 w-4" />
+                    Listen
+                  </Button>
+                </div>
                 <button 
                   onClick={() => setParentsOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
