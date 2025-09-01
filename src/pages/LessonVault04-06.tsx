@@ -158,6 +158,10 @@ const LessonVault0406 = () => {
       // Row 5: Smiling faces and one different expression (7 faces)
       "😀", "😀", "😀", "😀", "😃", "😀", "😀"
     ],
+    "Food Verification": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
+    "My Body Parts": ["👁️", "👂", "👁️", "👁️", "👁️", "👃", "👄", "👃", "👃", "👃", "🤚", "🦵", "🤚", "🤚", "🤚", "👶", "👧", "👶", "👶", "👶", "👦", "👱‍♀️", "👦", "👦", "👦"],
+    "Transportation": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
+    "Body Types": ["👶", "👦", "👶", "👶", "👶", "👧", "👩", "👧", "👧", "👧", "👨", "👴", "👨", "👨", "👨", "👵", "🧒", "👵", "👵", "👵", "🧓", "👱", "🧓", "🧓", "🧓"],
     "Fruit Recognition": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
     "Transport Recognition": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
     "Animal Recognition": ["🐶", "🐱", "🐶", "🐶", "🐶", "🐴", "🐮", "🐴", "🐴", "🐴", "🐷", "🐸", "🐷", "🐷", "🐷", "🐰", "🦆", "🐰", "🐰", "🐰", "🐔", "🐯", "🐔", "🐔", "🐔"]
@@ -312,51 +316,51 @@ const LessonVault0406 = () => {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium hover:bg-gray-100 flex items-center justify-between cursor-pointer">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
                       Number Counting
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" className="bg-white border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       1 - 10
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("11-20"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("11-20"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       11 - 20
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("21-30"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("21-30"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       21 - 30
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("31-40"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("31-40"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       31 - 40
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("41-50"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("41-50"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       41 - 50
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("51-60"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("51-60"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       51 - 60
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("61-70"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("61-70"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       61 - 70
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("71-80"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("71-80"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       71 - 80
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("81-90"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("81-90"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       81 - 90
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("91-100"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
+                    <DropdownMenuItem onClick={() => {setSelectedCountingRange("91-100"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       91 - 100
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   Problem Solving
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   Shapes
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -364,16 +368,35 @@ const LessonVault0406 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Emoji AI
+                  Basic Logic
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium hover:bg-gray-100">
-                  Facial Recognition
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Object AI
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
+                      Facial Recognition
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Food Verification")} className="font-medium text-white hover:bg-white/20">
+                      Food Verification
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("My Body Parts")} className="font-medium text-white hover:bg-white/20">
+                      My Body Parts (boy or girl under 06 years)
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Transportation")} className="font-medium text-white hover:bg-white/20">
+                  Transportation
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Transport Groups")} className="font-medium hover:bg-gray-100">
-                  Transport Groups
+                <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Body Types")} className="font-medium text-white hover:bg-white/20">
+                  Body Types
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
