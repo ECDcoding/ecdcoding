@@ -86,7 +86,7 @@ const LessonVault0406 = () => {
   };
 
   const speakWhatToExpected = () => {
-    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Emoji AI, we expect your child to identify odd objects that have been placed in every row; with Literacy, your child will learn Vowels, and Alphabets;";
+    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy, your child will learn Vowels, and Alphabets;";
     speakInstruction(message);
   };
 
