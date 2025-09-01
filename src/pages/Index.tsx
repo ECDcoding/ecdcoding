@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
@@ -24,10 +25,10 @@ const Index = () => {
             <Copyright className="h-4 w-4" />
             <span className="text-sm">ECDcoding 2025</span>
           </div>
-          <div className="flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+          <Link to="/contact" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
             <Mail className="h-4 w-4" />
             <span className="text-sm">Contact Us</span>
-          </div>
+          </Link>
         </div>
       </footer>
     </div>
