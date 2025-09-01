@@ -69,13 +69,14 @@ const ContactUs = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full p-8 text-white bg-gray-800 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+              className="w-full p-8 text-yellow-400 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+              style={{ backgroundColor: "#132a13" }}
               placeholder="Name"
             />
             <Label 
               htmlFor="name" 
               className={`absolute left-8 transition-all duration-200 pointer-events-none ${
-                formData.name ? 'top-2 text-xs text-gray-400' : 'top-8 text-gray-400'
+                formData.name ? 'top-2 text-xs text-white' : 'top-8 text-white'
               }`}
             >
               Name
@@ -91,13 +92,14 @@ const ContactUs = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full p-8 text-white bg-gray-800 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+                className="w-full p-8 text-yellow-400 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+                style={{ backgroundColor: "#132a13" }}
                 placeholder="Email"
               />
               <Label 
                 htmlFor="email" 
                 className={`absolute left-8 transition-all duration-200 pointer-events-none ${
-                  formData.email ? 'top-2 text-xs text-gray-400' : 'top-8 text-gray-400'
+                  formData.email ? 'top-2 text-xs text-white' : 'top-8 text-white'
                 }`}
               >
                 Email
@@ -111,13 +113,14 @@ const ContactUs = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
-                className="w-full p-8 text-white bg-gray-800 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+                className="w-full p-8 text-yellow-400 border-0 rounded text-base placeholder:text-transparent focus:placeholder:text-gray-400"
+                style={{ backgroundColor: "#132a13" }}
                 placeholder="Phone Number"
               />
               <Label 
                 htmlFor="phone" 
                 className={`absolute left-8 transition-all duration-200 pointer-events-none ${
-                  formData.phone ? 'top-2 text-xs text-gray-400' : 'top-8 text-gray-400'
+                  formData.phone ? 'top-2 text-xs text-white' : 'top-8 text-white'
                 }`}
               >
                 Phone Number
@@ -132,13 +135,14 @@ const ContactUs = () => {
               value={formData.message}
               onChange={handleInputChange}
               required
-              className="w-full p-8 text-white bg-gray-800 border-0 rounded text-base min-h-[240px] placeholder:text-transparent focus:placeholder:text-gray-400 resize-none"
+              className="w-full p-8 text-yellow-400 border-0 rounded text-base min-h-[240px] placeholder:text-transparent focus:placeholder:text-gray-400 resize-none"
+              style={{ backgroundColor: "#132a13" }}
               placeholder="Message"
             />
             <Label 
               htmlFor="message" 
               className={`absolute left-8 transition-all duration-200 pointer-events-none ${
-                formData.message ? 'top-2 text-xs text-gray-400' : 'top-8 text-gray-400'
+                formData.message ? 'top-2 text-xs text-white' : 'top-8 text-white'
               }`}
             >
               Message
