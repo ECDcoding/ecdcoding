@@ -17,7 +17,6 @@ const PaymentForm = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="text-center mb-6">
-            <div className="text-3xl font-bold text-primary mb-2">$9.99/month</div>
             <p className="text-muted-foreground">Full access to advanced STEM courses</p>
           </div>
           

@@ -18,6 +18,8 @@ import childDrawingRectangle from "@/assets/child-drawing-rectangle.jpg";
 import realCircleShape from "@/assets/real-circle-shape.jpg";
 import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
 import bodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
+import boyBodyDiagram from "@/assets/boy-body-diagram.jpg";
+import girlBodyDiagram from "@/assets/girl-body-diagram.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -33,6 +35,8 @@ const LessonVault0406 = () => {
   const [triangleShapeOpen, setTriangleShapeOpen] = useState(false);
   const [rectangleShapeOpen, setRectangleShapeOpen] = useState(false);
   const [circleShapeOpen, setCircleShapeOpen] = useState(false);
+  const [selectedBodyType, setSelectedBodyType] = useState<string | null>(null);
+  const [bodyTypesOpen, setBodyTypesOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -183,7 +187,7 @@ const LessonVault0406 = () => {
       // Row 5: Eggs and one chicken (7 items)
       "🥚", "🥚", "🥚", "🍗", "🥚", "🥚", "🥚"
     ],
-    "My Body Parts": ["👁️", "👂", "👁️", "👁️", "👁️", "👃", "👄", "👃", "👃", "👃", "🤚", "🦵", "🤚", "🤚", "🤚", "👶", "👧", "👶", "👶", "👶", "👦", "👱‍♀️", "👦", "👦", "👦"],
+    
     "Transportation": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
     "Body Types": ["👶", "👦", "👶", "👶", "👶", "👧", "👩", "👧", "👧", "👧", "👨", "👴", "👨", "👨", "👨", "👵", "🧒", "👵", "👵", "👵", "🧓", "👱", "🧓", "🧓", "🧓"],
     "Fruit Recognition": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
@@ -452,9 +456,6 @@ const LessonVault0406 = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("My Body Parts")} className="font-medium text-white hover:bg-white/20">
-                        My Body
-                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 <DropdownMenu>
@@ -479,15 +480,15 @@ const LessonVault0406 = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Body Types
+                      My Body Types
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem onClick={() => {setSelectedBodyType("boy"); setBodyTypesOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       Boy
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem onClick={() => {setSelectedBodyType("girl"); setBodyTypesOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       Girl
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -673,17 +674,6 @@ const LessonVault0406 = () => {
                          </Card>
                        );
                      })}
-                  </div>
-                </div>
-              ) : selectedEmojiCategory === "My Body Parts" ? (
-                <div className="text-center mb-8">
-                  <p className="text-xl mb-4">Learn about body parts with this comprehensive diagram!</p>
-                  <div className="max-w-4xl mx-auto">
-                    <img 
-                      src={bodyPartsDiagram} 
-                      alt="Complete body parts diagram with labels from head to toe" 
-                      className="w-full h-auto rounded-lg shadow-lg"
-                    />
                   </div>
                 </div>
               ) : (
@@ -1355,6 +1345,40 @@ const LessonVault0406 = () => {
                       </button>
                     )}
                  </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* My Body Types Full Overlay */}
+        {bodyTypesOpen && selectedBodyType && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  My Body Types - {selectedBodyType === "boy" ? "Boy" : "Girl"} (Ages 4-6)
+                </h1>
+                <button 
+                  onClick={() => setBodyTypesOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <p className="text-xl mb-4 text-gray-700">Learn about body parts with this comprehensive diagram!</p>
+                  <div className="max-w-2xl mx-auto">
+                    <img 
+                      src={selectedBodyType === "boy" ? boyBodyDiagram : girlBodyDiagram} 
+                      alt={`${selectedBodyType === "boy" ? "Boy" : "Girl"} body parts diagram with labels from head to toe`} 
+                      className="w-full h-auto rounded-lg shadow-lg"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
