@@ -286,7 +286,7 @@ const LessonVault0406 = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
-                placeholder="Search lessons..." 
+                placeholder="" 
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
