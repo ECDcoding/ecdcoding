@@ -1386,8 +1386,8 @@ const LessonVault0406 = () => {
                       <h3 className="text-lg font-semibold text-gray-800">Child-like Drawings</h3>
                       <div className="bg-white rounded-lg shadow-lg p-4">
                         <img 
-                          src={selectedTransportType === "road-transport" ? twoWheelVehicles : roadTransportVehicles} 
-                          alt={`Child-like drawings of ${selectedTransportType === "road-transport" ? "vehicles" : "rail transport"}`} 
+                          src={selectedTransportType === "road-transport" ? twoWheelVehicles : railTransportVehicles} 
+                          alt={`${selectedTransportType === "road-transport" ? "Child-like drawings of vehicles" : "Real rail transport vehicles"}`} 
                           className="w-full h-auto rounded-lg object-contain"
                           style={{minHeight: "300px"}}
                         />
