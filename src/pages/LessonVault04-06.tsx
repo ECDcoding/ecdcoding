@@ -176,16 +176,16 @@ const LessonVault0406 = () => {
       "😀", "😀", "😀", "😀", "😃", "😀", "😀"
     ],
     "Food Verification": [
-      // Row 1: Apples and one banana (7 items)
-      "🍎", "🍎", "🍎", "🍌", "🍎", "🍎", "🍎",
-      // Row 2: Milk and one cheese (7 items)
-      "🥛", "🥛", "🧀", "🥛", "🥛", "🥛", "🥛",
-      // Row 3: Bread and one carrot (7 items)
-      "🍞", "🍞", "🍞", "🥕", "🍞", "🍞", "🍞",
-      // Row 4: Pizza and one burger (7 items)
-      "🍕", "🍔", "🍕", "🍕", "🍕", "🍕", "🍕",
-      // Row 5: Eggs and one chicken (7 items)
-      "🥚", "🥚", "🥚", "🍗", "🥚", "🥚", "🥚"
+      // Row 1: Apples and one banana (10 items)
+      "🍎", "🍎", "🍎", "🍎", "🍌", "🍎", "🍎", "🍎", "🍎", "🍎",
+      // Row 2: Milk and one cheese (10 items)
+      "🥛", "🥛", "🥛", "🧀", "🥛", "🥛", "🥛", "🥛", "🥛", "🥛",
+      // Row 3: Bread and one carrot (10 items)
+      "🍞", "🍞", "🍞", "🍞", "🥕", "🍞", "🍞", "🍞", "🍞", "🍞",
+      // Row 4: Pizza and one burger (10 items)
+      "🍕", "🍕", "🍔", "🍕", "🍕", "🍕", "🍕", "🍕", "🍕", "🍕",
+      // Row 5: Eggs and one chicken (10 items)
+      "🥚", "🥚", "🥚", "🥚", "🍗", "🥚", "🥚", "🥚", "🥚", "🥚"
     ],
     
     "Transportation": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
@@ -635,10 +635,10 @@ const LessonVault0406 = () => {
               ) : selectedEmojiCategory === "Food Verification" ? (
                 <div className="text-center mb-8">
                   <p className="text-xl mb-4">Find the odd food items! Look for items that are different from the others in each row.</p>
-                  <div className="grid grid-cols-7 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+                  <div className="grid grid-cols-10 gap-3 max-w-full mx-auto">
                      {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
-                       // Define which items are odd in each row (7 items per row)
-                       const oddItems = [3, 9, 17, 22, 31]; // Banana, Cheese, Carrot, Burger, Chicken
+                       // Define which items are odd in each row (10 items per row)
+                       const oddItems = [4, 13, 24, 32, 44]; // Banana, Cheese, Carrot, Burger, Chicken
                        const isOddItem = oddItems.includes(index);
                        
                        return (
@@ -647,7 +647,7 @@ const LessonVault0406 = () => {
                            className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full relative ${starAnimations[index] ? 'animate-pulse' : ''}`}
                            onClick={() => {
                              if (isOddItem) {
-                               const rowNumber = Math.floor(index / 7) + 1;
+                                const rowNumber = Math.floor(index / 10) + 1;
                                speakInstruction(`Correct! You found the odd food item in row ${rowNumber}. Well done!`);
                                // Trigger star animation
                                setStarAnimations(prev => ({...prev, [index]: true}));
@@ -660,7 +660,7 @@ const LessonVault0406 = () => {
                            }}
                          >
                            <CardContent className="p-0 flex items-center justify-center h-full">
-                             <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{emoji}</span>
+                              <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">{emoji}</span>
                            </CardContent>
                            {starAnimations[index] && (
                              <div className="absolute inset-0 pointer-events-none">
