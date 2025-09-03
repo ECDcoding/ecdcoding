@@ -18,8 +18,8 @@ import childDrawingRectangle from "@/assets/child-drawing-rectangle.jpg";
 import realCircleShape from "@/assets/real-circle-shape.jpg";
 import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
 import bodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
-import boyBodyDiagram from "@/assets/boy-body-diagram.jpg";
-import girlBodyDiagram from "@/assets/girl-body-diagram.jpg";
+import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
+import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -35,8 +35,8 @@ const LessonVault0406 = () => {
   const [triangleShapeOpen, setTriangleShapeOpen] = useState(false);
   const [rectangleShapeOpen, setRectangleShapeOpen] = useState(false);
   const [circleShapeOpen, setCircleShapeOpen] = useState(false);
-  const [selectedBodyType, setSelectedBodyType] = useState<string | null>(null);
-  const [bodyTypesOpen, setBodyTypesOpen] = useState(false);
+  const [selectedTransportType, setSelectedTransportType] = useState<string | null>(null);
+  const [transportOpen, setTransportOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -466,30 +466,11 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem onClick={() => {setSelectedTransportType("four-wheels"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       Four Wheels
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem onClick={() => {setSelectedTransportType("two-wheels"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
                       Two Wheels
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      Rail
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      My Body Types
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => {setSelectedBodyType("boy"); setBodyTypesOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Boy
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedBodyType("girl"); setBodyTypesOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Girl
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -1350,17 +1331,17 @@ const LessonVault0406 = () => {
           </div>
         )}
 
-        {/* My Body Types Full Overlay */}
-        {bodyTypesOpen && selectedBodyType && (
+        {/* Transportation Full Overlay */}
+        {transportOpen && selectedTransportType && (
           <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
                 <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  My Body Types - {selectedBodyType === "boy" ? "Boy" : "Girl"} (Ages 4-6)
+                  Transportation - {selectedTransportType === "four-wheels" ? "Four Wheels" : "Two Wheels"} (Ages 4-6)
                 </h1>
                 <button 
-                  onClick={() => setBodyTypesOpen(false)}
+                  onClick={() => setTransportOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
                 >
                   <X className="h-8 w-8" />
@@ -1368,13 +1349,13 @@ const LessonVault0406 = () => {
               </div>
               
               {/* Content */}
-              <div className="flex-1 p-8 max-w-4xl mx-auto">
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
                 <div className="text-center mb-8">
-                  <p className="text-xl mb-4 text-gray-700">Learn about body parts with this comprehensive diagram!</p>
-                  <div className="max-w-2xl mx-auto">
+                  <p className="text-xl mb-4 text-gray-700">Learn about different types of vehicles!</p>
+                  <div className="max-w-4xl mx-auto">
                     <img 
-                      src={selectedBodyType === "boy" ? boyBodyDiagram : girlBodyDiagram} 
-                      alt={`${selectedBodyType === "boy" ? "Boy" : "Girl"} body parts diagram with labels from head to toe`} 
+                      src={selectedTransportType === "four-wheels" ? fourWheelVehicles : twoWheelVehicles} 
+                      alt={`${selectedTransportType === "four-wheels" ? "Four wheel vehicles like cars, trucks, and buses" : "Two wheel vehicles like bicycles and scooters"} for children to learn`} 
                       className="w-full h-auto rounded-lg shadow-lg"
                     />
                   </div>
