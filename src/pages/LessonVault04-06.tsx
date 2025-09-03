@@ -10,7 +10,13 @@ import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
-import handDrawingSquare from "@/assets/hand-drawing-square.jpg";
+import childDrawingSquare from "@/assets/child-drawing-square.jpg";
+import realTriangleShape from "@/assets/real-triangle-shape.jpg";
+import childDrawingTriangle from "@/assets/child-drawing-triangle.jpg";
+import realRectangleShape from "@/assets/real-rectangle-shape.jpg";
+import childDrawingRectangle from "@/assets/child-drawing-rectangle.jpg";
+import realCircleShape from "@/assets/real-circle-shape.jpg";
+import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
 import bodyPartsDiagram from "@/assets/body-parts-diagram.jpg";
 
 const LessonVault0406 = () => {
@@ -24,6 +30,9 @@ const LessonVault0406 = () => {
   const [isAutoCounting, setIsAutoCounting] = useState(false);
   const [currentAutoIndex, setCurrentAutoIndex] = useState(0);
   const [squareShapeOpen, setSquareShapeOpen] = useState(false);
+  const [triangleShapeOpen, setTriangleShapeOpen] = useState(false);
+  const [rectangleShapeOpen, setRectangleShapeOpen] = useState(false);
+  const [circleShapeOpen, setCircleShapeOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -386,15 +395,15 @@ const LessonVault0406 = () => {
                      <DropdownMenuItem onClick={() => setSquareShapeOpen(true)} className="font-medium text-white hover:bg-white/20">
                        Square
                      </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      Triangle
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      Circle
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      Rectangle
-                    </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setTriangleShapeOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Triangle
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setCircleShapeOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Circle
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setRectangleShapeOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Rectangle
+                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
@@ -781,20 +790,20 @@ const LessonVault0406 = () => {
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
                         src={realSquareShape} 
-                        alt="Real square shape - toy block or educational material" 
+                        alt="Real square shape - colorful educational material" 
                         className="mx-auto rounded-lg max-w-full h-auto"
                       />
                     </div>
                     <p className="text-gray-600 mt-4">This is what a square looks like in real life!</p>
                   </div>
                   
-                  {/* Right Column - Hand Drawing Square */}
+                  {/* Right Column - Child Drawing Square */}
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Square</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
-                        src={handDrawingSquare} 
-                        alt="Hand drawing a square shape step by step" 
+                        src={childDrawingSquare} 
+                        alt="Child's hand drawing a square shape step by step" 
                         className="mx-auto rounded-lg max-w-full h-auto"
                       />
                     </div>
@@ -810,6 +819,195 @@ const LessonVault0406 = () => {
                       <li>• All angles in a square are 90 degrees</li>
                       <li>• Squares are everywhere - windows, books, tiles!</li>
                       <li>• You can draw a square by making 4 equal lines that connect</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Triangle Shape Learning Dialog */}
+        {triangleShapeOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Learning Triangles
+                </h1>
+                <button 
+                  onClick={() => setTriangleShapeOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  {/* Left Column - Real Triangle Shape */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Real Triangle Shape</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={realTriangleShape} 
+                        alt="Real triangle shape - colorful educational material" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">This is what a triangle looks like in real life!</p>
+                  </div>
+                  
+                  {/* Right Column - Child Drawing Triangle */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Triangle</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={childDrawingTriangle} 
+                        alt="Child's hand drawing a triangle shape step by step" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">Learn how to draw a triangle with your hands!</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Triangles</h3>
+                    <ul className="text-left text-gray-700 space-y-2">
+                      <li>• A triangle has 3 sides</li>
+                      <li>• All angles in a triangle add up to 180 degrees</li>
+                      <li>• Triangles are very strong shapes - used in building bridges!</li>
+                      <li>• You can draw a triangle by making 3 lines that connect</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Rectangle Shape Learning Dialog */}
+        {rectangleShapeOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Learning Rectangles
+                </h1>
+                <button 
+                  onClick={() => setRectangleShapeOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  {/* Left Column - Real Rectangle Shape */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Real Rectangle Shape</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={realRectangleShape} 
+                        alt="Real rectangle shape - colorful educational material" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">This is what a rectangle looks like in real life!</p>
+                  </div>
+                  
+                  {/* Right Column - Child Drawing Rectangle */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Rectangle</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={childDrawingRectangle} 
+                        alt="Child's hand drawing a rectangle shape step by step" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">Learn how to draw a rectangle with your hands!</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Rectangles</h3>
+                    <ul className="text-left text-gray-700 space-y-2">
+                      <li>• A rectangle has 4 sides with opposite sides equal</li>
+                      <li>• All angles in a rectangle are 90 degrees</li>
+                      <li>• Rectangles are everywhere - doors, phones, TVs!</li>
+                      <li>• You can draw a rectangle with 2 long sides and 2 short sides</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Circle Shape Learning Dialog */}
+        {circleShapeOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Learning Circles
+                </h1>
+                <button 
+                  onClick={() => setCircleShapeOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  {/* Left Column - Real Circle Shape */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Real Circle Shape</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={realCircleShape} 
+                        alt="Real circle shape - colorful educational material" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">This is what a circle looks like in real life!</p>
+                  </div>
+                  
+                  {/* Right Column - Child Drawing Circle */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Circle</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={childDrawingCircle} 
+                        alt="Child's hand drawing a circle shape step by step" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">Learn how to draw a circle with your hands!</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Circles</h3>
+                    <ul className="text-left text-gray-700 space-y-2">
+                      <li>• A circle is perfectly round with no corners</li>
+                      <li>• All points on a circle are the same distance from the center</li>
+                      <li>• Circles are everywhere - wheels, balls, coins!</li>
+                      <li>• You can draw a circle by making one continuous curved line</li>
                     </ul>
                   </div>
                 </div>
