@@ -105,7 +105,7 @@ const LessonVault0406 = () => {
   };
 
   const speakWhatToExpected = () => {
-    const message = "Welcome to the Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy, your child will learn Vowels, and Alphabets; Notes to Parents: Parents are encouraged among other, to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
+    const message = "Welcome to My Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy, your child will learn Vowels, and Alphabets; Notes to Parents: Parents are encouraged among other, to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
     speakInstruction(message);
   };
 
@@ -280,7 +280,7 @@ const LessonVault0406 = () => {
             <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors mb-1">
               <Home className="h-8 w-8" />
             </Link>
-            <h1 className="text-2xl font-bold mb-1">Lesson Vault</h1>
+            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
