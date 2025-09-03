@@ -20,6 +20,8 @@ import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
 import bodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
 import roadTransportVehicles from "@/assets/road-transport-vehicles.jpg";
 import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
+import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
+import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -1363,13 +1365,34 @@ const LessonVault0406 = () => {
               <div className="flex-1 p-8 max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                   <p className="text-xl mb-8 text-gray-700">Learn about different types of vehicles!</p>
-                  <div className="max-w-6xl mx-auto px-8">
-                    <img 
-                      src={selectedTransportType === "road-transport" ? roadTransportVehicles : railTransportVehicles} 
-                      alt={`${selectedTransportType === "road-transport" ? "Road transport vehicles: school bus, ambulance, truck, and car" : "Rail transport vehicles like trains"} for children to learn`} 
-                      className="w-full h-auto rounded-lg shadow-lg object-contain"
-                      style={{minHeight: "400px"}}
-                    />
+                  
+                  {/* Two Column Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    {/* Left Column - Real Vehicles */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-gray-800">Real Vehicles</h3>
+                      <div className="bg-white rounded-lg shadow-lg p-4">
+                        <img 
+                          src={selectedTransportType === "road-transport" ? fourWheelVehicles : railTransportVehicles} 
+                          alt={`Real ${selectedTransportType === "road-transport" ? "four-wheeled vehicles" : "rail transport vehicles"}`} 
+                          className="w-full h-auto rounded-lg object-contain"
+                          style={{minHeight: "300px"}}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Right Column - Child-like Drawings */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-gray-800">Child-like Drawings</h3>
+                      <div className="bg-white rounded-lg shadow-lg p-4">
+                        <img 
+                          src={selectedTransportType === "road-transport" ? twoWheelVehicles : roadTransportVehicles} 
+                          alt={`Child-like drawings of ${selectedTransportType === "road-transport" ? "vehicles" : "rail transport"}`} 
+                          className="w-full h-auto rounded-lg object-contain"
+                          style={{minHeight: "300px"}}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
