@@ -58,6 +58,10 @@ export default {
 					purple: 'hsl(var(--brand-purple))',
 					orange: 'hsl(var(--ecd-orange))'
 				},
+				profile: {
+					bg: 'hsl(var(--profile-bg))',
+					text: 'hsl(var(--profile-text))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

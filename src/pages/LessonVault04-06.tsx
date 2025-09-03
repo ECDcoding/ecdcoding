@@ -284,27 +284,27 @@ const LessonVault0406 = () => {
           </div>
           <div className="flex items-center gap-4">
             <Select>
-              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-white/10 flex items-center justify-center">
+              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
                 {profileImage ? (
                   <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
                 ) : (
-                  <span className="text-white text-xs">Photo</span>
+                  <span className="text-profile-text text-xs">Photo</span>
                 )}
               </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <SelectItem value="profile" className="hover:bg-gray-100 flex items-center gap-2">
+              <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
+                <SelectItem value="profile" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
                   <User className="h-4 w-4" />
                   Profile
                 </SelectItem>
-                <SelectItem value="change-password" className="hover:bg-gray-100 flex items-center gap-2">
+                <SelectItem value="change-password" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
                   <Key className="h-4 w-4" />
                   Change Password
                 </SelectItem>
-                <SelectItem value="contact-details" className="hover:bg-gray-100 flex items-center gap-2">
+                <SelectItem value="contact-details" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
                   <Phone className="h-4 w-4" />
                   Contact Details
                 </SelectItem>
-                <SelectItem value="logout" className="hover:bg-gray-100 text-red-600">
+                <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
                   Logout
                 </SelectItem>
               </SelectContent>
