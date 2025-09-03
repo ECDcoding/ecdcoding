@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
+import realSquareShape from "@/assets/real-square-shape.jpg";
+import handDrawingSquare from "@/assets/hand-drawing-square.jpg";
+import bodyPartsDiagram from "@/assets/body-parts-diagram.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -20,6 +23,7 @@ const LessonVault0406 = () => {
   const [parentsOpen, setParentsOpen] = useState(false);
   const [isAutoCounting, setIsAutoCounting] = useState(false);
   const [currentAutoIndex, setCurrentAutoIndex] = useState(0);
+  const [squareShapeOpen, setSquareShapeOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -158,7 +162,18 @@ const LessonVault0406 = () => {
       // Row 5: Smiling faces and one different expression (7 faces)
       "😀", "😀", "😀", "😀", "😃", "😀", "😀"
     ],
-    "Food Verification": ["🍎", "🍌", "🍎", "🍎", "🍎", "🥛", "🧀", "🥛", "🥛", "🥛", "🍞", "🥕", "🍞", "🍞", "🍞", "🍕", "🍔", "🍕", "🍕", "🍕", "🥚", "🍗", "🥚", "🥚", "🥚"],
+    "Food Verification": [
+      // Row 1: Apples and one banana (7 items)
+      "🍎", "🍎", "🍎", "🍌", "🍎", "🍎", "🍎",
+      // Row 2: Milk and one cheese (7 items)
+      "🥛", "🥛", "🧀", "🥛", "🥛", "🥛", "🥛",
+      // Row 3: Bread and one carrot (7 items)
+      "🍞", "🍞", "🍞", "🥕", "🍞", "🍞", "🍞",
+      // Row 4: Pizza and one burger (7 items)
+      "🍕", "🍔", "🍕", "🍕", "🍕", "🍕", "🍕",
+      // Row 5: Eggs and one chicken (7 items)
+      "🥚", "🥚", "🥚", "🍗", "🥚", "🥚", "🥚"
+    ],
     "My Body Parts": ["👁️", "👂", "👁️", "👁️", "👁️", "👃", "👄", "👃", "👃", "👃", "🤚", "🦵", "🤚", "🤚", "🤚", "👶", "👧", "👶", "👶", "👶", "👦", "👱‍♀️", "👦", "👦", "👦"],
     "Transportation": ["🚗", "🚌", "🚗", "🚗", "🚗", "✈️", "🚲", "✈️", "✈️", "✈️", "🚂", "🛵", "🚂", "🚂", "🚂", "🚁", "⛵", "🚁", "🚁", "🚁", "🚜", "🏍️", "🚜", "🚜", "🚜"],
     "Body Types": ["👶", "👦", "👶", "👶", "👶", "👧", "👩", "👧", "👧", "👧", "👨", "👴", "👨", "👨", "👨", "👵", "🧒", "👵", "👵", "👵", "🧓", "👱", "🧓", "🧓", "🧓"],
@@ -368,9 +383,9 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      Square
-                    </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setSquareShapeOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Square
+                     </DropdownMenuItem>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                       Triangle
                     </DropdownMenuItem>
@@ -607,17 +622,72 @@ const LessonVault0406 = () => {
                      })}
                   </div>
                 </div>
+              ) : selectedEmojiCategory === "Food Verification" ? (
+                <div className="text-center mb-8">
+                  <p className="text-xl mb-4">Find the odd food items! Look for items that are different from the others in each row.</p>
+                  <div className="grid grid-cols-7 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+                     {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => {
+                       // Define which items are odd in each row (7 items per row)
+                       const oddItems = [3, 9, 17, 22, 31]; // Banana, Cheese, Carrot, Burger, Chicken
+                       const isOddItem = oddItems.includes(index);
+                       
+                       return (
+                         <Card 
+                           key={index} 
+                           className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full relative ${starAnimations[index] ? 'animate-pulse' : ''}`}
+                           onClick={() => {
+                             if (isOddItem) {
+                               const rowNumber = Math.floor(index / 7) + 1;
+                               speakInstruction(`Correct! You found the odd food item in row ${rowNumber}. Well done!`);
+                               // Trigger star animation
+                               setStarAnimations(prev => ({...prev, [index]: true}));
+                               setTimeout(() => {
+                                 setStarAnimations(prev => ({...prev, [index]: false}));
+                               }, 2000);
+                             } else {
+                               speakInstruction("Try again! Look for the food item that is different from the others in this row.");
+                             }
+                           }}
+                         >
+                           <CardContent className="p-0 flex items-center justify-center h-full">
+                             <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{emoji}</span>
+                           </CardContent>
+                           {starAnimations[index] && (
+                             <div className="absolute inset-0 pointer-events-none">
+                               <div className="absolute top-2 left-2 text-yellow-400 text-2xl animate-bounce">⭐</div>
+                               <div className="absolute top-2 right-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.1s'}}>⭐</div>
+                               <div className="absolute bottom-2 left-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.2s'}}>⭐</div>
+                               <div className="absolute bottom-2 right-2 text-yellow-400 text-2xl animate-bounce" style={{animationDelay: '0.3s'}}>⭐</div>
+                               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-yellow-400 text-3xl animate-pulse">🌟</div>
+                             </div>
+                           )}
+                         </Card>
+                       );
+                     })}
+                  </div>
+                </div>
+              ) : selectedEmojiCategory === "My Body Parts" ? (
+                <div className="text-center mb-8">
+                  <p className="text-xl mb-4">Learn about body parts with this comprehensive diagram!</p>
+                  <div className="max-w-4xl mx-auto">
+                    <img 
+                      src={bodyPartsDiagram} 
+                      alt="Complete body parts diagram with labels from head to toe" 
+                      className="w-full h-auto rounded-lg shadow-lg"
+                    />
+                  </div>
+                </div>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
-                  {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
-                     <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32">
-                       <CardContent className="p-0 flex items-center justify-center h-full">
-                         <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
-                       </CardContent>
-                     </Card>
-                  ))}
-                </div>
-              )}
+                   {emojiCategories[selectedEmojiCategory as keyof typeof emojiCategories]?.map((emoji, index) => (
+                      <Card key={index} className="aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32">
+                        <CardContent className="p-0 flex items-center justify-center h-full">
+                          <span className="text-4xl sm:text-6xl md:text-8xl">{emoji}</span>
+                        </CardContent>
+                      </Card>
+                   ))}
+                 </div>
+               )}
             </div>
           </div>
         )}
@@ -681,6 +751,69 @@ const LessonVault0406 = () => {
                 </div>
               )}
 
+            </div>
+          </div>
+        )}
+
+        {/* Square Shape Learning Dialog */}
+        {squareShapeOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Learning Squares
+                </h1>
+                <button 
+                  onClick={() => setSquareShapeOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  {/* Left Column - Real Square Shape */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Real Square Shape</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={realSquareShape} 
+                        alt="Real square shape - toy block or educational material" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">This is what a square looks like in real life!</p>
+                  </div>
+                  
+                  {/* Right Column - Hand Drawing Square */}
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Square</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                      <img 
+                        src={handDrawingSquare} 
+                        alt="Hand drawing a square shape step by step" 
+                        className="mx-auto rounded-lg max-w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-gray-600 mt-4">Learn how to draw a square with your hands!</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center">
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Squares</h3>
+                    <ul className="text-left text-gray-700 space-y-2">
+                      <li>• A square has 4 equal sides</li>
+                      <li>• All angles in a square are 90 degrees</li>
+                      <li>• Squares are everywhere - windows, books, tiles!</li>
+                      <li>• You can draw a square by making 4 equal lines that connect</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
