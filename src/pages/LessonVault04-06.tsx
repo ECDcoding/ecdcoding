@@ -1360,14 +1360,15 @@ const LessonVault0406 = () => {
               </div>
               
               {/* Content */}
-              <div className="flex-1 p-8 max-w-6xl mx-auto">
-                <div className="text-center mb-8">
-                  <p className="text-xl mb-4 text-gray-700">Learn about different types of vehicles!</p>
-                  <div className="max-w-4xl mx-auto">
+              <div className="flex-1 p-8 max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                  <p className="text-xl mb-8 text-gray-700">Learn about different types of vehicles!</p>
+                  <div className="max-w-6xl mx-auto px-8">
                     <img 
                       src={selectedTransportType === "road-transport" ? roadTransportVehicles : railTransportVehicles} 
                       alt={`${selectedTransportType === "road-transport" ? "Road transport vehicles: school bus, ambulance, truck, and car" : "Rail transport vehicles like trains"} for children to learn`} 
-                      className="w-full h-auto rounded-lg shadow-lg"
+                      className="w-full h-auto rounded-lg shadow-lg object-contain"
+                      style={{minHeight: "400px"}}
                     />
                   </div>
                 </div>
