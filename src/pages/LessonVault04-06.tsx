@@ -503,19 +503,7 @@ const LessonVault0406 = () => {
                 <SelectValue placeholder="Media Icons" />
               </SelectTrigger>
               <SelectContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                {Object.entries(mediaCategories).map(([category, objects]) => (
-                  <SelectItem key={category} value={category} className="hover:bg-gray-100">
-                    <div className="flex flex-col">
-                      <span className="font-medium">{category}</span>
-                      <div className="flex gap-1 mt-1">
-                        {objects.slice(0, 5).map((object, index) => (
-                          <span key={index} className="text-lg">{object}</span>
-                        ))}
-                        <span className="text-sm text-gray-500">...</span>
-                      </div>
-                    </div>
-                  </SelectItem>
-                ))}
+                {/* No media categories available */}
               </SelectContent>
             </Select>
           </div>
@@ -665,48 +653,9 @@ const LessonVault0406 = () => {
                 <h1 className="text-3xl font-bold">{selectedMediaCategory}</h1>
               </div>
               
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
-                {mediaCategories[selectedMediaCategory as keyof typeof mediaCategories]?.map((object, index) => (
-                   <Card 
-                     key={index} 
-                     onClick={() => { if (object === "📷") setPictureActive((prev) => !prev); }}
-                     className={`aspect-square flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow w-full max-w-32 ${object === "📷" && pictureActive ? "bg-brand-green text-foreground" : ""}`}
-                   >
-                     <CardContent className="p-0 flex items-center justify-center h-full">
-                       <span className="text-4xl sm:text-6xl md:text-8xl">{object}</span>
-                     </CardContent>
-                   </Card>
-                ))}
+              <div className="text-center py-8">
+                <p className="text-gray-600">No media content available.</p>
               </div>
-
-              {selectedMediaCategory === "Social Media" && (
-                <div className="mt-10">
-                  <img
-                    src="/lovable-uploads/b7647a0f-f531-4bd1-82fe-d8b4d9c54fc1.png"
-                    alt="Media icons: Facebook, X, LinkedIn, YouTube, WhatsApp, Google Plus, Instagram, Pinterest, Snapchat"
-                    loading="lazy"
-                    className="mx-auto max-w-xl w-full h-auto rounded-md shadow"
-                  />
-
-                  <div className="mt-6 flex items-center justify-center gap-6">
-                    <button aria-label="Facebook" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
-                      <SiFacebook size={28} />
-                    </button>
-                    <button aria-label="X" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
-                      <SiX size={28} />
-                    </button>
-                    <button aria-label="TikTok" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
-                      <SiTiktok size={28} />
-                    </button>
-                    <button aria-label="LinkedIn" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
-                      <SiLinkedin size={28} />
-                    </button>
-                    <button aria-label="Bluesky" className="p-3 rounded-full bg-card text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors">
-                      <SiBluesky size={28} />
-                    </button>
-                  </div>
-                </div>
-              )}
 
             </div>
           </div>
