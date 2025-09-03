@@ -431,9 +431,6 @@ const LessonVault0406 = () => {
                        <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
                          Facial Recognition
                        </DropdownMenuItem>
-                       <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                         Bread | Fruit | Dairy | Vegetables
-                       </DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
                 <DropdownMenu>
