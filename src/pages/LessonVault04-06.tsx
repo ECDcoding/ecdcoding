@@ -782,16 +782,25 @@ const LessonVault0406 = () => {
                   </div>
                 </div>
                 
-                <div className="mt-8 text-center">
-                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Squares</h3>
-                    <ul className="text-left text-gray-700 space-y-2">
-                      <li>• A square has 4 equal sides</li>
-                      <li>• All angles in a square are 90 degrees</li>
-                      <li>• Squares are everywhere - windows, books, tiles!</li>
-                      <li>• You can draw a square by making 4 equal lines that connect</li>
-                    </ul>
-                  </div>
+                <div className="mt-8 text-center flex flex-wrap gap-4 justify-center">
+                  <Button 
+                    onClick={() => {setSquareShapeOpen(false); setTriangleShapeOpen(true);}}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Triangle
+                  </Button>
+                  <Button 
+                    onClick={() => {setSquareShapeOpen(false); setCircleShapeOpen(true);}}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Circle
+                  </Button>
+                  <Button 
+                    onClick={() => {setSquareShapeOpen(false); setRectangleShapeOpen(true);}}
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Rectangle
+                  </Button>
                 </div>
               </div>
             </div>
@@ -845,16 +854,25 @@ const LessonVault0406 = () => {
                   </div>
                 </div>
                 
-                <div className="mt-8 text-center">
-                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Triangles</h3>
-                    <ul className="text-left text-gray-700 space-y-2">
-                      <li>• A triangle has 3 sides</li>
-                      <li>• All angles in a triangle add up to 180 degrees</li>
-                      <li>• Triangles are very strong shapes - used in building bridges!</li>
-                      <li>• You can draw a triangle by making 3 lines that connect</li>
-                    </ul>
-                  </div>
+                <div className="mt-8 text-center flex flex-wrap gap-4 justify-center">
+                  <Button 
+                    onClick={() => {setTriangleShapeOpen(false); setSquareShapeOpen(true);}}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Square
+                  </Button>
+                  <Button 
+                    onClick={() => {setTriangleShapeOpen(false); setCircleShapeOpen(true);}}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Circle
+                  </Button>
+                  <Button 
+                    onClick={() => {setTriangleShapeOpen(false); setRectangleShapeOpen(true);}}
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Rectangle
+                  </Button>
                 </div>
               </div>
             </div>
@@ -908,16 +926,25 @@ const LessonVault0406 = () => {
                   </div>
                 </div>
                 
-                <div className="mt-8 text-center">
-                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Rectangles</h3>
-                    <ul className="text-left text-gray-700 space-y-2">
-                      <li>• A rectangle has 4 sides with opposite sides equal</li>
-                      <li>• All angles in a rectangle are 90 degrees</li>
-                      <li>• Rectangles are everywhere - doors, phones, TVs!</li>
-                      <li>• You can draw a rectangle with 2 long sides and 2 short sides</li>
-                    </ul>
-                  </div>
+                <div className="mt-8 text-center flex flex-wrap gap-4 justify-center">
+                  <Button 
+                    onClick={() => {setRectangleShapeOpen(false); setSquareShapeOpen(true);}}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Square
+                  </Button>
+                  <Button 
+                    onClick={() => {setRectangleShapeOpen(false); setTriangleShapeOpen(true);}}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Triangle
+                  </Button>
+                  <Button 
+                    onClick={() => {setRectangleShapeOpen(false); setCircleShapeOpen(true);}}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Circle
+                  </Button>
                 </div>
               </div>
             </div>
@@ -971,16 +998,25 @@ const LessonVault0406 = () => {
                   </div>
                 </div>
                 
-                <div className="mt-8 text-center">
-                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fun Facts About Circles</h3>
-                    <ul className="text-left text-gray-700 space-y-2">
-                      <li>• A circle is perfectly round with no corners</li>
-                      <li>• All points on a circle are the same distance from the center</li>
-                      <li>• Circles are everywhere - wheels, balls, coins!</li>
-                      <li>• You can draw a circle by making one continuous curved line</li>
-                    </ul>
-                  </div>
+                <div className="mt-8 text-center flex flex-wrap gap-4 justify-center">
+                  <Button 
+                    onClick={() => {setCircleShapeOpen(false); setSquareShapeOpen(true);}}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Square
+                  </Button>
+                  <Button 
+                    onClick={() => {setCircleShapeOpen(false); setTriangleShapeOpen(true);}}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Triangle
+                  </Button>
+                  <Button 
+                    onClick={() => {setCircleShapeOpen(false); setRectangleShapeOpen(true);}}
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-6 py-3 rounded-full"
+                  >
+                    Proceed to Rectangle
+                  </Button>
                 </div>
               </div>
             </div>
