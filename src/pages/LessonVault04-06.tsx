@@ -427,36 +427,14 @@ const LessonVault0406 = () => {
                         <ChevronDown className="h-4 w-4" />
                       </DropdownMenuItem>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
-                        Facial Recognition
-                      </DropdownMenuItem>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                            Food Verification
-                            <ChevronDown className="h-4 w-4" />
-                          </DropdownMenuItem>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                            🍞🍞🍞🍞🍔 (4 Bread + Burger)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                            🍎🍎🍎🍎🍌 (4 Apples + Banana)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                            🥛🥛🥛🥛💧 (4 Milk + Water)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                            🍪🍪🍪🍪🧁 (4 Cookies + Cupcake)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                            🥕🥕🥕🥕🍅 (4 Carrots + Tomato)
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </DropdownMenuContent>
+                     <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                       <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
+                         Facial Recognition
+                       </DropdownMenuItem>
+                       <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                         Bread | Fruit | Dairy | Vegetables
+                       </DropdownMenuItem>
+                     </DropdownMenuContent>
                   </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
