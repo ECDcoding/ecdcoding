@@ -12,7 +12,7 @@ const CallToAction = () => {
           Kids Aged 04 - 06
         </Button>
       </Link>
-      <Link to="/lesson-vault-07-10">
+      <Link to="/payment">
         <Button 
           size="lg"
           className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 text-lg rounded-2xl"

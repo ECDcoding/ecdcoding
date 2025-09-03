@@ -17,7 +17,7 @@ import realRectangleShape from "@/assets/real-rectangle-shape.jpg";
 import childDrawingRectangle from "@/assets/child-drawing-rectangle.jpg";
 import realCircleShape from "@/assets/real-circle-shape.jpg";
 import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
-import bodyPartsDiagram from "@/assets/body-parts-diagram.jpg";
+import bodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);

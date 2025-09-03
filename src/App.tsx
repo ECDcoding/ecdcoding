@@ -9,6 +9,7 @@ import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 import LessonVault0406 from "./pages/LessonVault04-06";
 import LessonVault0710 from "./pages/LessonVault07-10";
+import PaymentForm from "./pages/PaymentForm";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/lesson-vault-04-06" element={<LessonVault0406 />} />
           <Route path="/lesson-vault-07-10" element={<LessonVault0710 />} />
+          <Route path="/payment" element={<PaymentForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
