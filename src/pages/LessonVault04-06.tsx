@@ -18,8 +18,8 @@ import childDrawingRectangle from "@/assets/child-drawing-rectangle.jpg";
 import realCircleShape from "@/assets/real-circle-shape.jpg";
 import childDrawingCircle from "@/assets/child-drawing-circle.jpg";
 import bodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
-import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
-import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
+import roadTransportVehicles from "@/assets/road-transport-vehicles.jpg";
+import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -466,11 +466,11 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => {setSelectedTransportType("four-wheels"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Four Wheels
+                    <DropdownMenuItem onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                      Road Transport
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedTransportType("two-wheels"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Two Wheels
+                    <DropdownMenuItem onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                      Rail Transport
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -1374,7 +1374,7 @@ const LessonVault0406 = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
                 <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Transportation - {selectedTransportType === "four-wheels" ? "Four Wheels" : "Two Wheels"} (Ages 4-6)
+                  Transportation - {selectedTransportType === "road-transport" ? "Road Transport" : "Rail Transport"} (Ages 4-6)
                 </h1>
                 <button 
                   onClick={() => setTransportOpen(false)}
@@ -1390,8 +1390,8 @@ const LessonVault0406 = () => {
                   <p className="text-xl mb-4 text-gray-700">Learn about different types of vehicles!</p>
                   <div className="max-w-4xl mx-auto">
                     <img 
-                      src={selectedTransportType === "four-wheels" ? fourWheelVehicles : twoWheelVehicles} 
-                      alt={`${selectedTransportType === "four-wheels" ? "Four wheel vehicles like cars, trucks, and buses" : "Two wheel vehicles like bicycles and scooters"} for children to learn`} 
+                      src={selectedTransportType === "road-transport" ? roadTransportVehicles : railTransportVehicles} 
+                      alt={`${selectedTransportType === "road-transport" ? "Road transport vehicles: school bus, ambulance, truck, and car" : "Rail transport vehicles like trains"} for children to learn`} 
                       className="w-full h-auto rounded-lg shadow-lg"
                     />
                   </div>
