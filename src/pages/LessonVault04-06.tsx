@@ -283,13 +283,6 @@ const LessonVault0406 = () => {
             <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="" 
-                className="pl-10 w-64 bg-white text-foreground"
-              />
-            </div>
             <Select>
               <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-white/10 flex items-center justify-center">
                 {profileImage ? (
