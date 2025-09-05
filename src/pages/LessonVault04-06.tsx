@@ -1426,38 +1426,129 @@ const LessonVault0406 = () => {
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-8 shadow-lg mb-8">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4">Create Your Own Dance Moves!</h2>
                   <p className="text-lg text-gray-700 mb-6">
-                    Use this special code to make your character dance! Watch as the SLOTH sprite moves with the "ThisOrThat" dance move.
+                    Drag and drop blocks to create your dance program! Just like coding, but visual and fun.
                   </p>
                   
-                  {/* Code Display */}
-                  <div className="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-6 overflow-x-auto">
-                    <pre>{`whenSetup(function () {
+                  {/* Visual Blocks Programming Area */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Block Palette */}
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold text-blue-600 mb-4">🧩 Programming Blocks</h3>
+                      
+                      {/* Event Block */}
+                      <div className="mb-4">
+                        <div className="bg-orange-500 text-white p-3 rounded-lg cursor-pointer hover:bg-orange-600 transition-colors shadow-md">
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 bg-orange-700 rounded-full"></div>
+                            <span className="font-semibold">When Setup</span>
+                          </div>
+                          <div className="text-xs mt-1 opacity-90">Event - starts the program</div>
+                        </div>
+                      </div>
+                      
+                      {/* Action Blocks */}
+                      <div className="space-y-3">
+                        <div className="bg-blue-500 text-white p-3 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors shadow-md">
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
+                            <span className="font-semibold">Make Dance Sprite</span>
+                          </div>
+                          <div className="text-xs mt-1 space-y-1">
+                            <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
+                            <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500 text-white p-3 rounded-lg cursor-pointer hover:bg-green-600 transition-colors shadow-md">
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 bg-green-700 rounded-full"></div>
+                            <span className="font-semibold">Change Move Each LR</span>
+                          </div>
+                          <div className="text-xs mt-1 space-y-1">
+                            <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
+                            <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">ThisOrThat</span></div>
+                            <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Programming Canvas */}
+                    <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">🎯 Your Program</h3>
+                      <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-4 min-h-[300px]">
+                        {/* Assembled Blocks */}
+                        <div className="space-y-2">
+                          {/* When Setup Block */}
+                          <div className="bg-orange-500 text-white p-3 rounded-lg shadow-md border-l-4 border-orange-700">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-orange-700 rounded-full"></div>
+                              <span className="font-semibold">When Setup</span>
+                            </div>
+                          </div>
+                          
+                          {/* Connected Action Blocks */}
+                          <div className="ml-6 space-y-2">
+                            <div className="bg-blue-500 text-white p-3 rounded-lg shadow-md border-l-4 border-blue-700">
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
+                                <span className="font-semibold">Make Dance Sprite</span>
+                              </div>
+                              <div className="text-xs mt-1 space-y-1">
+                                <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
+                                <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-green-500 text-white p-3 rounded-lg shadow-md border-l-4 border-green-700">
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 bg-green-700 rounded-full"></div>
+                                <span className="font-semibold">Change Move Each LR</span>
+                              </div>
+                              <div className="text-xs mt-1 space-y-1">
+                                <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
+                                <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">ThisOrThat</span></div>
+                                <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Generated Code Display */}
+                        <div className="mt-6 pt-4 border-t border-gray-300">
+                          <h4 className="text-sm font-semibold text-gray-600 mb-2">Generated Code:</h4>
+                          <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-xs overflow-x-auto">
+                            <pre>{`whenSetup(function () {
   makeAnonymousDanceSprite("SLOTH", {x: 200, y: 200});
   changeMoveEachLR("SLOTH", MOVES.ThisOrThat, -1);
 });`}</pre>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Instructions */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div className="bg-white p-6 rounded-lg shadow-md">
-                      <h3 className="text-lg font-semibold text-purple-600 mb-3">How it works:</h3>
-                      <ul className="space-y-2 text-gray-700">
-                        <li>• <strong>makeAnonymousDanceSprite</strong> creates a dancing character</li>
-                        <li>• <strong>"SLOTH"</strong> is the character type</li>
-                        <li>• <strong>{`{x: 200, y: 200}`}</strong> sets the starting position</li>
-                        <li>• <strong>changeMoveEachLR</strong> makes it dance</li>
-                        <li>• <strong>MOVES.ThisOrThat</strong> is the dance style</li>
+                      <h3 className="text-lg font-semibold text-purple-600 mb-3">🎨 How Blocks Work:</h3>
+                      <ul className="space-y-2 text-gray-700 text-sm">
+                        <li>• <span className="bg-orange-100 px-2 py-1 rounded text-orange-700 font-semibold">Orange blocks</span> are events (when things start)</li>
+                        <li>• <span className="bg-blue-100 px-2 py-1 rounded text-blue-700 font-semibold">Blue blocks</span> create characters</li>
+                        <li>• <span className="bg-green-100 px-2 py-1 rounded text-green-700 font-semibold">Green blocks</span> control movement</li>
+                        <li>• Connect blocks to build your program</li>
+                        <li>• Each block becomes real code!</li>
                       </ul>
                     </div>
                     
                     <div className="bg-white p-6 rounded-lg shadow-md">
-                      <h3 className="text-lg font-semibold text-pink-600 mb-3">Try changing:</h3>
-                      <ul className="space-y-2 text-gray-700">
-                        <li>• Change "SLOTH" to other animals</li>
-                        <li>• Try different x, y positions</li>
-                        <li>• Experiment with other MOVES</li>
-                        <li>• Change the -1 to different numbers</li>
-                        <li>• Add multiple dancers!</li>
+                      <h3 className="text-lg font-semibold text-pink-600 mb-3">🚀 Try Experimenting:</h3>
+                      <ul className="space-y-2 text-gray-700 text-sm">
+                        <li>• Change character types (CAT, DOG, BEAR)</li>
+                        <li>• Try different positions (x: 100, y: 300)</li>
+                        <li>• Experiment with dance moves</li>
+                        <li>• Change speed values (1, 2, -2)</li>
+                        <li>• Add multiple character blocks!</li>
                       </ul>
                     </div>
                   </div>
@@ -1469,7 +1560,7 @@ const LessonVault0406 = () => {
                       <div className="text-center">
                         <div className="text-6xl mb-4 animate-bounce">🦥</div>
                         <p className="text-gray-600">Your SLOTH dancer will appear here!</p>
-                        <p className="text-sm text-gray-500 mt-2">Copy the code above to see the magic happen</p>
+                        <p className="text-sm text-gray-500 mt-2">Run your block program to see the magic happen</p>
                       </div>
                     </div>
                   </div>
