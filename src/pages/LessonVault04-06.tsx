@@ -1446,31 +1446,43 @@ const LessonVault0406 = () => {
                         </div>
                       </div>
                       
-                      {/* Action Blocks */}
-                      <div className="space-y-3">
-                        <div className="bg-blue-500 text-white p-3 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors shadow-md">
-                          <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
-                            <span className="font-semibold">Make Dance Sprite</span>
+                        {/* Action Blocks */}
+                        <div className="space-y-3">
+                          <div className="bg-purple-500 text-white p-3 rounded-lg cursor-pointer hover:bg-purple-600 transition-colors shadow-md">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-purple-700 rounded-full"></div>
+                              <span className="font-semibold">AI Background Effects</span>
+                            </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Emojis: <span className="bg-white/20 px-2 py-1 rounded text-xs">face emojis</span></div>
+                              <div>Effect: <span className="bg-white/20 px-2 py-1 rounded text-xs">spiral</span></div>
+                              <div>Style: <span className="bg-white/20 px-2 py-1 rounded text-xs">vintage</span></div>
+                            </div>
                           </div>
-                          <div className="text-xs mt-1 space-y-1">
-                            <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
-                            <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
+                          
+                          <div className="bg-blue-500 text-white p-3 rounded-lg cursor-pointer hover:bg-blue-600 transition-colors shadow-md">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
+                              <span className="font-semibold">Make Dance Sprite</span>
+                            </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">BEAR</span></div>
+                              <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-green-500 text-white p-3 rounded-lg cursor-pointer hover:bg-green-600 transition-colors shadow-md">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-green-700 rounded-full"></div>
+                              <span className="font-semibold">Change Move Each LR</span>
+                            </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">BEAR</span></div>
+                              <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">Thriller</span></div>
+                              <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
+                            </div>
                           </div>
                         </div>
-                        
-                        <div className="bg-green-500 text-white p-3 rounded-lg cursor-pointer hover:bg-green-600 transition-colors shadow-md">
-                          <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 bg-green-700 rounded-full"></div>
-                            <span className="font-semibold">Change Move Each LR</span>
-                          </div>
-                          <div className="text-xs mt-1 space-y-1">
-                            <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
-                            <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">ThisOrThat</span></div>
-                            <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     
                     {/* Programming Canvas */}
@@ -1487,31 +1499,42 @@ const LessonVault0406 = () => {
                             </div>
                           </div>
                           
-                          {/* Connected Action Blocks */}
-                          <div className="ml-6 space-y-2">
-                            <div className="bg-blue-500 text-white p-3 rounded-lg shadow-md border-l-4 border-blue-700">
-                              <div className="flex items-center gap-2">
-                                <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
-                                <span className="font-semibold">Make Dance Sprite</span>
-                              </div>
-                              <div className="text-xs mt-1 space-y-1">
-                                <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
-                                <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
-                              </div>
+                        {/* Connected Action Blocks */}
+                        <div className="ml-6 space-y-2">
+                          <div className="bg-purple-500 text-white p-3 rounded-lg shadow-md border-l-4 border-purple-700">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-purple-700 rounded-full"></div>
+                              <span className="font-semibold">AI Background Effects</span>
                             </div>
-                            
-                            <div className="bg-green-500 text-white p-3 rounded-lg shadow-md border-l-4 border-green-700">
-                              <div className="flex items-center gap-2">
-                                <div className="w-4 h-4 bg-green-700 rounded-full"></div>
-                                <span className="font-semibold">Change Move Each LR</span>
-                              </div>
-                              <div className="text-xs mt-1 space-y-1">
-                                <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">SLOTH</span></div>
-                                <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">ThisOrThat</span></div>
-                                <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
-                              </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Emojis: <span className="bg-white/20 px-2 py-1 rounded text-xs">😵‍💫 😋 😃</span></div>
+                              <div>Effects: <span className="bg-white/20 px-2 py-1 rounded text-xs">spiral</span> + <span className="bg-white/20 px-2 py-1 rounded text-xs">vintage</span></div>
                             </div>
                           </div>
+                          
+                          <div className="bg-blue-500 text-white p-3 rounded-lg shadow-md border-l-4 border-blue-700">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-blue-700 rounded-full"></div>
+                              <span className="font-semibold">Make Dance Sprite</span>
+                            </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">BEAR</span></div>
+                              <div>Position: x: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span> y: <span className="bg-white/20 px-2 py-1 rounded text-xs">200</span></div>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-green-500 text-white p-3 rounded-lg shadow-md border-l-4 border-green-700">
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 bg-green-700 rounded-full"></div>
+                              <span className="font-semibold">Change Move Each LR</span>
+                            </div>
+                            <div className="text-xs mt-1 space-y-1">
+                              <div>Character: <span className="bg-white/20 px-2 py-1 rounded text-xs">BEAR</span></div>
+                              <div>Move: <span className="bg-white/20 px-2 py-1 rounded text-xs">Thriller</span></div>
+                              <div>Speed: <span className="bg-white/20 px-2 py-1 rounded text-xs">-1</span></div>
+                            </div>
+                          </div>
+                        </div>
                         </div>
                         
                         {/* Generated Code Display */}
@@ -1519,8 +1542,9 @@ const LessonVault0406 = () => {
                           <h4 className="text-sm font-semibold text-gray-600 mb-2">Generated Code:</h4>
                           <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-xs overflow-x-auto">
                             <pre>{`whenSetup(function () {
-  makeAnonymousDanceSprite("SLOTH", {x: 200, y: 200});
-  changeMoveEachLR("SLOTH", MOVES.ThisOrThat, -1);
+  ai({"inputs":["face-with-spiral-eyes","face-savoring-food","grinning-face-with-big-eyes"],"backgroundEffect":"spiral","foregroundEffect":"emojis","backgroundColor":"vintage"});
+  makeAnonymousDanceSprite("BEAR", {x: 200, y: 200});
+  changeMoveEachLR("BEAR", MOVES.Thriller, -1);
 });`}</pre>
                           </div>
                         </div>
@@ -1534,6 +1558,7 @@ const LessonVault0406 = () => {
                       <h3 className="text-lg font-semibold text-purple-600 mb-3">🎨 How Blocks Work:</h3>
                       <ul className="space-y-2 text-gray-700 text-sm">
                         <li>• <span className="bg-orange-100 px-2 py-1 rounded text-orange-700 font-semibold">Orange blocks</span> are events (when things start)</li>
+                        <li>• <span className="bg-purple-100 px-2 py-1 rounded text-purple-700 font-semibold">Purple blocks</span> add AI background effects</li>
                         <li>• <span className="bg-blue-100 px-2 py-1 rounded text-blue-700 font-semibold">Blue blocks</span> create characters</li>
                         <li>• <span className="bg-green-100 px-2 py-1 rounded text-green-700 font-semibold">Green blocks</span> control movement</li>
                         <li>• Connect blocks to build your program</li>
@@ -1557,10 +1582,14 @@ const LessonVault0406 = () => {
                   <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4">🎬 Your Dance Stage</h3>
                     <div className="bg-gradient-to-b from-blue-100 to-green-100 h-64 rounded-lg flex items-center justify-center border-4 border-dashed border-gray-300">
-                      <div className="text-center">
-                        <div className="text-6xl mb-4 animate-bounce">🦥</div>
-                        <p className="text-gray-600">Your SLOTH dancer will appear here!</p>
-                        <p className="text-sm text-gray-500 mt-2">Run your block program to see the magic happen</p>
+                      <div className="text-center relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-200 via-pink-200 to-yellow-200 opacity-50 rounded-lg animate-pulse"></div>
+                        <div className="relative z-10">
+                          <div className="text-6xl mb-4 animate-bounce">🐻</div>
+                          <div className="text-2xl mb-2">😵‍💫 😋 😃</div>
+                          <p className="text-gray-600">Your BEAR dancer with AI spiral effects!</p>
+                          <p className="text-sm text-gray-500 mt-2">Thriller moves with vintage emoji background</p>
+                        </div>
                       </div>
                     </div>
                   </div>
