@@ -39,6 +39,7 @@ const LessonVault0406 = () => {
   const [circleShapeOpen, setCircleShapeOpen] = useState(false);
   const [selectedTransportType, setSelectedTransportType] = useState<string | null>(null);
   const [transportOpen, setTransportOpen] = useState(false);
+  const [danceOpen, setDanceOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -481,16 +482,38 @@ const LessonVault0406 = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Select>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Arts" />
-              </SelectTrigger>
-              <SelectContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <SelectItem value="music" className="hover:bg-gray-100">🎵 Music</SelectItem>
-                <SelectItem value="drama" className="hover:bg-gray-100">🎭 Drama</SelectItem>
-                <SelectItem value="visual-art" className="hover:bg-gray-100">🎨 Visual Art</SelectItem>
-              </SelectContent>
-            </Select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Arts
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Create: Music | Dance | Drama
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      🎵 Music
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDanceOpen(true)} className="font-medium text-white hover:bg-white/20">
+                      💃 Dance
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      🎭 Drama
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🎨 Visual Art
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
               <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
                 <SelectValue placeholder="Media Icons" />
@@ -1375,6 +1398,81 @@ const LessonVault0406 = () => {
                     className="mx-auto rounded-lg shadow-lg max-w-2xl w-full"
                   />
                   <p className="text-gray-600 mt-4 italic">A child practicing logical thinking and problem-solving on paper</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dance Tool Dialog */}
+        {danceOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  💃 Dance Creator Tool
+                </h1>
+                <button 
+                  onClick={() => setDanceOpen(false)}
+                  className="text-white hover:text-yellow-400 transition-colors"
+                >
+                  <X className="h-8 w-8" />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-8 max-w-6xl mx-auto">
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-8 shadow-lg mb-8">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Create Your Own Dance Moves!</h2>
+                  <p className="text-lg text-gray-700 mb-6">
+                    Use this special code to make your character dance! Watch as the SLOTH sprite moves with the "ThisOrThat" dance move.
+                  </p>
+                  
+                  {/* Code Display */}
+                  <div className="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm mb-6 overflow-x-auto">
+                    <pre>{`whenSetup(function () {
+  makeAnonymousDanceSprite("SLOTH", {x: 200, y: 200});
+  changeMoveEachLR("SLOTH", MOVES.ThisOrThat, -1);
+});`}</pre>
+                  </div>
+                  
+                  {/* Instructions */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold text-purple-600 mb-3">How it works:</h3>
+                      <ul className="space-y-2 text-gray-700">
+                        <li>• <strong>makeAnonymousDanceSprite</strong> creates a dancing character</li>
+                        <li>• <strong>"SLOTH"</strong> is the character type</li>
+                        <li>• <strong>{`{x: 200, y: 200}`}</strong> sets the starting position</li>
+                        <li>• <strong>changeMoveEachLR</strong> makes it dance</li>
+                        <li>• <strong>MOVES.ThisOrThat</strong> is the dance style</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold text-pink-600 mb-3">Try changing:</h3>
+                      <ul className="space-y-2 text-gray-700">
+                        <li>• Change "SLOTH" to other animals</li>
+                        <li>• Try different x, y positions</li>
+                        <li>• Experiment with other MOVES</li>
+                        <li>• Change the -1 to different numbers</li>
+                        <li>• Add multiple dancers!</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  {/* Demo Area */}
+                  <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">🎬 Your Dance Stage</h3>
+                    <div className="bg-gradient-to-b from-blue-100 to-green-100 h-64 rounded-lg flex items-center justify-center border-4 border-dashed border-gray-300">
+                      <div className="text-center">
+                        <div className="text-6xl mb-4 animate-bounce">🦥</div>
+                        <p className="text-gray-600">Your SLOTH dancer will appear here!</p>
+                        <p className="text-sm text-gray-500 mt-2">Copy the code above to see the magic happen</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
