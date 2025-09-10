@@ -41,6 +41,8 @@ const LessonVault0406 = () => {
   const [transportOpen, setTransportOpen] = useState(false);
   const [danceOpen, setDanceOpen] = useState(false);
   const [colorsOpen, setColorsOpen] = useState(false);
+  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
+  const [selectedFullScreenColor, setSelectedFullScreenColor] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -518,14 +520,34 @@ const LessonVault0406 = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Select onValueChange={(value) => setSelectedMediaCategory(value)}>
-              <SelectTrigger className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold">
-                <SelectValue placeholder="Media Icons" />
-              </SelectTrigger>
-              <SelectContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                {/* No media categories available */}
-              </SelectContent>
-            </Select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Science and Discovery
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Domestic Ecology
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <Upload className="h-4 w-4" />
+                      Insert Picture
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <Upload className="h-4 w-4" />
+                      Insert Video Clip
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -1628,170 +1650,326 @@ const LessonVault0406 = () => {
                     Children's T-Shirts Color Collection
                   </h2>
                   
+                  {/* Full Screen Color View */}
+                  {hoveredColor && (
+                    <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
+                      <div className={`w-96 h-96 rounded-lg flex items-center justify-center ${
+                        hoveredColor === 'black' ? 'bg-black' :
+                        hoveredColor === 'blue' ? 'bg-blue-500' :
+                        hoveredColor === 'green' ? 'bg-green-500' :
+                        hoveredColor === 'yellow' ? 'bg-yellow-400' :
+                        hoveredColor === 'orange' ? 'bg-orange-500' :
+                        hoveredColor === 'purple' ? 'bg-purple-500' :
+                        hoveredColor === 'gray' ? 'bg-gray-500' :
+                        hoveredColor === 'brown' ? 'bg-amber-700' :
+                        hoveredColor === 'lime' ? 'bg-lime-500' :
+                        hoveredColor === 'red' ? 'bg-red-500' :
+                        hoveredColor === 'pink' ? 'bg-pink-500' :
+                        hoveredColor === 'white' ? 'bg-white' : 'bg-black'
+                      }`}>
+                        <div className={`w-48 h-64 ${
+                          hoveredColor === 'black' ? 'bg-black border-4 border-gray-800' :
+                          hoveredColor === 'blue' ? 'bg-blue-500 border-4 border-blue-600' :
+                          hoveredColor === 'green' ? 'bg-green-500 border-4 border-green-600' :
+                          hoveredColor === 'yellow' ? 'bg-yellow-400 border-4 border-yellow-500' :
+                          hoveredColor === 'orange' ? 'bg-orange-500 border-4 border-orange-600' :
+                          hoveredColor === 'purple' ? 'bg-purple-500 border-4 border-purple-600' :
+                          hoveredColor === 'gray' ? 'bg-gray-500 border-4 border-gray-600' :
+                          hoveredColor === 'brown' ? 'bg-amber-700 border-4 border-amber-800' :
+                          hoveredColor === 'lime' ? 'bg-lime-500 border-4 border-lime-600' :
+                          hoveredColor === 'red' ? 'bg-red-500 border-4 border-red-600' :
+                          hoveredColor === 'pink' ? 'bg-pink-500 border-4 border-pink-600' :
+                          hoveredColor === 'white' ? 'bg-white border-4 border-gray-300' : 'bg-black border-4 border-gray-800'
+                        } rounded-t-3xl rounded-b-lg`}></div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Selected Full Screen Color View */}
+                  {selectedFullScreenColor && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{
+                      backgroundColor: selectedFullScreenColor === 'black' ? '#000000' :
+                        selectedFullScreenColor === 'blue' ? '#3b82f6' :
+                        selectedFullScreenColor === 'green' ? '#10b981' :
+                        selectedFullScreenColor === 'yellow' ? '#facc15' :
+                        selectedFullScreenColor === 'orange' ? '#f97316' :
+                        selectedFullScreenColor === 'purple' ? '#8b5cf6' :
+                        selectedFullScreenColor === 'gray' ? '#6b7280' :
+                        selectedFullScreenColor === 'brown' ? '#b45309' :
+                        selectedFullScreenColor === 'lime' ? '#84cc16' :
+                        selectedFullScreenColor === 'red' ? '#ef4444' :
+                        selectedFullScreenColor === 'pink' ? '#ec4899' :
+                        selectedFullScreenColor === 'white' ? '#ffffff' : '#000000'
+                    }}>
+                      <Button 
+                        onClick={() => setSelectedFullScreenColor(null)}
+                        className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white"
+                      >
+                        <X className="h-6 w-6" />
+                      </Button>
+                      <div className="text-center">
+                        <h2 className={`text-6xl font-bold mb-4 ${
+                          selectedFullScreenColor === 'white' || selectedFullScreenColor === 'yellow' ? 'text-black' : 'text-white'
+                        }`}>
+                          {selectedFullScreenColor?.toUpperCase()}
+                        </h2>
+                        <p className={`text-2xl ${
+                          selectedFullScreenColor === 'white' || selectedFullScreenColor === 'yellow' ? 'text-black' : 'text-white'
+                        }`}>
+                          This is the color {selectedFullScreenColor}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* Black T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('black')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-black flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-black rounded-t-3xl rounded-b-lg border-4 border-gray-800"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-black">Black</h3>
                       <Button 
                         className="bg-blue-500 hover:bg-blue-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a black t-shirt. Black is a dark color.")}
+                        onClick={() => {
+                          speakInstruction("This is a black t-shirt. Black is a dark color.");
+                          setSelectedFullScreenColor('blue');
+                        }}
                       >
                         Proceed to Blue
                       </Button>
                     </div>
 
                     {/* Blue T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('blue')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-blue-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-blue-500 rounded-t-3xl rounded-b-lg border-4 border-blue-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-blue-600">Blue</h3>
                       <Button 
                         className="bg-green-500 hover:bg-green-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a blue t-shirt. Blue is the color of the sky and ocean.")}
+                        onClick={() => {
+                          speakInstruction("This is a blue t-shirt. Blue is the color of the sky and ocean.");
+                          setSelectedFullScreenColor('green');
+                        }}
                       >
                         Proceed to Green
                       </Button>
                     </div>
 
                     {/* Green T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('green')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-green-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-green-500 rounded-t-3xl rounded-b-lg border-4 border-green-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-green-600">Green</h3>
                       <Button 
                         className="bg-yellow-500 hover:bg-yellow-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a green t-shirt. Green is the color of grass and leaves.")}
+                        onClick={() => {
+                          speakInstruction("This is a green t-shirt. Green is the color of grass and leaves.");
+                          setSelectedFullScreenColor('yellow');
+                        }}
                       >
                         Proceed to Yellow
                       </Button>
                     </div>
 
                     {/* Yellow T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('yellow')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-yellow-400 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-yellow-400 rounded-t-3xl rounded-b-lg border-4 border-yellow-500"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-yellow-600">Yellow</h3>
                       <Button 
                         className="bg-orange-500 hover:bg-orange-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a yellow t-shirt. Yellow is the color of the sun and bananas.")}
+                        onClick={() => {
+                          speakInstruction("This is a yellow t-shirt. Yellow is the color of the sun and bananas.");
+                          setSelectedFullScreenColor('orange');
+                        }}
                       >
                         Proceed to Orange
                       </Button>
                     </div>
 
                     {/* Orange T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('orange')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-orange-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-orange-500 rounded-t-3xl rounded-b-lg border-4 border-orange-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-orange-600">Orange</h3>
                       <Button 
                         className="bg-purple-500 hover:bg-purple-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is an orange t-shirt. Orange is the color of oranges and carrots.")}
+                        onClick={() => {
+                          speakInstruction("This is an orange t-shirt. Orange is the color of oranges and carrots.");
+                          setSelectedFullScreenColor('purple');
+                        }}
                       >
                         Proceed to Purple
                       </Button>
                     </div>
 
                     {/* Purple T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('purple')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-purple-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-purple-500 rounded-t-3xl rounded-b-lg border-4 border-purple-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-purple-600">Purple</h3>
                       <Button 
                         className="bg-gray-500 hover:bg-gray-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a purple t-shirt. Purple is a mix of red and blue.")}
+                        onClick={() => {
+                          speakInstruction("This is a purple t-shirt. Purple is a mix of red and blue.");
+                          setSelectedFullScreenColor('gray');
+                        }}
                       >
                         Proceed to Gray
                       </Button>
                     </div>
 
                     {/* Gray T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('gray')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-gray-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-gray-500 rounded-t-3xl rounded-b-lg border-4 border-gray-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-600">Gray</h3>
                       <Button 
                         className="bg-amber-700 hover:bg-amber-800 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a gray t-shirt. Gray is between black and white.")}
+                        onClick={() => {
+                          speakInstruction("This is a gray t-shirt. Gray is between black and white.");
+                          setSelectedFullScreenColor('brown');
+                        }}
                       >
                         Proceed to Brown
                       </Button>
                     </div>
 
                     {/* Brown T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('brown')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-amber-700 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-amber-700 rounded-t-3xl rounded-b-lg border-4 border-amber-800"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-amber-700">Brown</h3>
                       <Button 
                         className="bg-lime-500 hover:bg-lime-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a brown t-shirt. Brown is the color of chocolate and trees.")}
+                        onClick={() => {
+                          speakInstruction("This is a brown t-shirt. Brown is the color of chocolate and trees.");
+                          setSelectedFullScreenColor('lime');
+                        }}
                       >
                         Proceed to Lime
                       </Button>
                     </div>
 
                     {/* Lime T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('lime')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-lime-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-lime-500 rounded-t-3xl rounded-b-lg border-4 border-lime-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-lime-600">Lime</h3>
                       <Button 
                         className="bg-red-500 hover:bg-red-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a lime t-shirt. Lime is a bright green color.")}
+                        onClick={() => {
+                          speakInstruction("This is a lime t-shirt. Lime is a bright green color.");
+                          setSelectedFullScreenColor('red');
+                        }}
                       >
                         Proceed to Red
                       </Button>
                     </div>
 
                     {/* Red T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('red')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-red-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-red-500 rounded-t-3xl rounded-b-lg border-4 border-red-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-red-600">Red</h3>
                       <Button 
                         className="bg-pink-500 hover:bg-pink-600 text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a red t-shirt. Red is the color of apples and fire trucks.")}
+                        onClick={() => {
+                          speakInstruction("This is a red t-shirt. Red is the color of apples and fire trucks.");
+                          setSelectedFullScreenColor('pink');
+                        }}
                       >
                         Proceed to Pink
                       </Button>
                     </div>
 
                     {/* Pink T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('pink')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-pink-500 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-pink-500 rounded-t-3xl rounded-b-lg border-4 border-pink-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-pink-600">Pink</h3>
                       <Button 
                         className="bg-white hover:bg-gray-100 text-black border border-gray-300 w-full text-sm"
-                        onClick={() => speakInstruction("This is a pink t-shirt. Pink is a light red color.")}
+                        onClick={() => {
+                          speakInstruction("This is a pink t-shirt. Pink is a light red color.");
+                          setSelectedFullScreenColor('white');
+                        }}
                       >
                         Proceed to White
                       </Button>
                     </div>
 
                     {/* White T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                    <div 
+                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      onMouseEnter={() => setHoveredColor('white')}
+                      onMouseLeave={() => setHoveredColor(null)}
+                    >
                       <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center relative">
                         <div className="w-24 h-32 bg-white rounded-t-3xl rounded-b-lg border-4 border-gray-300"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-700">White</h3>
                       <Button 
                         className="bg-[#395B50] hover:bg-[#2d4a40] text-white w-full text-sm"
-                        onClick={() => speakInstruction("This is a white t-shirt. White is the lightest color, like snow and clouds.")}
+                        onClick={() => {
+                          speakInstruction("This is a white t-shirt. White is the lightest color, like snow and clouds.");
+                          setSelectedFullScreenColor('white');
+                        }}
                       >
                         Finish Learning
                       </Button>
