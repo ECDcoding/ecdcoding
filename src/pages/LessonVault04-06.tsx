@@ -40,6 +40,7 @@ const LessonVault0406 = () => {
   const [selectedTransportType, setSelectedTransportType] = useState<string | null>(null);
   const [transportOpen, setTransportOpen] = useState(false);
   const [danceOpen, setDanceOpen] = useState(false);
+  const [colorsOpen, setColorsOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -454,14 +455,17 @@ const LessonVault0406 = () => {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  Vowels
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium hover:bg-gray-100">
-                  Alphabets
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                   Vowels
+                 </DropdownMenuItem>
+                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                   Alphabets
+                 </DropdownMenuItem>
+                 <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
+                   Colors
+                 </DropdownMenuItem>
+               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -1592,6 +1596,212 @@ const LessonVault0406 = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Colors Learning Dialog */}
+        {colorsOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  🌈 Learning Colors
+                </h1>
+                <Button 
+                  onClick={() => setColorsOpen(false)}
+                  variant="ghost" 
+                  className="text-white hover:bg-white/20 p-2"
+                >
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 p-6">
+                <div className="max-w-6xl mx-auto">
+                  <h2 className="text-2xl font-bold mb-6 text-center text-[#395B50]">
+                    Children's T-Shirts Color Collection
+                  </h2>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {/* Black T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-black flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-black rounded-t-3xl rounded-b-lg border-4 border-gray-800"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-black">Black</h3>
+                      <Button 
+                        className="bg-blue-500 hover:bg-blue-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a black t-shirt. Black is a dark color.")}
+                      >
+                        Proceed to Blue
+                      </Button>
+                    </div>
+
+                    {/* Blue T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-blue-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-blue-500 rounded-t-3xl rounded-b-lg border-4 border-blue-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-blue-600">Blue</h3>
+                      <Button 
+                        className="bg-green-500 hover:bg-green-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a blue t-shirt. Blue is the color of the sky and ocean.")}
+                      >
+                        Proceed to Green
+                      </Button>
+                    </div>
+
+                    {/* Green T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-green-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-green-500 rounded-t-3xl rounded-b-lg border-4 border-green-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-green-600">Green</h3>
+                      <Button 
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a green t-shirt. Green is the color of grass and leaves.")}
+                      >
+                        Proceed to Yellow
+                      </Button>
+                    </div>
+
+                    {/* Yellow T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-yellow-400 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-yellow-400 rounded-t-3xl rounded-b-lg border-4 border-yellow-500"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-yellow-600">Yellow</h3>
+                      <Button 
+                        className="bg-orange-500 hover:bg-orange-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a yellow t-shirt. Yellow is the color of the sun and bananas.")}
+                      >
+                        Proceed to Orange
+                      </Button>
+                    </div>
+
+                    {/* Orange T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-orange-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-orange-500 rounded-t-3xl rounded-b-lg border-4 border-orange-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-orange-600">Orange</h3>
+                      <Button 
+                        className="bg-purple-500 hover:bg-purple-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is an orange t-shirt. Orange is the color of oranges and carrots.")}
+                      >
+                        Proceed to Purple
+                      </Button>
+                    </div>
+
+                    {/* Purple T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-purple-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-purple-500 rounded-t-3xl rounded-b-lg border-4 border-purple-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-purple-600">Purple</h3>
+                      <Button 
+                        className="bg-gray-500 hover:bg-gray-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a purple t-shirt. Purple is a mix of red and blue.")}
+                      >
+                        Proceed to Gray
+                      </Button>
+                    </div>
+
+                    {/* Gray T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-gray-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-gray-500 rounded-t-3xl rounded-b-lg border-4 border-gray-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-gray-600">Gray</h3>
+                      <Button 
+                        className="bg-amber-700 hover:bg-amber-800 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a gray t-shirt. Gray is between black and white.")}
+                      >
+                        Proceed to Brown
+                      </Button>
+                    </div>
+
+                    {/* Brown T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-amber-700 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-amber-700 rounded-t-3xl rounded-b-lg border-4 border-amber-800"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-amber-700">Brown</h3>
+                      <Button 
+                        className="bg-lime-500 hover:bg-lime-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a brown t-shirt. Brown is the color of chocolate and trees.")}
+                      >
+                        Proceed to Lime
+                      </Button>
+                    </div>
+
+                    {/* Lime T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-lime-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-lime-500 rounded-t-3xl rounded-b-lg border-4 border-lime-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-lime-600">Lime</h3>
+                      <Button 
+                        className="bg-red-500 hover:bg-red-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a lime t-shirt. Lime is a bright green color.")}
+                      >
+                        Proceed to Red
+                      </Button>
+                    </div>
+
+                    {/* Red T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-red-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-red-500 rounded-t-3xl rounded-b-lg border-4 border-red-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-red-600">Red</h3>
+                      <Button 
+                        className="bg-pink-500 hover:bg-pink-600 text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a red t-shirt. Red is the color of apples and fire trucks.")}
+                      >
+                        Proceed to Pink
+                      </Button>
+                    </div>
+
+                    {/* Pink T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-pink-500 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-pink-500 rounded-t-3xl rounded-b-lg border-4 border-pink-600"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-pink-600">Pink</h3>
+                      <Button 
+                        className="bg-white hover:bg-gray-100 text-black border border-gray-300 w-full text-sm"
+                        onClick={() => speakInstruction("This is a pink t-shirt. Pink is a light red color.")}
+                      >
+                        Proceed to White
+                      </Button>
+                    </div>
+
+                    {/* White T-Shirt */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center">
+                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center relative">
+                        <div className="w-24 h-32 bg-white rounded-t-3xl rounded-b-lg border-4 border-gray-300"></div>
+                      </div>
+                      <h3 className="text-lg font-bold mb-2 text-gray-700">White</h3>
+                      <Button 
+                        className="bg-[#395B50] hover:bg-[#2d4a40] text-white w-full text-sm"
+                        onClick={() => speakInstruction("This is a white t-shirt. White is the lightest color, like snow and clouds.")}
+                      >
+                        Finish Learning
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 text-center">
+                    <p className="text-gray-600 text-lg">
+                      🌈 Click on each t-shirt to learn about different colors and hear their descriptions!
+                    </p>
                   </div>
                 </div>
               </div>
