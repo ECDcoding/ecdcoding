@@ -1725,7 +1725,7 @@ const LessonVault0406 = () => {
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* Black T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('black')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1746,7 +1746,7 @@ const LessonVault0406 = () => {
 
                     {/* Blue T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('blue')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1767,7 +1767,7 @@ const LessonVault0406 = () => {
 
                     {/* Green T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('green')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1788,7 +1788,7 @@ const LessonVault0406 = () => {
 
                     {/* Yellow T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('yellow')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1809,7 +1809,7 @@ const LessonVault0406 = () => {
 
                     {/* Orange T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('orange')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1830,7 +1830,7 @@ const LessonVault0406 = () => {
 
                     {/* Purple T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('purple')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1851,7 +1851,7 @@ const LessonVault0406 = () => {
 
                     {/* Gray T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('gray')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1872,7 +1872,7 @@ const LessonVault0406 = () => {
 
                     {/* Brown T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('brown')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1893,7 +1893,7 @@ const LessonVault0406 = () => {
 
                     {/* Lime T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('lime')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1914,7 +1914,7 @@ const LessonVault0406 = () => {
 
                     {/* Red T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('red')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1935,7 +1935,7 @@ const LessonVault0406 = () => {
 
                     {/* Pink T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('pink')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >
@@ -1956,7 +1956,7 @@ const LessonVault0406 = () => {
 
                     {/* White T-Shirt */}
                     <div 
-                      className="bg-white rounded-lg shadow-lg p-4 text-center hover:scale-105 transition-transform cursor-pointer"
+                      className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer"
                       onMouseEnter={() => setHoveredColor('white')}
                       onMouseLeave={() => setHoveredColor(null)}
                     >

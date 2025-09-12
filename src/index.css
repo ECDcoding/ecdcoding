@@ -152,6 +152,30 @@ All colors MUST be HSL.
   .animate-scroll {
     animation: scroll-horizontal 40s linear infinite;
   }
+
+  .btn-effect-10 {
+    background: #27ae60;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-effect-10:hover {
+    animation: blur 0.5s forwards;
+    letter-spacing: 3px;
+  }
+
+  @keyframes blur {
+    0% {
+      filter: blur(0);
+      letter-spacing: 0;
+    }
+    50% {
+      filter: blur(2px);
+    }
+    100% {
+      filter: blur(0);
+      letter-spacing: 3px;
+    }
+  }
 }
 
 /* App-specific form surface styling */
