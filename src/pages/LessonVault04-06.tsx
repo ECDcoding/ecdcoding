@@ -1655,12 +1655,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-black">Black</h3>
                       <Button 
-                        className="bg-blue-500 hover:bg-blue-600 text-white w-full text-sm"
+                        className="bg-black hover:bg-gray-800 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a black t-shirt. Black is a dark color.");
                         }}
                       >
-                        Proceed to Blue
+                        Click here
                       </Button>
                     </div>
 
@@ -1671,12 +1671,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-blue-600">Blue</h3>
                       <Button 
-                        className="bg-green-500 hover:bg-green-600 text-white w-full text-sm"
+                        className="bg-blue-500 hover:bg-blue-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a blue t-shirt. Blue is the color of the sky and ocean.");
                         }}
                       >
-                        Proceed to Green
+                        Click here
                       </Button>
                     </div>
 
@@ -1687,12 +1687,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-green-600">Green</h3>
                       <Button 
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full text-sm"
+                        className="bg-green-500 hover:bg-green-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a green t-shirt. Green is the color of grass and leaves.");
                         }}
                       >
-                        Proceed to Yellow
+                        Click here
                       </Button>
                     </div>
 
@@ -1703,12 +1703,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-yellow-600">Yellow</h3>
                       <Button 
-                        className="bg-orange-500 hover:bg-orange-600 text-white w-full text-sm"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a yellow t-shirt. Yellow is the color of the sun and bananas.");
                         }}
                       >
-                        Proceed to Orange
+                        Click here
                       </Button>
                     </div>
 
@@ -1719,12 +1719,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-orange-600">Orange</h3>
                       <Button 
-                        className="bg-purple-500 hover:bg-purple-600 text-white w-full text-sm"
+                        className="bg-orange-500 hover:bg-orange-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is an orange t-shirt. Orange is the color of oranges and carrots.");
                         }}
                       >
-                        Proceed to Purple
+                        Click here
                       </Button>
                     </div>
 
@@ -1735,12 +1735,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-purple-600">Purple</h3>
                       <Button 
-                        className="bg-gray-500 hover:bg-gray-600 text-white w-full text-sm"
+                        className="bg-purple-500 hover:bg-purple-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a purple t-shirt. Purple is a mix of red and blue.");
                         }}
                       >
-                        Proceed to Gray
+                        Click here
                       </Button>
                     </div>
 
@@ -1751,12 +1751,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-600">Gray</h3>
                       <Button 
-                        className="bg-amber-700 hover:bg-amber-800 text-white w-full text-sm"
+                        className="bg-gray-500 hover:bg-gray-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a gray t-shirt. Gray is between black and white.");
                         }}
                       >
-                        Proceed to Brown
+                        Click here
                       </Button>
                     </div>
 
@@ -1767,12 +1767,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-amber-700">Brown</h3>
                       <Button 
-                        className="bg-lime-500 hover:bg-lime-600 text-white w-full text-sm"
+                        className="bg-amber-700 hover:bg-amber-800 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a brown t-shirt. Brown is the color of chocolate and trees.");
                         }}
                       >
-                        Proceed to Lime
+                        Click here
                       </Button>
                     </div>
 
@@ -1783,12 +1783,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-lime-600">Lime</h3>
                       <Button 
-                        className="bg-red-500 hover:bg-red-600 text-white w-full text-sm"
+                        className="bg-lime-500 hover:bg-lime-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a lime t-shirt. Lime is a bright green color.");
                         }}
                       >
-                        Proceed to Red
+                        Click here
                       </Button>
                     </div>
 
@@ -1799,12 +1799,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-red-600">Red</h3>
                       <Button 
-                        className="bg-pink-500 hover:bg-pink-600 text-white w-full text-sm"
+                        className="bg-red-500 hover:bg-red-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a red t-shirt. Red is the color of apples and fire trucks.");
                         }}
                       >
-                        Proceed to Pink
+                        Click here
                       </Button>
                     </div>
 
@@ -1815,12 +1815,12 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-pink-600">Pink</h3>
                       <Button 
-                        className="bg-white hover:bg-gray-100 text-black border border-gray-300 w-full text-sm"
+                        className="bg-pink-500 hover:bg-pink-600 text-white w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a pink t-shirt. Pink is a light red color.");
                         }}
                       >
-                        Proceed to White
+                        Click here
                       </Button>
                     </div>
 
@@ -1831,21 +1831,16 @@ const LessonVault0406 = () => {
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-700">White</h3>
                       <Button 
-                        className="bg-[#395B50] hover:bg-[#2d4a40] text-white w-full text-sm"
+                        className="bg-white hover:bg-gray-100 text-black border border-gray-300 w-full text-sm"
                         onClick={() => {
                           speakInstruction("This is a white t-shirt. White is the lightest color, like snow and clouds.");
                         }}
                       >
-                        Finish Learning
+                        Click here
                       </Button>
                     </div>
                   </div>
 
-                  <div className="mt-8 text-center">
-                    <p className="text-gray-600 text-lg">
-                      🌈 Click on each t-shirt to learn about different colors and hear their descriptions!
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
