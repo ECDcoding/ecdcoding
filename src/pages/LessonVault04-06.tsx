@@ -531,6 +531,22 @@ const LessonVault0406 = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Animals
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Domestic Animals
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      Wild Animals
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
                       Domestic Ecology
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
