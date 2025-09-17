@@ -22,6 +22,8 @@ import roadTransportVehicles from "@/assets/road-transport-vehicles.jpg";
 import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
 import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
+import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
+import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 
 const LessonVault0406 = () => {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -43,6 +45,7 @@ const LessonVault0406 = () => {
   const [colorsOpen, setColorsOpen] = useState(false);
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [selectedFullScreenColor, setSelectedFullScreenColor] = useState<string | null>(null);
+  const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -536,10 +539,16 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setSelectedAnimalType("domestic")}
+                    >
                       Domestic Animals
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setSelectedAnimalType("wild")}
+                    >
                       Wild Animals
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -1857,6 +1866,37 @@ const LessonVault0406 = () => {
                     </div>
                   </div>
 
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full Page Animal View */}
+        {selectedAnimalType && (
+          <div className="fixed inset-0 tailormade-lessons-texture z-50 overflow-y-auto">
+            <div className="max-w-6xl mx-auto p-6">
+              <div className="flex items-center gap-4 mb-8">
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedAnimalType(null)}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+                <h1 className="text-4xl font-bold text-white">
+                  {selectedAnimalType === "domestic" ? "Domestic Animals" : "Wild Animals"}
+                </h1>
+              </div>
+              
+              <div className="flex justify-center">
+                <div className="bg-white rounded-lg shadow-xl p-6 max-w-4xl">
+                  <img 
+                    src={selectedAnimalType === "domestic" ? domesticAnimalsChart : wildAnimalsChart}
+                    alt={selectedAnimalType === "domestic" ? "Domestic Animals Chart" : "Wild Animals Chart"}
+                    className="w-full h-auto rounded-lg"
+                  />
                 </div>
               </div>
             </div>
