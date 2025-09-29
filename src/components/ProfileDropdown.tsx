@@ -279,20 +279,24 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                {/* Profile Avatar */}
                <div className="flex flex-col items-center gap-2">
                  <div 
-                   className="relative group cursor-pointer"
-                   onClick={() => fileInputRef.current?.click()}
+                   className={`relative group ${isEditing ? 'cursor-pointer' : ''}`}
+                   onClick={isEditing ? () => fileInputRef.current?.click() : undefined}
                  >
-                   <Avatar className="w-20 h-20 group-hover:opacity-80 transition-opacity">
+                   <Avatar className={`w-20 h-20 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
                      <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
                      <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
                        {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
                      </AvatarFallback>
                    </Avatar>
-                   <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                     <Camera className="h-6 w-6 text-white" />
-                   </div>
+                   {isEditing && (
+                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                       <Camera className="h-6 w-6 text-white" />
+                     </div>
+                   )}
                  </div>
-                 <p className="text-xs text-muted-foreground">Click to change photo</p>
+                 {isEditing && (
+                   <p className="text-xs text-muted-foreground">Click to change photo</p>
+                 )}
                </div>
 
               {!isEditing ? (
