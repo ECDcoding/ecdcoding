@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export const useAuth = () => {
@@ -50,7 +50,7 @@ export const useAuth = () => {
         const { error: profileError } = await supabase
           .from('profiles')
           .insert({
-            id: data.user.id,
+            user_id: data.user.id,
             first_name: userData.firstName,
             last_name: userData.lastName,
             username: userData.username,

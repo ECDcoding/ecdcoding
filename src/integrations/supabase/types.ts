@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          age_groups: string | null
+          aspiration: string | null
+          available_hours: string | null
+          country: string
+          created_at: string
+          current_programs: string | null
+          ecd_email: string | null
+          ecd_phone: string | null
+          experience: string | null
+          facility_name: string | null
+          facility_type: string | null
+          first_name: string
+          hear_about: string | null
+          id: string
+          institution: string | null
+          last_name: string
+          learner_first_name: string | null
+          learner_last_name: string | null
+          number_of_kids: string | null
+          number_of_learners: string | null
+          phone: string
+          programming_languages: string | null
+          qualifications: string | null
+          registration_status: string | null
+          registration_type: string
+          relationship: string | null
+          salary: string | null
+          start_date: string | null
+          state: string
+          teaching_philosophy: string | null
+          tech_goals: string | null
+          tech_skills: string | null
+          updated_at: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          age_groups?: string | null
+          aspiration?: string | null
+          available_hours?: string | null
+          country: string
+          created_at?: string
+          current_programs?: string | null
+          ecd_email?: string | null
+          ecd_phone?: string | null
+          experience?: string | null
+          facility_name?: string | null
+          facility_type?: string | null
+          first_name: string
+          hear_about?: string | null
+          id?: string
+          institution?: string | null
+          last_name: string
+          learner_first_name?: string | null
+          learner_last_name?: string | null
+          number_of_kids?: string | null
+          number_of_learners?: string | null
+          phone: string
+          programming_languages?: string | null
+          qualifications?: string | null
+          registration_status?: string | null
+          registration_type: string
+          relationship?: string | null
+          salary?: string | null
+          start_date?: string | null
+          state: string
+          teaching_philosophy?: string | null
+          tech_goals?: string | null
+          tech_skills?: string | null
+          updated_at?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          age_groups?: string | null
+          aspiration?: string | null
+          available_hours?: string | null
+          country?: string
+          created_at?: string
+          current_programs?: string | null
+          ecd_email?: string | null
+          ecd_phone?: string | null
+          experience?: string | null
+          facility_name?: string | null
+          facility_type?: string | null
+          first_name?: string
+          hear_about?: string | null
+          id?: string
+          institution?: string | null
+          last_name?: string
+          learner_first_name?: string | null
+          learner_last_name?: string | null
+          number_of_kids?: string | null
+          number_of_learners?: string | null
+          phone?: string
+          programming_languages?: string | null
+          qualifications?: string | null
+          registration_status?: string | null
+          registration_type?: string
+          relationship?: string | null
+          salary?: string | null
+          start_date?: string | null
+          state?: string
+          teaching_philosophy?: string | null
+          tech_goals?: string | null
+          tech_skills?: string | null
+          updated_at?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
