@@ -1,10 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const LessonVault0710 = () => {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+  
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
+
   const stemCourses = [
     {
       id: 1,
@@ -100,6 +109,15 @@ const LessonVault0710 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleLogout}
+              className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
           </div>
         </div>
       </header>
