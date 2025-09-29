@@ -313,11 +313,6 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
 
                    <div className="grid grid-cols-2 gap-4 text-sm">
                      <div>
-                       <span className="font-medium text-muted-foreground">Age:</span>
-                       <p>{getAgeFromAgeGroup(profile.number_of_kids)}</p>
-                     </div>
-                     
-                     <div>
                        <span className="font-medium text-muted-foreground">Gender:</span>
                        <p>{profile.learner_gender ? 
                            profile.learner_gender.charAt(0).toUpperCase() + profile.learner_gender.slice(1) 
@@ -325,13 +320,18 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                      </div>
                      
                      <div>
-                       <span className="font-medium text-muted-foreground">ECD Institution:</span>
-                       <p>{profile.institution || 'Not specified'}</p>
+                       <span className="font-medium text-muted-foreground">Country:</span>
+                       <p>{profile.country}</p>
                      </div>
                      
                      <div>
-                       <span className="font-medium text-muted-foreground">Country:</span>
-                       <p>{profile.country}</p>
+                       <span className="font-medium text-muted-foreground">Age:</span>
+                       <p>{getAgeFromAgeGroup(profile.number_of_kids)}</p>
+                     </div>
+                     
+                     <div>
+                       <span className="font-medium text-muted-foreground">ECD Institution:</span>
+                       <p>{profile.institution || 'Not specified'}</p>
                      </div>
                    </div>
                 </div>
