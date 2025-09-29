@@ -259,7 +259,27 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
        <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader className="flex flex-row items-center justify-between">
-            <DialogTitle className="text-xl font-bold">Learner Profile</DialogTitle>
+            <div className="flex items-center gap-3">
+              <div 
+                className={`relative group ${isEditing ? 'cursor-pointer' : ''}`}
+                onClick={isEditing ? () => fileInputRef.current?.click() : undefined}
+              >
+                <Avatar className={`w-12 h-12 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
+                  <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
+                  <AvatarFallback className="text-lg bg-primary text-primary-foreground">
+                    {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
+                  </AvatarFallback>
+                </Avatar>
+                {isEditing && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Camera className="h-3 w-3 text-white" />
+                  </div>
+                )}
+              </div>
+              {isEditing && (
+                <p className="text-xs text-muted-foreground">Click to change photo</p>
+              )}
+            </div>
             {!isEditing && profile && (
               <Button
                 variant="ghost"
@@ -276,32 +296,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             <div className="text-center py-6">Loading profile...</div>
           ) : profile ? (
             <div className="space-y-6">
-               {/* Profile Avatar */}
-               <div className="flex flex-col items-center gap-2">
-                 <div 
-                   className={`relative group ${isEditing ? 'cursor-pointer' : ''}`}
-                   onClick={isEditing ? () => fileInputRef.current?.click() : undefined}
-                 >
-                   <Avatar className={`w-20 h-20 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
-                     <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
-                     <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
-                       {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
-                     </AvatarFallback>
-                   </Avatar>
-                   {isEditing && (
-                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                       <Camera className="h-6 w-6 text-white" />
-                     </div>
-                   )}
-                 </div>
-                 {isEditing && (
-                   <p className="text-xs text-muted-foreground">Click to change photo</p>
-                 )}
-               </div>
-
               {!isEditing ? (
                 /* View Mode */
-                <div className="space-y-4">
+                <div className="space-y-4 flex flex-col items-center">
                   <div className="text-center">
                     <h3 className="text-lg font-semibold">
                       {profile.learner_first_name && profile.learner_last_name 
@@ -311,29 +308,29 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                     </h3>
                   </div>
 
-                   <div className="grid grid-cols-2 gap-4 text-sm">
-                     <div>
-                       <span className="font-medium text-muted-foreground">Gender:</span>
-                       <p>{profile.learner_gender ? 
-                           profile.learner_gender.charAt(0).toUpperCase() + profile.learner_gender.slice(1) 
-                           : 'Not specified'}</p>
-                     </div>
-                     
-                     <div>
-                       <span className="font-medium text-muted-foreground">Country:</span>
-                       <p>{profile.country}</p>
-                     </div>
-                     
-                     <div>
-                       <span className="font-medium text-muted-foreground">Age:</span>
-                       <p>{getAgeFromAgeGroup(profile.number_of_kids)}</p>
-                     </div>
-                     
-                     <div>
-                       <span className="font-medium text-muted-foreground">ECD Institution:</span>
-                       <p>{profile.institution || 'Not specified'}</p>
-                     </div>
-                   </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm max-w-sm">
+                    <div className="text-center">
+                      <span className="font-medium text-muted-foreground">Age:</span>
+                      <p>{getAgeFromAgeGroup(profile.number_of_kids)}</p>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-medium text-muted-foreground">Gender:</span>
+                      <p>{profile.learner_gender ? 
+                          profile.learner_gender.charAt(0).toUpperCase() + profile.learner_gender.slice(1) 
+                          : 'Not specified'}</p>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-medium text-muted-foreground">ECD Institution:</span>
+                      <p>{profile.institution || 'Not specified'}</p>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-medium text-muted-foreground">Country:</span>
+                      <p>{profile.country}</p>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 /* Edit Mode */
