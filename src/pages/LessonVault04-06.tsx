@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { ProfileDropdown } from "@/components/ProfileDropdown";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -298,32 +299,10 @@ const LessonVault0406 = () => {
             <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Select onValueChange={(value) => value === "logout" && handleLogout()}>
-              <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
-                {profileImage ? (
-                  <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
-                ) : (
-                  <span className="text-profile-text text-xs">Photo</span>
-                )}
-              </SelectTrigger>
-              <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
-                <SelectItem value="profile" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Profile
-                </SelectItem>
-                <SelectItem value="change-password" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-                  <Key className="h-4 w-4" />
-                  Change Password
-                </SelectItem>
-                <SelectItem value="contact-details" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  Contact Details
-                </SelectItem>
-                <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
-                  Logout
-                </SelectItem>
-              </SelectContent>
-            </Select>
+            <ProfileDropdown 
+              profileImage={profileImage} 
+              onLogout={handleLogout}
+            />
           </div>
         </div>
       </nav>

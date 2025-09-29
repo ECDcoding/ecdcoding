@@ -4,10 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { ProfileDropdown } from "@/components/ProfileDropdown";
+import { useState } from "react";
 
 const LessonVault0710 = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   
   const handleLogout = async () => {
     await signOut();
@@ -109,15 +112,10 @@ const LessonVault0710 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleLogout}
-              className="bg-white/10 text-white border-white/20 hover:bg-white/20"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
+            <ProfileDropdown 
+              profileImage={profileImage} 
+              onLogout={handleLogout}
+            />
           </div>
         </div>
       </header>
