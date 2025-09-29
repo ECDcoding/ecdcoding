@@ -267,7 +267,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                 <Avatar className={`w-12 h-12 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
                   <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
                   <AvatarFallback className="text-lg bg-primary text-primary-foreground">
-                    {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
+                    {(isEditing ? formData.learner_first_name : profile?.learner_first_name)?.[0] || profile?.first_name?.[0] || '?'}
                   </AvatarFallback>
                 </Avatar>
                 {isEditing && (
