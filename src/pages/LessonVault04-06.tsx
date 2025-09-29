@@ -808,9 +808,12 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Learn Your Shapes
-                </h1>
+                <div>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Square
+                  </h1>
+                  <p className="text-lg text-white mt-1">This is a Square</p>
+                </div>
                 <button 
                   onClick={() => setSquareShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -880,9 +883,12 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Learning Triangles
-                </h1>
+                <div>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Triangle
+                  </h1>
+                  <p className="text-lg text-white mt-1">This is a Triangle</p>
+                </div>
                 <button 
                   onClick={() => setTriangleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -952,9 +958,12 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Learning Rectangles
-                </h1>
+                <div>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Rectangle
+                  </h1>
+                  <p className="text-lg text-white mt-1">This is a Rectangle</p>
+                </div>
                 <button 
                   onClick={() => setRectangleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -1024,9 +1033,12 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                  Learning Circles
-                </h1>
+                <div>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    Circle
+                  </h1>
+                  <p className="text-lg text-white mt-1">This is a Circle</p>
+                </div>
                 <button 
                   onClick={() => setCircleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
