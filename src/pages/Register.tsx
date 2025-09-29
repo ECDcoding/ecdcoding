@@ -291,6 +291,7 @@ const Register = () => {
     aspiration: "",
     learnerFirstName: "",
     learnerLastName: "",
+    learnerGender: "",
     relationship: "",
     ecdPhone1: "",
     ecdPhone2: "",
@@ -617,17 +618,31 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="learnerAge">Ages *</Label>
-          <Select onValueChange={(value) => handleInputChange("learnerAge", value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select age group" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="04-06">04 - 06</SelectItem>
-              <SelectItem value="07-10">07 - 10</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="learnerAge">Ages *</Label>
+            <Select onValueChange={(value) => handleInputChange("learnerAge", value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select age group" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="04-06">04 - 06</SelectItem>
+                <SelectItem value="07-10">07 - 10</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="learnerGender">Gender *</Label>
+            <Select onValueChange={(value) => handleInputChange("learnerGender", value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="male">Male</SelectItem>
+                <SelectItem value="female">Female</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="space-y-2">
