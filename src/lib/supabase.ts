@@ -1,21 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from "@/integrations/supabase/client";
 
-// TODO: Replace these with your actual Supabase project credentials
-// Get these from your Supabase project: Settings → API
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL_HERE';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY_HERE';
-
-// Temporary fallback - replace with your actual credentials
-let supabaseClient;
-if (supabaseUrl === 'YOUR_SUPABASE_URL_HERE' || supabaseAnonKey === 'YOUR_SUPABASE_ANON_KEY_HERE') {
-  console.warn('⚠️ Please update your Supabase credentials in src/lib/supabase.ts');
-  // Create a dummy client to prevent the app from crashing
-  supabaseClient = createClient('https://dummy.supabase.co', 'dummy-key');
-} else {
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-}
-
-export const supabase = supabaseClient;
+export { supabase };
 
 export type Database = {
   public: {
