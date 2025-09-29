@@ -33,6 +33,7 @@ export type Database = {
           institution: string | null
           last_name: string
           learner_first_name: string | null
+          learner_gender: string | null
           learner_last_name: string | null
           number_of_kids: string | null
           number_of_learners: string | null
@@ -70,6 +71,7 @@ export type Database = {
           institution?: string | null
           last_name: string
           learner_first_name?: string | null
+          learner_gender?: string | null
           learner_last_name?: string | null
           number_of_kids?: string | null
           number_of_learners?: string | null
@@ -107,6 +109,7 @@ export type Database = {
           institution?: string | null
           last_name?: string
           learner_first_name?: string | null
+          learner_gender?: string | null
           learner_last_name?: string | null
           number_of_kids?: string | null
           number_of_learners?: string | null
