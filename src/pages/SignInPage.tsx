@@ -203,44 +203,56 @@ const SignInPage = () => {
               </div>
             )}
             
-            <div className="text-center text-sm">
-              <span className="text-muted-foreground">Don't have an account? </span>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="link" 
-                    className="text-primary hover:underline p-0 h-auto font-normal text-sm"
-                  >
-                    Register here <ChevronDown className="ml-1 h-3 w-3" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
-                  <DropdownMenuItem asChild>
-                    <Link 
-                      to="/register?type=parent" 
-                      className="cursor-pointer"
+            <div className="text-center text-sm space-y-2">
+              <div>
+                <span className="text-muted-foreground">Don't have an account? </span>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="link" 
+                      className="text-primary hover:underline p-0 h-auto font-normal text-sm"
                     >
-                      Parent
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link 
-                      to="/register?type=ecd-manager" 
-                      className="cursor-pointer"
-                    >
-                      ECD Manager
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link 
-                      to="/register?type=tech-teacher" 
-                      className="cursor-pointer"
-                    >
-                      Tech Teacher
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                      Register here <ChevronDown className="ml-1 h-3 w-3" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=parent" 
+                        className="cursor-pointer"
+                      >
+                        Parent
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=ecd-manager" 
+                        className="cursor-pointer"
+                      >
+                        ECD Manager
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        to="/register?type=tech-teacher" 
+                        className="cursor-pointer"
+                      >
+                        Tech Teacher
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              
+              <div>
+                <Button 
+                  variant="link" 
+                  className="text-primary hover:underline p-0 h-auto font-normal text-sm"
+                  onClick={() => setShowForgotPassword(true)}
+                >
+                  Forgot password?
+                </Button>
+              </div>
             </div>
           </form>
         </CardContent>
