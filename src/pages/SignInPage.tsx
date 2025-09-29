@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +14,14 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { ChevronDown, Home } from "lucide-react";
+import { SiFacebook, SiGoogle } from "react-icons/si";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { signIn, user } = useAuth();
+  const [isOAuthSubmitting, setIsOAuthSubmitting] = useState(false);
+  const { signIn, signInWithOAuth, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already signed in
@@ -46,6 +49,17 @@ const SignInPage = () => {
     }
   };
 
+  const handleOAuthSignIn = async (provider: 'google' | 'facebook') => {
+    setIsOAuthSubmitting(true);
+    try {
+      await signInWithOAuth(provider);
+    } catch (error) {
+      console.error('OAuth sign in error:', error);
+    } finally {
+      setIsOAuthSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <div className="mb-8">
@@ -61,7 +75,44 @@ const SignInPage = () => {
         </CardHeader>
         
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => handleOAuthSignIn('google')}
+                disabled={isOAuthSubmitting}
+              >
+                <SiGoogle className="h-4 w-4 mr-2" />
+                Continue with Google
+              </Button>
+              
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => handleOAuthSignIn('facebook')}
+                disabled={isOAuthSubmitting}
+              >
+                <SiFacebook className="h-4 w-4 mr-2" />
+                Continue with Facebook
+              </Button>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <Separator className="w-full" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with email
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
             <div className="space-y-2">
               <Label htmlFor="signin-email">Email</Label>
               <Input
