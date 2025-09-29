@@ -808,12 +808,9 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <div>
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Square
-                  </h1>
-                  <p className="text-lg text-white mt-1">This is a Square</p>
-                </div>
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Square
+                </h1>
                 <button 
                   onClick={() => setSquareShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -827,7 +824,7 @@ const LessonVault0406 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   {/* Left Column - Real Square Shape */}
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Square</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Square</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
                         src={realSquareShape} 
@@ -883,12 +880,9 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <div>
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Triangle
-                  </h1>
-                  <p className="text-lg text-white mt-1">This is a Triangle</p>
-                </div>
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Triangle
+                </h1>
                 <button 
                   onClick={() => setTriangleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -902,7 +896,7 @@ const LessonVault0406 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   {/* Left Column - Real Triangle Shape */}
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Triangle</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Triangle</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
                         src={realTriangleShape} 
@@ -958,12 +952,9 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <div>
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Rectangle
-                  </h1>
-                  <p className="text-lg text-white mt-1">This is a Rectangle</p>
-                </div>
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Rectangle
+                </h1>
                 <button 
                   onClick={() => setRectangleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -977,7 +968,7 @@ const LessonVault0406 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   {/* Left Column - Real Rectangle Shape */}
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Rectangle</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Rectangle</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
                         src={realRectangleShape} 
@@ -1033,12 +1024,9 @@ const LessonVault0406 = () => {
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
-                <div>
-                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                    Circle
-                  </h1>
-                  <p className="text-lg text-white mt-1">This is a Circle</p>
-                </div>
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  Circle
+                </h1>
                 <button 
                   onClick={() => setCircleShapeOpen(false)}
                   className="text-white hover:text-yellow-400 transition-colors"
@@ -1052,7 +1040,7 @@ const LessonVault0406 = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   {/* Left Column - Real Circle Shape */}
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Circle</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Circle</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
                       <img 
                         src={realCircleShape} 
