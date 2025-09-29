@@ -205,6 +205,16 @@ const SignInPage = () => {
             
             <div className="text-center text-sm space-y-2">
               <div>
+                <Button 
+                  variant="link" 
+                  className="text-primary hover:underline p-0 h-auto font-normal text-sm"
+                  onClick={() => setShowForgotPassword(true)}
+                >
+                  Forgot password?
+                </Button>
+              </div>
+              
+              <div>
                 <span className="text-muted-foreground">Don't have an account? </span>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -242,16 +252,6 @@ const SignInPage = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </div>
-              
-              <div>
-                <Button 
-                  variant="link" 
-                  className="text-primary hover:underline p-0 h-auto font-normal text-sm"
-                  onClick={() => setShowForgotPassword(true)}
-                >
-                  Forgot password?
-                </Button>
               </div>
             </div>
           </form>
