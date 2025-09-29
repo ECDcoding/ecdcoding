@@ -32,6 +32,7 @@ const Register = () => {
     country: "",
     username: "",
     password: "",
+    confirmPassword: "",
     
     // Parent/Learner specific
     institution: "",
@@ -225,7 +226,7 @@ const Register = () => {
 
 
         {/* Username and Password Creation */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username">Create Username *</Label>
             <Input
@@ -236,17 +237,33 @@ const Register = () => {
               required
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Create Password *</Label>
-            <Input
-              id="password"
-              type="password"
-              value={formData.password || ''}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="One capital letter, a number, and a punctuation"
-              required
-            />
-            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="password">Create Password *</Label>
+              <Input
+                id="password"
+                type="password"
+                value={formData.password || ''}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                placeholder="One capital letter, a number, and a punctuation"
+                required
+              />
+              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password *</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={formData.confirmPassword || ''}
+                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                placeholder="Re-enter your password"
+                required
+              />
+              {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                <p className="text-xs text-red-600">Passwords do not match</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -510,7 +527,7 @@ const Register = () => {
         </div>
 
         {/* Username and Password Creation */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username-ecd">Create Username *</Label>
             <Input
@@ -522,18 +539,35 @@ const Register = () => {
               required
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password-ecd">Create Password *</Label>
-            <Input
-              id="password-ecd"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="One capital letter, a number, and a punctuation"
-              className="text-black bg-green-50"
-              required
-            />
-            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="password-ecd">Create Password *</Label>
+              <Input
+                id="password-ecd"
+                type="password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                placeholder="One capital letter, a number, and a punctuation"
+                className="text-black bg-green-50"
+                required
+              />
+              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword-ecd">Confirm Password *</Label>
+              <Input
+                id="confirmPassword-ecd"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                placeholder="Re-enter your password"
+                className="text-black bg-green-50"
+                required
+              />
+              {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                <p className="text-xs text-red-600">Passwords do not match</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -757,7 +791,7 @@ const Register = () => {
         </div>
 
         {/* Username and Password Creation */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username-tech">Create Username *</Label>
             <Input
@@ -769,18 +803,35 @@ const Register = () => {
               required
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password-tech">Create Password *</Label>
-            <Input
-              id="password-tech"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="One capital letter, a number, and a punctuation"
-              className="text-black bg-green-50"
-              required
-            />
-            <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="password-tech">Create Password *</Label>
+              <Input
+                id="password-tech"
+                type="password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                placeholder="One capital letter, a number, and a punctuation"
+                className="text-black bg-green-50"
+                required
+              />
+              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword-tech">Confirm Password *</Label>
+              <Input
+                id="confirmPassword-tech"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                placeholder="Re-enter your password"
+                className="text-black bg-green-50"
+                required
+              />
+              {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                <p className="text-xs text-red-600">Passwords do not match</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
