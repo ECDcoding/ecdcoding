@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -631,17 +631,38 @@ const LessonVault0406 = () => {
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                     <DropdownMenuItem 
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => window.location.href = '/domestic-ecology'}
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      Domestic Ecology
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                       onClick={() => openMediaUpload('picture')}
                     >
-                      <ImageIcon className="h-4 w-4" />
-                      Insert Picture
+                      <TreePine className="h-4 w-4" />
+                      Environmental Science
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                       onClick={() => openMediaUpload('video')}
                     >
-                      <Film className="h-4 w-4" />
-                      Insert Video Clip
+                      <Microscope className="h-4 w-4" />
+                      Biology & Nature
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => openMediaUpload('picture')}
+                    >
+                      <Home className="h-4 w-4" />
+                      Home Sciences
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => openMediaUpload('video')}
+                    >
+                      <Users className="h-4 w-4" />
+                      Community Studies
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
