@@ -430,7 +430,7 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label>Phone Number *</Label>
+          <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
             <Input
               className="w-20"
@@ -729,7 +729,7 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label>Phone Number *</Label>
+          <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
             <Input
               className="w-20 text-black bg-green-50"
@@ -991,7 +991,7 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label>Phone Number *</Label>
+          <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
             <Input
               className="w-20 text-black bg-green-50"
