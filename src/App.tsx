@@ -11,6 +11,7 @@ import LessonVault0406 from "./pages/LessonVault04-06";
 import LessonVault0710 from "./pages/LessonVault07-10";
 import PaymentForm from "./pages/PaymentForm";
 import SignInPage from "./pages/SignInPage";
+import DomesticEcology from "./pages/DomesticEcology";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
           <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
+          <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
