@@ -17,6 +17,7 @@ interface Profile {
   learner_last_name?: string;
   learner_gender?: string;
   number_of_kids?: string;
+  profile_image_url?: string;
   created_at: string;
   updated_at: string;
 }

@@ -1,14 +1,15 @@
-import { User, Key, Phone, LogOut, Settings, Save, X } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useProfile } from "@/hooks/useProfile";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ProfileDropdownProps {
   profileImage?: string | null;
@@ -18,15 +19,20 @@ interface ProfileDropdownProps {
 export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     learner_first_name: "",
     learner_last_name: "",
     learner_gender: "",
     institution: "",
-    number_of_kids: ""
+    number_of_kids: "",
+    password: "",
+    confirmPassword: ""
   });
   const { profile, loading } = useProfile();
+  const { user } = useAuth();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectChange = (value: string) => {
     if (value === "profile") {
@@ -37,7 +43,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           learner_last_name: profile.learner_last_name || "",
           learner_gender: profile.learner_gender || "",
           institution: profile.institution || "",
-          number_of_kids: profile.number_of_kids || ""
+          number_of_kids: profile.number_of_kids || "",
+          password: "",
+          confirmPassword: ""
         });
       }
     } else if (value === "logout") {
@@ -57,7 +65,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         learner_last_name: profile.learner_last_name || "",
         learner_gender: profile.learner_gender || "",
         institution: profile.institution || "",
-        number_of_kids: profile.number_of_kids || ""
+        number_of_kids: profile.number_of_kids || "",
+        password: "",
+        confirmPassword: ""
       });
     }
   };
@@ -101,6 +111,94 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     }
   };
 
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+
+    setUploading(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/avatar.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('profile-pictures')
+        .upload(fileName, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from('profile-pictures')
+        .getPublicUrl(fileName);
+
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ profile_image_url: data.publicUrl })
+        .eq('user_id', user.id);
+
+      if (updateError) throw updateError;
+
+      toast({
+        title: "Success",
+        description: "Profile picture updated successfully!",
+      });
+      
+      // Reload the page to see the updated profile picture
+      window.location.reload();
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload profile picture. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: formData.password
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Password updated successfully!",
+      });
+      
+      setFormData(prev => ({ ...prev, password: "", confirmPassword: "" }));
+    } catch (error) {
+      console.error('Error updating password:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update password. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const getAgeFromAgeGroup = (ageGroup?: string) => {
     if (!ageGroup) return "Not specified";
     if (ageGroup === "04-06") return "4-6 years";
@@ -110,33 +208,53 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
 
   return (
     <>
-      <Select onValueChange={handleSelectChange}>
-        <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
-          {profileImage ? (
-            <img src={profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
+      <div className="flex items-center gap-2">
+        <Select onValueChange={handleSelectChange}>
+          <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
+            {profileImage || profile?.profile_image_url ? (
+              <img src={profileImage || profile?.profile_image_url || undefined} alt="Profile" className="w-full h-full rounded-full object-cover" />
+            ) : (
+              <span className="text-profile-text text-xs">Photo</span>
+            )}
+          </SelectTrigger>
+          <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
+            <SelectItem value="profile" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
+              <User className="h-4 w-4" />
+              Profile
+            </SelectItem>
+            <SelectItem value="contact-details" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
+              <Phone className="h-4 w-4" />
+              Contact Details
+            </SelectItem>
+            <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </SelectItem>
+          </SelectContent>
+        </Select>
+        
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+          className="h-8 w-8 p-0 rounded-full border-2 border-white/20 bg-profile-bg hover:bg-white/20"
+        >
+          {uploading ? (
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
           ) : (
-            <span className="text-profile-text text-xs">Photo</span>
+            <Upload className="h-4 w-4 text-profile-text" />
           )}
-        </SelectTrigger>
-        <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
-          <SelectItem value="profile" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-            <User className="h-4 w-4" />
-            Profile
-          </SelectItem>
-          <SelectItem value="change-password" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-            <Key className="h-4 w-4" />
-            Change Password
-          </SelectItem>
-          <SelectItem value="contact-details" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            Contact Details
-          </SelectItem>
-          <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </SelectItem>
-        </SelectContent>
-      </Select>
+        </Button>
+        
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
+      </div>
 
        <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
         <DialogContent className="max-w-md">
@@ -158,15 +276,15 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             <div className="text-center py-6">Loading profile...</div>
           ) : profile ? (
             <div className="space-y-6">
-              {/* Profile Avatar */}
-              <div className="flex justify-center">
-                <Avatar className="w-20 h-20">
-                  <AvatarImage src={profileImage || undefined} />
-                  <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
-                    {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
+               {/* Profile Avatar */}
+               <div className="flex justify-center">
+                 <Avatar className="w-20 h-20">
+                   <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
+                   <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
+                     {(isEditing ? formData.learner_first_name : profile.learner_first_name)?.[0] || profile.first_name?.[0] || '?'}
+                   </AvatarFallback>
+                 </Avatar>
+               </div>
 
               {!isEditing ? (
                 /* View Mode */
@@ -251,17 +369,56 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="institution">ECD Institution</Label>
-                    <Input
-                      id="institution"
-                      value={formData.institution}
-                      onChange={(e) => setFormData(prev => ({...prev, institution: e.target.value}))}
-                      placeholder="Enter institution name"
-                    />
-                  </div>
+                   <div>
+                     <Label htmlFor="institution">ECD Institution</Label>
+                     <Input
+                       id="institution"
+                       value={formData.institution}
+                       onChange={(e) => setFormData(prev => ({...prev, institution: e.target.value}))}
+                       placeholder="Enter institution name"
+                     />
+                   </div>
 
-                  <div className="flex justify-end gap-2 pt-4">
+                   {/* Change Password Section */}
+                   <div className="border-t pt-4 space-y-4">
+                     <h4 className="font-medium flex items-center gap-2">
+                       <Key className="h-4 w-4" />
+                       Change Password
+                     </h4>
+                     <div className="grid grid-cols-2 gap-4">
+                       <div>
+                         <Label htmlFor="password">New Password</Label>
+                         <Input
+                           id="password"
+                           type="password"
+                           value={formData.password}
+                           onChange={(e) => setFormData(prev => ({...prev, password: e.target.value}))}
+                           placeholder="Enter new password"
+                         />
+                       </div>
+                       <div>
+                         <Label htmlFor="confirmPassword">Confirm Password</Label>
+                         <Input
+                           id="confirmPassword"
+                           type="password"
+                           value={formData.confirmPassword}
+                           onChange={(e) => setFormData(prev => ({...prev, confirmPassword: e.target.value}))}
+                           placeholder="Confirm password"
+                         />
+                       </div>
+                     </div>
+                     {formData.password && (
+                       <Button
+                         variant="outline"
+                         onClick={handleChangePassword}
+                         className="w-full"
+                       >
+                         Update Password
+                       </Button>
+                     )}
+                   </div>
+
+                   <div className="flex justify-end gap-2 pt-4">
                     <Button
                       variant="outline"
                       onClick={handleCancel}

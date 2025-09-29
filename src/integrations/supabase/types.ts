@@ -38,6 +38,7 @@ export type Database = {
           number_of_kids: string | null
           number_of_learners: string | null
           phone: string
+          profile_image_url: string | null
           programming_languages: string | null
           qualifications: string | null
           registration_status: string | null
@@ -76,6 +77,7 @@ export type Database = {
           number_of_kids?: string | null
           number_of_learners?: string | null
           phone: string
+          profile_image_url?: string | null
           programming_languages?: string | null
           qualifications?: string | null
           registration_status?: string | null
@@ -114,6 +116,7 @@ export type Database = {
           number_of_kids?: string | null
           number_of_learners?: string | null
           phone?: string
+          profile_image_url?: string | null
           programming_languages?: string | null
           qualifications?: string | null
           registration_status?: string | null
