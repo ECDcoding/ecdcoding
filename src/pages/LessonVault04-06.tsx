@@ -624,7 +624,7 @@ const LessonVault0406 = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Domestic Ecology
+                      Videos
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
@@ -1496,7 +1496,7 @@ const LessonVault0406 = () => {
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 {mediaType === 'picture' ? <ImageIcon className="h-5 w-5" /> : <Film className="h-5 w-5" />}
-                Upload {mediaType === 'picture' ? 'Picture' : 'Video Clip'} - Domestic Ecology
+                Upload {mediaType === 'picture' ? 'Picture' : 'Video Clip'} - Videos
               </DialogTitle>
             </DialogHeader>
             
@@ -1592,7 +1592,7 @@ const LessonVault0406 = () => {
         {uploadedMedia.length > 0 && (
           <div className="mt-8 p-6 bg-white/10 rounded-lg">
             <h3 className="text-2xl font-bold text-yellow-400 mb-4" style={{fontFamily: 'Bungee Shade, cursive'}}>
-              🌿 Domestic Ecology Media Gallery
+              🎥 Videos Media Gallery
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {uploadedMedia.map((media) => (
