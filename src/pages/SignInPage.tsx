@@ -21,7 +21,9 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOAuthSubmitting, setIsOAuthSubmitting] = useState(false);
-  const { signIn, signInWithOAuth, user } = useAuth();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const { signIn, signInWithOAuth, resetPassword, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already signed in
@@ -34,6 +36,7 @@ const SignInPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setShowForgotPassword(false);
     
     try {
       const { data, error } = await signIn(email, password);
@@ -41,11 +44,31 @@ const SignInPage = () => {
       if (data && !error) {
         // Navigate back to home page or redirect to intended page
         navigate("/");
+      } else if (error) {
+        // Show forgot password option after failed sign-in
+        setShowForgotPassword(true);
       }
     } catch (error) {
       console.error('Sign in error:', error);
+      setShowForgotPassword(true);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsResetting(true);
+    
+    try {
+      const { error } = await resetPassword(email);
+      if (!error) {
+        setShowForgotPassword(false);
+      }
+    } catch (error) {
+      console.error('Password reset error:', error);
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -144,6 +167,41 @@ const SignInPage = () => {
             >
               {isSubmitting ? 'Signing in...' : 'Sign In'}
             </Button>
+            
+            {showForgotPassword && (
+              <div className="mt-4 p-4 border rounded-lg bg-muted/50">
+                <p className="text-sm text-muted-foreground mb-3">
+                  Forgot password? Enter your email to receive a reset link:
+                </p>
+                <form onSubmit={handleForgotPassword} className="space-y-3">
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                  />
+                  <div className="flex gap-2">
+                    <Button 
+                      type="submit"
+                      size="sm"
+                      disabled={isResetting}
+                      className="flex-1"
+                    >
+                      {isResetting ? 'Sending...' : 'Send Reset Link'}
+                    </Button>
+                    <Button 
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowForgotPassword(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            )}
             
             <div className="text-center text-sm">
               <span className="text-muted-foreground">Don't have an account? </span>
