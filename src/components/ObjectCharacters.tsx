@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import catReal from "@/assets/characters/cat-real.png";
+import catBaby from "@/assets/characters/cat-baby.jpg";
 import spiderReal from "@/assets/characters/spider-real.png";
 import cowReal from "@/assets/characters/cow-real.png";
 import donkeyReal from "@/assets/characters/donkey-real.png";
@@ -33,7 +34,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
   };
 
   const characters = [
-    { id: 1, name: 'Cat', displayName: 'Kitten', image: catReal, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
+    { id: 1, name: 'Cat', displayName: 'Kitten', image: catReal, babyImage: catBaby, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
     { id: 2, name: 'Spider', displayName: 'Bee', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
     { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
     { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
@@ -215,32 +216,15 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
                 />
               </div>
               
-              {/* Sprite Container */}
+              {/* Baby Character Display */}
               <div className="relative bg-white h-full w-full min-h-[300px] grid place-items-center">
-                <div className="absolute right-0 bottom-0 flex">
-                  <input
-                    type="radio"
-                    name="direction"
-                    checked={direction === 'left'}
-                    onChange={() => setDirection('left')}
-                    className="appearance-none w-[26px] h-7 before:content-['◀️'] before:text-xl before:opacity-25 before:cursor-pointer checked:before:opacity-50"
-                  />
-                  <input
-                    type="radio"
-                    name="direction"
-                    checked={direction === 'right'}
-                    onChange={() => setDirection('right')}
-                    className="appearance-none w-[26px] h-7 before:content-['▶️'] before:text-xl before:opacity-25 before:cursor-pointer checked:before:opacity-50"
-                  />
-                </div>
-                
-                <div
-                  className={`sprite-animation ${direction === 'left' ? 'scale-x-[-1]' : ''} ${isMoving ? 'sprite-moving' : ''} cursor-pointer`}
+                <img 
+                  src={selected.babyImage || selected.spriteImage} 
+                  alt={selected.displayName}
+                  className="max-w-[200px] max-h-[250px] object-contain"
                   style={{
-                    filter: 'drop-shadow(2px 4px 6px black)',
-                    position: 'relative'
+                    filter: 'drop-shadow(2px 4px 6px black)'
                   }}
-                  onClick={handleSpriteClick}
                 />
               </div>
 
