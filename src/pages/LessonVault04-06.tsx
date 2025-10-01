@@ -12,6 +12,7 @@ import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
+import { ObjectCharacters } from "@/components/ObjectCharacters";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -52,6 +53,7 @@ const LessonVault0406 = () => {
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [selectedFullScreenColor, setSelectedFullScreenColor] = useState<string | null>(null);
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
+  const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   
@@ -618,6 +620,12 @@ const LessonVault0406 = () => {
                       onClick={() => setSelectedAnimalType("wild")}
                     >
                       Wild Animals
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setObjectCharactersOpen(true)}
+                    >
+                      Object Characters
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -2148,6 +2156,11 @@ const LessonVault0406 = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Object Characters View */}
+        {objectCharactersOpen && (
+          <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
         )}
 
        </main>
