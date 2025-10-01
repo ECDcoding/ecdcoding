@@ -5,6 +5,7 @@ import catReal from "@/assets/characters/cat-real.png";
 import catBaby from "@/assets/characters/cat-baby.jpg";
 import spiderReal from "@/assets/characters/spider-real.png";
 import cowReal from "@/assets/characters/cow-real.png";
+import cowBaby from "@/assets/characters/cow-baby.jpg";
 import donkeyReal from "@/assets/characters/donkey-real.png";
 import endermanReal from "@/assets/characters/enderman-real.png";
 import crocodileReal from "@/assets/characters/crocodile-real.png";
@@ -36,7 +37,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
   const characters = [
     { id: 1, name: 'Cat', displayName: 'Kitten', image: catReal, babyImage: catBaby, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
     { id: 2, name: 'Spider', displayName: 'Bee', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
-    { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
+    { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, babyImage: cowBaby, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
     { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 5, name: 'Enderman', displayName: 'Ender Child', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 6, name: 'Crocodile', displayName: 'Hatchling', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
