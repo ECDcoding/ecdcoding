@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import catReal from "@/assets/characters/cat-real.png";
 import spiderReal from "@/assets/characters/spider-real.png";
 import cowReal from "@/assets/characters/cow-real.png";
-import creeperReal from "@/assets/characters/creeper-real.png";
+import donkeyReal from "@/assets/characters/donkey-real.png";
 import endermanReal from "@/assets/characters/enderman-real.png";
-import evokerReal from "@/assets/characters/evoker-real.png";
-import golemReal from "@/assets/characters/golem-real.png";
+import crocodileReal from "@/assets/characters/crocodile-real.png";
+import shrekReal from "@/assets/characters/shrek-real.png";
 import horseReal from "@/assets/characters/horse-real.png";
 import ocelotReal from "@/assets/characters/ocelot-real.png";
 import pandaReal from "@/assets/characters/panda-real.png";
@@ -15,7 +15,7 @@ import skeletonReal from "@/assets/characters/skeleton-real.png";
 import wolfReal from "@/assets/characters/wolf-real.png";
 import squidReal from "@/assets/characters/squid-real.png";
 import foxReal from "@/assets/characters/fox-real.png";
-import villagerReal from "@/assets/characters/villager-real.png";
+import sharkReal from "@/assets/characters/shark-real.png";
 
 interface ObjectCharactersProps {
   onClose: () => void;
@@ -36,10 +36,10 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 1, name: 'Cat', image: catReal, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
     { id: 2, name: 'Spider', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
     { id: 3, name: 'Cow', image: cowReal, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
-    { id: 4, name: 'Creeper', image: creeperReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
+    { id: 4, name: 'Donkey', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 5, name: 'Enderman', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
-    { id: 6, name: 'Evoker', image: evokerReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
-    { id: 7, name: 'Steel golem', image: golemReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
+    { id: 6, name: 'Crocodile', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
+    { id: 7, name: 'Shrek', image: shrekReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
     { id: 8, name: 'Skeleton horse', image: horseReal, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
     { id: 9, name: 'Ocelot', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
     { id: 10, name: 'Panda', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
@@ -47,7 +47,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 12, name: 'Wolf', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
     { id: 13, name: 'Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
     { id: 14, name: 'Fox', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
-    { id: 15, name: 'Villager', image: villagerReal, spriteImage: 'https://assets.codepen.io/36869/villager.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
+    { id: 15, name: 'Shark', image: sharkReal, spriteImage: 'https://assets.codepen.io/36869/villager.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
   ];
 
   const selected = characters.find(c => c.id === selectedCharacter) || characters[0];
