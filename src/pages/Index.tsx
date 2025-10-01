@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import Chatbot from "@/components/Chatbot";
 import { Copyright, Mail } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Index = () => {
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
@@ -29,6 +30,10 @@ const Index = () => {
             <Mail className="h-4 w-4" />
             <span className="text-sm">Contact Us</span>
           </Link>
+          <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+            <FaWhatsapp className="h-4 w-4" />
+            <span className="text-sm">WhatsApp</span>
+          </a>
         </div>
       </footer>
     </div>
