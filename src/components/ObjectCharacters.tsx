@@ -10,6 +10,12 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
   const [selectedCharacter, setSelectedCharacter] = useState(1);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [frameRate, setFrameRate] = useState(48);
+  const [isMoving, setIsMoving] = useState(false);
+
+  const handleSpriteClick = () => {
+    setIsMoving(true);
+    setTimeout(() => setIsMoving(false), 600);
+  };
 
   const characters = [
     { id: 1, name: 'Cat', image: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
@@ -82,6 +88,17 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
         
         .sprite-animation:hover {
           transform: scale(1.4);
+        }
+        
+        @keyframes sprite-move {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          25% { transform: translateX(-30px) translateY(-40px); }
+          50% { transform: translateX(30px) translateY(-60px); }
+          75% { transform: translateX(-20px) translateY(-40px); }
+        }
+        
+        .sprite-moving {
+          animation: sprite-move 0.6s ease-in-out;
         }
       `}</style>
       
@@ -191,11 +208,12 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
                 </div>
                 
                 <div
-                  className={`sprite-animation ${direction === 'left' ? 'scale-x-[-1]' : ''}`}
+                  className={`sprite-animation ${direction === 'left' ? 'scale-x-[-1]' : ''} ${isMoving ? 'sprite-moving' : ''} cursor-pointer`}
                   style={{
                     filter: 'drop-shadow(2px 4px 6px black)',
                     position: 'relative'
                   }}
+                  onClick={handleSpriteClick}
                 />
               </div>
 
