@@ -33,21 +33,21 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
   };
 
   const characters = [
-    { id: 1, name: 'Cat', image: catReal, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
-    { id: 2, name: 'Spider', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
-    { id: 3, name: 'Cow', image: cowReal, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
-    { id: 4, name: 'Donkey', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
-    { id: 5, name: 'Enderman', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
-    { id: 6, name: 'Crocodile', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
-    { id: 7, name: 'Shrek', image: shrekReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
-    { id: 8, name: 'Skeleton horse', image: horseReal, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
-    { id: 9, name: 'Ocelot', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
-    { id: 10, name: 'Panda', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
-    { id: 11, name: 'Skeleton', image: skeletonReal, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
-    { id: 12, name: 'Wolf', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
-    { id: 13, name: 'Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
-    { id: 14, name: 'Fox', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
-    { id: 15, name: 'Shark', image: sharkReal, spriteImage: 'https://assets.codepen.io/36869/villager.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
+    { id: 1, name: 'Cat', displayName: 'Kitten', image: catReal, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
+    { id: 2, name: 'Spider', displayName: 'Bee', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
+    { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
+    { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
+    { id: 5, name: 'Enderman', displayName: 'Ender Child', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
+    { id: 6, name: 'Crocodile', displayName: 'Hatchling', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
+    { id: 7, name: 'Shrek', displayName: 'Baby Shrek', image: shrekReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
+    { id: 8, name: 'Skeleton horse', displayName: 'Foal', image: horseReal, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
+    { id: 9, name: 'Ocelot', displayName: 'Cub', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
+    { id: 10, name: 'Panda', displayName: 'Cub', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
+    { id: 11, name: 'Skeleton', displayName: 'Baby Skeleton', image: skeletonReal, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
+    { id: 12, name: 'Wolf', displayName: 'Pup', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
+    { id: 13, name: 'Squid', displayName: 'Baby Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
+    { id: 14, name: 'Fox', displayName: 'Kit', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
+    { id: 15, name: 'Shark', displayName: 'Pup', image: sharkReal, spriteImage: 'https://assets.codepen.io/36869/villager.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
   ];
 
   const selected = characters.find(c => c.id === selectedCharacter) || characters[0];
@@ -199,7 +199,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
               className="bg-[#adcbf1] text-center leading-10 font-bold text-xl"
               style={{ fontFamily: 'Minecraft, sans-serif' }}
             >
-              {selected.name}
+              {selected.displayName}
             </div>
             
             <div className="h-full w-full grid gap-2 place-items-center place-content-center">
