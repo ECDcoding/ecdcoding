@@ -7,6 +7,7 @@ import spiderReal from "@/assets/characters/spider-real.png";
 import cowReal from "@/assets/characters/cow-real.png";
 import cowBaby from "@/assets/characters/cow-baby.jpg";
 import donkeyReal from "@/assets/characters/donkey-real.png";
+import donkeyBaby from "@/assets/characters/donkey-baby.mov";
 import endermanReal from "@/assets/characters/enderman-real.png";
 import crocodileReal from "@/assets/characters/crocodile-real.png";
 import shrekReal from "@/assets/characters/shrek-real.png";
@@ -38,7 +39,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 1, name: 'Cat', displayName: 'Kitten', image: catReal, babyImage: catBaby, spriteImage: 'https://assets.codepen.io/36869/cat.webp', frames: 42, columns: 5, height: 5364, width: 2980 },
     { id: 2, name: 'Spider', displayName: 'Bee', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
     { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, babyImage: cowBaby, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
-    { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
+    { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 5, name: 'Enderman', displayName: 'Ender Child', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 6, name: 'Crocodile', displayName: 'Hatchling', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
     { id: 7, name: 'Shrek', displayName: 'Baby Shrek', image: shrekReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
@@ -219,14 +220,28 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
               
               {/* Baby Character Display */}
               <div className="relative bg-white h-full w-full min-h-[300px] grid place-items-center">
-                <img 
-                  src={selected.babyImage || selected.spriteImage} 
-                  alt={selected.displayName}
-                  className="max-w-[200px] max-h-[250px] object-contain"
-                  style={{
-                    filter: 'drop-shadow(2px 4px 6px black)'
-                  }}
-                />
+                {selected.babyIsVideo ? (
+                  <video 
+                    src={selected.babyImage} 
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="max-w-[200px] max-h-[250px] object-contain"
+                    style={{
+                      filter: 'drop-shadow(2px 4px 6px black)'
+                    }}
+                  />
+                ) : (
+                  <img 
+                    src={selected.babyImage || selected.spriteImage} 
+                    alt={selected.displayName}
+                    className="max-w-[200px] max-h-[250px] object-contain"
+                    style={{
+                      filter: 'drop-shadow(2px 4px 6px black)'
+                    }}
+                  />
+                )}
               </div>
 
               {/* Stats */}
