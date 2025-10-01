@@ -203,6 +203,18 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
             </div>
             
             <div className="h-full w-full grid gap-2 place-items-center place-content-center">
+              {/* Realistic Character Display */}
+              <div className="relative bg-white h-full w-full min-h-[300px] grid place-items-center">
+                <img 
+                  src={selected.image} 
+                  alt={selected.name}
+                  className="max-w-[200px] max-h-[250px] object-contain"
+                  style={{
+                    filter: 'drop-shadow(2px 4px 6px black)'
+                  }}
+                />
+              </div>
+              
               {/* Sprite Container */}
               <div className="relative bg-white h-full w-full min-h-[300px] grid place-items-center">
                 <div className="absolute right-0 bottom-0 flex">
