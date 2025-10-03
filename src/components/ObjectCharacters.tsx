@@ -15,7 +15,8 @@ import shrekReal from "@/assets/characters/shrek-real.png";
 import horseReal from "@/assets/characters/horse-real.png";
 import ocelotReal from "@/assets/characters/ocelot-real.png";
 import pandaReal from "@/assets/characters/panda-real.png";
-import skeletonReal from "@/assets/characters/skeleton-real.png";
+import dogReal from "@/assets/characters/dog-real.png";
+import dogBaby from "@/assets/characters/dog-baby.mov";
 import wolfReal from "@/assets/characters/wolf-real.png";
 import squidReal from "@/assets/characters/squid-real.png";
 import foxReal from "@/assets/characters/fox-real.png";
@@ -47,7 +48,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 8, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
     { id: 9, name: 'Ocelot', displayName: 'Cub', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
     { id: 10, name: 'Panda', displayName: 'Cub', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
-    { id: 11, name: 'Skeleton', displayName: 'Baby Skeleton', image: skeletonReal, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
+    { id: 11, name: 'Dog', displayName: 'Puppy', image: dogReal, babyImage: dogBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
     { id: 12, name: 'Wolf', displayName: 'Pup', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
     { id: 13, name: 'Squid', displayName: 'Baby Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
     { id: 14, name: 'Fox', displayName: 'Kit', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
