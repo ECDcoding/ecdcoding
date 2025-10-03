@@ -1359,12 +1359,17 @@ const Register = () => {
                             <h3 className="font-semibold text-base mb-2">2. Privacy Policy</h3>
                             <p className="mb-2">
                               We are committed to protecting your privacy and the privacy of the children in our programs.
+                              <br />
+                              <Link to="/privacy-policy" className="text-primary underline hover:text-primary/80" target="_blank">
+                                Read Full Privacy Policy →
+                              </Link>
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-4">
                               <li>Personal information is collected only for educational and administrative purposes</li>
                               <li>Child data is protected according to applicable child protection laws</li>
                               <li>Information is not shared with third parties without consent</li>
                               <li>Parents have the right to access and update their child's information</li>
+                              <li>You can request data deletion at any time - <Link to="/data-deletion" className="text-primary underline hover:text-primary/80" target="_blank">View Instructions</Link></li>
                             </ul>
                           </section>
 
@@ -1375,6 +1380,7 @@ const Register = () => {
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-4">
                               <li>Parent/Guardian: R250/month or R3000/annual</li>
+                              <li>ECD Managers: R250/month or R3000/annual</li>
                               <li>Tech Teacher: R500/annual</li>
                               <li>Early bird registrations receive 24-month payment exemptions</li>
                               <li>Refunds are subject to our refund policy terms</li>

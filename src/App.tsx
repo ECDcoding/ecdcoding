@@ -12,6 +12,8 @@ import LessonVault0710 from "./pages/LessonVault07-10";
 import PaymentForm from "./pages/PaymentForm";
 import SignInPage from "./pages/SignInPage";
 import DomesticEcology from "./pages/DomesticEcology";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import DataDeletion from "./pages/DataDeletion";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
           <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
           <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
