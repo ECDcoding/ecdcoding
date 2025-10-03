@@ -5,6 +5,7 @@ import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut } from "l
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
+import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { useState } from "react";
 
 const LessonVault0710 = () => {
@@ -122,6 +123,9 @@ const LessonVault0710 = () => {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
+        {/* Promo Code Banner */}
+        <PromoCodeBanner />
+        
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-4">Advanced STEM Courses</h2>
           <p className="text-muted-foreground text-lg">

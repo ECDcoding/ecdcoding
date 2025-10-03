@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
+import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -392,6 +393,9 @@ const LessonVault0406 = () => {
 
         {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
+          {/* Promo Code Banner */}
+          <PromoCodeBanner />
+          
           <div className="mb-8 mt-12 text-center">
             <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
             <div className="mt-4">
