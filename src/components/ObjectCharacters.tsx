@@ -8,7 +8,7 @@ import cowReal from "@/assets/characters/cow-real.png";
 import cowBaby from "@/assets/characters/cow-baby.jpg";
 import donkeyReal from "@/assets/characters/donkey-real.png";
 import donkeyBaby from "@/assets/characters/donkey-baby.mov";
-import endermanReal from "@/assets/characters/enderman-real.png";
+import goatReal from "@/assets/characters/goat-real.jpg";
 import crocodileReal from "@/assets/characters/crocodile-real.png";
 import shrekReal from "@/assets/characters/shrek-real.png";
 import horseReal from "@/assets/characters/horse-real.png";
@@ -40,7 +40,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 2, name: 'Spider', displayName: 'Bee', image: spiderReal, spriteImage: 'https://assets.codepen.io/36869/spider.webp', frames: 28, columns: 5, height: 3576, width: 2980 },
     { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, babyImage: cowBaby, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
     { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
-    { id: 5, name: 'Enderman', displayName: 'Ender Child', image: endermanReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
+    { id: 5, name: 'Goat', displayName: 'Kid', image: goatReal, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 6, name: 'Crocodile', displayName: 'Hatchling', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
     { id: 7, name: 'Horse', displayName: 'Foal', image: horseReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
     { id: 8, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
