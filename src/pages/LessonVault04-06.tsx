@@ -653,7 +653,7 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
-                      onClick={() => openMediaUpload('video')}
+                      onClick={() => navigate('/biology-nature')}
                     >
                       <Microscope className="h-4 w-4" />
                       Biology & Nature
