@@ -7,6 +7,14 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
+  phone: z.string().trim().min(1, "Phone is required").max(20),
+  message: z.string().trim().min(1, "Message is required").max(2000)
+});
 
 const ContactUs = () => {
   const { toast } = useToast();
@@ -28,14 +36,33 @@ const ContactUs = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validation = contactSchema.safeParse(formData);
+    if (!validation.success) {
+      toast({
+        title: "Validation Error",
+        description: validation.error.errors[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData
+      console.log("Sending contact form to edge function...");
+      
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: validation.data
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        throw error;
+      }
+
+      console.log("Email sent successfully:", data);
 
       toast({
         title: "Message sent successfully!",
@@ -52,7 +79,7 @@ const ContactUs = () => {
       console.error("Error sending message:", error);
       toast({
         title: "Failed to send message",
-        description: "Please try again later or contact us directly at info@ecdcoding.co.za",
+        description: error.message || "Please try again later or contact us directly at info@ecdcoding.co.za",
         variant: "destructive",
       });
     } finally {
