@@ -30,13 +30,11 @@ const Index = () => {
             <Mail className="h-4 w-4" />
             <span className="text-sm">Contact Us</span>
           </Link>
-          <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-            <FaWhatsapp className="h-4 w-4" />
-            <span className="text-sm">WhatsApp</span>
+          <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+            <FaWhatsapp className="h-5 w-5" />
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61568116623673" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-            <FaFacebook className="h-4 w-4" />
-            <span className="text-sm">Facebook</span>
+          <a href="https://www.facebook.com/profile.php?id=61568116623673" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+            <FaFacebook className="h-5 w-5" />
           </a>
         </div>
       </footer>

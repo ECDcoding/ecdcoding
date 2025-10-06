@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ArrowLeft, FileText } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { countryCodes } from "@/lib/countryCodes";
 
 // Comprehensive country list
 const countries = [
@@ -274,6 +275,7 @@ const Register = () => {
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+27",
     phone1: "",
     phone2: "",
     phone3: "",
@@ -282,6 +284,7 @@ const Register = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    ecdPhoneCountryCode: "+27",
     
     // Parent/Learner specific
     institution: "",
@@ -433,6 +436,18 @@ const Register = () => {
         <div className="space-y-2">
           <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
+            <Select value={formData.phoneCountryCode} onValueChange={(value) => handleInputChange("phoneCountryCode", value)}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {countryCodes.map((country) => (
+                  <SelectItem key={country.code} value={country.dialCode}>
+                    {country.dialCode} {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Input
               className="w-20"
               placeholder="###"
@@ -659,6 +674,18 @@ const Register = () => {
         <div className="space-y-2">
           <Label>ECD Institution Phone Number *</Label>
           <div className="flex gap-2">
+            <Select value={formData.ecdPhoneCountryCode} onValueChange={(value) => handleInputChange("ecdPhoneCountryCode", value)}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {countryCodes.map((country) => (
+                  <SelectItem key={country.code} value={country.dialCode}>
+                    {country.dialCode} {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Input
               className="w-20"
               placeholder="###"
@@ -746,6 +773,18 @@ const Register = () => {
         <div className="space-y-2">
           <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
+            <Select value={formData.phoneCountryCode} onValueChange={(value) => handleInputChange("phoneCountryCode", value)}>
+              <SelectTrigger className="w-32 text-black bg-green-50">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {countryCodes.map((country) => (
+                  <SelectItem key={country.code} value={country.dialCode}>
+                    {country.dialCode} {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Input
               className="w-20 text-black bg-green-50"
               placeholder="###"
@@ -1008,6 +1047,18 @@ const Register = () => {
         <div className="space-y-2">
           <Label>Phone Number (Whatsapp) *</Label>
           <div className="flex gap-2">
+            <Select value={formData.phoneCountryCode} onValueChange={(value) => handleInputChange("phoneCountryCode", value)}>
+              <SelectTrigger className="w-32 text-black bg-green-50">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {countryCodes.map((country) => (
+                  <SelectItem key={country.code} value={country.dialCode}>
+                    {country.dialCode} {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Input
               className="w-20 text-black bg-green-50"
               placeholder="###"
