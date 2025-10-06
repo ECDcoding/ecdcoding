@@ -26,7 +26,8 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOAuthSubmitting, setIsOAuthSubmitting] = useState(false);
-  const { signIn, signInWithOAuth } = useAuth();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const { signIn, signInWithOAuth, resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +58,16 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
     } finally {
       setIsOAuthSubmitting(false);
     }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      return;
+    }
+    
+    await resetPassword(email);
+    setShowForgotPassword(false);
   };
 
   return (
@@ -137,6 +148,42 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
               >
                 {isSubmitting ? 'Signing in...' : 'Sign In'}
               </Button>
+
+              {!showForgotPassword ? (
+                <div className="text-center text-sm">
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="text-primary hover:underline p-0 h-auto font-normal text-sm"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot password?
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground text-center">
+                    Enter your email above and click the button below to receive a password reset link.
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setShowForgotPassword(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="button"
+                      className="flex-1"
+                      onClick={handleForgotPassword}
+                    >
+                      Send Reset Link
+                    </Button>
+                  </div>
+                </div>
+              )}
               
               <div className="text-center text-sm">
                 <span className="text-muted-foreground">Don't have an account? </span>
