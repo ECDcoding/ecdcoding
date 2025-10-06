@@ -262,45 +262,45 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
 
        <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
         <DialogContent className="max-w-md">
-          <DialogHeader className="flex flex-col items-center gap-2">
-            <div className="w-full flex justify-end">
-              {!isEditing && profile && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleEdit}
-                  className="h-8 w-8 p-0"
+          <DialogHeader className="flex flex-row items-start justify-between">
+            <div className="flex items-start gap-3">
+              <div className="flex flex-col items-center gap-1">
+                <div 
+                  className={`relative group ${isEditing ? 'cursor-pointer' : ''}`}
+                  onClick={isEditing ? () => fileInputRef.current?.click() : undefined}
                 >
-                  <Settings className="h-4 w-4" />
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <div 
-                className={`relative group ${isEditing ? 'cursor-pointer' : ''}`}
-                onClick={isEditing ? () => fileInputRef.current?.click() : undefined}
-              >
-                <Avatar className={`w-16 h-16 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
-                  <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
-                  <AvatarFallback className="text-lg bg-primary text-primary-foreground">
-                    {(isEditing ? formData.learner_first_name : profile?.learner_first_name)?.[0] || profile?.first_name?.[0] || '?'}
-                  </AvatarFallback>
-                </Avatar>
-                {isEditing && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="h-4 w-4 text-white" />
-                  </div>
+                  <Avatar className={`w-12 h-12 ${isEditing ? 'group-hover:opacity-80 transition-opacity' : ''}`}>
+                    <AvatarImage src={profileImage || profile?.profile_image_url || undefined} />
+                    <AvatarFallback className="text-lg bg-primary text-primary-foreground">
+                      {(isEditing ? formData.learner_first_name : profile?.learner_first_name)?.[0] || profile?.first_name?.[0] || '?'}
+                    </AvatarFallback>
+                  </Avatar>
+                  {isEditing && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Camera className="h-3 w-3 text-white" />
+                    </div>
+                  )}
+                </div>
+                {profile && (
+                  <p className="text-xs text-muted-foreground">
+                    {profile.registration_type || 'Not specified'}
+                  </p>
                 )}
               </div>
-              {profile && (
-                <p className="text-sm text-muted-foreground">
-                  {profile.registration_type || 'Not specified'}
-                </p>
-              )}
               {isEditing && (
-                <p className="text-xs text-muted-foreground">Click photo to change</p>
+                <p className="text-xs text-muted-foreground mt-3">Click photo to change</p>
               )}
             </div>
+            {!isEditing && profile && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleEdit}
+                className="h-8 w-8 p-0"
+              >
+                <Settings className="h-4 w-4" />
+              </Button>
+            )}
           </DialogHeader>
           
           {loading ? (
