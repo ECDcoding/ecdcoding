@@ -310,6 +310,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                         : `${profile.first_name} ${profile.last_name}`
                       }
                     </h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {profile.registration_type || 'Not specified'}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 text-sm max-w-sm">
