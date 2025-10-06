@@ -1,5 +1,5 @@
 import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     learner_gender: "",
     institution: "",
     number_of_kids: "",
+    registration_type: "",
     password: "",
     confirmPassword: ""
   });
@@ -44,6 +45,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           learner_gender: profile.learner_gender || "",
           institution: profile.institution || "",
           number_of_kids: profile.number_of_kids || "",
+          registration_type: profile.registration_type || "",
           password: "",
           confirmPassword: ""
         });
@@ -66,6 +68,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         learner_gender: profile.learner_gender || "",
         institution: profile.institution || "",
         number_of_kids: profile.number_of_kids || "",
+        registration_type: profile.registration_type || "",
         password: "",
         confirmPassword: ""
       });
@@ -84,6 +87,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           learner_gender: formData.learner_gender || null,
           institution: formData.institution || null,
           number_of_kids: formData.number_of_kids || null,
+          registration_type: formData.registration_type || null,
         })
         .eq("user_id", profile.user_id);
 
@@ -387,6 +391,23 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                        onChange={(e) => setFormData(prev => ({...prev, institution: e.target.value}))}
                        placeholder="Enter institution name"
                      />
+                   </div>
+
+                   <div>
+                     <Label htmlFor="account_type">Account Type</Label>
+                     <Select
+                       value={formData.registration_type}
+                       onValueChange={(value) => setFormData(prev => ({...prev, registration_type: value}))}
+                     >
+                       <SelectTrigger id="account_type" className="bg-background">
+                         <SelectValue placeholder="Select account type" />
+                       </SelectTrigger>
+                       <SelectContent className="bg-background border border-gray-200 shadow-lg z-50">
+                         <SelectItem value="Kid">Kid</SelectItem>
+                         <SelectItem value="ECD">ECD</SelectItem>
+                         <SelectItem value="Tech Teacher">Tech Teacher</SelectItem>
+                       </SelectContent>
+                     </Select>
                    </div>
 
                    {/* Change Password Section */}
