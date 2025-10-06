@@ -22,7 +22,7 @@ const CallToAction = () => {
       <Button 
         size="lg"
         className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 text-lg rounded-2xl"
-        onClick={() => handleNavigation("/lesson-vault-04-06")}
+        onClick={() => navigate("/lesson-vault-04-06")}
       >
         Kids Aged 04 - 06
       </Button>
