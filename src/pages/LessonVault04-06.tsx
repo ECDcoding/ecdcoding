@@ -1163,7 +1163,10 @@ const LessonVault0406 = () => {
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-pink-400">Read more</a>
+                  <div className="space-y-2">
+                    <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                    <a href="/transportation" className="block font-bold underline text-black hover:text-pink-400">🚗 Transportation</a>
+                  </div>
                 </CardContent>
               </Card>
               
@@ -1209,7 +1212,10 @@ const LessonVault0406 = () => {
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-pink-400">Read more</a>
+                  <div className="space-y-2">
+                    <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                    <a href="/transportation" className="block font-bold underline text-black hover:text-pink-400">🚗 Transportation</a>
+                  </div>
                 </CardContent>
               </Card>
               

@@ -15,6 +15,8 @@ import DomesticEcology from "./pages/DomesticEcology";
 import BiologyNature from "./pages/BiologyNature";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataDeletion from "./pages/DataDeletion";
+import EmojiAI from "./pages/EmojiAI";
+import Transportation from "./pages/Transportation";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
           <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
           <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
           <Route path="/biology-nature" element={<ProtectedRoute><BiologyNature /></ProtectedRoute>} />
+          <Route path="/emoji-ai" element={<ProtectedRoute><EmojiAI /></ProtectedRoute>} />
+          <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
