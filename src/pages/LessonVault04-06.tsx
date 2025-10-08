@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
+import { CourseLikeComment } from "@/components/CourseLikeComment";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -423,10 +424,13 @@ const LessonVault0406 = () => {
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Number Counting
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
+                    <div className="flex items-center justify-between w-full">
+                      <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer flex-1">
+                        Number Counting
+                        <ChevronDown className="h-4 w-4" />
+                      </DropdownMenuItem>
+                      <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
+                    </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
