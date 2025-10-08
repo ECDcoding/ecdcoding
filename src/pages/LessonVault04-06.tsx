@@ -1303,6 +1303,7 @@ const LessonVault0406 = () => {
                             }}
                             onClick={() => speakVowel(vowel.toUpperCase())}
                             onMouseEnter={() => speakVowel(vowel.toUpperCase())}
+                            onMouseLeave={() => window.speechSynthesis.cancel()}
                             title={`Vowel ${vowel.toUpperCase()} - Click to hear tone`}
                           >
                             {vowel}
@@ -1321,6 +1322,7 @@ const LessonVault0406 = () => {
                             }}
                             onClick={() => speakVowel(letter)}
                             onMouseEnter={() => speakVowel(letter)}
+                            onMouseLeave={() => window.speechSynthesis.cancel()}
                             title={`Letter ${letter} - Click to hear pronunciation`}
                           >
                             {letter}
@@ -1344,6 +1346,7 @@ const LessonVault0406 = () => {
                                     ][number % 5]
                               }}
                               onMouseEnter={() => !isAutoCounting && speakNumber(number)}
+                              onMouseLeave={() => !isAutoCounting && window.speechSynthesis.cancel()}
                               onClick={() => !isAutoCounting && speakNumber(number)}
                               title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
                             >
