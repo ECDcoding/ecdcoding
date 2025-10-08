@@ -424,13 +424,10 @@ const LessonVault0406 = () => {
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <div className="flex items-center justify-between w-full">
-                      <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer flex-1">
-                        Number Counting
-                        <ChevronDown className="h-4 w-4" />
-                      </DropdownMenuItem>
-                      <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
-                    </div>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Number Counting
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("1-10"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
@@ -1263,11 +1260,16 @@ const LessonVault0406 = () => {
               <div className="flex items-center justify-between p-6 border-b border-white/20">
                 <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
                   <div className="flex items-center justify-between w-full">
-                     <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                       {selectedCountingRange === "vowels" ? "Vowels" : 
-                        selectedCountingRange === "alphabets" ? "Alphabets" : 
-                        "Number Counting"}
-                     </h1>
+                     <div className="flex items-center gap-4">
+                       <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                         {selectedCountingRange === "vowels" ? "Vowels" : 
+                          selectedCountingRange === "alphabets" ? "Alphabets" : 
+                          "Number Counting"}
+                       </h1>
+                       {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                         <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
+                       )}
+                     </div>
                      {/* Auto-counting controls aligned from position 4 */}
                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
