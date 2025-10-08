@@ -17,6 +17,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataDeletion from "./pages/DataDeletion";
 import EmojiAI from "./pages/EmojiAI";
 import Transportation from "./pages/Transportation";
+import FruitItemRecognition from "./pages/FruitItemRecognition";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
           <Route path="/biology-nature" element={<ProtectedRoute><BiologyNature /></ProtectedRoute>} />
           <Route path="/emoji-ai" element={<ProtectedRoute><EmojiAI /></ProtectedRoute>} />
+          <Route path="/fruit-item-recognition" element={<ProtectedRoute><FruitItemRecognition /></ProtectedRoute>} />
           <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
