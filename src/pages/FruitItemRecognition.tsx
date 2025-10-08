@@ -65,7 +65,7 @@ const FruitItemRecognition = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
           <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-            Fruit Item Recognition
+            Emoji AI
           </h1>
           <button 
             onClick={() => navigate('/emoji-ai')}
