@@ -1141,6 +1141,12 @@ const LessonVault0406 = () => {
                 animation: 'scroll-horizontal 40s linear infinite',
                 width: 'max-content'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.animationPlayState = 'paused';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.animationPlayState = 'running';
+              }}
             >
               {/* First set of cards */}
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
