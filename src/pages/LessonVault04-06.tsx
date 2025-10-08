@@ -502,7 +502,7 @@ const LessonVault0406 = () => {
                         Emoji AI
                         <ChevronDown className="h-4 w-4" />
                       </DropdownMenuItem>
-                    </DropdownMenuTrigger>
+                   </DropdownMenuTrigger>
                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                        <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
                          Facial Recognition
