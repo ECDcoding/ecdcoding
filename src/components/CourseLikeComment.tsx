@@ -130,22 +130,30 @@ export const CourseLikeComment = ({ courseId, courseName }: CourseLikeCommentPro
     }
 
     try {
-      await supabase
+      const { data: newComment, error } = await supabase
         .from("course_comments")
         .insert({
           user_id: userId,
           course_id: courseId,
           comment_text: commentText.trim(),
-        });
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Add the new comment to the list immediately
+      if (newComment) {
+        setComments(prev => [newComment, ...prev]);
+        setCommentCount(prev => prev + 1);
+      }
 
       toast({
         title: "Success",
-        description: "Comment added successfully",
+        description: "Comment posted successfully",
       });
 
       setCommentText("");
-      setShowCommentDialog(false);
-      fetchComments();
     } catch (error) {
       toast({
         title: "Error",
@@ -190,17 +198,28 @@ export const CourseLikeComment = ({ courseId, courseName }: CourseLikeCommentPro
           <div className="space-y-4">
             <div>
               <Textarea
-                placeholder="Write your comment..."
+                placeholder="Write your comment... (Press Enter to submit)"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleComment();
+                  }
+                }}
                 className="min-h-[100px]"
               />
-              <Button
-                onClick={handleComment}
-                className="mt-2 w-full"
-              >
-                Post Comment
-              </Button>
+              <div className="flex justify-between items-center mt-2">
+                <p className="text-xs text-muted-foreground">
+                  Press Enter to submit, Shift+Enter for new line
+                </p>
+                <Button
+                  onClick={handleComment}
+                  size="sm"
+                >
+                  Post Comment
+                </Button>
+              </div>
             </div>
 
             <div className="max-h-[300px] overflow-y-auto space-y-3">
