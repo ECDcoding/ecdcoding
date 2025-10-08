@@ -68,7 +68,7 @@ const FruitItemRecognition = () => {
             Emoji AI
           </h1>
           <button 
-            onClick={() => navigate('/emoji-ai')}
+            onClick={() => navigate('/lesson-vault-04-06')}
             className="text-white hover:text-yellow-400 transition-colors"
           >
             <X className="h-8 w-8" />
@@ -131,10 +131,10 @@ const FruitItemRecognition = () => {
 
             <div className="mt-8 text-center">
               <Button 
-                onClick={() => navigate('/emoji-ai')}
+                onClick={() => navigate('/lesson-vault-04-06')}
                 className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-4 rounded-full text-lg"
               >
-                Back to Emoji AI
+                Back to Lesson Vault
               </Button>
             </div>
           </div>
