@@ -12,11 +12,33 @@ interface Profile {
   state: string;
   country: string;
   registration_type: string;
+  
+  // Parent fields
   institution?: string;
   learner_first_name?: string;
   learner_last_name?: string;
   learner_gender?: string;
   number_of_kids?: string;
+  relationship?: string;
+  
+  // ECD Manager fields
+  facility_name?: string;
+  facility_type?: string;
+  number_of_learners?: string;
+  age_groups?: string;
+  ecd_phone?: string;
+  ecd_email?: string;
+  
+  // Tech Teacher fields
+  qualifications?: string;
+  experience?: string;
+  tech_skills?: string;
+  programming_languages?: string;
+  available_hours?: string;
+  salary?: string;
+  start_date?: string;
+  teaching_philosophy?: string;
+  
   profile_image_url?: string;
   created_at: string;
   updated_at: string;
