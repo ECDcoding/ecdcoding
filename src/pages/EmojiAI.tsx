@@ -65,16 +65,19 @@ const EmojiAI = () => {
               <div className="bg-pink-50 p-6 rounded-lg shadow-lg">
                 <h3 className="text-2xl font-bold text-pink-600 mb-4">Fun Activities</h3>
                 <div className="space-y-4">
-                  <div className="p-4 bg-white rounded-lg">
+                  <button 
+                    onClick={() => navigate('/facial-recognition')}
+                    className="w-full p-4 bg-white rounded-lg hover:bg-[#bc6c25] hover:text-white transition-colors text-left"
+                  >
                     <p className="font-semibold mb-2">😊 Facial Recognition</p>
-                    <p className="text-sm text-gray-600">Detect and recognize different facial expressions!</p>
-                  </div>
+                    <p className="text-sm text-gray-600 group-hover:text-white">Detect and recognize different facial expressions!</p>
+                  </button>
                   <button 
                     onClick={() => navigate('/fruit-item-recognition')}
-                    className="w-full p-4 bg-white rounded-lg hover:bg-pink-100 transition-colors text-left"
+                    className="w-full p-4 bg-white rounded-lg hover:bg-[#bc6c25] hover:text-white transition-colors text-left"
                   >
                     <p className="font-semibold mb-2">🍎 Fruit Item Recognition</p>
-                    <p className="text-sm text-gray-600">Find the different fruit in each row!</p>
+                    <p className="text-sm text-gray-600 group-hover:text-white">Find the different fruit in each row!</p>
                   </button>
                   <div className="p-4 bg-white rounded-lg">
                     <p className="font-semibold mb-2">🎯 Emoji Matching Game</p>
