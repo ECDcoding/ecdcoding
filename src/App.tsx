@@ -19,7 +19,6 @@ import EmojiAI from "./pages/EmojiAI";
 import Transportation from "./pages/Transportation";
 import FruitItemRecognition from "./pages/FruitItemRecognition";
 import FacialRecognition from "./pages/FacialRecognition";
-import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -45,7 +44,6 @@ const App = () => (
           <Route path="/fruit-item-recognition" element={<ProtectedRoute><FruitItemRecognition /></ProtectedRoute>} />
           <Route path="/facial-recognition" element={<ProtectedRoute><FacialRecognition /></ProtectedRoute>} />
           <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

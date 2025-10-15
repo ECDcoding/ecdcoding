@@ -1,5 +1,4 @@
 import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,6 @@ interface ProfileDropdownProps {
 }
 
 export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps) => {
-  const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -116,7 +114,42 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         });
       }
     } else if (value === "settings") {
-      navigate("/settings");
+      setProfileOpen(true);
+      setIsEditing(true);
+      if (profile) {
+        setFormData({
+          // Parent fields
+          learner_first_name: profile.learner_first_name || "",
+          learner_last_name: profile.learner_last_name || "",
+          learner_gender: profile.learner_gender || "",
+          number_of_kids: profile.number_of_kids || "",
+          relationship: profile.relationship || "",
+          
+          // ECD Manager fields
+          institution: profile.institution || "",
+          facility_name: profile.facility_name || "",
+          facility_type: profile.facility_type || "",
+          number_of_learners: profile.number_of_learners || "",
+          age_groups: profile.age_groups || "",
+          ecd_phone: profile.ecd_phone || "",
+          ecd_email: profile.ecd_email || "",
+          
+          // Tech Teacher fields
+          qualifications: profile.qualifications || "",
+          experience: profile.experience || "",
+          tech_skills: profile.tech_skills || "",
+          programming_languages: profile.programming_languages || "",
+          available_hours: profile.available_hours || "",
+          salary: profile.salary || "",
+          start_date: profile.start_date || "",
+          teaching_philosophy: profile.teaching_philosophy || "",
+          
+          // Common fields
+          registration_type: profile.registration_type || "",
+          password: "",
+          confirmPassword: ""
+        });
+      }
     } else if (value === "logout") {
       onLogout();
     }
