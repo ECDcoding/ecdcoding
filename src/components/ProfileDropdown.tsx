@@ -1,4 +1,5 @@
 import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ interface ProfileDropdownProps {
 }
 
 export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps) => {
+  const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -113,6 +115,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           confirmPassword: ""
         });
       }
+    } else if (value === "settings") {
+      navigate("/settings");
     } else if (value === "logout") {
       onLogout();
     }
