@@ -386,11 +386,11 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     <>
       <div className="flex items-center gap-2">
         <Select onValueChange={handleSelectChange}>
-          <SelectTrigger className="w-10 h-10 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
+          <SelectTrigger className="w-14 h-14 rounded-full border-2 border-white/20 bg-profile-bg flex items-center justify-center">
             {profileImage || profile?.profile_image_url ? (
               <img src={profileImage || profile?.profile_image_url || undefined} alt="Profile" className="w-full h-full rounded-full object-cover" />
             ) : (
-              <span className="text-profile-text text-xs">Photo</span>
+              <span className="text-profile-text text-sm">Photo</span>
             )}
           </SelectTrigger>
           <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
@@ -416,20 +416,6 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             </SelectItem>
           </SelectContent>
         </Select>
-        
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={uploading}
-          className="h-8 w-8 p-0 rounded-full border-2 border-white/20 bg-profile-bg hover:bg-white/20"
-        >
-          {uploading ? (
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-          ) : (
-            <Upload className="h-4 w-4 text-profile-text" />
-          )}
-        </Button>
         
         <input
           ref={fileInputRef}
