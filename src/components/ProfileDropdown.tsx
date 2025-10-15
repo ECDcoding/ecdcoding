@@ -402,13 +402,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
               <Phone className="h-4 w-4" />
               Contact Details
             </SelectItem>
-            <SelectItem value="upload-picture" className="text-profile-text hover:bg-white/20 flex items-center gap-2" onClick={() => openMediaUpload('picture')}>
-              <ImageIcon className="h-4 w-4" />
-              Upload Picture
-            </SelectItem>
-            <SelectItem value="upload-video" className="text-profile-text hover:bg-white/20 flex items-center gap-2" onClick={() => openMediaUpload('video')}>
-              <Film className="h-4 w-4" />
-              Upload Video
+            <SelectItem value="settings" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Settings
             </SelectItem>
             <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
               <LogOut className="h-4 w-4 mr-2" />
