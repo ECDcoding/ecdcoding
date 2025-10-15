@@ -6,9 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky } from "react-icons/si";
+import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
@@ -399,14 +399,82 @@ const LessonVault0406 = () => {
           
           <div className="mb-8 mt-12 text-center">
             <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
-            <div className="mt-4">
+            <div className="mt-4 flex items-center justify-center gap-4">
               <Button 
                 onClick={speakWhatToExpected}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2 mx-auto"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2"
               >
                 <Volume2 className="h-5 w-5" />
                 What to Expect
               </Button>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2"
+                  >
+                    <Share2 className="h-5 w-5" />
+                    Share
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white shadow-lg border border-gray-200">
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent("Check out My Lesson Vault - Learning the Basics!");
+                      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+                    }}
+                  >
+                    <SiFacebook className="h-4 w-4 text-blue-600" />
+                    <span>Facebook</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent("Check out My Lesson Vault - Learning the Basics!");
+                      window.open(`https://www.instagram.com/`, '_blank');
+                    }}
+                  >
+                    <SiInstagram className="h-4 w-4 text-pink-600" />
+                    <span>Instagram</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent("Check out My Lesson Vault - Learning the Basics! " + window.location.href);
+                      window.open(`https://wa.me/?text=${text}`, '_blank');
+                    }}
+                  >
+                    <SiWhatsapp className="h-4 w-4 text-green-600" />
+                    <span>WhatsApp</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent("Check out My Lesson Vault - Learning the Basics!");
+                      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+                    }}
+                  >
+                    <SiX className="h-4 w-4 text-black" />
+                    <span>X (Twitter)</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent("Check out My Lesson Vault - Learning the Basics!");
+                      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+                    }}
+                  >
+                    <SiLinkedin className="h-4 w-4 text-blue-700" />
+                    <span>LinkedIn</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
