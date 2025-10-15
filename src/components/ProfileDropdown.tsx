@@ -1,4 +1,4 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ProfileDropdownProps {
   profileImage?: string | null;
@@ -20,6 +22,23 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const [profileOpen, setProfileOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [mediaUploadOpen, setMediaUploadOpen] = useState(false);
+  const [mediaType, setMediaType] = useState<'picture' | 'video'>('picture');
+  const [mediaFile, setMediaFile] = useState<File | null>(null);
+  const [mediaPreview, setMediaPreview] = useState<string | null>(null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  const [mediaTitle, setMediaTitle] = useState('');
+  const [mediaDescription, setMediaDescription] = useState('');
+  const [uploadedMedia, setUploadedMedia] = useState<Array<{
+    id: string;
+    type: 'picture' | 'video';
+    file: File;
+    preview: string;
+    thumbnail?: string;
+    title: string;
+    description: string;
+  }>>([]);
   const [formData, setFormData] = useState({
     // Parent fields
     learner_first_name: "",
@@ -292,6 +311,70 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     }
   };
 
+  const handleMediaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setMediaFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setMediaPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleThumbnailUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setThumbnailFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setThumbnailPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const openMediaUpload = (type: 'picture' | 'video') => {
+    setMediaType(type);
+    setMediaUploadOpen(true);
+    setMediaFile(null);
+    setMediaPreview(null);
+    setThumbnailFile(null);
+    setThumbnailPreview(null);
+    setMediaTitle('');
+    setMediaDescription('');
+  };
+
+  const handleMediaSubmit = () => {
+    if (!mediaFile || !mediaTitle.trim() || !mediaDescription.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields and select a file",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newMedia = {
+      id: Date.now().toString(),
+      type: mediaType,
+      file: mediaFile,
+      preview: mediaPreview!,
+      thumbnail: thumbnailPreview || undefined,
+      title: mediaTitle,
+      description: mediaDescription,
+    };
+
+    setUploadedMedia(prev => [...prev, newMedia]);
+    setMediaUploadOpen(false);
+    
+    toast({
+      title: "Success",
+      description: `Successfully uploaded ${mediaType}: ${mediaTitle}`,
+    });
+  };
+
   const getAgeFromAgeGroup = (ageGroup?: string) => {
     if (!ageGroup) return "Not specified";
     if (ageGroup === "04-06") return "4-6 years";
@@ -318,6 +401,14 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             <SelectItem value="contact-details" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
               <Phone className="h-4 w-4" />
               Contact Details
+            </SelectItem>
+            <SelectItem value="upload-picture" className="text-profile-text hover:bg-white/20 flex items-center gap-2" onClick={() => openMediaUpload('picture')}>
+              <ImageIcon className="h-4 w-4" />
+              Upload Picture
+            </SelectItem>
+            <SelectItem value="upload-video" className="text-profile-text hover:bg-white/20 flex items-center gap-2" onClick={() => openMediaUpload('video')}>
+              <Film className="h-4 w-4" />
+              Upload Video
             </SelectItem>
             <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
               <LogOut className="h-4 w-4 mr-2" />
@@ -755,6 +846,162 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Media Upload Dialog */}
+      <Dialog open={mediaUploadOpen} onOpenChange={setMediaUploadOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {mediaType === 'picture' ? <ImageIcon className="h-5 w-5" /> : <Film className="h-5 w-5" />}
+              Upload {mediaType === 'picture' ? 'Picture' : 'Video Clip'}
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            {/* File Upload */}
+            <div>
+              <Label htmlFor="media-file" className="text-sm font-medium">
+                Select {mediaType === 'picture' ? 'Image' : 'Video'} File *
+              </Label>
+              <Input
+                id="media-file"
+                type="file"
+                accept={mediaType === 'picture' ? 'image/*' : 'video/*'}
+                onChange={handleMediaUpload}
+                className="mt-1"
+              />
+              {mediaPreview && (
+                <div className="mt-2">
+                  {mediaType === 'picture' ? (
+                    <img src={mediaPreview} alt="Preview" className="max-w-full h-32 object-cover rounded" />
+                  ) : (
+                    <video src={mediaPreview} className="max-w-full h-32 object-cover rounded" controls />
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Upload (for videos) */}
+            {mediaType === 'video' && (
+              <div>
+                <Label htmlFor="thumbnail-file" className="text-sm font-medium">
+                  Thumbnail Image (Optional)
+                </Label>
+                <Input
+                  id="thumbnail-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnailUpload}
+                  className="mt-1"
+                />
+                {thumbnailPreview && (
+                  <div className="mt-2">
+                    <img src={thumbnailPreview} alt="Thumbnail Preview" className="max-w-full h-20 object-cover rounded" />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Title */}
+            <div>
+              <Label htmlFor="media-title" className="text-sm font-medium">
+                Title *
+              </Label>
+              <Input
+                id="media-title"
+                value={mediaTitle}
+                onChange={(e) => setMediaTitle(e.target.value)}
+                placeholder={`Enter ${mediaType} title...`}
+                className="mt-1"
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <Label htmlFor="media-description" className="text-sm font-medium">
+                Description *
+              </Label>
+              <Textarea
+                id="media-description"
+                value={mediaDescription}
+                onChange={(e) => setMediaDescription(e.target.value)}
+                placeholder={`Describe this ${mediaType} and its educational value...`}
+                className="mt-1"
+                rows={3}
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <Button onClick={handleMediaSubmit} className="flex-1">
+                <Upload className="h-4 w-4 mr-2" />
+                Upload {mediaType === 'picture' ? 'Picture' : 'Video'}
+              </Button>
+              <Button variant="outline" onClick={() => setMediaUploadOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Uploaded Media Gallery */}
+      {uploadedMedia.length > 0 && (
+        <Dialog open={uploadedMedia.length > 0}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                🎥 Your Media Gallery
+              </DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {uploadedMedia.map((media) => (
+                <Card key={media.id} className="bg-white shadow-lg">
+                  <CardContent className="p-4">
+                    <div className="aspect-video bg-gray-100 rounded-lg mb-3 overflow-hidden">
+                      {media.type === 'picture' ? (
+                        <img 
+                          src={media.preview} 
+                          alt={media.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="relative w-full h-full">
+                          {media.thumbnail ? (
+                            <img 
+                              src={media.thumbnail} 
+                              alt={`${media.title} thumbnail`}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <video 
+                              src={media.preview} 
+                              className="w-full h-full object-cover"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <Play className="h-12 w-12 text-white" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <h4 className="font-semibold text-lg mb-2">{media.title}</h4>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{media.description}</p>
+                    <div className="flex items-center gap-2">
+                      {media.type === 'picture' ? (
+                        <ImageIcon className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <Film className="h-4 w-4 text-blue-600" />
+                      )}
+                      <span className="text-xs text-gray-500 capitalize">{media.type}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };
