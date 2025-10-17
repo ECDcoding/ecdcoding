@@ -1225,45 +1225,17 @@ const LessonVault0406 = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
                 <div className="max-w-6xl mx-auto w-full flex items-center justify-between">
-                  <div className="flex items-center justify-between w-full">
-                     <div className="flex items-center gap-4">
-                       <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
-                         {selectedCountingRange === "vowels" ? "Vowels" : 
-                          selectedCountingRange === "alphabets" ? "Alphabets" : 
-                          "Number Counting"}
-                       </h1>
-                       {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                         <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
-                       )}
-                     </div>
-                     {/* Auto-counting controls aligned from position 4 */}
-                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
-                          {/* Empty spaces for positions 1-3 */}
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          
-                          {/* Single toggle button in position 4 */}
-                          <Button
-                            onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
-                            className={`${
-                              isAutoCounting 
-                                ? "bg-red-500 hover:bg-red-600" 
-                                : "bg-green-500 hover:bg-green-600"
-                            } text-white font-bold py-2 px-4 rounded-lg text-sm w-full`}
-                          >
-                            {isAutoCounting ? "Stop" : "Start Counting"}
-                          </Button>
-                        </div>
-                      )}
-                   </div>
-                   <button 
-                     onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                     className="text-white hover:text-yellow-400 transition-colors ml-4"
-                   >
-                     <X className="h-8 w-8" />
-                   </button>
+                  <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                    {selectedCountingRange === "vowels" ? "Vowels" : 
+                     selectedCountingRange === "alphabets" ? "Alphabets" : 
+                     "Number Counting"}
+                  </h1>
+                  <button 
+                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                    className="text-white hover:text-yellow-400 transition-colors ml-4"
+                  >
+                    <X className="h-8 w-8" />
+                  </button>
                 </div>
               </div>
               
@@ -1338,7 +1310,7 @@ const LessonVault0406 = () => {
                      }
                    })()}
                  </div>
-                
+                 
                  <div className="mt-8"></div>
                  <div className="mt-8"></div>
                  <div className="mt-8"></div>
@@ -1352,6 +1324,23 @@ const LessonVault0406 = () => {
                       <ArrowLeft className="h-6 w-6" />
                       Back
                    </button>
+                   
+                   {/* Center section with Start Counting button and Like/Share icons */}
+                   {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+                       <Button
+                         onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
+                         className={`${
+                           isAutoCounting 
+                             ? "bg-red-500 hover:bg-red-600" 
+                             : "bg-green-500 hover:bg-green-600"
+                         } text-white font-bold py-3 px-6 rounded-lg`}
+                       >
+                         {isAutoCounting ? "Stop" : "Start Counting"}
+                       </Button>
+                       <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
+                     </div>
+                   )}
                    
                    
                     {/* Continue to next range buttons */}

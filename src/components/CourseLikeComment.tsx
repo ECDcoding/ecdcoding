@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heart, MessageCircle } from "lucide-react";
+import { Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -184,7 +184,7 @@ export const CourseLikeComment = ({ courseId, courseName }: CourseLikeCommentPro
           onClick={() => setShowCommentDialog(true)}
           className="flex items-center gap-1 hover:bg-white/10"
         >
-          <MessageCircle className="h-4 w-4 text-white" />
+          <Share2 className="h-4 w-4 text-white" />
           <span className="text-xs text-white">{commentCount}</span>
         </Button>
       </div>
