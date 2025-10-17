@@ -1325,16 +1325,16 @@ const LessonVault0406 = () => {
                       Back
                    </button>
                    
-                   {/* Like and Share icons - Top Right above number 15 */}
+                   {/* Like and Share icons - Top Right */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute top-4 right-8">
+                     <div className="absolute top-4 right-4">
                        <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
                      </div>
                    )}
                    
-                   {/* Start Counting button - Under number 19 */}
+                   {/* Start Counting button - Centered under number 19 */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute bottom-8 right-[20%]">
+                     <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
                        <Button
                          onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
                          className={`${
