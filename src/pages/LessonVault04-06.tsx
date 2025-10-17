@@ -1230,12 +1230,27 @@ const LessonVault0406 = () => {
                      selectedCountingRange === "alphabets" ? "Alphabets" : 
                      "Number Counting"}
                   </h1>
-                  <button 
-                    onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
-                    className="text-white hover:text-yellow-400 transition-colors ml-4"
-                  >
-                    <X className="h-8 w-8" />
-                  </button>
+                  <div className="flex items-center gap-4">
+                    {/* Start Counting button - Top Right */}
+                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                      <Button
+                        onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
+                        className={`${
+                          isAutoCounting 
+                            ? "bg-red-500 hover:bg-red-600" 
+                            : "bg-green-500 hover:bg-green-600"
+                        } text-white font-bold py-3 px-6 rounded-lg`}
+                      >
+                        {isAutoCounting ? "Stop" : "Start Counting"}
+                      </Button>
+                    )}
+                    <button 
+                      onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                      className="text-white hover:text-yellow-400 transition-colors"
+                    >
+                      <X className="h-8 w-8" />
+                    </button>
+                  </div>
                 </div>
               </div>
               
@@ -1325,26 +1340,10 @@ const LessonVault0406 = () => {
                       Back
                    </button>
                    
-                   {/* Like and Share icons - Top Right */}
+                   {/* Like and Share icons - Under number 18 */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute top-4 right-4">
+                     <div className="absolute bottom-32 left-[40%] -translate-x-1/2">
                        <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
-                     </div>
-                   )}
-                   
-                   {/* Start Counting button - Centered under number 19 */}
-                   {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
-                       <Button
-                         onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
-                         className={`${
-                           isAutoCounting 
-                             ? "bg-red-500 hover:bg-red-600" 
-                             : "bg-green-500 hover:bg-green-600"
-                         } text-white font-bold py-3 px-6 rounded-lg`}
-                       >
-                         {isAutoCounting ? "Stop" : "Start Counting"}
-                       </Button>
                      </div>
                    )}
                    
