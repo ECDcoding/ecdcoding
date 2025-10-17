@@ -1327,7 +1327,7 @@ const LessonVault0406 = () => {
                    
                    {/* Center section with Start Counting button and Like/Share icons */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute left-1/2 transform -translate-x-1/4 flex items-center gap-4">
+                     <div className="absolute left-[45%] flex items-center gap-3">
                        <Button
                          onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
                          className={`${
