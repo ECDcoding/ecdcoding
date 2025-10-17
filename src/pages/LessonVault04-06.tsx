@@ -1325,9 +1325,16 @@ const LessonVault0406 = () => {
                       Back
                    </button>
                    
-                   {/* Center section with Start Counting button and Like/Share icons */}
+                   {/* Like and Share icons - Top Right above number 15 */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute left-[45%] flex items-center gap-3">
+                     <div className="absolute top-4 right-8">
+                       <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
+                     </div>
+                   )}
+                   
+                   {/* Start Counting button - Under number 19 */}
+                   {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                     <div className="absolute bottom-8 right-[20%]">
                        <Button
                          onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
                          className={`${
@@ -1338,7 +1345,6 @@ const LessonVault0406 = () => {
                        >
                          {isAutoCounting ? "Stop" : "Start Counting"}
                        </Button>
-                       <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
                      </div>
                    )}
                    
