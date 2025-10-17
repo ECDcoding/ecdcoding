@@ -1237,32 +1237,26 @@ const LessonVault0406 = () => {
                        )}
                      </div>
                      {/* Auto-counting controls aligned from position 4 */}
-                     {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
-                         {/* Empty spaces for positions 1-3 */}
-                         <div></div>
-                         <div></div>
-                         <div></div>
-                         
-                         {/* Start button in position 4 */}
-                         <Button
-                           onClick={startAutoCounting}
-                           disabled={isAutoCounting}
-                           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 text-sm"
-                         >
-                           {isAutoCounting ? "Auto-counting..." : "Start Auto Count"}
-                         </Button>
-                         
-                         {/* Stop button in position 5 */}
-                         <Button
-                           onClick={stopAutoCounting}
-                           disabled={!isAutoCounting}
-                           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded-lg disabled:opacity-50 text-sm"
-                         >
-                           Stop
-                         </Button>
-                       </div>
-                     )}
+                      {selectedCountingRange && selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 flex-1 max-w-3xl ml-8">
+                          {/* Empty spaces for positions 1-3 */}
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          
+                          {/* Single toggle button in position 4 */}
+                          <Button
+                            onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
+                            className={`${
+                              isAutoCounting 
+                                ? "bg-red-500 hover:bg-red-600" 
+                                : "bg-green-500 hover:bg-green-600"
+                            } text-white font-bold py-2 px-4 rounded-lg text-sm w-full`}
+                          >
+                            {isAutoCounting ? "Stop" : "Start Counting"}
+                          </Button>
+                        </div>
+                      )}
                    </div>
                    <button 
                      onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
