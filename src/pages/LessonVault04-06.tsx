@@ -1327,7 +1327,7 @@ const LessonVault0406 = () => {
                    
                    {/* Center section with Start Counting button and Like/Share icons */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+                     <div className="absolute left-1/2 transform -translate-x-1/4 flex items-center gap-4">
                        <Button
                          onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
                          className={`${
@@ -1347,7 +1347,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "1-10" && (
                       <button 
                         onClick={() => setSelectedCountingRange("11-20")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 11-20
                         <span className="text-2xl">🚀</span>
@@ -1356,7 +1356,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "11-20" && (
                       <button 
                         onClick={() => setSelectedCountingRange("21-30")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 21-30
                         <span className="text-2xl">🚀</span>
@@ -1365,7 +1365,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "21-30" && (
                       <button 
                         onClick={() => setSelectedCountingRange("31-40")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 31-40
                         <span className="text-2xl">🚀</span>
@@ -1374,7 +1374,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "31-40" && (
                       <button 
                         onClick={() => setSelectedCountingRange("41-50")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 41-50
                         <span className="text-2xl">🚀</span>
@@ -1383,7 +1383,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "41-50" && (
                       <button 
                         onClick={() => setSelectedCountingRange("51-60")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 51-60
                         <span className="text-2xl">🚀</span>
@@ -1392,7 +1392,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "51-60" && (
                       <button 
                         onClick={() => setSelectedCountingRange("61-70")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 61-70
                         <span className="text-2xl">🚀</span>
@@ -1401,7 +1401,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "61-70" && (
                       <button 
                         onClick={() => setSelectedCountingRange("71-80")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 71-80
                         <span className="text-2xl">🚀</span>
@@ -1410,7 +1410,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "71-80" && (
                       <button 
                         onClick={() => setSelectedCountingRange("81-90")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 81-90
                         <span className="text-2xl">🚀</span>
@@ -1419,7 +1419,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "81-90" && (
                       <button 
                         onClick={() => setSelectedCountingRange("91-100")}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Continue to 91-100
                         <span className="text-2xl">🚀</span>
@@ -1428,7 +1428,7 @@ const LessonVault0406 = () => {
                     {selectedCountingRange === "91-100" && (
                       <button 
                         onClick={() => setSelectedCountingRange("1-10")}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                       >
                         Start Over (1-10)
                         <span className="text-2xl">🔄</span>
