@@ -1142,10 +1142,37 @@ const LessonVault0406 = () => {
               
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Binary Numbers</h3>
+                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
                   <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
                   <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
                   <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
+                  <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
+                  <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-orange-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-orange-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Problem Solving</h3>
+                  <h4 className="text-lg italic mb-4">Think smart, solve fast</h4>
+                  <p className="text-base mb-4">Develop critical thinking skills through fun challenges and puzzles.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-orange-500">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-green-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Shapes</h3>
+                  <h4 className="text-lg italic mb-4">Explore the world of geometry</h4>
+                  <p className="text-base mb-4">Learn to identify and draw basic shapes with hands-on activities.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-green-500">Read more</a>
                 </CardContent>
               </Card>
               
@@ -1191,10 +1218,37 @@ const LessonVault0406 = () => {
               
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Binary Numbers</h3>
+                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
                   <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
                   <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
                   <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
+                  <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
+                  <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-orange-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-orange-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Problem Solving</h3>
+                  <h4 className="text-lg italic mb-4">Think smart, solve fast</h4>
+                  <p className="text-base mb-4">Develop critical thinking skills through fun challenges and puzzles.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-orange-500">Read more</a>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-green-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Shapes</h3>
+                  <h4 className="text-lg italic mb-4">Explore the world of geometry</h4>
+                  <p className="text-base mb-4">Learn to identify and draw basic shapes with hands-on activities.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-green-500">Read more</a>
                 </CardContent>
               </Card>
               
@@ -1228,7 +1282,7 @@ const LessonVault0406 = () => {
                   <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
                     {selectedCountingRange === "vowels" ? "Vowels" : 
                      selectedCountingRange === "alphabets" ? "Alphabets" : 
-                     "Number Counting"}
+                     "Basic Counting"}
                   </h1>
                   <div className="flex items-center gap-4">
                     {/* Start Counting button - Top Right */}
@@ -1343,7 +1397,7 @@ const LessonVault0406 = () => {
                    {/* Like and Share icons - Under number 18 */}
                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
                      <div className="absolute bottom-32 left-[40%] -translate-x-1/2">
-                       <CourseLikeComment courseId="number-counting" courseName="Number Counting" />
+                       <CourseLikeComment courseId="basic-counting" courseName="Basic Counting" />
                      </div>
                    )}
                    
