@@ -92,30 +92,73 @@ export type Database = {
         }
         Relationships: []
       }
-      profiles: {
+      profile_sensitive_data: {
         Row: {
           age_groups: string | null
-          aspiration: string | null
-          available_hours: string | null
-          country: string
           created_at: string
-          current_programs: string | null
           ecd_email: string | null
           ecd_phone: string | null
-          experience: string | null
           facility_name: string | null
           facility_type: string | null
-          first_name: string
-          hear_about: string | null
           id: string
-          institution: string | null
-          last_name: string
           learner_first_name: string | null
           learner_gender: string | null
           learner_last_name: string | null
           number_of_kids: string | null
           number_of_learners: string | null
-          phone: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_groups?: string | null
+          created_at?: string
+          ecd_email?: string | null
+          ecd_phone?: string | null
+          facility_name?: string | null
+          facility_type?: string | null
+          id?: string
+          learner_first_name?: string | null
+          learner_gender?: string | null
+          learner_last_name?: string | null
+          number_of_kids?: string | null
+          number_of_learners?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_groups?: string | null
+          created_at?: string
+          ecd_email?: string | null
+          ecd_phone?: string | null
+          facility_name?: string | null
+          facility_type?: string | null
+          id?: string
+          learner_first_name?: string | null
+          learner_gender?: string | null
+          learner_last_name?: string | null
+          number_of_kids?: string | null
+          number_of_learners?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          aspiration: string | null
+          available_hours: string | null
+          country: string
+          created_at: string
+          current_programs: string | null
+          experience: string | null
+          first_name: string
+          hear_about: string | null
+          id: string
+          institution: string | null
+          last_name: string
           profile_image_url: string | null
           programming_languages: string | null
           qualifications: string | null
@@ -133,28 +176,17 @@ export type Database = {
           username: string
         }
         Insert: {
-          age_groups?: string | null
           aspiration?: string | null
           available_hours?: string | null
           country: string
           created_at?: string
           current_programs?: string | null
-          ecd_email?: string | null
-          ecd_phone?: string | null
           experience?: string | null
-          facility_name?: string | null
-          facility_type?: string | null
           first_name: string
           hear_about?: string | null
           id?: string
           institution?: string | null
           last_name: string
-          learner_first_name?: string | null
-          learner_gender?: string | null
-          learner_last_name?: string | null
-          number_of_kids?: string | null
-          number_of_learners?: string | null
-          phone: string
           profile_image_url?: string | null
           programming_languages?: string | null
           qualifications?: string | null
@@ -172,28 +204,17 @@ export type Database = {
           username: string
         }
         Update: {
-          age_groups?: string | null
           aspiration?: string | null
           available_hours?: string | null
           country?: string
           created_at?: string
           current_programs?: string | null
-          ecd_email?: string | null
-          ecd_phone?: string | null
           experience?: string | null
-          facility_name?: string | null
-          facility_type?: string | null
           first_name?: string
           hear_about?: string | null
           id?: string
           institution?: string | null
           last_name?: string
-          learner_first_name?: string | null
-          learner_gender?: string | null
-          learner_last_name?: string | null
-          number_of_kids?: string | null
-          number_of_learners?: string | null
-          phone?: string
           profile_image_url?: string | null
           programming_languages?: string | null
           qualifications?: string | null
@@ -245,6 +266,33 @@ export type Database = {
           is_active?: boolean
           max_uses?: number | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      sensitive_data_access_log: {
+        Row: {
+          access_type: string
+          accessed_at: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          access_type: string
+          accessed_at?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          access_type?: string
+          accessed_at?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -312,6 +360,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_sensitive_profile_data: {
+        Args: never
+        Returns: {
+          age_groups: string
+          ecd_email: string
+          ecd_phone: string
+          facility_name: string
+          facility_type: string
+          learner_first_name: string
+          learner_gender: string
+          learner_last_name: string
+          number_of_kids: string
+          number_of_learners: string
+          phone: string
+          user_id: string
+        }[]
+      }
       redeem_promo_code: { Args: { promo_code_text: string }; Returns: Json }
     }
     Enums: {

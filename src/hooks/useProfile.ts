@@ -8,26 +8,17 @@ interface Profile {
   first_name: string;
   last_name: string;
   username: string;
-  phone: string;
   state: string;
   country: string;
   registration_type: string;
   
   // Parent fields
   institution?: string;
-  learner_first_name?: string;
-  learner_last_name?: string;
-  learner_gender?: string;
-  number_of_kids?: string;
   relationship?: string;
   
   // ECD Manager fields
-  facility_name?: string;
-  facility_type?: string;
-  number_of_learners?: string;
-  age_groups?: string;
-  ecd_phone?: string;
-  ecd_email?: string;
+  current_programs?: string;
+  tech_goals?: string;
   
   // Tech Teacher fields
   qualifications?: string;
@@ -44,8 +35,24 @@ interface Profile {
   updated_at: string;
 }
 
+interface SensitiveProfileData {
+  phone?: string;
+  ecd_phone?: string;
+  ecd_email?: string;
+  learner_first_name?: string;
+  learner_last_name?: string;
+  learner_gender?: string;
+  facility_name?: string;
+  facility_type?: string;
+  number_of_learners?: string;
+  age_groups?: string;
+  number_of_kids?: string;
+}
+
+interface CompleteProfile extends Profile, SensitiveProfileData {}
+
 export const useProfile = () => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<CompleteProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
@@ -57,17 +64,35 @@ export const useProfile = () => {
       }
 
       try {
-        const { data, error } = await supabase
+        // Fetch basic profile data
+        const { data: profileData, error: profileError } = await supabase
           .from("profiles")
           .select("*")
           .eq("user_id", user.id)
           .maybeSingle();
 
-        if (error) {
-          console.error("Error fetching profile:", error);
-        } else {
-          setProfile(data);
+        if (profileError) {
+          console.error("Error fetching profile:", profileError);
+          setLoading(false);
+          return;
         }
+
+        // Fetch sensitive profile data
+        const { data: sensitiveData, error: sensitiveError } = await supabase
+          .from("profile_sensitive_data")
+          .select("*")
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (sensitiveError) {
+          console.error("Error fetching sensitive data:", sensitiveError);
+        }
+
+        // Merge both datasets
+        setProfile({
+          ...profileData,
+          ...sensitiveData,
+        } as CompleteProfile);
       } catch (error) {
         console.error("Error:", error);
       } finally {

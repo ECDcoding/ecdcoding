@@ -47,6 +47,7 @@ export const useAuth = () => {
 
       // Create profile record
       if (data.user) {
+        // Insert basic profile data
         const { error: profileError } = await supabase
           .from('profiles')
           .insert({
@@ -54,28 +55,18 @@ export const useAuth = () => {
             first_name: userData.firstName,
             last_name: userData.lastName,
             username: userData.username,
-            phone: `${userData.phone1}-${userData.phone2}-${userData.phone3}`,
             state: userData.state,
             country: userData.country,
             registration_type: userData.registrationType,
-            // Add type-specific fields based on registration type
+            // Add non-sensitive type-specific fields
             ...(userData.registrationType === 'parent' && {
               institution: userData.institution,
               registration_status: userData.registrationStatus,
-              number_of_kids: userData.numberOfKids,
               hear_about: userData.hearAbout,
               aspiration: userData.aspiration,
-              learner_first_name: userData.learnerFirstName,
-              learner_last_name: userData.learnerLastName,
               relationship: userData.relationship,
-              ecd_phone: userData.ecdPhone1 ? `${userData.ecdPhone1}-${userData.ecdPhone2}-${userData.ecdPhone3}` : null,
-              ecd_email: userData.ecdEmail,
             }),
             ...(userData.registrationType === 'ecd-manager' && {
-              facility_name: userData.facilityName,
-              facility_type: userData.facilityType,
-              number_of_learners: userData.numberOfLearners,
-              age_groups: userData.ageGroups,
               current_programs: userData.currentPrograms,
               tech_goals: userData.techGoals,
             }),
@@ -92,6 +83,35 @@ export const useAuth = () => {
           });
 
         if (profileError) throw profileError;
+
+        // Insert sensitive profile data into separate table
+        const sensitiveData: any = {
+          user_id: data.user.id,
+          phone: `${userData.phone1}-${userData.phone2}-${userData.phone3}`,
+        };
+
+        // Add type-specific sensitive fields
+        if (userData.registrationType === 'parent') {
+          sensitiveData.number_of_kids = userData.numberOfKids;
+          sensitiveData.learner_first_name = userData.learnerFirstName;
+          sensitiveData.learner_last_name = userData.learnerLastName;
+          sensitiveData.learner_gender = userData.learnerGender;
+          sensitiveData.ecd_phone = userData.ecdPhone1 ? `${userData.ecdPhone1}-${userData.ecdPhone2}-${userData.ecdPhone3}` : null;
+          sensitiveData.ecd_email = userData.ecdEmail;
+        } else if (userData.registrationType === 'ecd-manager') {
+          sensitiveData.facility_name = userData.facilityName;
+          sensitiveData.facility_type = userData.facilityType;
+          sensitiveData.number_of_learners = userData.numberOfLearners;
+          sensitiveData.age_groups = userData.ageGroups;
+          sensitiveData.ecd_phone = userData.ecdPhone1 ? `${userData.ecdPhone1}-${userData.ecdPhone2}-${userData.ecdPhone3}` : null;
+          sensitiveData.ecd_email = userData.ecdEmail;
+        }
+
+        const { error: sensitiveError } = await supabase
+          .from('profile_sensitive_data')
+          .insert(sensitiveData);
+
+        if (sensitiveError) throw sensitiveError;
       }
 
       toast({
