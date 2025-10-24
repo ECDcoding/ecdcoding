@@ -31,6 +31,7 @@ import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
+import alphabetSong from "@/assets/alphabet-song.mp3";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -57,7 +58,11 @@ const LessonVault0406 = () => {
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
+  const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
+  const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+  const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -91,11 +96,11 @@ const LessonVault0406 = () => {
 
   const vowels = ["A", "E", "I", "O", "U"];
   
-  const speakVowel = (vowel: string) => {
+  const speakVowel = (vowel: string, isAlphabet = false) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(vowel);
-      utterance.rate = 0.6; // Even slower for vowel pronunciation
-      utterance.volume = 0.8;
+      utterance.rate = isAlphabet ? 0.8 : 0.6; // Slightly faster for alphabets to match rhythm
+      utterance.volume = isAlphabet ? 1.0 : 0.8; // Louder for alphabets to be heard over music
       
       // Different pitch for each vowel to create distinct tones
       const vowelTones: Record<string, number> = {
@@ -106,7 +111,7 @@ const LessonVault0406 = () => {
         "U": 0.7  // Lowest tone
       };
       
-      utterance.pitch = vowelTones[vowel] || 1.0;
+      utterance.pitch = isAlphabet ? 1.2 : (vowelTones[vowel] || 1.0);
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -124,6 +129,55 @@ const LessonVault0406 = () => {
   const speakWhatToExpected = () => {
     const message = "Welcome to My Lesson Vault for Learning the Basic, and as you can see we have a variety of lessons lined up for the kids to start learning immediately, for instance under Numeracy click on Numbers Counting, and when a dropdown menu appears click on it and start counting, and with the Basic Logic dropdown under Emoji AI, we expect your child to be able to identify odd objects that exist in every row; with Literacy your child will learn vowels alphabets and colors, Notes to Parents parent are encouraged among other to get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first and foremost.";
     speakInstruction(message);
+  };
+
+  // Alphabet auto-play with music
+  const startAlphabetPlay = () => {
+    if (!alphabetAudioRef.current) return;
+    
+    setIsAlphabetPlaying(true);
+    setCurrentAlphabetIndex(0);
+    
+    // Start the music
+    alphabetAudioRef.current.volume = 0.4; // Lower music volume so voice is audible
+    alphabetAudioRef.current.currentTime = 0;
+    alphabetAudioRef.current.play();
+    
+    // Start reciting alphabets with rhythm matching the music
+    let index = 0;
+    const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
+    
+    // Speak first letter immediately
+    speakVowel(alphabet[0], true);
+    index++;
+    
+    // Continue with rhythm (approximately 1.2 seconds per letter to match music tempo)
+    alphabetIntervalRef.current = setInterval(() => {
+      if (index < alphabet.length) {
+        setCurrentAlphabetIndex(index);
+        speakVowel(alphabet[index], true);
+        index++;
+      } else {
+        stopAlphabetPlay();
+      }
+    }, 1200); // 1.2 seconds per letter for rhythmic flow
+  };
+
+  const stopAlphabetPlay = () => {
+    setIsAlphabetPlaying(false);
+    setCurrentAlphabetIndex(0);
+    
+    if (alphabetIntervalRef.current) {
+      clearInterval(alphabetIntervalRef.current);
+      alphabetIntervalRef.current = null;
+    }
+    
+    if (alphabetAudioRef.current) {
+      alphabetAudioRef.current.pause();
+      alphabetAudioRef.current.currentTime = 0;
+    }
+    
+    window.speechSynthesis.cancel();
   };
 
   // Auto-counting functionality
@@ -1275,6 +1329,15 @@ const LessonVault0406 = () => {
         {/* Number Counting Full Overlay */}
         {countingOpen && selectedCountingRange && (
           <div className="fixed inset-0 bg-[#395B50] z-[100] overflow-y-auto">
+            {/* Hidden audio element for alphabet background music */}
+            {selectedCountingRange === "alphabets" && (
+              <audio
+                ref={alphabetAudioRef}
+                src={alphabetSong}
+                loop
+                preload="auto"
+              />
+            )}
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
@@ -1296,6 +1359,19 @@ const LessonVault0406 = () => {
                         } text-white font-bold py-3 px-6 rounded-lg`}
                       >
                         {isAutoCounting ? "Stop" : "Start Counting"}
+                      </Button>
+                    )}
+                    {/* Start Alphabet Play button */}
+                    {selectedCountingRange === "alphabets" && (
+                      <Button
+                        onClick={isAlphabetPlaying ? stopAlphabetPlay : startAlphabetPlay}
+                        className={`${
+                          isAlphabetPlaying 
+                            ? "bg-red-500 hover:bg-red-600" 
+                            : "bg-green-500 hover:bg-green-600"
+                        } text-white font-bold py-3 px-6 rounded-lg`}
+                      >
+                        {isAlphabetPlaying ? "Stop" : "Start Alphabet Song"}
                       </Button>
                     )}
                     <button 
@@ -1333,23 +1409,30 @@ const LessonVault0406 = () => {
                         ));
                      } else if (selectedCountingRange === "alphabets") {
                         const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)); // Capital letters A-Z
-                        return alphabet.map((letter, index) => (
-                          <div 
-                            key={letter}
-                            className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
-                            style={{
-                              backgroundColor: [
-                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                              ][index % 5]
-                            }}
-                            onClick={() => speakVowel(letter)}
-                            onMouseEnter={() => speakVowel(letter)}
-                            onMouseLeave={() => window.speechSynthesis.cancel()}
-                            title={`Letter ${letter} - Click to hear pronunciation`}
-                          >
-                            {letter}
-                          </div>
-                        ));
+                        return alphabet.map((letter, index) => {
+                          const isCurrentlyPlaying = isAlphabetPlaying && index === currentAlphabetIndex;
+                          return (
+                            <div 
+                              key={letter}
+                              className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white ${
+                                isCurrentlyPlaying ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
+                              }`}
+                              style={{
+                                backgroundColor: isCurrentlyPlaying 
+                                  ? '#fbbf24' // Yellow when active
+                                  : [
+                                      '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                                    ][index % 5]
+                              }}
+                              onClick={() => !isAlphabetPlaying && speakVowel(letter, true)}
+                              onMouseEnter={() => !isAlphabetPlaying && speakVowel(letter, true)}
+                              onMouseLeave={() => !isAlphabetPlaying && window.speechSynthesis.cancel()}
+                              title={`Letter ${letter} - Click to hear pronunciation`}
+                            >
+                              {letter}
+                            </div>
+                          );
+                        });
                       } else {
                         const [start, end] = selectedCountingRange.split('-').map(Number);
                         return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number, arrayIndex) => {
