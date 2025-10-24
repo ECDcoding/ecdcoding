@@ -65,7 +65,6 @@ const LessonVault0406 = () => {
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
-  const [alphabetLiked, setAlphabetLiked] = useState(false);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -181,17 +180,6 @@ const LessonVault0406 = () => {
     }
     
     window.speechSynthesis.cancel();
-  };
-
-  const handleAlphabetLike = () => {
-    setAlphabetLiked(!alphabetLiked);
-    toast({
-      title: alphabetLiked ? "Removed from favorites" : "Added to favorites!",
-      description: alphabetLiked 
-        ? "You've removed the Alphabets lesson from your favorites." 
-        : "You love the Alphabets lesson! Keep learning!",
-      duration: 2000,
-    });
   };
 
   // Auto-counting functionality
@@ -1361,17 +1349,14 @@ const LessonVault0406 = () => {
                      selectedCountingRange === "alphabets" ? (
                        <>
                          Alphabets
-                         <Heart 
-                           className={`h-8 w-8 cursor-pointer transition-all duration-300 hover:scale-110 ${
-                             alphabetLiked 
-                               ? 'fill-red-500 text-red-500' 
-                               : 'fill-none text-red-500 hover:fill-red-500'
-                           }`}
-                           onClick={handleAlphabetLike}
-                         />
+                         <CourseLikeComment courseId="alphabets" courseName="Alphabets" />
                        </>
-                     ) : 
-                     "Basic Counting"}
+                     ) : (
+                       <>
+                         Basic Counting
+                         <CourseLikeComment courseId="basic-counting" courseName="Basic Counting" />
+                       </>
+                     )}
                   </h1>
                   <div className="flex items-center gap-4">
                     {/* Start Counting button - Top Right */}
@@ -1502,14 +1487,6 @@ const LessonVault0406 = () => {
                       <ArrowLeft className="h-6 w-6" />
                       Back
                    </button>
-                   
-                   {/* Like and Share icons - Under number 18 */}
-                   {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                     <div className="absolute bottom-32 left-[40%] -translate-x-1/2">
-                       <CourseLikeComment courseId="basic-counting" courseName="Basic Counting" />
-                     </div>
-                   )}
-                   
                    
                     {/* Continue to next range buttons */}
                     {selectedCountingRange === "1-10" && (
