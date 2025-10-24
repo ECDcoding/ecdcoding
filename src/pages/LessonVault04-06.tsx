@@ -16,6 +16,7 @@ import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { useToast } from "@/hooks/use-toast";
+import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -39,6 +40,7 @@ const LessonVault0406 = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const onlineCount = useOnlineUsers('lesson-vault-04-06');
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -424,11 +426,15 @@ const LessonVault0406 = () => {
             </Link>
             <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
               profileImage={profileImage} 
               onLogout={handleLogout}
             />
+            <div className="flex items-center gap-1 text-xs text-white/80">
+              <Users className="h-3 w-3" />
+              <span>{onlineCount} online</span>
+            </div>
           </div>
         </div>
       </nav>

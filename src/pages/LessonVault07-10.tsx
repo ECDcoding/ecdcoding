@@ -1,17 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut } from "lucide-react";
+import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut, Users } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
+import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useState } from "react";
 
 const LessonVault0710 = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const onlineCount = useOnlineUsers('lesson-vault-07-10');
   
   const handleLogout = async () => {
     await signOut();
@@ -113,10 +115,16 @@ const LessonVault0710 = () => {
                 className="pl-10 w-64 bg-white text-foreground"
               />
             </div>
-            <ProfileDropdown 
-              profileImage={profileImage} 
-              onLogout={handleLogout}
-            />
+            <div className="flex flex-col items-end gap-1">
+              <ProfileDropdown 
+                profileImage={profileImage} 
+                onLogout={handleLogout}
+              />
+              <div className="flex items-center gap-1 text-xs text-white/80">
+                <Users className="h-3 w-3" />
+                <span>{onlineCount} online</span>
+              </div>
+            </div>
           </div>
         </div>
       </header>
