@@ -40,7 +40,7 @@ const LessonVault0406 = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const onlineCount = useOnlineUsers('lesson-vault-04-06');
+  const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -431,9 +431,21 @@ const LessonVault0406 = () => {
               profileImage={profileImage} 
               onLogout={handleLogout}
             />
-            <div className="flex items-center gap-1 text-xs text-white/80">
-              <Users className="h-3 w-3" />
-              <span>{onlineCount} online</span>
+            <div className="flex flex-col items-end gap-1 text-xs text-white/80">
+              <div className="flex items-center gap-1">
+                <Users className="h-3 w-3" />
+                <span>{onlineCount} online</span>
+              </div>
+              {onlineUsers.length > 0 && (
+                <div className="text-xs text-white/60">
+                  {onlineUsers.map((u, i) => (
+                    <span key={u.user_id}>
+                      {u.first_name || u.username}
+                      {i < onlineUsers.length - 1 ? ', ' : ''}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
