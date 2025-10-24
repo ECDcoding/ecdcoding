@@ -678,32 +678,19 @@ const LessonVault0406 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Arts
+                  Sport and Recreation
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Create: Music | Dance | Drama
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      🎵 Music
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setDanceOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      💃 Dance
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      🎭 Drama
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🎨 Visual Art
+                  🎭 Performing Arts
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🎨 Visual Arts
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  ⚽ Sport
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
