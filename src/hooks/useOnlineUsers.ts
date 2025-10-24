@@ -29,7 +29,7 @@ export const useOnlineUsers = (channelName: string) => {
         return;
       }
 
-      // Fetch profile information for all online users
+      // Fetch profile information for all online users (non-sensitive fields only)
       const { data: profiles } = await supabase
         .from('profiles')
         .select('user_id, first_name, last_name, username')
