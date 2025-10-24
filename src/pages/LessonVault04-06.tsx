@@ -15,6 +15,7 @@ import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { CourseLikeComment } from "@/components/CourseLikeComment";
+import { useToast } from "@/hooks/use-toast";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -36,6 +37,7 @@ import alphabetSong from "@/assets/alphabet-song.mp3";
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -63,6 +65,7 @@ const LessonVault0406 = () => {
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
+  const [alphabetLiked, setAlphabetLiked] = useState(false);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -178,6 +181,17 @@ const LessonVault0406 = () => {
     }
     
     window.speechSynthesis.cancel();
+  };
+
+  const handleAlphabetLike = () => {
+    setAlphabetLiked(!alphabetLiked);
+    toast({
+      title: alphabetLiked ? "Removed from favorites" : "Added to favorites!",
+      description: alphabetLiked 
+        ? "You've removed the Alphabets lesson from your favorites." 
+        : "You love the Alphabets lesson! Keep learning!",
+      duration: 2000,
+    });
   };
 
   // Auto-counting functionality
@@ -1347,7 +1361,14 @@ const LessonVault0406 = () => {
                      selectedCountingRange === "alphabets" ? (
                        <>
                          Alphabets
-                         <Heart className="h-8 w-8 fill-red-500 text-red-500" />
+                         <Heart 
+                           className={`h-8 w-8 cursor-pointer transition-all duration-300 hover:scale-110 ${
+                             alphabetLiked 
+                               ? 'fill-red-500 text-red-500' 
+                               : 'fill-none text-red-500 hover:fill-red-500'
+                           }`}
+                           onClick={handleAlphabetLike}
+                         />
                        </>
                      ) : 
                      "Basic Counting"}
