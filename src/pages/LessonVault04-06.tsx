@@ -33,6 +33,7 @@ import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import alphabetSong from "@/assets/alphabet-song.mp3";
+import countingSong from "@/assets/basic-counting-song.mp3";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -65,6 +66,8 @@ const LessonVault0406 = () => {
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
+  const [isCountingPlaying, setIsCountingPlaying] = useState(false);
+  const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -182,6 +185,64 @@ const LessonVault0406 = () => {
     window.speechSynthesis.cancel();
   };
 
+  // Counting song functionality
+  const countingAudioRef = useRef<HTMLAudioElement | null>(null);
+  const countingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startCountingPlay = () => {
+    if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
+    
+    setIsCountingPlaying(true);
+    setCurrentCountingIndex(0);
+    
+    const [start, end] = selectedCountingRange.split('-').map(Number);
+    const totalNumbers = end - start + 1;
+    
+    // Create and play the audio
+    if (!countingAudioRef.current) {
+      countingAudioRef.current = new Audio(countingSong);
+    }
+    countingAudioRef.current.volume = 0.4;
+    countingAudioRef.current.currentTime = 0;
+    countingAudioRef.current.play();
+    
+    // Start speaking numbers with rhythm matching the music
+    let index = 0;
+    
+    // Speak first number immediately
+    speakNumber(start);
+    index++;
+    
+    // Continue with rhythm (approximately 1.5 seconds per number to match music tempo)
+    countingIntervalRef.current = setInterval(() => {
+      if (index < totalNumbers) {
+        setCurrentCountingIndex(index);
+        const currentNumber = start + index;
+        speakNumber(currentNumber);
+        index++;
+      } else {
+        stopCountingPlay();
+      }
+    }, 1500); // 1.5 seconds per number for rhythmic flow
+  };
+
+  const stopCountingPlay = () => {
+    setIsCountingPlaying(false);
+    setCurrentCountingIndex(0);
+    
+    if (countingIntervalRef.current) {
+      clearInterval(countingIntervalRef.current);
+      countingIntervalRef.current = null;
+    }
+    
+    if (countingAudioRef.current) {
+      countingAudioRef.current.pause();
+      countingAudioRef.current.currentTime = 0;
+    }
+    
+    window.speechSynthesis.cancel();
+  };
+
   // Auto-counting functionality
   const startAutoCounting = () => {
     if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
@@ -229,6 +290,8 @@ const LessonVault0406 = () => {
   useEffect(() => {
     if (!countingOpen) {
       stopAutoCounting();
+      stopCountingPlay();
+      stopAlphabetPlay();
     }
   }, [countingOpen]);
 
@@ -1358,33 +1421,45 @@ const LessonVault0406 = () => {
                        </>
                      )}
                   </h1>
-                  <div className="flex items-center gap-4">
-                    {/* Start Counting button - Top Right */}
-                    {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
-                      <Button
-                        onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
-                        className={`${
-                          isAutoCounting 
-                            ? "bg-red-500 hover:bg-red-600" 
-                            : "bg-green-500 hover:bg-green-600"
-                        } text-white font-bold py-3 px-6 rounded-lg`}
-                      >
-                        {isAutoCounting ? "Stop" : "Start Counting"}
-                      </Button>
-                    )}
-                    {/* Start Alphabet Play button */}
-                    {selectedCountingRange === "alphabets" && (
-                      <Button
-                        onClick={isAlphabetPlaying ? stopAlphabetPlay : startAlphabetPlay}
-                        className={`${
-                          isAlphabetPlaying 
-                            ? "bg-red-500 hover:bg-red-600" 
-                            : "bg-green-500 hover:bg-green-600"
-                        } text-white font-bold py-3 px-6 rounded-lg`}
-                      >
-                        {isAlphabetPlaying ? "Stop" : "Start Alphabet Song"}
-                      </Button>
-                    )}
+                   <div className="flex items-center gap-4">
+                     {/* Start Counting button - Top Right */}
+                     {selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets" && (
+                       <>
+                         <Button
+                           onClick={isCountingPlaying ? stopCountingPlay : startCountingPlay}
+                           className={`${
+                             isCountingPlaying 
+                               ? "bg-purple-500 hover:bg-purple-600" 
+                               : "bg-blue-500 hover:bg-blue-600"
+                           } text-white font-bold py-3 px-6 rounded-lg`}
+                         >
+                           {isCountingPlaying ? "Stop Song" : "Play Counting Song"}
+                         </Button>
+                         <Button
+                           onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
+                           className={`${
+                             isAutoCounting 
+                               ? "bg-red-500 hover:bg-red-600" 
+                               : "bg-green-500 hover:bg-green-600"
+                           } text-white font-bold py-3 px-6 rounded-lg`}
+                         >
+                           {isAutoCounting ? "Stop" : "Start Counting"}
+                         </Button>
+                       </>
+                     )}
+                     {/* Start Alphabet Play button */}
+                     {selectedCountingRange === "alphabets" && (
+                       <Button
+                         onClick={isAlphabetPlaying ? stopAlphabetPlay : startAlphabetPlay}
+                         className={`${
+                           isAlphabetPlaying 
+                             ? "bg-red-500 hover:bg-red-600" 
+                             : "bg-green-500 hover:bg-green-600"
+                         } text-white font-bold py-3 px-6 rounded-lg`}
+                       >
+                         {isAlphabetPlaying ? "Stop" : "Start Alphabet Song"}
+                       </Button>
+                     )}
                     <button 
                       onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
                       className="text-white hover:text-yellow-400 transition-colors"
@@ -1444,33 +1519,34 @@ const LessonVault0406 = () => {
                             </div>
                           );
                         });
-                      } else {
-                        const [start, end] = selectedCountingRange.split('-').map(Number);
-                        return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number, arrayIndex) => {
-                          const isCurrentlyPlaying = isAutoCounting && arrayIndex === currentAutoIndex;
-                          return (
-                            <div 
-                              key={number}
-                              className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer ${
-                                isCurrentlyPlaying ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
-                              }`}
-                              style={{
-                                backgroundColor: isCurrentlyPlaying 
-                                  ? '#fbbf24' // Yellow when active
-                                  : [
-                                      '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                                    ][number % 5]
-                              }}
-                              onMouseEnter={() => !isAutoCounting && speakNumber(number)}
-                              onMouseLeave={() => !isAutoCounting && window.speechSynthesis.cancel()}
-                              onClick={() => !isAutoCounting && speakNumber(number)}
-                              title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
-                            >
-                              {number}
-                            </div>
-                          );
-                        });
-                     }
+                       } else {
+                         const [start, end] = selectedCountingRange.split('-').map(Number);
+                         return Array.from({ length: end - start + 1 }, (_, index) => start + index).map((number, arrayIndex) => {
+                           const isCurrentlyPlaying = (isAutoCounting && arrayIndex === currentAutoIndex) || (isCountingPlaying && arrayIndex === currentCountingIndex);
+                           const isInteractive = !isAutoCounting && !isCountingPlaying;
+                           return (
+                             <div 
+                               key={number}
+                               className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer ${
+                                 isCurrentlyPlaying ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
+                               }`}
+                               style={{
+                                 backgroundColor: isCurrentlyPlaying 
+                                   ? '#fbbf24' // Yellow when active
+                                   : [
+                                       '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                                     ][number % 5]
+                               }}
+                               onMouseEnter={() => isInteractive && speakNumber(number)}
+                               onMouseLeave={() => isInteractive && window.speechSynthesis.cancel()}
+                               onClick={() => isInteractive && speakNumber(number)}
+                               title={`Number ${number} - ${numberWords[number - 1] || number.toString()}`}
+                             >
+                               {number}
+                             </div>
+                           );
+                         });
+                      }
                    })()}
                  </div>
                  
