@@ -696,7 +696,7 @@ const LessonVault0406 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Sport and Recreation
+                  Arts
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -705,10 +705,35 @@ const LessonVault0406 = () => {
                   🎭 Performing Arts
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🎨 Visual Arts
+                  🎨 Visual Art
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  ⚽ Sport
+                  ✂️ Craft
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Sport
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  ⚽ Soccer
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🏉 Rugby
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🏏 Cricket
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🎾 Tennis
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🏹 Indigenous Games
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

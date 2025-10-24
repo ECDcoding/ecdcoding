@@ -30,7 +30,7 @@ export const BuyCredits = () => {
   if (!user) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
