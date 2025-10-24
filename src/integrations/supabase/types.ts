@@ -62,6 +62,36 @@ export type Database = {
         }
         Relationships: []
       }
+      credit_purchases: {
+        Row: {
+          created_at: string
+          credits_amount: number
+          id: string
+          payment_id: string | null
+          payment_status: string
+          price_zar: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          credits_amount: number
+          id?: string
+          payment_id?: string | null
+          payment_status?: string
+          price_zar: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          credits_amount?: number
+          id?: string
+          payment_id?: string | null
+          payment_status?: string
+          price_zar?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age_groups: string | null
@@ -218,6 +248,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_credits: {
+        Row: {
+          created_at: string
+          credits: number
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          credits?: number
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          credits?: number
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_promo_codes: {
         Row: {
           expires_at: string
@@ -258,10 +312,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      redeem_promo_code: {
-        Args: { promo_code_text: string }
-        Returns: Json
-      }
+      redeem_promo_code: { Args: { promo_code_text: string }; Returns: Json }
     }
     Enums: {
       [_ in never]: never
