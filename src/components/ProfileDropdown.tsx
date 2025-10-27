@@ -46,6 +46,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     learner_gender: "",
     number_of_kids: "",
     relationship: "",
+    learner_progress_report: "",
     
     // ECD Manager fields
     institution: "",
@@ -87,6 +88,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           learner_gender: profile.learner_gender || "",
           number_of_kids: profile.number_of_kids || "",
           relationship: profile.relationship || "",
+          learner_progress_report: profile.learner_progress_report || "",
           
           // ECD Manager fields
           institution: profile.institution || "",
@@ -124,6 +126,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           learner_gender: profile.learner_gender || "",
           number_of_kids: profile.number_of_kids || "",
           relationship: profile.relationship || "",
+          learner_progress_report: profile.learner_progress_report || "",
           
           // ECD Manager fields
           institution: profile.institution || "",
@@ -169,6 +172,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         learner_gender: profile.learner_gender || "",
         number_of_kids: profile.number_of_kids || "",
         relationship: profile.relationship || "",
+        learner_progress_report: profile.learner_progress_report || "",
         
         // ECD Manager fields
         institution: profile.institution || "",
@@ -212,14 +216,14 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         updateData.learner_gender = formData.learner_gender || null;
         updateData.number_of_kids = formData.number_of_kids || null;
         updateData.relationship = formData.relationship || null;
+        updateData.learner_progress_report = formData.learner_progress_report || null;
       } else if (formData.registration_type === 'ecd-manager') {
         updateData.institution = formData.institution || null;
         updateData.facility_name = formData.facility_name || null;
         updateData.facility_type = formData.facility_type || null;
         updateData.number_of_learners = formData.number_of_learners || null;
         updateData.age_groups = formData.age_groups || null;
-        updateData.ecd_phone = formData.ecd_phone || null;
-        updateData.ecd_email = formData.ecd_email || null;
+        updateData.learner_progress_report = formData.learner_progress_report || null;
       } else if (formData.registration_type === 'tech-teacher') {
         updateData.qualifications = formData.qualifications || null;
         updateData.experience = formData.experience || null;
@@ -231,10 +235,27 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         updateData.teaching_philosophy = formData.teaching_philosophy || null;
       }
 
-      const { error } = await supabase
+      // Update profiles table
+      const { error: profileError } = await supabase
         .from("profiles")
         .update(updateData)
         .eq("user_id", profile.user_id);
+
+      if (profileError) throw profileError;
+
+      // Update sensitive data if it exists
+      if (formData.learner_progress_report) {
+        const { error: sensitiveError } = await supabase
+          .from("profile_sensitive_data")
+          .upsert({
+            user_id: profile.user_id,
+            learner_progress_report: formData.learner_progress_report
+          });
+        
+        if (sensitiveError) throw sensitiveError;
+      }
+
+      const error = profileError;
 
       if (error) {
         toast({
@@ -625,6 +646,22 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                           placeholder="e.g., Parent, Guardian"
                         />
                       </div>
+
+                      <div>
+                        <Label htmlFor="learner_progress_report">Learner Progress Report</Label>
+                        <Textarea
+                          id="learner_progress_report"
+                          value={formData.learner_progress_report}
+                          onChange={(e) => setFormData(prev => ({...prev, learner_progress_report: e.target.value}))}
+                          placeholder="Brief progress report (max 200 characters)"
+                          maxLength={200}
+                          className="resize-none"
+                          rows={3}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {formData.learner_progress_report.length}/200 characters
+                        </p>
+                      </div>
                     </>
                   )}
 
@@ -685,27 +722,20 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="ecd_phone">Phone</Label>
-                          <Input
-                            id="ecd_phone"
-                            value={formData.ecd_phone}
-                            onChange={(e) => setFormData(prev => ({...prev, ecd_phone: e.target.value}))}
-                            placeholder="Phone number"
-                          />
-                        </div>
-                        
-                        <div>
-                          <Label htmlFor="ecd_email">Email</Label>
-                          <Input
-                            id="ecd_email"
-                            type="email"
-                            value={formData.ecd_email}
-                            onChange={(e) => setFormData(prev => ({...prev, ecd_email: e.target.value}))}
-                            placeholder="Email address"
-                          />
-                        </div>
+                      <div>
+                        <Label htmlFor="learner_progress_report">Learner Progress Report</Label>
+                        <Textarea
+                          id="learner_progress_report"
+                          value={formData.learner_progress_report}
+                          onChange={(e) => setFormData(prev => ({...prev, learner_progress_report: e.target.value}))}
+                          placeholder="Brief progress report (max 200 characters)"
+                          maxLength={200}
+                          className="resize-none"
+                          rows={3}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {formData.learner_progress_report.length}/200 characters
+                        </p>
                       </div>
                     </>
                   )}
@@ -799,44 +829,46 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                     </>
                   )}
 
-                   {/* Change Password Section */}
-                   <div className="border-t pt-4 space-y-4">
-                     <h4 className="font-medium flex items-center gap-2">
-                       <Key className="h-4 w-4" />
-                       Change Password
-                     </h4>
-                     <div className="grid grid-cols-2 gap-4">
-                       <div>
-                         <Label htmlFor="password">New Password</Label>
-                         <Input
-                           id="password"
-                           type="password"
-                           value={formData.password}
-                           onChange={(e) => setFormData(prev => ({...prev, password: e.target.value}))}
-                           placeholder="Enter new password"
-                         />
+                   {/* Change Password Section - Only for Tech Teacher */}
+                   {formData.registration_type === 'tech-teacher' && (
+                     <div className="border-t pt-4 space-y-4">
+                       <h4 className="font-medium flex items-center gap-2">
+                         <Key className="h-4 w-4" />
+                         Change Password
+                       </h4>
+                       <div className="grid grid-cols-2 gap-4">
+                         <div>
+                           <Label htmlFor="password">New Password</Label>
+                           <Input
+                             id="password"
+                             type="password"
+                             value={formData.password}
+                             onChange={(e) => setFormData(prev => ({...prev, password: e.target.value}))}
+                             placeholder="Enter new password"
+                           />
+                         </div>
+                         <div>
+                           <Label htmlFor="confirmPassword">Confirm Password</Label>
+                           <Input
+                             id="confirmPassword"
+                             type="password"
+                             value={formData.confirmPassword}
+                             onChange={(e) => setFormData(prev => ({...prev, confirmPassword: e.target.value}))}
+                             placeholder="Confirm password"
+                           />
+                         </div>
                        </div>
-                       <div>
-                         <Label htmlFor="confirmPassword">Confirm Password</Label>
-                         <Input
-                           id="confirmPassword"
-                           type="password"
-                           value={formData.confirmPassword}
-                           onChange={(e) => setFormData(prev => ({...prev, confirmPassword: e.target.value}))}
-                           placeholder="Confirm password"
-                         />
-                       </div>
+                       {formData.password && (
+                         <Button
+                           variant="outline"
+                           onClick={handleChangePassword}
+                           className="w-full"
+                         >
+                           Update Password
+                         </Button>
+                       )}
                      </div>
-                     {formData.password && (
-                       <Button
-                         variant="outline"
-                         onClick={handleChangePassword}
-                         className="w-full"
-                       >
-                         Update Password
-                       </Button>
-                     )}
-                   </div>
+                   )}
 
                    <div className="flex justify-end gap-2 pt-4">
                     <Button

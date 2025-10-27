@@ -47,6 +47,7 @@ interface SensitiveProfileData {
   number_of_learners?: string;
   age_groups?: string;
   number_of_kids?: string;
+  learner_progress_report?: string;
 }
 
 interface CompleteProfile extends Profile, SensitiveProfileData {}
