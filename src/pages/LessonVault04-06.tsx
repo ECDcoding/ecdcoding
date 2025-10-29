@@ -329,6 +329,39 @@ const LessonVault0406 = () => {
     }
   }, [countingOpen]);
 
+  // Continue music when counting range changes
+  useEffect(() => {
+    if (selectedCountingRange && isCountingPlaying && 
+        selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets") {
+      // Keep music playing, just restart the counting interval for new range
+      const [start, end] = selectedCountingRange.split('-').map(Number);
+      const totalNumbers = end - start + 1;
+      
+      // Clear existing interval
+      if (countingIntervalRef.current) {
+        clearInterval(countingIntervalRef.current);
+      }
+      
+      // Restart counting for new range without stopping music
+      setCurrentCountingIndex(0);
+      let index = 0;
+      
+      countingIntervalRef.current = setInterval(() => {
+        if (index < totalNumbers) {
+          setCurrentCountingIndex(index);
+          const currentNumber = start + index;
+          speakNumber(currentNumber);
+          index++;
+        } else {
+          if (countingIntervalRef.current) {
+            clearInterval(countingIntervalRef.current);
+            countingIntervalRef.current = null;
+          }
+        }
+      }, 1500);
+    }
+  }, [selectedCountingRange]);
+
   const languages = [
     "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
     "Setswana", "Sepedi", "Xitsonga", "Venda"
