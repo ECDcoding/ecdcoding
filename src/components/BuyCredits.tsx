@@ -27,10 +27,10 @@ export const BuyCredits = () => {
     setIsProcessing(false);
   };
 
-  if (!user) return null;
+  if (!user || credits > 40) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 animate-pulse">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
