@@ -8,6 +8,7 @@ interface OnlineUser {
   first_name?: string;
   last_name?: string;
   username?: string;
+  registration_type?: string;
 }
 
 export const useOnlineUsers = (channelName: string) => {
@@ -32,7 +33,7 @@ export const useOnlineUsers = (channelName: string) => {
       // Fetch profile information for all online users (non-sensitive fields only)
       const { data: profiles } = await supabase
         .from('profiles')
-        .select('user_id, first_name, last_name, username')
+        .select('user_id, first_name, last_name, username, registration_type')
         .in('user_id', userIds);
 
       if (profiles) {
@@ -51,6 +52,7 @@ export const useOnlineUsers = (channelName: string) => {
             first_name: profile.first_name,
             last_name: profile.last_name,
             username: profile.username,
+            registration_type: profile.registration_type,
             online_at: new Date().toISOString(),
           });
         }

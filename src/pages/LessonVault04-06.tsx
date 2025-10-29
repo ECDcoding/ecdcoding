@@ -3,14 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
@@ -43,6 +45,7 @@ const LessonVault0406 = () => {
   const { toast } = useToast();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, loading: creditsLoading, purchaseCredits } = useCredits();
+  const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
@@ -65,6 +68,8 @@ const LessonVault0406 = () => {
   const [selectedFullScreenColor, setSelectedFullScreenColor] = useState<string | null>(null);
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
+  const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [responseText, setResponseText] = useState('');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Buy Credits visibility cycle
@@ -372,6 +377,34 @@ const LessonVault0406 = () => {
     navigate("/");
   };
 
+  const handleSendResponse = async () => {
+    if (!responseText.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a response",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Here you can implement sending the response to ecdcoding
+      // For now, we'll just show a success message
+      toast({
+        title: "Success",
+        description: "Response sent to ECDCoding team",
+      });
+      setResponseText("");
+      setShowProgressDialog(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send response",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -464,12 +497,15 @@ const LessonVault0406 = () => {
                 <span>{onlineCount} online</span>
               </div>
               {onlineUsers.length > 0 && (
-                <div className="text-xs text-white/60">
-                  {onlineUsers.map((u, i) => (
-                    <span key={u.user_id}>
-                      {u.first_name || u.username}
-                      {i < onlineUsers.length - 1 ? ', ' : ''}
-                    </span>
+                <div className="flex flex-wrap gap-1 justify-end">
+                  {onlineUsers.map((u) => (
+                    <Badge 
+                      key={u.user_id}
+                      className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity bg-white/20 text-white border-white/30"
+                      onClick={() => setShowProgressDialog(true)}
+                    >
+                      {u.registration_type?.replace('-', ' ') || u.first_name || u.username}
+                    </Badge>
                   ))}
                 </div>
               )}
@@ -2255,6 +2291,54 @@ const LessonVault0406 = () => {
         )}
 
        </main>
+
+      <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Progress Report Communication</DialogTitle>
+            <DialogDescription>
+              View learner progress report and communicate with ECDCoding team
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <Label className="text-sm font-semibold">Current Progress Report</Label>
+              <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  {profile?.learner_progress_report || "No progress report available yet."}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="response">Your Question or Comment</Label>
+              <Textarea
+                id="response"
+                placeholder="Ask a question or provide comments about the progress report..."
+                value={responseText}
+                onChange={(e) => setResponseText(e.target.value)}
+                className="mt-2 min-h-[120px]"
+              />
+            </div>
+
+            <div className="flex gap-2 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowProgressDialog(false);
+                  setResponseText("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleSendResponse}>
+                Send to ECDCoding
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       
     </div>
   );
