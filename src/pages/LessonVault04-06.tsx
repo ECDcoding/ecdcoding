@@ -1515,16 +1515,69 @@ const LessonVault0406 = () => {
                          >
                            {isCountingPlaying ? "Stop Song" : "Play Counting Song"}
                          </Button>
-                         <Button
-                           onClick={isAutoCounting ? stopAutoCounting : startAutoCounting}
-                           className={`${
-                             isAutoCounting 
-                               ? "bg-red-500 hover:bg-red-600" 
-                               : "bg-green-500 hover:bg-green-600"
-                           } text-white font-bold py-3 px-6 rounded-lg`}
-                         >
-                           {isAutoCounting ? "Stop" : "Start Counting"}
-                         </Button>
+                          {isAutoCounting ? (
+                            <Button
+                              onClick={stopAutoCounting}
+                              className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg"
+                            >
+                              Stop
+                            </Button>
+                          ) : (
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">
+                                  Start Counting <ChevronDown className="ml-2 h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent className="bg-background border-2">
+                                <DropdownMenuItem 
+                                  onClick={() => {
+                                    setSelectedCountingRange("1-20");
+                                    setTimeout(startAutoCounting, 100);
+                                  }}
+                                  className="font-medium cursor-pointer"
+                                >
+                                  1 - 20
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  onClick={() => {
+                                    setSelectedCountingRange("21-40");
+                                    setTimeout(startAutoCounting, 100);
+                                  }}
+                                  className="font-medium cursor-pointer"
+                                >
+                                  21 - 40
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  onClick={() => {
+                                    setSelectedCountingRange("41-60");
+                                    setTimeout(startAutoCounting, 100);
+                                  }}
+                                  className="font-medium cursor-pointer"
+                                >
+                                  41 - 60
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  onClick={() => {
+                                    setSelectedCountingRange("61-80");
+                                    setTimeout(startAutoCounting, 100);
+                                  }}
+                                  className="font-medium cursor-pointer"
+                                >
+                                  61 - 80
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  onClick={() => {
+                                    setSelectedCountingRange("81-100");
+                                    setTimeout(startAutoCounting, 100);
+                                  }}
+                                  className="font-medium cursor-pointer"
+                                >
+                                  81 - 100
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          )}
                        </>
                      )}
                      {/* Start Alphabet Play button */}
