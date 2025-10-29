@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,8 +18,33 @@ const creditPackages = [
 
 export const BuyCredits = () => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { purchaseCredits, credits } = useCredits();
   const { user } = useAuth();
+
+  useEffect(() => {
+    // Start with button hidden for 10 seconds
+    const cycle = () => {
+      setIsVisible(false);
+      
+      // Show after 10 seconds
+      const showTimer = setTimeout(() => {
+        setIsVisible(true);
+        
+        // Hide after 5 seconds
+        const hideTimer = setTimeout(() => {
+          cycle();
+        }, 5000);
+        
+        return () => clearTimeout(hideTimer);
+      }, 10000);
+      
+      return () => clearTimeout(showTimer);
+    };
+    
+    const cleanup = cycle();
+    return cleanup;
+  }, []);
 
   const handlePurchase = async (credits: number, price: number) => {
     setIsProcessing(true);
@@ -27,10 +52,10 @@ export const BuyCredits = () => {
     setIsProcessing(false);
   };
 
-  if (!user || credits > 40) return null;
+  if (!user || credits > 40 || !isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 animate-pulse">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
