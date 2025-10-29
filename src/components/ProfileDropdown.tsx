@@ -209,21 +209,31 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         registration_type: formData.registration_type || null,
       };
 
+      const sensitiveData: any = {
+        user_id: profile.user_id,
+      };
+
       // Add fields based on registration type
       if (formData.registration_type === 'parent') {
-        updateData.learner_first_name = formData.learner_first_name || null;
-        updateData.learner_last_name = formData.learner_last_name || null;
-        updateData.learner_gender = formData.learner_gender || null;
-        updateData.number_of_kids = formData.number_of_kids || null;
         updateData.relationship = formData.relationship || null;
-        updateData.learner_progress_report = formData.learner_progress_report || null;
+        updateData.number_of_kids = formData.number_of_kids || null;
+        
+        // Sensitive fields go to profile_sensitive_data
+        sensitiveData.learner_first_name = formData.learner_first_name || null;
+        sensitiveData.learner_last_name = formData.learner_last_name || null;
+        sensitiveData.learner_gender = formData.learner_gender || null;
+        sensitiveData.learner_progress_report = formData.learner_progress_report || null;
       } else if (formData.registration_type === 'ecd-manager') {
         updateData.institution = formData.institution || null;
-        updateData.facility_name = formData.facility_name || null;
-        updateData.facility_type = formData.facility_type || null;
-        updateData.number_of_learners = formData.number_of_learners || null;
-        updateData.age_groups = formData.age_groups || null;
-        updateData.learner_progress_report = formData.learner_progress_report || null;
+        
+        // Sensitive fields go to profile_sensitive_data
+        sensitiveData.facility_name = formData.facility_name || null;
+        sensitiveData.facility_type = formData.facility_type || null;
+        sensitiveData.number_of_learners = formData.number_of_learners || null;
+        sensitiveData.age_groups = formData.age_groups || null;
+        sensitiveData.ecd_phone = formData.ecd_phone || null;
+        sensitiveData.ecd_email = formData.ecd_email || null;
+        sensitiveData.learner_progress_report = formData.learner_progress_report || null;
       } else if (formData.registration_type === 'tech-teacher') {
         updateData.qualifications = formData.qualifications || null;
         updateData.experience = formData.experience || null;
@@ -243,34 +253,19 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
 
       if (profileError) throw profileError;
 
-      // Update sensitive data if it exists
-      if (formData.learner_progress_report) {
-        const { error: sensitiveError } = await supabase
-          .from("profile_sensitive_data")
-          .upsert({
-            user_id: profile.user_id,
-            learner_progress_report: formData.learner_progress_report
-          });
-        
-        if (sensitiveError) throw sensitiveError;
-      }
+      // Always update sensitive data table with all sensitive fields
+      const { error: sensitiveError } = await supabase
+        .from("profile_sensitive_data")
+        .upsert(sensitiveData);
+      
+      if (sensitiveError) throw sensitiveError;
 
-      const error = profileError;
-
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to update profile. Please try again.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: "Profile updated successfully!",
-        });
-        setIsEditing(false);
-        // The profile will be refetched automatically due to the useProfile hook
-      }
+      toast({
+        title: "Success",
+        description: "Profile updated successfully!",
+      });
+      setIsEditing(false);
+      // The profile will be refetched automatically due to the useProfile hook
     } catch (error) {
       console.error("Error updating profile:", error);
       toast({
