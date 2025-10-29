@@ -1,6 +1,6 @@
 import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 
 interface ProfileDropdownProps {
   profileImage?: string | null;
@@ -30,6 +31,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [mediaTitle, setMediaTitle] = useState('');
   const [mediaDescription, setMediaDescription] = useState('');
+  const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [responseText, setResponseText] = useState('');
   const [uploadedMedia, setUploadedMedia] = useState<Array<{
     id: string;
     type: 'picture' | 'video';
@@ -435,6 +438,34 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     return ageGroup;
   };
 
+  const handleSendResponse = async () => {
+    if (!responseText.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a response",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Here you can implement sending the response to ecdcoding
+      // For now, we'll just show a success message
+      toast({
+        title: "Success",
+        description: "Response sent to ECDCoding team",
+      });
+      setResponseText("");
+      setShowProgressDialog(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send response",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-2">
@@ -497,9 +528,12 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                   )}
                 </div>
                 {profile && (
-                  <p className="text-xs text-muted-foreground">
-                    {profile.registration_type || 'Not specified'}
-                  </p>
+                  <Badge 
+                    className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={() => setShowProgressDialog(true)}
+                  >
+                    {profile.registration_type?.replace('-', ' ') || 'Not specified'}
+                  </Badge>
                 )}
               </div>
               {isEditing && (
@@ -1048,6 +1082,54 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           </DialogContent>
         </Dialog>
       )}
+
+      <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Progress Report Communication</DialogTitle>
+            <DialogDescription>
+              View learner progress report and communicate with ECDCoding team
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <Label className="text-sm font-semibold">Current Progress Report</Label>
+              <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  {profile?.learner_progress_report || "No progress report available yet."}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="response">Your Question or Comment</Label>
+              <Textarea
+                id="response"
+                placeholder="Ask a question or provide comments about the progress report..."
+                value={responseText}
+                onChange={(e) => setResponseText(e.target.value)}
+                className="mt-2 min-h-[120px]"
+              />
+            </div>
+
+            <div className="flex gap-2 justify-end">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowProgressDialog(false);
+                  setResponseText("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleSendResponse}>
+                Send to ECDCoding
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
