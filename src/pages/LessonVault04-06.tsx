@@ -766,7 +766,7 @@ const LessonVault0406 = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100">
-                  👨‍👩‍👧‍👦 Parents
+                  👨‍👩‍👧‍👦 Comments
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium hover:bg-gray-100">
                   🎓 Tech Teachers
