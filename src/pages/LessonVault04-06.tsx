@@ -537,7 +537,7 @@ const LessonVault0406 = () => {
                       className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity bg-white/20 text-white border-white/30"
                       onClick={() => setShowProgressDialog(true)}
                     >
-                      {u.registration_type?.replace('-', ' ') || u.first_name || u.username}
+                      {u.registration_type?.replace('-', ' ').replace('parent', 'comment') || u.first_name || u.username}
                     </Badge>
                   ))}
                 </div>
