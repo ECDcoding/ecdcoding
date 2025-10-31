@@ -127,8 +127,8 @@ const LessonVault0406 = () => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(numberWords[number - 1]);
       utterance.rate = 0.8; // Slower rate for kids
+      utterance.volume = 1.0; // Maximum volume for clear counting voice
       utterance.pitch = 1.2; // Higher pitch for child-friendly voice
-      utterance.volume = 0.8;
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -236,7 +236,7 @@ const LessonVault0406 = () => {
     if (!countingAudioRef.current) {
       countingAudioRef.current = new Audio(countingSong);
     }
-    countingAudioRef.current.volume = 0.4;
+    countingAudioRef.current.volume = 0.15; // Reduced volume to minimize background voice
     countingAudioRef.current.currentTime = 0;
     countingAudioRef.current.play();
     
