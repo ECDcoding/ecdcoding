@@ -236,7 +236,7 @@ const LessonVault0406 = () => {
     if (!countingAudioRef.current) {
       countingAudioRef.current = new Audio(countingSong);
     }
-    countingAudioRef.current.volume = 0.15; // Reduced volume to minimize background voice
+    countingAudioRef.current.volume = 0.35; // Background music at 35% volume
     countingAudioRef.current.currentTime = 0;
     countingAudioRef.current.play();
     
