@@ -18,6 +18,7 @@ import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
@@ -2359,13 +2360,31 @@ const LessonVault0406 = () => {
               </div>
             </div>
 
-            {/* Current Progress Report */}
+            {/* User Profile Information */}
             <div>
-              <Label className="text-sm font-semibold">Current Progress Report</Label>
+              <Label className="text-sm font-semibold">User Information</Label>
               <div className="mt-2 p-4 bg-muted rounded-md">
-                <p className="text-sm">
-                  {profile?.learner_progress_report || "No progress report available yet."}
-                </p>
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-16 w-16 border-2 border-primary">
+                    <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
+                    <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                      {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <p className="font-semibold text-lg">{profile?.first_name} {profile?.last_name}</p>
+                    <p className="text-sm text-muted-foreground">@{profile?.username}</p>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                        profile?.registration_type === 'parent' 
+                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                          : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                      }`}>
+                        {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
