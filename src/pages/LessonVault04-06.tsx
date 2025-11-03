@@ -724,22 +724,6 @@ const LessonVault0406 = () => {
                        </DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Transportation
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Road Transport
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                      Rail Transport
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -1369,13 +1353,31 @@ const LessonVault0406 = () => {
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <div className="space-y-2">
-                    <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
-                    <a href="/transportation" className="block font-bold underline text-black hover:text-pink-400">🚗 Transportation</a>
-                  </div>
+                  <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
                 </CardContent>
               </Card>
               
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
+                  <h4 className="text-lg italic mb-4">Exploring vehicles and travel</h4>
+                  <p className="text-base mb-4">Learn about different types of transport and how they move us around.</p>
+                  <div className="space-y-2">
+                    <button onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
+                    <button onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-red-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Road Safety</h3>
+                  <h4 className="text-lg italic mb-4">Stay safe on the streets</h4>
+                  <p className="text-base mb-4">Learn important road safety rules and how to stay safe as a pedestrian.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-red-500">Learn more</a>
+                </CardContent>
+              </Card>
+
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
@@ -1445,13 +1447,31 @@ const LessonVault0406 = () => {
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <div className="space-y-2">
-                    <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
-                    <a href="/transportation" className="block font-bold underline text-black hover:text-pink-400">🚗 Transportation</a>
-                  </div>
+                  <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
                 </CardContent>
               </Card>
               
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
+                  <h4 className="text-lg italic mb-4">Exploring vehicles and travel</h4>
+                  <p className="text-base mb-4">Learn about different types of transport and how they move us around.</p>
+                  <div className="space-y-2">
+                    <button onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
+                    <button onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-red-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Road Safety</h3>
+                  <h4 className="text-lg italic mb-4">Stay safe on the streets</h4>
+                  <p className="text-base mb-4">Learn important road safety rules and how to stay safe as a pedestrian.</p>
+                  <a href="#" className="font-bold underline text-black hover:text-red-500">Learn more</a>
+                </CardContent>
+              </Card>
+
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
