@@ -2408,9 +2408,9 @@ const LessonVault0406 = () => {
               </div>
             </div>
 
-            {/* Comment Section */}
+            {/* Feedback Section */}
             <div>
-              <Label htmlFor="response" className="text-sm font-semibold">Comment</Label>
+              <Label htmlFor="response" className="text-sm font-semibold">Feedback</Label>
               <Textarea
                 id="response"
                 placeholder="Share your thoughts, ask questions, or provide feedback..."
