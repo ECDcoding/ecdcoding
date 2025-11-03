@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -2322,55 +2323,130 @@ const LessonVault0406 = () => {
           <DialogHeader>
             <DialogTitle>Progress Report Communication</DialogTitle>
             <DialogDescription>
-              Track your child's understanding level and share comments
+              Share your child's learning progress and any challenges they may be facing.
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-6">
-            {/* Child's Understanding Levels with Subject Selection */}
-            <div className="border border-border rounded-lg p-4 bg-card">
-              <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-sm text-muted-foreground mb-2 block">
-                    Select a lesson topic to track progress:
-                  </Label>
-                  <Select value={selectedSubject} onValueChange={setSelectedSubject}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Choose a lesson topic..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="alphabet">Alphabet</SelectItem>
-                      <SelectItem value="counting">Counting</SelectItem>
-                      <SelectItem value="body-parts">Body Parts</SelectItem>
-                      <SelectItem value="shapes">Shapes</SelectItem>
-                      <SelectItem value="domestic-animals">Domestic Animals</SelectItem>
-                      <SelectItem value="wild-animals">Wild Animals</SelectItem>
-                      <SelectItem value="minecraft-characters">Minecraft Characters</SelectItem>
-                      <SelectItem value="sea-animals">Sea Animals</SelectItem>
-                      <SelectItem value="two-wheel-vehicles">Two Wheel Vehicles</SelectItem>
-                      <SelectItem value="four-wheel-vehicles">Four Wheel Vehicles</SelectItem>
-                      <SelectItem value="rail-transport">Rail Transport Vehicles</SelectItem>
-                      <SelectItem value="road-transport">Road Transport Vehicles</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                {selectedSubject && (
-                  <div className="flex flex-col items-center gap-3 pt-2">
-                    <p className="text-sm text-muted-foreground text-center">
-                      How is your child progressing with <span className="font-semibold text-foreground">{selectedSubject.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>?
-                    </p>
-                    <TrafficLightProgress 
-                      onLevelChange={(level) => setUnderstandingLevel(level)}
-                      initialLevel={understandingLevel}
-                    />
-                    <p className="text-xs text-muted-foreground text-center max-w-sm">
-                      Use the traffic light to track progress. If you encounter difficulties, share a comment below so other parents and educators can help.
-                    </p>
-                  </div>
-                )}
+          <div className="space-y-4">
+            {/* Overall ECDcoding Progress */}
+            <div className="space-y-2">
+              <Label>Overall ECDcoding Progress</Label>
+              <p className="text-sm text-muted-foreground">
+                General status of your child's learning journey
+              </p>
+              <div className="flex justify-center">
+                <TrafficLightProgress 
+                  onLevelChange={setUnderstandingLevel}
+                  initialLevel={understandingLevel}
+                />
               </div>
+            </div>
+
+            {/* Lesson-specific Progress */}
+            <div className="space-y-2">
+              <Label>Lesson Progress</Label>
+              <p className="text-sm text-muted-foreground mb-2">
+                Expand categories to track progress on specific lessons. Use traffic lights to indicate child's understanding and share comments if they need help.
+              </p>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="literacy">
+                  <AccordionTrigger>Literacy</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Alphabet Practice</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Speech & Sounds</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="numeracy">
+                  <AccordionTrigger>Numeracy</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Basic Counting</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Numbers 1-10</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="body-health">
+                  <AccordionTrigger>Body & Health</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Body Parts Identification</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Hand-Eye Coordination</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="shapes">
+                  <AccordionTrigger>Shapes</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Identify 2D Shapes</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Real-life Shapes</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="transportation">
+                  <AccordionTrigger>Transportation</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Types of Transport</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Vehicles</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="biology">
+                  <AccordionTrigger>Biology & Nature</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Animals & Habitats</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Animal Classification</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="domestic">
+                  <AccordionTrigger>Domestic Ecology</AccordionTrigger>
+                  <AccordionContent className="space-y-3">
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Home & Environment</span>
+                      <TrafficLightProgress />
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
+                      <span className="text-sm">Daily Routines</span>
+                      <TrafficLightProgress />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
 
             {/* User Profile Information - Click to Comment */}
