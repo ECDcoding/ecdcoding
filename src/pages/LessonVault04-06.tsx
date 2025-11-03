@@ -17,6 +17,7 @@ import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { CourseLikeComment } from "@/components/CourseLikeComment";
+import { TrafficLightProgress } from "@/components/TrafficLightProgress";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
@@ -70,6 +71,7 @@ const LessonVault0406 = () => {
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [responseText, setResponseText] = useState('');
+  const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Buy Credits visibility cycle
@@ -2314,47 +2316,85 @@ const LessonVault0406 = () => {
        </main>
 
       <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Progress Report Communication</DialogTitle>
             <DialogDescription>
-              View learner progress report and communicate with ECDCoding team
+              Track your child's understanding level and share comments
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4">
+          <div className="space-y-6">
+            {/* Traffic Light Understanding Checklist */}
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
+              <div className="flex items-start gap-6">
+                <TrafficLightProgress 
+                  initialLevel={understandingLevel}
+                  onLevelChange={(level) => setUnderstandingLevel(level)}
+                />
+                <div className="flex-1 space-y-3">
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-red-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Struggling</p>
+                      <p className="text-xs text-muted-foreground">The child is struggling to understand the lesson</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-yellow-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Promising</p>
+                      <p className="text-xs text-muted-foreground">The child's understanding is promising</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Ready to Progress</p>
+                      <p className="text-xs text-muted-foreground">The child is happy to progress to a new lesson</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Current Progress Report */}
             <div>
               <Label className="text-sm font-semibold">Current Progress Report</Label>
-              <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+              <div className="mt-2 p-4 bg-muted rounded-md">
+                <p className="text-sm">
                   {profile?.learner_progress_report || "No progress report available yet."}
                 </p>
               </div>
             </div>
 
+            {/* Comment Section */}
             <div>
-              <Label htmlFor="response">Your Question or Comment</Label>
+              <Label htmlFor="response" className="text-sm font-semibold">Comment</Label>
               <Textarea
                 id="response"
-                placeholder="Ask a question or provide comments about the progress report..."
+                placeholder="Share your thoughts, ask questions, or provide feedback..."
                 value={responseText}
                 onChange={(e) => setResponseText(e.target.value)}
                 className="mt-2 min-h-[120px]"
               />
             </div>
 
+            {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
               <Button
                 variant="outline"
                 onClick={() => {
                   setShowProgressDialog(false);
                   setResponseText("");
+                  setUnderstandingLevel(null);
                 }}
               >
                 Cancel
               </Button>
               <Button onClick={handleSendResponse}>
-                Send to ECDCoding
+                Reply
               </Button>
             </div>
           </div>
