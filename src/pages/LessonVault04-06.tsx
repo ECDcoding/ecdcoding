@@ -518,9 +518,8 @@ const LessonVault0406 = () => {
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-end gap-4">
-            <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-40 h-28 md:w-48 md:h-32 object-contain" />
-            <Link to="/" aria-label="Home" className="text-white hover:text-lime-300 transition-colors mb-1">
-              <Home className="h-8 w-8" />
+            <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
+              <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
             <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
