@@ -1369,14 +1369,25 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Road Safety</h3>
-                  <h4 className="text-lg italic mb-4">Stay safe on the streets</h4>
-                  <p className="text-base mb-4">Learn important road safety rules and how to stay safe as a pedestrian.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-red-500">Learn more</a>
-                </CardContent>
-              </Card>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2 w-80">
+                    Road Safety
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    🚦 Traffic Lights
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    🛑 Crossing at a Four-Way Stop
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                    🚸 Traffic Road Signs
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
@@ -1451,26 +1462,29 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
-                  <h4 className="text-lg italic mb-4">Exploring vehicles and travel</h4>
-                  <p className="text-base mb-4">Learn about different types of transport and how they move us around.</p>
-                  <div className="space-y-2">
-                    <button onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
-                    <button onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
-                  </div>
-                </CardContent>
-              </Card>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2 w-80">
+                    Transportation
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                  <DropdownMenuItem 
+                    className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                    onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}}
+                  >
+                    🚗 Road Transport
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                    onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}}
+                  >
+                    🚂 Rail Transport
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Road Safety</h3>
-                  <h4 className="text-lg italic mb-4">Stay safe on the streets</h4>
-                  <p className="text-base mb-4">Learn important road safety rules and how to stay safe as a pedestrian.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-red-500">Learn more</a>
-                </CardContent>
-              </Card>
 
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
