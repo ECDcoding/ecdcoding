@@ -74,6 +74,7 @@ const LessonVault0406 = () => {
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
+  const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Buy Credits visibility cycle
@@ -838,11 +839,25 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => setTrafficLightsOpen(true)}
+                >
                   🚦 Traffic Lights
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🛑 Crossing at a Four-Way Stop
+                  <div className="flex flex-col gap-1">
+                    <span>🛑 Crossing at a Four-Way Stop</span>
+                    <a 
+                      href="https://pin.it/5DOPuodGE" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-300 hover:text-blue-200 underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View Example
+                    </a>
+                  </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   🚸 Traffic Road Signs
@@ -2466,6 +2481,50 @@ const LessonVault0406 = () => {
               <Button onClick={handleSendResponse}>
                 Reply
               </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Traffic Lights Dialog */}
+      <Dialog open={trafficLightsOpen} onOpenChange={setTrafficLightsOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Traffic Lights</DialogTitle>
+            <DialogDescription>
+              Learn about traffic light signals and their meanings
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex flex-col items-center gap-6 py-8">
+            <div className="scale-150">
+              <TrafficLightProgress />
+            </div>
+            
+            <div className="space-y-4 w-full">
+              <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+                <div className="w-6 h-6 rounded-full bg-red-500"></div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm">Red Light</p>
+                  <p className="text-xs text-muted-foreground">Stop and wait</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg">
+                <div className="w-6 h-6 rounded-full bg-yellow-500"></div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm">Yellow Light</p>
+                  <p className="text-xs text-muted-foreground">Slow down and prepare to stop</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
+                <div className="w-6 h-6 rounded-full bg-green-500"></div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm">Green Light</p>
+                  <p className="text-xs text-muted-foreground">Go - it's safe to proceed</p>
+                </div>
+              </div>
             </div>
           </div>
         </DialogContent>
