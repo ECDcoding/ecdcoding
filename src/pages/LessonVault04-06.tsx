@@ -2328,17 +2328,45 @@ const LessonVault0406 = () => {
           </DialogHeader>
           
           <div className="space-y-4">
-            {/* Overall ECDcoding Progress */}
-            <div className="space-y-2">
-              <Label>Overall ECDcoding Progress</Label>
-              <p className="text-sm text-muted-foreground">
-                General status of your child's learning journey
-              </p>
-              <div className="flex justify-center">
-                <TrafficLightProgress 
-                  onLevelChange={setUnderstandingLevel}
-                  initialLevel={understandingLevel}
-                />
+            {/* Top Section: User Info and Overall Progress Side by Side */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* User Profile Information - Click to Comment */}
+              <div>
+                <Label className="text-sm font-semibold">User Information</Label>
+                <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
+                  <div 
+                    className="flex flex-col items-center gap-3 cursor-pointer group"
+                    onClick={() => setShowProgressDialog(true)}
+                  >
+                    <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
+                      <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
+                      <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                        {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                      profile?.registration_type === 'parent' 
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                        : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    }`}>
+                      {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Overall ECDcoding Progress */}
+              <div className="space-y-2">
+                <Label>Overall ECDcoding Progress</Label>
+                <p className="text-sm text-muted-foreground">
+                  General status of your child's learning journey
+                </p>
+                <div className="flex justify-center">
+                  <TrafficLightProgress 
+                    onLevelChange={setUnderstandingLevel}
+                    initialLevel={understandingLevel}
+                  />
+                </div>
               </div>
             </div>
 
@@ -2371,7 +2399,7 @@ const LessonVault0406 = () => {
                       <TrafficLightProgress />
                     </div>
                     <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
-                      <span className="text-sm">Numbers 1-10</span>
+                      <span className="text-sm">Number Recognition</span>
                       <TrafficLightProgress />
                     </div>
                   </AccordionContent>
@@ -2381,11 +2409,11 @@ const LessonVault0406 = () => {
                   <AccordionTrigger>Body & Health</AccordionTrigger>
                   <AccordionContent className="space-y-3">
                     <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
-                      <span className="text-sm">Body Parts Identification</span>
+                      <span className="text-sm">Body Parts</span>
                       <TrafficLightProgress />
                     </div>
                     <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
-                      <span className="text-sm">Hand-Eye Coordination</span>
+                      <span className="text-sm">Hygiene</span>
                       <TrafficLightProgress />
                     </div>
                   </AccordionContent>
@@ -2395,7 +2423,7 @@ const LessonVault0406 = () => {
                   <AccordionTrigger>Shapes</AccordionTrigger>
                   <AccordionContent className="space-y-3">
                     <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
-                      <span className="text-sm">Identify 2D Shapes</span>
+                      <span className="text-sm">Basic Shapes</span>
                       <TrafficLightProgress />
                     </div>
                     <div className="flex items-center justify-between p-2 bg-secondary/20 rounded">
@@ -2447,31 +2475,6 @@ const LessonVault0406 = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </div>
-
-            {/* User Profile Information - Click to Comment */}
-            <div>
-              <Label className="text-sm font-semibold">User Information</Label>
-              <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
-                <div 
-                  className="flex flex-col items-center gap-3 cursor-pointer group"
-                  onClick={() => setShowProgressDialog(true)}
-                >
-                  <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
-                    <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
-                      {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                    profile?.registration_type === 'parent' 
-                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                      : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                  }`}>
-                    {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* Comment Section */}
