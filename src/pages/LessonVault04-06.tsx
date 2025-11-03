@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -2334,28 +2335,50 @@ const LessonVault0406 = () => {
                   initialLevel={understandingLevel}
                   onLevelChange={(level) => setUnderstandingLevel(level)}
                 />
-                <div className="flex-1 space-y-3">
-                  <div className="flex items-start gap-2">
-                    <div className="w-4 h-4 rounded-full bg-red-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-sm">Struggling</p>
-                      <p className="text-xs text-muted-foreground">The child is struggling to understand the lesson</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-4 h-4 rounded-full bg-yellow-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-sm">Promising</p>
-                      <p className="text-xs text-muted-foreground">The child's understanding is promising</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-4 h-4 rounded-full bg-green-500 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-sm">Ready to Progress</p>
-                      <p className="text-xs text-muted-foreground">The child is happy to progress to a new lesson</p>
-                    </div>
-                  </div>
+                <div className="flex-1">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="numeracy">
+                      <AccordionTrigger>Numeracy</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Track progress in counting, numbers, and basic math skills.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="basic-logic">
+                      <AccordionTrigger>Basic Logic</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Monitor development in problem-solving and logical thinking.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="literacy">
+                      <AccordionTrigger>Literacy</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Assess reading, writing, and language comprehension skills.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="arts">
+                      <AccordionTrigger>Arts</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Evaluate creative expression and artistic development.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="sport">
+                      <AccordionTrigger>Sport</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Track physical development and motor skills.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="science-discovery">
+                      <AccordionTrigger>Science and Discovery</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Observe curiosity and understanding of the natural world.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               </div>
             </div>
