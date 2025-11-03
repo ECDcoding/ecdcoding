@@ -2377,10 +2377,12 @@ const LessonVault0406 = () => {
             <div className="border border-border rounded-lg p-4 bg-card">
               <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
               <div className="flex items-start gap-6">
-                <TrafficLightProgress 
-                  initialLevel={understandingLevel}
-                  onLevelChange={(level) => setUnderstandingLevel(level)}
-                />
+                <div className="mt-14">
+                  <TrafficLightProgress 
+                    initialLevel={understandingLevel}
+                    onLevelChange={(level) => setUnderstandingLevel(level)}
+                  />
+                </div>
                 <div className="flex-1">
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="numeracy">
