@@ -73,7 +73,6 @@ const LessonVault0406 = () => {
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
-  const [selectedSubject, setSelectedSubject] = useState<string>('');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Buy Credits visibility cycle
@@ -2327,49 +2326,37 @@ const LessonVault0406 = () => {
           </DialogHeader>
           
           <div className="space-y-6">
-            {/* Child's Understanding Levels with Subject Selection */}
+            {/* Traffic Light Understanding Checklist */}
             <div className="border border-border rounded-lg p-4 bg-card">
               <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-sm text-muted-foreground mb-2 block">
-                    Select a lesson topic to track progress:
-                  </Label>
-                  <Select value={selectedSubject} onValueChange={setSelectedSubject}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Choose a lesson topic..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="alphabet">Alphabet</SelectItem>
-                      <SelectItem value="counting">Counting</SelectItem>
-                      <SelectItem value="body-parts">Body Parts</SelectItem>
-                      <SelectItem value="shapes">Shapes</SelectItem>
-                      <SelectItem value="domestic-animals">Domestic Animals</SelectItem>
-                      <SelectItem value="wild-animals">Wild Animals</SelectItem>
-                      <SelectItem value="minecraft-characters">Minecraft Characters</SelectItem>
-                      <SelectItem value="sea-animals">Sea Animals</SelectItem>
-                      <SelectItem value="two-wheel-vehicles">Two Wheel Vehicles</SelectItem>
-                      <SelectItem value="four-wheel-vehicles">Four Wheel Vehicles</SelectItem>
-                      <SelectItem value="rail-transport">Rail Transport Vehicles</SelectItem>
-                      <SelectItem value="road-transport">Road Transport Vehicles</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                {selectedSubject && (
-                  <div className="flex flex-col items-center gap-3 pt-2">
-                    <p className="text-sm text-muted-foreground text-center">
-                      How is your child progressing with <span className="font-semibold text-foreground">{selectedSubject.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>?
-                    </p>
-                    <TrafficLightProgress 
-                      onLevelChange={(level) => setUnderstandingLevel(level)}
-                      initialLevel={understandingLevel}
-                    />
-                    <p className="text-xs text-muted-foreground text-center max-w-sm">
-                      Use the traffic light to track progress. If you encounter difficulties, share a comment below so other parents and educators can help.
-                    </p>
+              <div className="flex items-start gap-6">
+                <TrafficLightProgress 
+                  initialLevel={understandingLevel}
+                  onLevelChange={(level) => setUnderstandingLevel(level)}
+                />
+                <div className="flex-1 space-y-3">
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-red-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Struggling</p>
+                      <p className="text-xs text-muted-foreground">The child is struggling to understand the lesson</p>
+                    </div>
                   </div>
-                )}
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-yellow-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Promising</p>
+                      <p className="text-xs text-muted-foreground">The child's understanding is promising</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-sm">Ready to Progress</p>
+                      <p className="text-xs text-muted-foreground">The child is happy to progress to a new lesson</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
