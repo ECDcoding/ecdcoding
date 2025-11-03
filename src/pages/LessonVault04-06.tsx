@@ -811,6 +811,47 @@ const LessonVault0406 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Transportation
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}}
+                >
+                  🚗 Road Transport
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}}
+                >
+                  🚂 Rail Transport
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Road Safety
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🚦 Traffic Lights
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🛑 Crossing at a Four-Way Stop
+                </DropdownMenuItem>
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🚸 Traffic Road Signs
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Science and Discovery
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -1369,26 +1410,6 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2 w-80">
-                    Road Safety
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                    🚦 Traffic Lights
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                    🛑 Crossing at a Four-Way Stop
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                    🚸 Traffic Road Signs
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
@@ -1461,30 +1482,6 @@ const LessonVault0406 = () => {
                   <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
                 </CardContent>
               </Card>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2 w-80">
-                    Transportation
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                  <DropdownMenuItem 
-                    className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                    onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}}
-                  >
-                    🚗 Road Transport
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                    onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}}
-                  >
-                    🚂 Rail Transport
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
 
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
