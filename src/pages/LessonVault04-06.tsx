@@ -521,12 +521,7 @@ const LessonVault0406 = () => {
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
-            <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-2xl font-bold">My Lesson Vault</h1>
-              <Badge className="bg-lime-500 hover:bg-lime-600 text-white font-semibold px-3 py-1 text-sm">
-                {credits} Credits
-              </Badge>
-            </div>
+            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -2370,10 +2365,17 @@ const LessonVault0406 = () => {
       <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Progress Report Communication</DialogTitle>
-            <DialogDescription>
-              Track your child's understanding level and share comments
-            </DialogDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle>Progress Report Communication</DialogTitle>
+                <DialogDescription>
+                  Track your child's understanding level and share comments
+                </DialogDescription>
+              </div>
+              <Badge className="bg-lime-500 hover:bg-lime-600 text-white font-semibold px-3 py-1 text-sm">
+                {credits} Credits
+              </Badge>
+            </div>
           </DialogHeader>
           
           <div className="space-y-6">
