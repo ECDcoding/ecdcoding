@@ -76,6 +76,9 @@ const LessonVault0406 = () => {
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number>(0);
+  const [touchEnd, setTouchEnd] = useState<number>(0);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1381,6 +1384,7 @@ const LessonVault0406 = () => {
           
           <div className="overflow-hidden w-full relative">
             <div 
+              ref={carouselRef}
               className="flex gap-8 animate-scroll"
               style={{
                 animation: 'scroll-horizontal 40s linear infinite',
@@ -1391,6 +1395,40 @@ const LessonVault0406 = () => {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.animationPlayState = 'running';
+              }}
+              onTouchStart={(e) => {
+                setTouchStart(e.targetTouches[0].clientX);
+                if (carouselRef.current) {
+                  carouselRef.current.style.animationPlayState = 'paused';
+                }
+              }}
+              onTouchMove={(e) => {
+                setTouchEnd(e.targetTouches[0].clientX);
+              }}
+              onTouchEnd={() => {
+                if (carouselRef.current) {
+                  const swipeDistance = touchStart - touchEnd;
+                  const minSwipeDistance = 50;
+                  
+                  if (Math.abs(swipeDistance) > minSwipeDistance) {
+                    // Scroll the carousel based on swipe direction
+                    const scrollAmount = swipeDistance > 0 ? 400 : -400;
+                    carouselRef.current.scrollBy({
+                      left: scrollAmount,
+                      behavior: 'smooth'
+                    });
+                  }
+                  
+                  // Resume animation after a short delay
+                  setTimeout(() => {
+                    if (carouselRef.current) {
+                      carouselRef.current.style.animationPlayState = 'running';
+                    }
+                  }, 500);
+                }
+                
+                setTouchStart(0);
+                setTouchEnd(0);
               }}
             >
               {/* First set of cards */}
