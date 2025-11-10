@@ -13,6 +13,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ArrowLeft, FileText, ChevronDown } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
+import { SchedulePaymentDialog } from "@/components/SchedulePaymentDialog";
 import { countryCodes } from "@/lib/countryCodes";
 
 // Comprehensive country list
@@ -270,6 +272,8 @@ const Register = () => {
   const registrationType = searchParams.get('type') || 'parent';
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
+  const [schedulePaymentDialogOpen, setSchedulePaymentDialogOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     // Common fields
@@ -1003,8 +1007,8 @@ const Register = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuItem>Debit Card Payment</DropdownMenuItem>
-              <DropdownMenuItem>Schedule a Payment Date</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Debit Card Payment</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -1377,8 +1381,8 @@ const Register = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-56">
-                        <DropdownMenuItem>Debit Card Payment</DropdownMenuItem>
-                        <DropdownMenuItem>Schedule a Payment Date</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Debit Card Payment</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -1522,6 +1526,16 @@ const Register = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Payment Dialogs */}
+      <DebitCardPaymentDialog 
+        open={debitCardDialogOpen} 
+        onOpenChange={setDebitCardDialogOpen} 
+      />
+      <SchedulePaymentDialog 
+        open={schedulePaymentDialogOpen} 
+        onOpenChange={setSchedulePaymentDialogOpen} 
+      />
     </div>
   );
 };
