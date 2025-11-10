@@ -994,7 +994,7 @@ const Register = () => {
       {/* Payment Section for ECD Manager */}
       <div className="space-y-4">
         <div className="p-4 bg-muted rounded-lg">
-          <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay Here</Button>
+          <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay with Payfast</Button>
         </div>
       </div>
     </>
@@ -1357,7 +1357,7 @@ const Register = () => {
               {registrationType === 'parent' && (
                 <div className="space-y-4">
                   <div className="p-4 bg-muted rounded-lg">
-                    <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay Here</Button>
+                    <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay with Payfast</Button>
                   </div>
                 </div>
               )}
