@@ -18,10 +18,18 @@ export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDia
   const [paymentType, setPaymentType] = useState("");
   const [amount, setAmount] = useState("");
   const [scheduledDate, setScheduledDate] = useState("");
+  const [twoFactorCode, setTwoFactorCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate 2FA code for credits reload
+    if (paymentType === "credits" && twoFactorCode.length !== 6) {
+      toast.error("Please enter a valid 6-digit 2FA code");
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Simulate API request
@@ -35,6 +43,7 @@ export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDia
       setPaymentType("");
       setAmount("");
       setScheduledDate("");
+      setTwoFactorCode("");
     }, 2000);
   };
 
@@ -111,6 +120,24 @@ export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDia
               required
             />
           </div>
+
+          {paymentType === "credits" && (
+            <div className="space-y-2">
+              <Label htmlFor="twoFactorCode">2FA Verification Code</Label>
+              <Input
+                id="twoFactorCode"
+                type="text"
+                placeholder="Enter 6-digit code"
+                value={twoFactorCode}
+                onChange={(e) => setTwoFactorCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 6))}
+                maxLength={6}
+                required
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter the 6-digit verification code from your authenticator app
+              </p>
+            </div>
+          )}
 
           <Button
             type="submit"
