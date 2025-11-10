@@ -81,7 +81,7 @@ export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDia
               <SelectContent>
                 <SelectItem value="monthly">Monthly Payment</SelectItem>
                 <SelectItem value="annual">Annual Subscription</SelectItem>
-                <SelectItem value="credits">Reload Credits</SelectItem>
+                <SelectItem value="credits">Reload Credits (Optional)</SelectItem>
               </SelectContent>
             </Select>
           </div>
