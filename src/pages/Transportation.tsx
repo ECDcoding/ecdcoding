@@ -5,6 +5,8 @@ import roadTransportVehicles from "@/assets/road-transport-vehicles.jpg";
 import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
+import electricCarConcept from "@/assets/electric-car-concept.avif";
+import electricCarCharging from "@/assets/electric-car-charging.avif";
 
 const Transportation = () => {
   const navigate = useNavigate();
@@ -95,6 +97,30 @@ const Transportation = () => {
                 </div>
                 <p className="text-gray-700">
                   Cars and vans have four wheels for stability and comfort!
+                </p>
+              </div>
+
+              {/* Electric Vehicles */}
+              <div className="bg-teal-50 p-6 rounded-lg shadow-lg md:col-span-2">
+                <h3 className="text-2xl font-bold text-teal-600 mb-4">Electric Vehicles with Recharging Stations</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-white p-4 rounded-lg">
+                    <img 
+                      src={electricCarConcept} 
+                      alt="Electric vehicle concept illustration" 
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <img 
+                      src={electricCarCharging} 
+                      alt="Electric car at charging station" 
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </div>
+                </div>
+                <p className="text-gray-700">
+                  Electric vehicles run on electricity instead of petrol or diesel! They can be charged at special recharging stations, helping to keep our air clean and protect the environment!
                 </p>
               </div>
             </div>
