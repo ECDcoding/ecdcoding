@@ -996,6 +996,22 @@ const Register = () => {
       
       <Separator />
 
+      {/* Payment Information */}
+      <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-3">
+        <h3 className="text-lg font-semibold text-center mb-4">Payment Options</h3>
+        <div className="space-y-2 text-center">
+          <p className="text-base font-semibold">
+            Monthly Payment <span className="text-primary">R100.00</span>
+          </p>
+          <p className="text-base font-semibold">
+            Annual Payment <span className="text-primary">R1200.00</span>
+          </p>
+          <p className="text-base font-semibold">
+            Reloading Credit (Anytime Payment) <span className="text-primary">R100.00</span>
+          </p>
+        </div>
+      </div>
+
       {/* Payment Section for ECD Manager */}
       <div className="space-y-4">
         <div className="p-4 bg-muted rounded-lg">
@@ -1371,22 +1387,40 @@ const Register = () => {
               )}
 
               {registrationType === 'parent' && (
-                <div className="space-y-4">
-                  <div className="p-4 bg-muted rounded-lg">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">
-                          Pay with PayFast
-                          <ChevronDown className="ml-2 h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Debit Card Payment</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                <>
+                  {/* Payment Information */}
+                  <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-3">
+                    <h3 className="text-lg font-semibold text-center mb-4">Payment Options</h3>
+                    <div className="space-y-2 text-center">
+                      <p className="text-base font-semibold">
+                        Monthly Payment <span className="text-primary">R100.00</span>
+                      </p>
+                      <p className="text-base font-semibold">
+                        Annual Payment <span className="text-primary">R1200.00</span>
+                      </p>
+                      <p className="text-base font-semibold">
+                        Reloading Credit (Anytime Payment) <span className="text-primary">R100.00</span>
+                      </p>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="space-y-4">
+                    <div className="p-4 bg-muted rounded-lg">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">
+                            Pay with PayFast
+                            <ChevronDown className="ml-2 h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56">
+                          <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Debit Card Payment</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
+                </>
               )}
 
               {/* Terms and Policy Agreement */}
