@@ -7,6 +7,7 @@ import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import electricCarConcept from "@/assets/electric-car-concept.avif";
 import electricCarCharging from "@/assets/electric-car-charging.avif";
+import electricCarChargingProgress from "@/assets/electric-car-charging-progress.jpg";
 
 const Transportation = () => {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ const Transportation = () => {
               {/* Electric Vehicles */}
               <div className="bg-teal-50 p-6 rounded-lg shadow-lg md:col-span-2">
                 <h3 className="text-2xl font-bold text-teal-600 mb-4">Electric Vehicles with Recharging Stations</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="bg-white p-4 rounded-lg">
                     <img 
                       src={electricCarConcept} 
@@ -115,6 +116,13 @@ const Transportation = () => {
                     <img 
                       src={electricCarCharging} 
                       alt="Electric car at charging station" 
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <img 
+                      src={electricCarChargingProgress} 
+                      alt="Electric car charging with battery progress indicator" 
                       className="w-full h-auto rounded-lg"
                     />
                   </div>
