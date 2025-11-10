@@ -448,7 +448,7 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countryCodes.map((country) => (
                   <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode} {country.name}
+                    {country.dialCode}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -686,7 +686,7 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countryCodes.map((country) => (
                   <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode} {country.name}
+                    {country.dialCode}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -785,7 +785,7 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countryCodes.map((country) => (
                   <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode} {country.name}
+                    {country.dialCode}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -1067,7 +1067,7 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countryCodes.map((country) => (
                   <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode} {country.name}
+                    {country.dialCode}
                   </SelectItem>
                 ))}
               </SelectContent>
