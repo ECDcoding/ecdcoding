@@ -10,16 +10,9 @@ const PaymentForm = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Payment Required</CardTitle>
-          <CardDescription>
-            Access to lessons for ages 07-10 requires a subscription
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">Pay with PayFast</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-center mb-6">
-            <p className="text-muted-foreground">Full access to advanced STEM courses</p>
-          </div>
-          
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
