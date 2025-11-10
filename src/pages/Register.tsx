@@ -998,7 +998,7 @@ const Register = () => {
 
       {/* Payment Information */}
       <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-3">
-        <h3 className="text-lg font-semibold text-center mb-4">Payment Options</h3>
+        <h3 className="text-lg font-semibold text-center mb-4">Recurring Payment Options</h3>
         <div className="space-y-2 text-center">
           <p className="text-base font-semibold">
             Monthly Payment <span className="text-primary">R100.00</span>
@@ -1007,7 +1007,7 @@ const Register = () => {
             Annual Payment <span className="text-primary">R1200.00</span>
           </p>
           <p className="text-base font-semibold">
-            Reloading Credit (Anytime Payment) <span className="text-primary">R100.00</span>
+            Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
           </p>
         </div>
       </div>
@@ -1390,7 +1390,7 @@ const Register = () => {
                 <>
                   {/* Payment Information */}
                   <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-3">
-                    <h3 className="text-lg font-semibold text-center mb-4">Payment Options</h3>
+                    <h3 className="text-lg font-semibold text-center mb-4">Recurring Payment Options</h3>
                     <div className="space-y-2 text-center">
                       <p className="text-base font-semibold">
                         Monthly Payment <span className="text-primary">R100.00</span>
@@ -1399,7 +1399,7 @@ const Register = () => {
                         Annual Payment <span className="text-primary">R1200.00</span>
                       </p>
                       <p className="text-base font-semibold">
-                        Reloading Credit (Anytime Payment) <span className="text-primary">R100.00</span>
+                        Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
                       </p>
                     </div>
                   </div>

@@ -564,7 +564,7 @@ const LessonVault0406 = () => {
                 What to Expect
               </Button>
               
-              {credits <= 40 && isBuyCreditsVisible ? (
+              {credits <= 5 && isBuyCreditsVisible ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
