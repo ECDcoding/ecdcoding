@@ -1004,7 +1004,7 @@ const Register = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuItem>Debit Card Payment</DropdownMenuItem>
-              <DropdownMenuItem>Request a Payment Token</DropdownMenuItem>
+              <DropdownMenuItem>Schedule a Payment Date</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -1378,7 +1378,7 @@ const Register = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-56">
                         <DropdownMenuItem>Debit Card Payment</DropdownMenuItem>
-                        <DropdownMenuItem>Request a Payment Token</DropdownMenuItem>
+                        <DropdownMenuItem>Schedule a Payment Date</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
