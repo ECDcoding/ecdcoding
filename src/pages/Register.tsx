@@ -994,9 +994,6 @@ const Register = () => {
       {/* Payment Section for ECD Manager */}
       <div className="space-y-4">
         <div className="p-4 bg-muted rounded-lg">
-          <h3 className="font-semibold mb-2">Registration Fee</h3>
-          <p className="text-sm mb-2">R250.00 /month | or R3000.00 /annual</p>
-          <p className="text-sm text-green-600 mb-2">24 months future payment exemption for 'early bird registrations' who will start paying upfront</p>
           <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay Here</Button>
         </div>
       </div>
@@ -1360,9 +1357,6 @@ const Register = () => {
               {registrationType === 'parent' && (
                 <div className="space-y-4">
                   <div className="p-4 bg-muted rounded-lg">
-                    <h3 className="font-semibold mb-2">Registration Fee</h3>
-                    <p className="text-sm mb-2">R250.00 /month | or R3000.00 /annual</p>
-                    <p className="text-sm text-green-600 mb-2">24 months future payment exemption for 'early bird registrations' who will start paying upfront</p>
                     <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">Pay Here</Button>
                   </div>
                 </div>
