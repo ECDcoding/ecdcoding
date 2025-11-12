@@ -30,7 +30,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Users, Mail, UserX, CheckCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, Users, Mail, UserX, CheckCircle, Shield } from "lucide-react";
 import { format, isAfter, isBefore, addDays } from "date-fns";
 import { toast } from "sonner";
 
@@ -64,8 +72,20 @@ interface UserWithPayment extends UserProfile {
   payment?: SubscriptionPayment;
 }
 
+interface UserRole {
+  id: string;
+  user_id: string;
+  role: "admin" | "moderator" | "user";
+  created_at: string;
+}
+
+interface UserWithRoles extends UserProfile {
+  roles: UserRole[];
+}
+
 const AdminDashboard = () => {
   const [usersWithPayments, setUsersWithPayments] = useState<UserWithPayment[]>([]);
+  const [usersWithRoles, setUsersWithRoles] = useState<UserWithRoles[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionUser, setActionUser] = useState<UserWithPayment | null>(null);
   const [actionType, setActionType] = useState<"remind" | "deregister" | "mark-paid" | null>(null);
@@ -74,6 +94,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchUsersWithPayments();
+    fetchUsersWithRoles();
   }, []);
 
   const fetchUsersWithPayments = async () => {
@@ -183,6 +204,76 @@ const AdminDashboard = () => {
     );
   };
 
+  const fetchUsersWithRoles = async () => {
+    try {
+      const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (profilesError) throw profilesError;
+
+      const { data: roles, error: rolesError } = await supabase
+        .from("user_roles")
+        .select("*");
+
+      if (rolesError) throw rolesError;
+
+      const usersWithRoleData: UserWithRoles[] = (profiles || []).map((profile) => {
+        const userRoles = roles?.filter((r) => r.user_id === profile.user_id) || [];
+        return { ...profile, roles: userRoles };
+      });
+
+      setUsersWithRoles(usersWithRoleData);
+    } catch (error) {
+      console.error("Error fetching user roles:", error);
+      toast.error("Failed to load user roles");
+    }
+  };
+
+  const handleRoleChange = async (userId: string, newRole: "admin" | "moderator" | "user") => {
+    try {
+      // Check if user already has this role
+      const existingRole = usersWithRoles
+        .find((u) => u.user_id === userId)
+        ?.roles.find((r) => r.role === newRole);
+
+      if (existingRole) {
+        toast.info("User already has this role");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("user_roles")
+        .insert({ user_id: userId, role: newRole });
+
+      if (error) throw error;
+
+      toast.success(`Role ${newRole} assigned successfully`);
+      fetchUsersWithRoles();
+    } catch (error) {
+      console.error("Error assigning role:", error);
+      toast.error("Failed to assign role");
+    }
+  };
+
+  const handleRoleRemove = async (roleId: string) => {
+    try {
+      const { error } = await supabase
+        .from("user_roles")
+        .delete()
+        .eq("id", roleId);
+
+      if (error) throw error;
+
+      toast.success("Role removed successfully");
+      fetchUsersWithRoles();
+    } catch (error) {
+      console.error("Error removing role:", error);
+      toast.error("Failed to remove role");
+    }
+  };
+
   const handleAction = async () => {
     if (!actionUser || !actionType) return;
 
@@ -260,12 +351,25 @@ const AdminDashboard = () => {
               <div>
                 <CardTitle className="text-2xl">Admin Dashboard</CardTitle>
                 <CardDescription>
-                  View all registered users and their profiles
+                  Manage users, payments, and roles
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-6">
+            <Tabs defaultValue="payments" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="payments" className="gap-2">
+                  <Users className="h-4 w-4" />
+                  Payment Management
+                </TabsTrigger>
+                <TabsTrigger value="roles" className="gap-2">
+                  <Shield className="h-4 w-4" />
+                  Role Management
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="payments">
             <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
               <p className="text-sm text-muted-foreground">
                 Total Users: <span className="font-semibold text-foreground">{usersWithPayments.length}</span>
@@ -400,12 +504,109 @@ const AdminDashboard = () => {
               </Table>
             </div>
 
-            {usersWithPayments.length === 0 && (
-              <div className="text-center py-12">
-                <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <p className="text-muted-foreground">No registered users yet</p>
-              </div>
-            )}
+                {usersWithPayments.length === 0 && (
+                  <div className="text-center py-12">
+                    <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <p className="text-muted-foreground">No registered users yet</p>
+                  </div>
+                )}
+              </TabsContent>
+
+              <TabsContent value="roles">
+                <div className="mb-4">
+                  <p className="text-sm text-muted-foreground">
+                    Total Users: <span className="font-semibold text-foreground">{usersWithRoles.length}</span>
+                  </p>
+                </div>
+
+                <div className="rounded-md border overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="w-[80px]">Avatar</TableHead>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Username</TableHead>
+                        <TableHead>Current Roles</TableHead>
+                        <TableHead>Assign Role</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {usersWithRoles.map((user) => (
+                        <TableRow key={user.id} className="hover:bg-muted/30">
+                          <TableCell>
+                            <Avatar>
+                              <AvatarImage src={user.profile_image_url} />
+                              <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                                {getInitials(user.first_name, user.last_name)}
+                              </AvatarFallback>
+                            </Avatar>
+                          </TableCell>
+                          <TableCell>
+                            <div className="font-medium">
+                              {user.first_name} {user.last_name}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {user.country}, {user.state}
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-sm">
+                            @{user.username}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2 flex-wrap">
+                              {user.roles.length > 0 ? (
+                                user.roles.map((role) => (
+                                  <Badge
+                                    key={role.id}
+                                    variant={
+                                      role.role === "admin"
+                                        ? "default"
+                                        : role.role === "moderator"
+                                        ? "secondary"
+                                        : "outline"
+                                    }
+                                    className="gap-1"
+                                  >
+                                    {role.role}
+                                    <button
+                                      onClick={() => handleRoleRemove(role.id)}
+                                      className="ml-1 hover:text-destructive"
+                                    >
+                                      ×
+                                    </button>
+                                  </Badge>
+                                ))
+                              ) : (
+                                <span className="text-sm text-muted-foreground">No roles assigned</span>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Select onValueChange={(value) => handleRoleChange(user.user_id, value as "admin" | "moderator" | "user")}>
+                              <SelectTrigger className="w-[140px]">
+                                <SelectValue placeholder="Add role" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="admin">Admin</SelectItem>
+                                <SelectItem value="moderator">Moderator</SelectItem>
+                                <SelectItem value="user">User</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                {usersWithRoles.length === 0 && (
+                  <div className="text-center py-12">
+                    <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <p className="text-muted-foreground">No users found</p>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>
