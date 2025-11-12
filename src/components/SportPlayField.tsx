@@ -14,6 +14,14 @@ interface TargetZone {
   label: string;
 }
 
+type Difficulty = 'easy' | 'medium' | 'hard';
+
+interface SportTargets {
+  easy: TargetZone[];
+  medium: TargetZone[];
+  hard: TargetZone[];
+}
+
 const sportConfigs = {
   soccer: {
     name: "Soccer",
@@ -21,10 +29,24 @@ const sportConfigs = {
     color1: "#00B050",
     color2: "#3D5A47",
     field: "Soccer Field - Score in the goals!",
-    targets: [
-      { x: 10, y: 40, width: 8, height: 20, label: "Left Goal" },
-      { x: 82, y: 40, width: 8, height: 20, label: "Right Goal" },
-    ],
+    targets: {
+      easy: [
+        { x: 10, y: 35, width: 12, height: 30, label: "Left Goal" },
+        { x: 78, y: 35, width: 12, height: 30, label: "Right Goal" },
+      ],
+      medium: [
+        { x: 10, y: 38, width: 10, height: 24, label: "Left Goal" },
+        { x: 80, y: 38, width: 10, height: 24, label: "Right Goal" },
+        { x: 45, y: 48, width: 10, height: 4, label: "Center" },
+      ],
+      hard: [
+        { x: 10, y: 40, width: 8, height: 20, label: "Left Goal" },
+        { x: 82, y: 40, width: 8, height: 20, label: "Right Goal" },
+        { x: 20, y: 20, width: 6, height: 6, label: "Corner 1" },
+        { x: 74, y: 20, width: 6, height: 6, label: "Corner 2" },
+        { x: 47, y: 47, width: 6, height: 6, label: "Center" },
+      ],
+    },
   },
   rugby: {
     name: "Rugby",
@@ -32,10 +54,24 @@ const sportConfigs = {
     color1: "#C55A11",
     color2: "#5A3520",
     field: "Rugby Field - Score a try!",
-    targets: [
-      { x: 5, y: 35, width: 10, height: 30, label: "Try Zone Left" },
-      { x: 85, y: 35, width: 10, height: 30, label: "Try Zone Right" },
-    ],
+    targets: {
+      easy: [
+        { x: 5, y: 30, width: 12, height: 40, label: "Try Zone Left" },
+        { x: 83, y: 30, width: 12, height: 40, label: "Try Zone Right" },
+      ],
+      medium: [
+        { x: 5, y: 33, width: 10, height: 34, label: "Try Zone Left" },
+        { x: 85, y: 33, width: 10, height: 34, label: "Try Zone Right" },
+        { x: 45, y: 45, width: 10, height: 10, label: "Center" },
+      ],
+      hard: [
+        { x: 5, y: 35, width: 10, height: 30, label: "Try Zone Left" },
+        { x: 85, y: 35, width: 10, height: 30, label: "Try Zone Right" },
+        { x: 30, y: 10, width: 8, height: 8, label: "Post 1" },
+        { x: 62, y: 10, width: 8, height: 8, label: "Post 2" },
+        { x: 46, y: 46, width: 8, height: 8, label: "Center" },
+      ],
+    },
   },
   cricket: {
     name: "Cricket",
@@ -43,12 +79,24 @@ const sportConfigs = {
     color1: "#8B4513",
     color2: "#4A3020",
     field: "Cricket Oval - Hit the stumps!",
-    targets: [
-      { x: 20, y: 45, width: 6, height: 10, label: "Stumps 1" },
-      { x: 74, y: 45, width: 6, height: 10, label: "Stumps 2" },
-      { x: 47, y: 20, width: 6, height: 10, label: "Stumps 3" },
-      { x: 47, y: 70, width: 6, height: 10, label: "Stumps 4" },
-    ],
+    targets: {
+      easy: [
+        { x: 20, y: 43, width: 8, height: 14, label: "Stumps 1" },
+        { x: 72, y: 43, width: 8, height: 14, label: "Stumps 2" },
+      ],
+      medium: [
+        { x: 20, y: 44, width: 7, height: 12, label: "Stumps 1" },
+        { x: 73, y: 44, width: 7, height: 12, label: "Stumps 2" },
+        { x: 46, y: 20, width: 8, height: 12, label: "Stumps 3" },
+      ],
+      hard: [
+        { x: 20, y: 45, width: 6, height: 10, label: "Stumps 1" },
+        { x: 74, y: 45, width: 6, height: 10, label: "Stumps 2" },
+        { x: 47, y: 20, width: 6, height: 10, label: "Stumps 3" },
+        { x: 47, y: 70, width: 6, height: 10, label: "Stumps 4" },
+        { x: 10, y: 47, width: 6, height: 6, label: "Boundary" },
+      ],
+    },
   },
   tennis: {
     name: "Tennis",
@@ -56,10 +104,24 @@ const sportConfigs = {
     color1: "#CCFF00",
     color2: "#5A6040",
     field: "Tennis Court - Score in opponent's court!",
-    targets: [
-      { x: 5, y: 25, width: 40, height: 20, label: "Left Service Box" },
-      { x: 55, y: 55, width: 40, height: 20, label: "Right Service Box" },
-    ],
+    targets: {
+      easy: [
+        { x: 5, y: 20, width: 45, height: 25, label: "Left Service Box" },
+        { x: 50, y: 55, width: 45, height: 25, label: "Right Service Box" },
+      ],
+      medium: [
+        { x: 8, y: 23, width: 40, height: 22, label: "Left Service Box" },
+        { x: 52, y: 55, width: 40, height: 22, label: "Right Service Box" },
+        { x: 45, y: 45, width: 10, height: 10, label: "Center" },
+      ],
+      hard: [
+        { x: 5, y: 25, width: 40, height: 20, label: "Left Service Box" },
+        { x: 55, y: 55, width: 40, height: 20, label: "Right Service Box" },
+        { x: 10, y: 10, width: 8, height: 8, label: "Corner 1" },
+        { x: 82, y: 82, width: 8, height: 8, label: "Corner 2" },
+        { x: 46, y: 46, width: 8, height: 8, label: "Center" },
+      ],
+    },
   },
   indigenous: {
     name: "Indigenous Games",
@@ -67,12 +129,24 @@ const sportConfigs = {
     color1: "#FF6B35",
     color2: "#8B4726",
     field: "Traditional Playing Area - Hit the targets!",
-    targets: [
-      { x: 15, y: 15, width: 15, height: 15, label: "Target 1" },
-      { x: 70, y: 15, width: 15, height: 15, label: "Target 2" },
-      { x: 15, y: 70, width: 15, height: 15, label: "Target 3" },
-      { x: 70, y: 70, width: 15, height: 15, label: "Target 4" },
-    ],
+    targets: {
+      easy: [
+        { x: 15, y: 15, width: 18, height: 18, label: "Target 1" },
+        { x: 67, y: 67, width: 18, height: 18, label: "Target 2" },
+      ],
+      medium: [
+        { x: 15, y: 15, width: 16, height: 16, label: "Target 1" },
+        { x: 69, y: 15, width: 16, height: 16, label: "Target 2" },
+        { x: 42, y: 42, width: 16, height: 16, label: "Center" },
+      ],
+      hard: [
+        { x: 15, y: 15, width: 15, height: 15, label: "Target 1" },
+        { x: 70, y: 15, width: 15, height: 15, label: "Target 2" },
+        { x: 15, y: 70, width: 15, height: 15, label: "Target 3" },
+        { x: 70, y: 70, width: 15, height: 15, label: "Target 4" },
+        { x: 42, y: 42, width: 16, height: 16, label: "Center" },
+      ],
+    },
   },
 };
 
@@ -80,6 +154,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const config = sportConfigs[sport as keyof typeof sportConfigs] || sportConfigs.soccer;
   const ballRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 50, y: 50 });
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
@@ -101,7 +176,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     const ballXPercent = (ballX / containerWidth) * 100;
     const ballYPercent = (ballY / containerHeight) * 100;
     
-    for (const target of config.targets) {
+    const currentTargets = config.targets[difficulty];
+    
+    for (const target of currentTargets) {
       const inZone = 
         ballXPercent >= target.x &&
         ballXPercent <= target.x + target.width &&
@@ -109,11 +186,13 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         ballYPercent <= target.y + target.height;
       
       if (inZone && lastScoredZone.current !== target.label) {
-        // Score!
-        setScore((prev) => prev + 1);
+        // Score! More points for harder difficulties
+        const points = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
+        setScore((prev) => prev + points);
         setCelebration(true);
         lastScoredZone.current = target.label;
-        toast.success(`🎉 GOAL! Scored in ${target.label}!`, {
+        toast.success(`🎉 GOAL! +${points} point${points > 1 ? 's' : ''}!`, {
+          description: `Scored in ${target.label}!`,
           duration: 2000,
         });
         
@@ -255,7 +334,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Score Display */}
+      {/* Score Display & Controls */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50">
         <div 
           className={`px-8 py-4 rounded-2xl text-center transition-all duration-300 ${
@@ -267,6 +346,26 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             boxShadow: celebration ? '0 0 30px rgba(255, 215, 0, 0.8)' : '0 4px 20px rgba(0,0,0,0.2)',
           }}
         >
+          {/* Difficulty Selection */}
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="text-xs font-semibold text-gray-600">Difficulty:</span>
+            {(['easy', 'medium', 'hard'] as Difficulty[]).map((level) => (
+              <Button
+                key={level}
+                variant={difficulty === level ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setDifficulty(level);
+                  resetGame();
+                }}
+                style={difficulty === level ? { backgroundColor: config.color1 } : undefined}
+                className="capitalize text-xs px-3 py-1 h-7"
+              >
+                {level}
+              </Button>
+            ))}
+          </div>
+          
           <p className="text-sm font-semibold text-gray-600 mb-1">SCORE</p>
           <p className="text-5xl font-bold" style={{ color: config.color1 }}>
             {score}
@@ -287,7 +386,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       </div>
 
       {/* Target Zones */}
-      {config.targets.map((target, index) => (
+      {config.targets[difficulty].map((target, index) => (
         <div
           key={index}
           className="absolute border-4 border-dashed rounded-lg transition-all duration-300"
