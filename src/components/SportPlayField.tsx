@@ -28,23 +28,20 @@ const sportConfigs = {
     ball: "⚽",
     color1: "#00B050",
     color2: "#3D5A47",
-    field: "Soccer Field - Score in the goals!",
+    field: "Penalty Kick - Aim for the goals!",
     targets: {
       easy: [
-        { x: 10, y: 35, width: 12, height: 30, label: "Left Goal" },
-        { x: 78, y: 35, width: 12, height: 30, label: "Right Goal" },
+        { x: 70, y: 8, width: 25, height: 18, label: "🥅 Goal" },
       ],
       medium: [
-        { x: 10, y: 38, width: 10, height: 24, label: "Left Goal" },
-        { x: 80, y: 38, width: 10, height: 24, label: "Right Goal" },
-        { x: 45, y: 48, width: 10, height: 4, label: "Center" },
+        { x: 72, y: 8, width: 20, height: 15, label: "🥅 Top Corner" },
+        { x: 73, y: 28, width: 18, height: 12, label: "🥅 Bottom Corner" },
       ],
       hard: [
-        { x: 10, y: 40, width: 8, height: 20, label: "Left Goal" },
-        { x: 82, y: 40, width: 8, height: 20, label: "Right Goal" },
-        { x: 20, y: 20, width: 6, height: 6, label: "Corner 1" },
-        { x: 74, y: 20, width: 6, height: 6, label: "Corner 2" },
-        { x: 47, y: 47, width: 6, height: 6, label: "Center" },
+        { x: 75, y: 5, width: 10, height: 10, label: "🥅 Top Left" },
+        { x: 85, y: 5, width: 10, height: 10, label: "🥅 Top Right" },
+        { x: 75, y: 25, width: 10, height: 8, label: "🥅 Bottom Left" },
+        { x: 85, y: 25, width: 10, height: 8, label: "🥅 Bottom Right" },
       ],
     },
   },
@@ -156,7 +153,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 50, y: 50 });
+  // Initialize ball position - at penalty spot for soccer, center for others
+  const initialX = sport === 'soccer' ? window.innerWidth * 0.30 : 50;
+  const initialY = sport === 'soccer' ? window.innerHeight * 0.25 : 50;
+  const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [score, setScore] = useState(0);
@@ -313,7 +313,11 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
 
   const resetGame = () => {
     setScore(0);
-    setPosition({ x: 50, y: 50 });
+    // Position ball at penalty spot for soccer, center for others
+    const initialPosition = sport === 'soccer' 
+      ? { x: window.innerWidth * 0.30, y: window.innerHeight * 0.25 }
+      : { x: 50, y: 50 };
+    setPosition(initialPosition);
     setVelocity({ x: 0, y: 0 });
     setRotation(0);
     lastScoredZone.current = null;
@@ -385,6 +389,85 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         </Button>
       </div>
 
+      {/* Soccer Field Elements (for soccer sport only) */}
+      {sport === 'soccer' && (
+        <>
+          {/* Penalty Area */}
+          <div 
+            className="absolute border-4 border-white/60 rounded-sm"
+            style={{
+              left: '65%',
+              top: '5%',
+              width: '32%',
+              height: '40%',
+            }}
+          />
+          
+          {/* Goal Area */}
+          <div 
+            className="absolute border-4 border-white/80 rounded-sm"
+            style={{
+              left: '73%',
+              top: '15%',
+              width: '24%',
+              height: '20%',
+            }}
+          />
+          
+          {/* Goal */}
+          <div 
+            className="absolute border-4 border-white rounded-md"
+            style={{
+              left: '90%',
+              top: '12%',
+              width: '9%',
+              height: '26%',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            }}
+          >
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-full h-1 bg-white" />
+            <div className="absolute left-0 top-0 w-1 h-full bg-white" />
+            <div className="absolute right-0 top-0 w-1 h-full bg-white" />
+          </div>
+          
+          {/* Penalty Spot */}
+          <div 
+            className="absolute rounded-full bg-white"
+            style={{
+              left: '77%',
+              top: '23.5%',
+              width: '1.5%',
+              height: '2.5%',
+            }}
+          />
+          
+          {/* Player Emoji */}
+          <div 
+            className="absolute text-6xl select-none pointer-events-none"
+            style={{
+              left: '30%',
+              top: '18%',
+              transform: 'scaleX(-1)',
+              filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
+            }}
+          >
+            🧑‍🦱
+          </div>
+          
+          {/* Goalkeeper Emoji */}
+          <div 
+            className="absolute text-5xl select-none pointer-events-none"
+            style={{
+              left: '88%',
+              top: '19%',
+              filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
+            }}
+          >
+            🧤
+          </div>
+        </>
+      )}
+
       {/* Target Zones */}
       {config.targets[difficulty].map((target, index) => (
         <div
@@ -395,18 +478,18 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             top: `${target.y}%`,
             width: `${target.width}%`,
             height: `${target.height}%`,
-            borderColor: 'rgba(255, 255, 255, 0.6)',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            borderColor: sport === 'soccer' ? 'rgba(255, 215, 0, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+            backgroundColor: sport === 'soccer' ? 'rgba(255, 215, 0, 0.15)' : 'rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(5px)',
           }}
         >
           <div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none"
             style={{
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontSize: '0.75rem',
+              color: sport === 'soccer' ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.9)',
+              fontSize: sport === 'soccer' ? '1rem' : '0.75rem',
               fontWeight: 'bold',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              textShadow: '0 2px 4px rgba(0,0,0,0.5)',
             }}
           >
             {target.label}
