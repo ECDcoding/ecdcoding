@@ -207,6 +207,74 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     }
   };
 
+  // Get ball position description for soccer
+  const getBallPositionDescription = () => {
+    if (!containerRef.current || sport !== 'soccer') return '';
+    
+    const containerWidth = containerRef.current.clientWidth;
+    const containerHeight = containerRef.current.clientHeight;
+    
+    const ballXPercent = (position.x / containerWidth) * 100;
+    const ballYPercent = (position.y / containerHeight) * 100;
+    
+    // Center circle (around 50%, 50%)
+    if (Math.abs(ballXPercent - 50) < 8 && Math.abs(ballYPercent - 50) < 12) {
+      return "⚽ Center Circle - This is where play starts!";
+    }
+    
+    // Right penalty spot (around 72%, 50%)
+    if (Math.abs(ballXPercent - 72) < 3 && Math.abs(ballYPercent - 50) < 3) {
+      return "🎯 Right Penalty Spot - Ready for a penalty kick!";
+    }
+    
+    // Left penalty spot (around 26%, 50%)
+    if (Math.abs(ballXPercent - 26) < 3 && Math.abs(ballYPercent - 50) < 3) {
+      return "🎯 Left Penalty Spot - Ready for a penalty kick!";
+    }
+    
+    // Top right corner
+    if (ballXPercent > 90 && ballYPercent < 10) {
+      return "🚩 Top Right Corner - Ready for a corner kick!";
+    }
+    
+    // Bottom right corner
+    if (ballXPercent > 90 && ballYPercent > 90) {
+      return "🚩 Bottom Right Corner - Ready for a corner kick!";
+    }
+    
+    // Top left corner
+    if (ballXPercent < 10 && ballYPercent < 10) {
+      return "🚩 Top Left Corner - Ready for a corner kick!";
+    }
+    
+    // Bottom left corner
+    if (ballXPercent < 10 && ballYPercent > 90) {
+      return "🚩 Bottom Left Corner - Ready for a corner kick!";
+    }
+    
+    // Right goal area
+    if (ballXPercent > 65 && ballXPercent < 98 && ballYPercent > 25 && ballYPercent < 75) {
+      return "⚡ Right Goal Area - Close to the goal!";
+    }
+    
+    // Left goal area
+    if (ballXPercent > 2 && ballXPercent < 35 && ballYPercent > 25 && ballYPercent < 75) {
+      return "⚡ Left Goal Area - Close to the goal!";
+    }
+    
+    // Right half
+    if (ballXPercent > 50) {
+      return "➡️ Right Half of the Pitch";
+    }
+    
+    // Left half
+    if (ballXPercent < 50) {
+      return "⬅️ Left Half of the Pitch";
+    }
+    
+    return "⚽ On the Pitch";
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     dragStart.current = { 
@@ -338,6 +406,25 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Ball Position Commentary - For Soccer Only */}
+      {sport === 'soccer' && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50">
+          <div 
+            className="px-6 py-3 rounded-xl text-center"
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+            }}
+          >
+            <p className="text-sm font-bold text-white">
+              {getBallPositionDescription()}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Score Display - Simplified */}
       <div className="absolute top-4 right-4 z-50">
         <div 
@@ -515,11 +602,11 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* RIGHT SIDE - Penalty Spot - Centered in Goal Area */}
+          {/* RIGHT SIDE - Penalty Spot - Moved back from goal */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(65% + 16.5% - 1.25%)',
+              left: 'calc(65% + 8% - 1.25%)',
               top: 'calc(25% + 25% - 2%)',
               width: '2.5%',
               height: '4%',
@@ -647,11 +734,11 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* LEFT SIDE - Penalty Spot - Centered in Goal Area */}
+          {/* LEFT SIDE - Penalty Spot - Moved back from goal */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(2% + 16.5% - 1.25%)',
+              left: 'calc(2% + 25% - 1.25%)',
               top: 'calc(25% + 25% - 2%)',
               width: '2.5%',
               height: '4%',
