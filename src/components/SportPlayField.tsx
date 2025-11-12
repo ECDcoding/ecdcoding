@@ -217,24 +217,12 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     const ballXPercent = (position.x / containerWidth) * 100;
     const ballYPercent = (position.y / containerHeight) * 100;
     
-    // Top right corner - expanded detection zone
-    if (ballXPercent > 85 && ballYPercent < 15) {
-      return "🚩 Corner Kick - Top Right Corner";
-    }
-    
-    // Bottom right corner - expanded detection zone
-    if (ballXPercent > 85 && ballYPercent > 85) {
-      return "🚩 Corner Kick - Bottom Right Corner";
-    }
-    
-    // Top left corner - expanded detection zone
-    if (ballXPercent < 15 && ballYPercent < 15) {
-      return "🚩 Corner Kick - Top Left Corner";
-    }
-    
-    // Bottom left corner - expanded detection zone
-    if (ballXPercent < 15 && ballYPercent > 85) {
-      return "🚩 Corner Kick - Bottom Left Corner";
+    // Corner kicks - simplified to just "Corner Kick"
+    if ((ballXPercent > 85 && ballYPercent < 15) || 
+        (ballXPercent > 85 && ballYPercent > 85) ||
+        (ballXPercent < 15 && ballYPercent < 15) ||
+        (ballXPercent < 15 && ballYPercent > 85)) {
+      return "🚩 Corner Kick";
     }
     
     // Right penalty spot (center of right goal area: 81.5%, 50%)
@@ -456,12 +444,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         </Button>
       </div>
 
-      {/* Title - Positioned at top left under Back button */}
-      <div className="absolute top-20 left-8 z-20">
-        <h3 className="text-lg font-bold text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
-          {config.field}
-        </h3>
-      </div>
+      {/* Title removed as requested */}
 
       {/* Soccer Field Dimensions Labels */}
       {sport === 'soccer' && (
