@@ -30,7 +30,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Users, DollarSign, Mail, UserX, CheckCircle } from "lucide-react";
+import { ArrowLeft, Users, Mail, UserX, CheckCircle } from "lucide-react";
 import { format, isAfter, isBefore, addDays } from "date-fns";
 import { toast } from "sonner";
 
@@ -78,7 +78,6 @@ const AdminDashboard = () => {
 
   const fetchUsersWithPayments = async () => {
     try {
-      // Fetch profiles
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select("*")
@@ -86,7 +85,6 @@ const AdminDashboard = () => {
 
       if (profilesError) throw profilesError;
 
-      // Fetch all subscription payments
       const { data: payments, error: paymentsError } = await supabase
         .from("subscription_payments")
         .select("*")
@@ -94,7 +92,6 @@ const AdminDashboard = () => {
 
       if (paymentsError) throw paymentsError;
 
-      // Merge data with proper typing
       const usersWithPaymentData: UserWithPayment[] = (profiles || []).map((profile) => {
         const payment = payments?.find((p) => p.user_id === profile.user_id);
         return { 
@@ -161,7 +158,6 @@ const AdminDashboard = () => {
 
     try {
       if (actionType === "mark-paid") {
-        // Update payment status to active and extend next payment date
         const nextMonth = new Date();
         nextMonth.setMonth(nextMonth.getMonth() + 1);
 
@@ -177,7 +173,6 @@ const AdminDashboard = () => {
         if (error) throw error;
         toast.success("Payment marked as paid");
       } else if (actionType === "deregister") {
-        // Mark payment as cancelled
         const { error } = await supabase
           .from("subscription_payments")
           .update({
@@ -189,7 +184,6 @@ const AdminDashboard = () => {
         if (error) throw error;
         toast.success("User deregistered successfully");
       } else if (actionType === "remind") {
-        // In a real app, this would send an email
         toast.success(`Reminder sent to ${actionUser.first_name} ${actionUser.last_name}`);
       }
 
