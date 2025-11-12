@@ -379,6 +379,88 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       {/* Soccer Field Elements (for soccer sport only) */}
       {sport === 'soccer' && (
         <>
+          {/* Center Circle - At ball position */}
+          <div 
+            className="absolute border-4 border-white/80 rounded-full"
+            style={{
+              left: 'calc(61% - 8%)',
+              top: 'calc(48% - 12%)',
+              width: '16%',
+              height: '24%',
+            }}
+          />
+          
+          {/* Center Spot */}
+          <div 
+            className="absolute rounded-full bg-white"
+            style={{
+              left: 'calc(61% - 1.25%)',
+              top: 'calc(48% - 2%)',
+              width: '2.5%',
+              height: '4%',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
+            }}
+          />
+          
+          {/* Halfway Line */}
+          <div 
+            className="absolute bg-white/70"
+            style={{
+              left: '61%',
+              top: '5%',
+              width: '0.3%',
+              height: '90%',
+            }}
+          />
+          
+          {/* Corner Arcs - Top Right */}
+          <div 
+            className="absolute border-4 border-white/70 rounded-full"
+            style={{
+              right: '1%',
+              top: '3%',
+              width: '8%',
+              height: '12%',
+              clipPath: 'polygon(0 100%, 100% 100%, 100% 0)',
+            }}
+          />
+          
+          {/* Corner Arcs - Bottom Right */}
+          <div 
+            className="absolute border-4 border-white/70 rounded-full"
+            style={{
+              right: '1%',
+              bottom: '3%',
+              width: '8%',
+              height: '12%',
+              clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+            }}
+          />
+          
+          {/* Corner Arcs - Top Left */}
+          <div 
+            className="absolute border-4 border-white/70 rounded-full"
+            style={{
+              left: '2%',
+              top: '3%',
+              width: '8%',
+              height: '12%',
+              clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
+            }}
+          />
+          
+          {/* Corner Arcs - Bottom Left */}
+          <div 
+            className="absolute border-4 border-white/70 rounded-full"
+            style={{
+              left: '2%',
+              bottom: '3%',
+              width: '8%',
+              height: '12%',
+              clipPath: 'polygon(0 0, 100% 0, 0 100%)',
+            }}
+          />
+          
           {/* Penalty Area - Enlarged */}
           <div 
             className="absolute border-4 border-white/70 rounded-sm"
