@@ -83,6 +83,7 @@ const LessonVault0406 = () => {
     created_at: string;
     user_id: string;
   }>>([]);
+  const [showCommunityFeed, setShowCommunityFeed] = useState(false);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -119,9 +120,9 @@ const LessonVault0406 = () => {
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
 
-  // Fetch all feedback on dialog open
+  // Fetch all feedback when community feed is shown
   useEffect(() => {
-    if (showProgressDialog) {
+    if (showCommunityFeed && showProgressDialog) {
       fetchAllFeedback();
       
       // Subscribe to realtime updates
@@ -142,7 +143,7 @@ const LessonVault0406 = () => {
         supabase.removeChannel(channel);
       };
     }
-  }, [showProgressDialog]);
+  }, [showCommunityFeed, showProgressDialog]);
 
   const fetchAllFeedback = async () => {
     try {
@@ -484,25 +485,34 @@ const LessonVault0406 = () => {
     }
 
     try {
-      const { error } = await supabase
-        .from('user_feedback')
-        .insert({
-          user_id: profile?.user_id,
-          username: profile?.username || profile?.first_name || 'Anonymous',
-          feedback_text: responseText.trim()
+      if (showCommunityFeed) {
+        // Post to community feedback
+        const { error } = await supabase
+          .from('user_feedback')
+          .insert({
+            user_id: profile?.user_id,
+            username: profile?.username || profile?.first_name || 'Anonymous',
+            feedback_text: responseText.trim()
+          });
+
+        if (error) throw error;
+
+        toast({
+          title: "Success",
+          description: "Your feedback has been shared with the community!",
         });
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Your feedback has been shared!",
-      });
+      } else {
+        // Send private response to ECD team
+        toast({
+          title: "Success",
+          description: "Response sent to ECDCoding team",
+        });
+      }
       setResponseText("");
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to post feedback",
+        description: "Failed to send feedback",
         variant: "destructive",
       });
     }
@@ -2476,13 +2486,13 @@ const LessonVault0406 = () => {
        </main>
 
       <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <div>
-                <DialogTitle>Community Feedback</DialogTitle>
+                <DialogTitle>Progress Report Communication</DialogTitle>
                 <DialogDescription>
-                  Share your experience and see what others are saying
+                  Track your child's understanding level and share comments
                 </DialogDescription>
               </div>
               <Badge className="bg-lime-500 hover:bg-lime-600 text-white font-semibold px-3 py-1 text-sm">
@@ -2491,86 +2501,271 @@ const LessonVault0406 = () => {
             </div>
           </DialogHeader>
           
-          {/* Feedback Feed */}
-          <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-[400px] max-h-[500px]">
-            {allFeedback.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center p-8">
-                <Users className="h-16 w-16 text-muted-foreground mb-4" />
-                <p className="text-muted-foreground text-lg font-medium">No feedback yet</p>
-                <p className="text-sm text-muted-foreground mt-2">Be the first to share your experience!</p>
+          <div className="space-y-6">
+            {/* Traffic Light Understanding Checklist */}
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
+              <div className="flex items-start gap-6">
+                <div className="mt-14">
+                  <TrafficLightProgress 
+                    initialLevel={understandingLevel}
+                    onLevelChange={(level) => setUnderstandingLevel(level)}
+                  />
+                </div>
+                <div className="flex-1">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="numeracy">
+                      <AccordionTrigger>Numeracy</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Track progress in counting, numbers, and basic math skills.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="basic-logic">
+                      <AccordionTrigger>Basic Logic</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Monitor development in problem-solving and logical thinking.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="literacy">
+                      <AccordionTrigger>Literacy</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Assess reading, writing, and language comprehension skills.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="arts">
+                      <AccordionTrigger>Arts</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Evaluate creative expression and artistic development.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="sport">
+                      <AccordionTrigger>Sport</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">Play</h4>
+                          <div className="flex flex-col gap-2">
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("soccer");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              ⚽ Soccer
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("rugby");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🏉 Rugby
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("cricket");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🏏 Cricket
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("tennis");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🎾 Tennis
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("indigenous");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🥎 Indigenous Games
+                            </Button>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="science-discovery">
+                      <AccordionTrigger>Science and Discovery</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground">Observe curiosity and understanding of the natural world.</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               </div>
-            ) : (
-              allFeedback.map((feedback) => (
-                <div 
-                  key={feedback.id} 
-                  className={`p-4 rounded-lg border ${
-                    feedback.user_id === profile?.user_id 
-                      ? 'bg-primary/5 border-primary/20 ml-8' 
-                      : 'bg-muted/50 border-border mr-8'
-                  }`}
+            </div>
+
+            {/* User Information with Community Feedback */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Label className="text-sm font-semibold">User Information</Label>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowCommunityFeed(!showCommunityFeed)}
+                  className="text-xs"
                 >
-                  <div className="flex items-start gap-3">
-                    <Avatar className="h-10 w-10 border-2 border-border">
-                      <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
-                        {feedback.username[0].toUpperCase()}
+                  <Users className="h-3 w-3 mr-1" />
+                  {showCommunityFeed ? 'Hide' : 'Show'} Community
+                </Button>
+              </div>
+              
+              {!showCommunityFeed ? (
+                <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
+                  <div 
+                    className="flex flex-col items-center gap-3 cursor-pointer group"
+                    onClick={() => setShowCommunityFeed(true)}
+                  >
+                    <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
+                      <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
+                      <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                        {profile?.first_name?.[0]}{profile?.last_name?.[0]}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-sm">{feedback.username}</span>
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(feedback.created_at).toLocaleDateString()} at {new Date(feedback.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                        {feedback.user_id === profile?.user_id && (
-                          <Badge variant="outline" className="text-xs">You</Badge>
-                        )}
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                      profile?.registration_type === 'parent' 
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                        : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    }`}>
+                      {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
+                    </span>
+                    <p className="text-xs text-muted-foreground text-center">Click to view community feedback</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="border rounded-lg overflow-hidden">
+                  {/* Community Feedback Feed */}
+                  <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
+                    {allFeedback.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-8 text-center">
+                        <Users className="h-12 w-12 text-muted-foreground mb-3" />
+                        <p className="text-muted-foreground text-sm font-medium">No community feedback yet</p>
+                        <p className="text-xs text-muted-foreground mt-1">Be the first to share!</p>
                       </div>
-                      <p className="text-sm whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                    ) : (
+                      allFeedback.map((feedback) => (
+                        <div 
+                          key={feedback.id} 
+                          className={`p-3 rounded-lg ${
+                            feedback.user_id === profile?.user_id 
+                              ? 'bg-primary/5 border border-primary/20' 
+                              : 'bg-background border border-border'
+                          }`}
+                        >
+                          <div className="flex items-start gap-2">
+                            <Avatar className="h-8 w-8 border">
+                              <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                {feedback.username[0].toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold text-xs">{feedback.username}</span>
+                                <span className="text-[10px] text-muted-foreground">
+                                  {new Date(feedback.created_at).toLocaleDateString()}
+                                </span>
+                                {feedback.user_id === profile?.user_id && (
+                                  <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
+                                )}
+                              </div>
+                              <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  
+                  {/* Post to Community */}
+                  <div className="p-3 border-t bg-background">
+                    <div className="flex items-start gap-2">
+                      <Avatar className="h-8 w-8 border-2 border-primary">
+                        <AvatarImage src={profile?.profile_image_url || ''} />
+                        <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
+                          {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <Textarea
+                        placeholder="Share with the community..."
+                        value={responseText}
+                        onChange={(e) => setResponseText(e.target.value)}
+                        className="min-h-[60px] resize-none text-sm"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSendResponse();
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-end mt-2">
+                      <Button size="sm" onClick={handleSendResponse} disabled={!responseText.trim()}>
+                        <Share2 className="h-3 w-3 mr-1" />
+                        Post
+                      </Button>
                     </div>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
+              )}
+            </div>
 
-          {/* Post Feedback Section */}
-          <div className="border-t pt-4 space-y-3">
-            <div className="flex items-start gap-3">
-              <Avatar className="h-10 w-10 border-2 border-primary">
-                <AvatarImage src={profile?.profile_image_url || ''} />
-                <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">
-                  {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
+            {/* Private Feedback Section */}
+            {!showCommunityFeed && (
+              <div>
+                <Label htmlFor="response" className="text-sm font-semibold">Private Feedback to ECD Team</Label>
                 <Textarea
-                  placeholder="Share your experience with the community..."
+                  id="response"
+                  placeholder="Share your thoughts privately with the ECDCoding team..."
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
-                  className="min-h-[80px] resize-none"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendResponse();
-                    }
-                  }}
+                  className="mt-2 min-h-[120px]"
                 />
               </div>
-            </div>
+            )}
+
+            {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
               <Button
                 variant="outline"
                 onClick={() => {
                   setShowProgressDialog(false);
                   setResponseText("");
+                  setUnderstandingLevel(null);
+                  setShowCommunityFeed(false);
                 }}
               >
-                Close
+                Cancel
               </Button>
-              <Button onClick={handleSendResponse} disabled={!responseText.trim()}>
-                <Share2 className="h-4 w-4 mr-2" />
-                Post Feedback
-              </Button>
+              {!showCommunityFeed && (
+                <Button onClick={handleSendResponse}>
+                  Send to Team
+                </Button>
+              )}
             </div>
           </div>
         </DialogContent>
