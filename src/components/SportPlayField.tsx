@@ -227,8 +227,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       return "🎯 Right Penalty Spot - Ready for a penalty kick!";
     }
     
-    // Left penalty spot (around 26%, 50%)
-    if (Math.abs(ballXPercent - 26) < 3 && Math.abs(ballYPercent - 50) < 3) {
+    // Left penalty spot (around 28%, 50%)
+    if (Math.abs(ballXPercent - 28) < 3 && Math.abs(ballYPercent - 50) < 3) {
       return "🎯 Left Penalty Spot - Ready for a penalty kick!";
     }
     
@@ -602,12 +602,12 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* RIGHT SIDE - Penalty Spot - Moved back from goal */}
+          {/* RIGHT SIDE - Penalty Spot - Standard position (12 yards from goal) */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(65% + 8% - 1.25%)',
-              top: 'calc(25% + 25% - 2%)',
+              left: 'calc(72% - 1.25%)',
+              top: 'calc(50% - 2%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
@@ -734,12 +734,12 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* LEFT SIDE - Penalty Spot - Moved back from goal */}
+          {/* LEFT SIDE - Penalty Spot - Standard position (12 yards from goal) */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(2% + 25% - 1.25%)',
-              top: 'calc(25% + 25% - 2%)',
+              left: 'calc(28% - 1.25%)',
+              top: 'calc(50% - 2%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
