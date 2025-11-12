@@ -299,6 +299,51 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          is_active: boolean
+          last_payment_date: string | null
+          next_payment_due: string
+          notes: string | null
+          payment_method: string | null
+          payment_status: string
+          subscription_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_payment_date?: string | null
+          next_payment_due: string
+          notes?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          subscription_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_payment_date?: string | null
+          next_payment_due?: string
+          notes?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          subscription_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_credits: {
         Row: {
           created_at: string
