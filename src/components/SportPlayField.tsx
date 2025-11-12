@@ -376,6 +376,29 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         </h3>
       </div>
 
+      {/* Soccer Field Dimensions Labels */}
+      {sport === 'soccer' && (
+        <>
+          {/* Width dimension label - Bottom */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-2">
+            <div className="w-20 h-0.5 bg-gray-800" />
+            <div className="px-4 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg shadow-lg">
+              100-130 yds
+            </div>
+            <div className="w-20 h-0.5 bg-gray-800" />
+          </div>
+
+          {/* Length dimension label - Right side */}
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 flex flex-col items-center gap-2">
+            <div className="w-0.5 h-16 bg-gray-800" />
+            <div className="px-3 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg shadow-lg writing-mode-vertical transform rotate-180">
+              50-100 yds
+            </div>
+            <div className="w-0.5 h-16 bg-gray-800" />
+          </div>
+        </>
+      )}
+
       {/* Soccer Field Elements (for soccer sport only) */}
       {sport === 'soccer' && (
         <>
