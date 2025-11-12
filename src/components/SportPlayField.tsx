@@ -153,9 +153,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [isDragging, setIsDragging] = useState(false);
-  // Initialize ball position - at penalty spot for soccer (centered in penalty box), center for others
-  const initialX = sport === 'soccer' ? window.innerWidth * 0.61 : 50;
-  const initialY = sport === 'soccer' ? window.innerHeight * 0.48 : 50;
+  // Initialize ball position - at center spot for soccer, center for others
+  const initialX = sport === 'soccer' ? window.innerWidth * 0.50 : 50;
+  const initialY = sport === 'soccer' ? window.innerHeight * 0.50 : 50;
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -313,9 +313,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
 
   const resetGame = () => {
     setScore(0);
-    // Position ball at penalty spot for soccer (centered in penalty box), center for others
+    // Position ball at center spot for soccer, center for others
     const initialPosition = sport === 'soccer' 
-      ? { x: window.innerWidth * 0.61, y: window.innerHeight * 0.48 }
+      ? { x: window.innerWidth * 0.50, y: window.innerHeight * 0.50 }
       : { x: 50, y: 50 };
     setPosition(initialPosition);
     setVelocity({ x: 0, y: 0 });
@@ -411,34 +411,34 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       {/* Soccer Field Elements (for soccer sport only) */}
       {sport === 'soccer' && (
         <>
-          {/* Center Circle - At ball position */}
+          {/* Center Circle - At actual center of pitch */}
           <div 
             className="absolute border-4 border-white/80 rounded-full"
             style={{
-              left: 'calc(61% - 8%)',
-              top: 'calc(48% - 12%)',
+              left: 'calc(50% - 8%)',
+              top: 'calc(50% - 12%)',
               width: '16%',
               height: '24%',
             }}
           />
           
-          {/* Center Spot */}
+          {/* Center Spot - At actual center of pitch */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(61% - 1.25%)',
-              top: 'calc(48% - 2%)',
+              left: 'calc(50% - 1.25%)',
+              top: 'calc(50% - 2%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
             }}
           />
           
-          {/* Halfway Line */}
+          {/* Halfway Line - At actual center of pitch */}
           <div 
             className="absolute bg-white/70"
             style={{
-              left: '61%',
+              left: '50%',
               top: '5%',
               width: '0.3%',
               height: '90%',
