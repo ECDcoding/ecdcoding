@@ -1138,17 +1138,13 @@ const LessonVault0406 = () => {
                     <p className="text-gray-600 mt-4">This is what a square looks like in real life!</p>
                   </div>
                   
-                  {/* Right Column - Child Drawing Square */}
+                  {/* Right Column - Real Square Shape Alternative View */}
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Drawing a Square</h2>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Square Shape</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
-                      <img 
-                        src={childDrawingSquare} 
-                        alt="Child's hand drawing a square shape step by step" 
-                        className="mx-auto rounded-lg max-w-full h-auto"
-                      />
+                      <div className="mx-auto" style={{ width: '300px', height: '300px', backgroundColor: '#4299e1', borderRadius: '8px' }}></div>
                     </div>
-                    <p className="text-gray-600 mt-4">Learn how to draw a square with your hands!</p>
+                    <p className="text-gray-600 mt-4">A square has 4 equal sides and 4 right angles!</p>
                   </div>
                 </div>
                 
