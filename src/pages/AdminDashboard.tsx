@@ -20,27 +20,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Users, Mail, UserX, CheckCircle, Shield } from "lucide-react";
-import { format, isAfter, isBefore, addDays } from "date-fns";
-import { toast } from "sonner";
+import { ArrowLeft, Users } from "lucide-react";
+import { format } from "date-fns";
 
 interface UserProfile {
   id: string;
@@ -56,78 +37,27 @@ interface UserProfile {
   profile_image_url?: string;
 }
 
-interface SubscriptionPayment {
-  id: string;
-  user_id: string;
-  subscription_type: string;
-  amount: number;
-  payment_status: "active" | "pending" | "overdue" | "cancelled";
-  last_payment_date: string | null;
-  next_payment_due: string;
-  is_active: boolean;
-  notes?: string;
-}
-
-interface UserWithPayment extends UserProfile {
-  payment?: SubscriptionPayment;
-}
-
-interface UserRole {
-  id: string;
-  user_id: string;
-  role: "admin" | "moderator" | "user";
-  created_at: string;
-}
-
-interface UserWithRoles extends UserProfile {
-  roles: UserRole[];
-}
-
 const AdminDashboard = () => {
-  const [usersWithPayments, setUsersWithPayments] = useState<UserWithPayment[]>([]);
-  const [usersWithRoles, setUsersWithRoles] = useState<UserWithRoles[]>([]);
+  const [profiles, setProfiles] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionUser, setActionUser] = useState<UserWithPayment | null>(null);
-  const [actionType, setActionType] = useState<"remind" | "deregister" | "mark-paid" | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUsersWithPayments();
-    fetchUsersWithRoles();
+    fetchProfiles();
   }, []);
 
-  const fetchUsersWithPayments = async () => {
+  const fetchProfiles = async () => {
     try {
-      const { data: profiles, error: profilesError } = await supabase
+      const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (profilesError) throw profilesError;
-
-      const { data: payments, error: paymentsError } = await supabase
-        .from("subscription_payments")
-        .select("*")
-        .eq("is_active", true);
-
-      if (paymentsError) throw paymentsError;
-
-      const usersWithPaymentData: UserWithPayment[] = (profiles || []).map((profile) => {
-        const payment = payments?.find((p) => p.user_id === profile.user_id);
-        return { 
-          ...profile, 
-          payment: payment ? {
-            ...payment,
-            payment_status: payment.payment_status as "active" | "pending" | "overdue" | "cancelled"
-          } : undefined
-        };
-      });
-
-      setUsersWithPayments(usersWithPaymentData);
+      if (error) throw error;
+      setProfiles(data || []);
     } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Failed to load user data");
+      console.error("Error fetching profiles:", error);
     } finally {
       setLoading(false);
     }
@@ -148,173 +78,6 @@ const AdminDashboard = () => {
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  };
-
-  const getPaymentStatusBadge = (payment?: SubscriptionPayment) => {
-    if (!payment) {
-      return (
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-gray-300" />
-          <div className="w-6 h-6 rounded-full bg-gray-300" />
-          <div className="w-6 h-6 rounded-full bg-gray-300" />
-        </div>
-      );
-    }
-
-    const now = new Date();
-    const dueDate = new Date(payment.next_payment_due);
-    const isOverdue = isAfter(now, dueDate);
-    const isDueSoon = isBefore(now, dueDate) && isAfter(dueDate, now) && isAfter(addDays(now, 7), dueDate);
-
-    // Determine which light should be active
-    let activeLight: 'red' | 'yellow' | 'green' = 'green';
-    
-    if (payment.payment_status === "cancelled" || isOverdue) {
-      activeLight = 'red';
-    } else if (isDueSoon || payment.payment_status === "pending") {
-      activeLight = 'yellow';
-    } else if (payment.payment_status === "active") {
-      activeLight = 'green';
-    }
-
-    return (
-      <div className="flex items-center gap-2">
-        <div 
-          className={`w-6 h-6 rounded-full transition-all ${
-            activeLight === 'red' 
-              ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)]' 
-              : 'bg-red-200'
-          }`} 
-        />
-        <div 
-          className={`w-6 h-6 rounded-full transition-all ${
-            activeLight === 'yellow' 
-              ? 'bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.6)]' 
-              : 'bg-yellow-200'
-          }`} 
-        />
-        <div 
-          className={`w-6 h-6 rounded-full transition-all ${
-            activeLight === 'green' 
-              ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]' 
-              : 'bg-green-200'
-          }`} 
-        />
-      </div>
-    );
-  };
-
-  const fetchUsersWithRoles = async () => {
-    try {
-      const { data: profiles, error: profilesError } = await supabase
-        .from("profiles")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (profilesError) throw profilesError;
-
-      const { data: roles, error: rolesError } = await supabase
-        .from("user_roles")
-        .select("*");
-
-      if (rolesError) throw rolesError;
-
-      const usersWithRoleData: UserWithRoles[] = (profiles || []).map((profile) => {
-        const userRoles = roles?.filter((r) => r.user_id === profile.user_id) || [];
-        return { ...profile, roles: userRoles };
-      });
-
-      setUsersWithRoles(usersWithRoleData);
-    } catch (error) {
-      console.error("Error fetching user roles:", error);
-      toast.error("Failed to load user roles");
-    }
-  };
-
-  const handleRoleChange = async (userId: string, newRole: "admin" | "moderator" | "user") => {
-    try {
-      // Check if user already has this role
-      const existingRole = usersWithRoles
-        .find((u) => u.user_id === userId)
-        ?.roles.find((r) => r.role === newRole);
-
-      if (existingRole) {
-        toast.info("User already has this role");
-        return;
-      }
-
-      const { error } = await supabase
-        .from("user_roles")
-        .insert({ user_id: userId, role: newRole });
-
-      if (error) throw error;
-
-      toast.success(`Role ${newRole} assigned successfully`);
-      fetchUsersWithRoles();
-    } catch (error) {
-      console.error("Error assigning role:", error);
-      toast.error("Failed to assign role");
-    }
-  };
-
-  const handleRoleRemove = async (roleId: string) => {
-    try {
-      const { error } = await supabase
-        .from("user_roles")
-        .delete()
-        .eq("id", roleId);
-
-      if (error) throw error;
-
-      toast.success("Role removed successfully");
-      fetchUsersWithRoles();
-    } catch (error) {
-      console.error("Error removing role:", error);
-      toast.error("Failed to remove role");
-    }
-  };
-
-  const handleAction = async () => {
-    if (!actionUser || !actionType) return;
-
-    try {
-      if (actionType === "mark-paid") {
-        const nextMonth = new Date();
-        nextMonth.setMonth(nextMonth.getMonth() + 1);
-
-        const { error } = await supabase
-          .from("subscription_payments")
-          .update({
-            payment_status: "active",
-            last_payment_date: new Date().toISOString(),
-            next_payment_due: nextMonth.toISOString(),
-          })
-          .eq("user_id", actionUser.user_id);
-
-        if (error) throw error;
-        toast.success("Payment marked as paid");
-      } else if (actionType === "deregister") {
-        const { error } = await supabase
-          .from("subscription_payments")
-          .update({
-            payment_status: "cancelled",
-            is_active: false,
-          })
-          .eq("user_id", actionUser.user_id);
-
-        if (error) throw error;
-        toast.success("User deregistered successfully");
-      } else if (actionType === "remind") {
-        toast.success(`Reminder sent to ${actionUser.first_name} ${actionUser.last_name}`);
-      }
-
-      setActionUser(null);
-      setActionType(null);
-      fetchUsersWithPayments();
-    } catch (error) {
-      console.error("Error performing action:", error);
-      toast.error("Action failed");
-    }
   };
 
   if (loading) {
@@ -351,44 +114,16 @@ const AdminDashboard = () => {
               <div>
                 <CardTitle className="text-2xl">Admin Dashboard</CardTitle>
                 <CardDescription>
-                  Manage users, payments, and roles
+                  View all registered users and their profiles
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-6">
-            <Tabs defaultValue="payments" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="payments" className="gap-2">
-                  <Users className="h-4 w-4" />
-                  Payment Management
-                </TabsTrigger>
-                <TabsTrigger value="roles" className="gap-2">
-                  <Shield className="h-4 w-4" />
-                  Role Management
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="payments">
-            <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
+            <div className="mb-4 flex items-center justify-between">
               <p className="text-sm text-muted-foreground">
-                Total Users: <span className="font-semibold text-foreground">{usersWithPayments.length}</span>
+                Total Users: <span className="font-semibold text-foreground">{profiles.length}</span>
               </p>
-              <div className="flex gap-4 text-sm">
-                <span className="text-green-600 font-medium">
-                  Active: {usersWithPayments.filter(u => u.payment?.payment_status === "active").length}
-                </span>
-                <span className="text-red-600 font-medium">
-                  Overdue: {usersWithPayments.filter(u => {
-                    const now = new Date();
-                    const dueDate = u.payment ? new Date(u.payment.next_payment_due) : null;
-                    return dueDate && isAfter(now, dueDate);
-                  }).length}
-                </span>
-                <span className="text-gray-600 font-medium">
-                  No Subscription: {usersWithPayments.filter(u => !u.payment).length}
-                </span>
-              </div>
             </div>
 
             <div className="rounded-md border overflow-hidden">
@@ -397,106 +132,44 @@ const AdminDashboard = () => {
                   <TableRow className="bg-muted/50">
                     <TableHead className="w-[80px]">Avatar</TableHead>
                     <TableHead>Name</TableHead>
+                    <TableHead>Username</TableHead>
                     <TableHead>Type</TableHead>
-                    <TableHead>Payment Status</TableHead>
-                    <TableHead>Subscription</TableHead>
-                    <TableHead>Next Due</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Institution</TableHead>
+                    <TableHead>Registered</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {usersWithPayments.map((user) => (
-                    <TableRow key={user.id} className="hover:bg-muted/30">
+                  {profiles.map((profile) => (
+                    <TableRow key={profile.id} className="hover:bg-muted/30">
                       <TableCell>
                         <Avatar>
-                          <AvatarImage src={user.profile_image_url} />
+                          <AvatarImage src={profile.profile_image_url} />
                           <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                            {getInitials(user.first_name, user.last_name)}
+                            {getInitials(profile.first_name, profile.last_name)}
                           </AvatarFallback>
                         </Avatar>
                       </TableCell>
+                      <TableCell className="font-medium">
+                        {profile.first_name} {profile.last_name}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        @{profile.username}
+                      </TableCell>
                       <TableCell>
-                        <div className="font-medium">
-                          {user.first_name} {user.last_name}
+                        {getRegistrationTypeBadge(profile.registration_type)}
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div>{profile.state}</div>
+                          <div className="text-muted-foreground">{profile.country}</div>
                         </div>
-                        <div className="text-xs text-muted-foreground">@{user.username}</div>
                       </TableCell>
-                      <TableCell>
-                        {getRegistrationTypeBadge(user.registration_type)}
-                      </TableCell>
-                      <TableCell>
-                        {getPaymentStatusBadge(user.payment)}
+                      <TableCell className="text-sm text-muted-foreground">
+                        {profile.institution || "-"}
                       </TableCell>
                       <TableCell className="text-sm">
-                        {user.payment ? (
-                          <span className="capitalize">{user.payment.subscription_type.replace("_", " ")}</span>
-                        ) : (
-                          "-"
-                        )}
-                      </TableCell>
-                      <TableCell className="text-sm">
-                        {user.payment ? (
-                          <div>
-                            <div>{format(new Date(user.payment.next_payment_due), "MMM dd, yyyy")}</div>
-                            {user.payment.last_payment_date && (
-                              <div className="text-xs text-muted-foreground">
-                                Last: {format(new Date(user.payment.last_payment_date), "MMM dd")}
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          "-"
-                        )}
-                      </TableCell>
-                      <TableCell className="text-sm font-medium">
-                        {user.payment ? `R${user.payment.amount.toFixed(2)}` : "-"}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {user.payment && user.payment.payment_status !== "active" && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="gap-1"
-                              onClick={() => {
-                                setActionUser(user);
-                                setActionType("mark-paid");
-                              }}
-                            >
-                              <CheckCircle className="h-3 w-3" />
-                              Mark Paid
-                            </Button>
-                          )}
-                          {user.payment && user.payment.payment_status !== "cancelled" && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="gap-1"
-                              onClick={() => {
-                                setActionUser(user);
-                                setActionType("remind");
-                              }}
-                            >
-                              <Mail className="h-3 w-3" />
-                              Remind
-                            </Button>
-                          )}
-                          {user.payment && user.payment.is_active && (
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              className="gap-1"
-                              onClick={() => {
-                                setActionUser(user);
-                                setActionType("deregister");
-                              }}
-                            >
-                              <UserX className="h-3 w-3" />
-                              Deregister
-                            </Button>
-                          )}
-                        </div>
+                        {format(new Date(profile.created_at), "MMM dd, yyyy")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -504,140 +177,15 @@ const AdminDashboard = () => {
               </Table>
             </div>
 
-                {usersWithPayments.length === 0 && (
-                  <div className="text-center py-12">
-                    <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-muted-foreground">No registered users yet</p>
-                  </div>
-                )}
-              </TabsContent>
-
-              <TabsContent value="roles">
-                <div className="mb-4">
-                  <p className="text-sm text-muted-foreground">
-                    Total Users: <span className="font-semibold text-foreground">{usersWithRoles.length}</span>
-                  </p>
-                </div>
-
-                <div className="rounded-md border overflow-hidden">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-muted/50">
-                        <TableHead className="w-[80px]">Avatar</TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Username</TableHead>
-                        <TableHead>Current Roles</TableHead>
-                        <TableHead>Assign Role</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {usersWithRoles.map((user) => (
-                        <TableRow key={user.id} className="hover:bg-muted/30">
-                          <TableCell>
-                            <Avatar>
-                              <AvatarImage src={user.profile_image_url} />
-                              <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                                {getInitials(user.first_name, user.last_name)}
-                              </AvatarFallback>
-                            </Avatar>
-                          </TableCell>
-                          <TableCell>
-                            <div className="font-medium">
-                              {user.first_name} {user.last_name}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {user.country}, {user.state}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-sm">
-                            @{user.username}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2 flex-wrap">
-                              {user.roles.length > 0 ? (
-                                user.roles.map((role) => (
-                                  <Badge
-                                    key={role.id}
-                                    variant={
-                                      role.role === "admin"
-                                        ? "default"
-                                        : role.role === "moderator"
-                                        ? "secondary"
-                                        : "outline"
-                                    }
-                                    className="gap-1"
-                                  >
-                                    {role.role}
-                                    <button
-                                      onClick={() => handleRoleRemove(role.id)}
-                                      className="ml-1 hover:text-destructive"
-                                    >
-                                      ×
-                                    </button>
-                                  </Badge>
-                                ))
-                              ) : (
-                                <span className="text-sm text-muted-foreground">No roles assigned</span>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Select onValueChange={(value) => handleRoleChange(user.user_id, value as "admin" | "moderator" | "user")}>
-                              <SelectTrigger className="w-[140px]">
-                                <SelectValue placeholder="Add role" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="admin">Admin</SelectItem>
-                                <SelectItem value="moderator">Moderator</SelectItem>
-                                <SelectItem value="user">User</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-
-                {usersWithRoles.length === 0 && (
-                  <div className="text-center py-12">
-                    <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-muted-foreground">No users found</p>
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
+            {profiles.length === 0 && (
+              <div className="text-center py-12">
+                <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                <p className="text-muted-foreground">No registered users yet</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
-
-      <AlertDialog open={!!actionUser} onOpenChange={() => setActionUser(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {actionType === "mark-paid" && "Mark Payment as Paid"}
-              {actionType === "remind" && "Send Payment Reminder"}
-              {actionType === "deregister" && "Deregister User"}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {actionType === "mark-paid" &&
-                `Mark the payment for ${actionUser?.first_name} ${actionUser?.last_name} as paid and extend their subscription for another month?`}
-              {actionType === "remind" &&
-                `Send a payment reminder email to ${actionUser?.first_name} ${actionUser?.last_name}?`}
-              {actionType === "deregister" &&
-                `Are you sure you want to deregister ${actionUser?.first_name} ${actionUser?.last_name}? This will cancel their subscription.`}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleAction}>
-              {actionType === "mark-paid" && "Mark as Paid"}
-              {actionType === "remind" && "Send Reminder"}
-              {actionType === "deregister" && "Deregister"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 };

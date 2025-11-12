@@ -10,12 +10,10 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Shield } from "lucide-react";
 import SignIn from "./SignIn";
 import { useAuth } from "@/hooks/useAuth";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const Header = () => {
   const [signInOpen, setSignInOpen] = useState(false);
   const { user, signOut } = useAuth();
-  const { isAdmin } = useIsAdmin();
 
   return (
     <header className="absolute top-0 right-0 p-4 z-10">
@@ -49,18 +47,16 @@ const Header = () => {
         </DropdownMenu>
         {user ? (
           <>
-            {isAdmin && (
-              <Button 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground gap-2"
-                asChild
-              >
-                <Link to="/admin">
-                  <Shield className="h-4 w-4" />
-                  Admin
-                </Link>
-              </Button>
-            )}
+            <Button 
+              variant="outline" 
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground gap-2"
+              asChild
+            >
+              <Link to="/admin">
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            </Button>
             <Button 
               variant="outline" 
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"

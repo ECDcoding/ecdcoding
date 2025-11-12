@@ -1,4 +1,4 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Shield } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
-import { useNavigate } from "react-router-dom";
 
 interface ProfileDropdownProps {
   profileImage?: string | null;
@@ -80,14 +78,10 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const { profile, loading } = useProfile();
   const { user } = useAuth();
   const { toast } = useToast();
-  const { isAdmin } = useIsAdmin();
-  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectChange = (value: string) => {
-    if (value === "admin") {
-      navigate("/admin");
-    } else if (value === "profile") {
+    if (value === "profile") {
       setProfileOpen(true);
       if (profile) {
         setFormData({
@@ -484,12 +478,6 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             )}
           </SelectTrigger>
           <SelectContent className="bg-profile-bg border border-gray-200 shadow-lg z-50">
-            {isAdmin && (
-              <SelectItem value="admin" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Admin Dashboard
-              </SelectItem>
-            )}
             <SelectItem value="profile" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
               <User className="h-4 w-4" />
               Profile
