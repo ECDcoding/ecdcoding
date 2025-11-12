@@ -186,30 +186,32 @@ const LessonVault0406 = () => {
     if (!alphabetAudioRef.current) return;
     
     setIsAlphabetPlaying(true);
-    setCurrentAlphabetIndex(0);
+    setCurrentAlphabetIndex(-1); // Start with no letter highlighted
     
     // Start the music
     alphabetAudioRef.current.volume = 1.0; // Full volume for the song
     alphabetAudioRef.current.currentTime = 0;
     alphabetAudioRef.current.play();
     
-    // Highlight letters with rhythm matching the music
-    let index = 0;
-    const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
-    
-    // Start with first letter
-    setCurrentAlphabetIndex(0);
-    index++;
-    
-    // Continue with rhythm (approximately 1.2 seconds per letter to match music tempo)
-    alphabetIntervalRef.current = setInterval(() => {
-      if (index < alphabet.length) {
-        setCurrentAlphabetIndex(index);
-        index++;
-      } else {
-        stopAlphabetPlay();
-      }
-    }, 1200); // 1.2 seconds per letter for rhythmic flow
+    // Wait for musical intro before starting to highlight letters
+    setTimeout(() => {
+      let index = 0;
+      const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
+      
+      // Highlight first letter when singing starts
+      setCurrentAlphabetIndex(0);
+      index++;
+      
+      // Continue highlighting letters in sync with the song
+      alphabetIntervalRef.current = setInterval(() => {
+        if (index < alphabet.length) {
+          setCurrentAlphabetIndex(index);
+          index++;
+        } else {
+          stopAlphabetPlay();
+        }
+      }, 1400); // 1.4 seconds per letter - adjusted to sync with song tempo
+    }, 2000); // 2 second delay for musical intro
   };
 
   const stopAlphabetPlay = () => {
