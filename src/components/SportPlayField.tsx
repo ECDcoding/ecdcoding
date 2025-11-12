@@ -391,7 +391,16 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           {/* Length dimension label - Right side */}
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 flex flex-col items-center gap-2">
             <div className="w-0.5 h-16 bg-gray-800" />
-            <div className="px-3 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg shadow-lg writing-mode-vertical transform rotate-180">
+            <div className="px-3 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg shadow-lg" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+              50-100 yds
+            </div>
+            <div className="w-0.5 h-16 bg-gray-800" />
+          </div>
+
+          {/* Length dimension label - Left side */}
+          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 flex flex-col items-center gap-2">
+            <div className="w-0.5 h-16 bg-gray-800" />
+            <div className="px-3 py-2 bg-gray-800 text-white font-bold text-sm rounded-lg shadow-lg" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
               50-100 yds
             </div>
             <div className="w-0.5 h-16 bg-gray-800" />
@@ -484,7 +493,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* Penalty Area - Enlarged */}
+          {/* RIGHT SIDE - Penalty Area */}
           <div 
             className="absolute border-4 border-white/70 rounded-sm"
             style={{
@@ -495,7 +504,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* Goal Area - Enlarged */}
+          {/* RIGHT SIDE - Goal Area */}
           <div 
             className="absolute border-4 border-white/90 rounded-sm"
             style={{
@@ -506,7 +515,19 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* Realistic Soccer Goal - Enlarged */}
+          {/* RIGHT SIDE - Penalty Spot */}
+          <div 
+            className="absolute rounded-full bg-white"
+            style={{
+              left: 'calc(50% + 11%)',
+              top: 'calc(50% - 1.5%)',
+              width: '2.5%',
+              height: '4%',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
+            }}
+          />
+          
+          {/* RIGHT SIDE - Soccer Goal */}
           <div 
             className="absolute"
             style={{
@@ -603,18 +624,138 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
               }}
             />
           </div>
+
+          {/* LEFT SIDE - Penalty Area */}
+          <div 
+            className="absolute border-4 border-white/70 rounded-sm"
+            style={{
+              left: '2%',
+              top: '5%',
+              width: '48%',
+              height: '90%',
+            }}
+          />
           
-          {/* Penalty Spot - Centered in Penalty Box */}
+          {/* LEFT SIDE - Goal Area */}
+          <div 
+            className="absolute border-4 border-white/90 rounded-sm"
+            style={{
+              left: '2%',
+              top: '25%',
+              width: '33%',
+              height: '50%',
+            }}
+          />
+          
+          {/* LEFT SIDE - Penalty Spot */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(50% + 11%)',
+              left: 'calc(2% + 11%)',
               top: 'calc(50% - 1.5%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
             }}
           />
+          
+          {/* LEFT SIDE - Soccer Goal */}
+          <div 
+            className="absolute"
+            style={{
+              left: '1%',
+              top: '18%',
+              width: '8%',
+              height: '64%',
+              perspective: '1000px',
+            }}
+          >
+            {/* Goal Frame - White Posts */}
+            <div 
+              className="absolute w-full h-full"
+              style={{
+                transform: 'rotateY(15deg)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              {/* Left Post */}
+              <div 
+                className="absolute left-0 top-0 bottom-0"
+                style={{
+                  width: '8%',
+                  background: 'linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
+                  boxShadow: '2px 0 8px rgba(0,0,0,0.3)',
+                  borderRadius: '3px',
+                }}
+              />
+              
+              {/* Right Post */}
+              <div 
+                className="absolute right-0 top-0 bottom-0"
+                style={{
+                  width: '8%',
+                  background: 'linear-gradient(90deg, #e0e0e0 0%, #ffffff 50%, #f0f0f0 100%)',
+                  boxShadow: '-2px 0 8px rgba(0,0,0,0.3)',
+                  borderRadius: '3px',
+                }}
+              />
+              
+              {/* Top Bar/Crossbar */}
+              <div 
+                className="absolute left-0 right-0 top-0"
+                style={{
+                  height: '4%',
+                  background: 'linear-gradient(180deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  borderRadius: '3px',
+                }}
+              />
+              
+              {/* Net Pattern */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: `
+                    repeating-linear-gradient(
+                      0deg,
+                      transparent,
+                      transparent 4%,
+                      rgba(200, 200, 200, 0.6) 4%,
+                      rgba(200, 200, 200, 0.6) 5%
+                    ),
+                    repeating-linear-gradient(
+                      90deg,
+                      transparent,
+                      transparent 4%,
+                      rgba(200, 200, 200, 0.6) 4%,
+                      rgba(200, 200, 200, 0.6) 5%
+                    )
+                  `,
+                  opacity: 0.8,
+                  backdropFilter: 'blur(1px)',
+                }}
+              />
+              
+              {/* Net Shadow/Depth */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.2) 100%)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+            
+            {/* Goal Base Shadow */}
+            <div 
+              className="absolute bottom-0 left-0 right-0"
+              style={{
+                height: '10%',
+                background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%)',
+                filter: 'blur(4px)',
+              }}
+            />
+          </div>
         </>
       )}
 
