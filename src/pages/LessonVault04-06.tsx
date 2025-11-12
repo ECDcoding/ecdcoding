@@ -19,6 +19,7 @@ import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
+import { SportPlayField } from "@/components/SportPlayField";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -79,6 +80,8 @@ const LessonVault0406 = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
+  const [sportPlayOpen, setSportPlayOpen] = useState(false);
+  const [selectedSport, setSelectedSport] = useState<string | null>(null);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -2460,7 +2463,67 @@ const LessonVault0406 = () => {
                     <AccordionItem value="sport">
                       <AccordionTrigger>Sport</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Track physical development and motor skills.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">Play</h4>
+                          <div className="flex flex-col gap-2">
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("soccer");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              ⚽ Soccer
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("rugby");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🏉 Rugby
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("cricket");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🏏 Cricket
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("tennis");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🎾 Tennis
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedSport("indigenous");
+                                setSportPlayOpen(true);
+                              }}
+                              className="justify-start"
+                            >
+                              🥎 Indigenous Games
+                            </Button>
+                          </div>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
                     
@@ -2575,6 +2638,24 @@ const LessonVault0406 = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Sport Play Field Full Screen Overlay */}
+      {sportPlayOpen && selectedSport && (
+        <div className="fixed inset-0 z-[100] bg-background">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4 z-50 bg-background/80 backdrop-blur-sm hover:bg-background"
+            onClick={() => {
+              setSportPlayOpen(false);
+              setSelectedSport(null);
+            }}
+          >
+            <X className="h-6 w-6" />
+          </Button>
+          <SportPlayField sport={selectedSport} />
+        </div>
+      )}
       
     </div>
   );
