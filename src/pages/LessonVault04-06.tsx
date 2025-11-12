@@ -24,6 +24,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
+import { supabase } from "@/integrations/supabase/client";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -75,6 +76,13 @@ const LessonVault0406 = () => {
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
+  const [allFeedback, setAllFeedback] = useState<Array<{
+    id: string;
+    username: string;
+    feedback_text: string;
+    created_at: string;
+    user_id: string;
+  }>>([]);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -110,6 +118,45 @@ const LessonVault0406 = () => {
   const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+
+  // Fetch all feedback on dialog open
+  useEffect(() => {
+    if (showProgressDialog) {
+      fetchAllFeedback();
+      
+      // Subscribe to realtime updates
+      const channel = supabase
+        .channel('feedback-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'user_feedback'
+          },
+          () => fetchAllFeedback()
+        )
+        .subscribe();
+      
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }
+  }, [showProgressDialog]);
+
+  const fetchAllFeedback = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_feedback')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setAllFeedback(data || []);
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+    }
+  };
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
   const [isCountingPlaying, setIsCountingPlaying] = useState(false);
   const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
@@ -430,25 +477,32 @@ const LessonVault0406 = () => {
     if (!responseText.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a response",
+        description: "Please enter your feedback",
         variant: "destructive",
       });
       return;
     }
 
     try {
-      // Here you can implement sending the response to ecdcoding
-      // For now, we'll just show a success message
+      const { error } = await supabase
+        .from('user_feedback')
+        .insert({
+          user_id: profile?.user_id,
+          username: profile?.username || profile?.first_name || 'Anonymous',
+          feedback_text: responseText.trim()
+        });
+
+      if (error) throw error;
+
       toast({
         title: "Success",
-        description: "Response sent to ECDCoding team",
+        description: "Your feedback has been shared!",
       });
       setResponseText("");
-      setShowProgressDialog(false);
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send response",
+        description: "Failed to post feedback",
         variant: "destructive",
       });
     }
@@ -2422,13 +2476,13 @@ const LessonVault0406 = () => {
        </main>
 
       <Dialog open={showProgressDialog} onOpenChange={setShowProgressDialog}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <div>
-                <DialogTitle>Progress Report Communication</DialogTitle>
+                <DialogTitle>Community Feedback</DialogTitle>
                 <DialogDescription>
-                  Track your child's understanding level and share comments
+                  Share your experience and see what others are saying
                 </DialogDescription>
               </div>
               <Badge className="bg-lime-500 hover:bg-lime-600 text-white font-semibold px-3 py-1 text-sm">
@@ -2437,176 +2491,85 @@ const LessonVault0406 = () => {
             </div>
           </DialogHeader>
           
-          <div className="space-y-6">
-            {/* Traffic Light Understanding Checklist */}
-            <div className="border border-border rounded-lg p-4 bg-card">
-              <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
-              <div className="flex items-start gap-6">
-                <div className="mt-14">
-                  <TrafficLightProgress 
-                    initialLevel={understandingLevel}
-                    onLevelChange={(level) => setUnderstandingLevel(level)}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="numeracy">
-                      <AccordionTrigger>Numeracy</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Track progress in counting, numbers, and basic math skills.</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                    
-                    <AccordionItem value="basic-logic">
-                      <AccordionTrigger>Basic Logic</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Monitor development in problem-solving and logical thinking.</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                    
-                    <AccordionItem value="literacy">
-                      <AccordionTrigger>Literacy</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Assess reading, writing, and language comprehension skills.</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                    
-                    <AccordionItem value="arts">
-                      <AccordionTrigger>Arts</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Evaluate creative expression and artistic development.</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                    
-                    <AccordionItem value="sport">
-                      <AccordionTrigger>Sport</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
-                        <div className="space-y-2">
-                          <h4 className="font-semibold text-sm">Play</h4>
-                          <div className="flex flex-col gap-2">
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSport("soccer");
-                                setSportPlayOpen(true);
-                              }}
-                              className="justify-start"
-                            >
-                              ⚽ Soccer
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSport("rugby");
-                                setSportPlayOpen(true);
-                              }}
-                              className="justify-start"
-                            >
-                              🏉 Rugby
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSport("cricket");
-                                setSportPlayOpen(true);
-                              }}
-                              className="justify-start"
-                            >
-                              🏏 Cricket
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSport("tennis");
-                                setSportPlayOpen(true);
-                              }}
-                              className="justify-start"
-                            >
-                              🎾 Tennis
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSport("indigenous");
-                                setSportPlayOpen(true);
-                              }}
-                              className="justify-start"
-                            >
-                              🥎 Indigenous Games
-                            </Button>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                    
-                    <AccordionItem value="science-discovery">
-                      <AccordionTrigger>Science and Discovery</AccordionTrigger>
-                      <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Observe curiosity and understanding of the natural world.</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </div>
+          {/* Feedback Feed */}
+          <div className="flex-1 overflow-y-auto space-y-4 py-4 min-h-[400px] max-h-[500px]">
+            {allFeedback.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center p-8">
+                <Users className="h-16 w-16 text-muted-foreground mb-4" />
+                <p className="text-muted-foreground text-lg font-medium">No feedback yet</p>
+                <p className="text-sm text-muted-foreground mt-2">Be the first to share your experience!</p>
               </div>
-            </div>
-
-            {/* User Profile Information - Click to Comment */}
-            <div>
-              <Label className="text-sm font-semibold">User Information</Label>
-              <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
+            ) : (
+              allFeedback.map((feedback) => (
                 <div 
-                  className="flex flex-col items-center gap-3 cursor-pointer group"
-                  onClick={() => setShowProgressDialog(true)}
+                  key={feedback.id} 
+                  className={`p-4 rounded-lg border ${
+                    feedback.user_id === profile?.user_id 
+                      ? 'bg-primary/5 border-primary/20 ml-8' 
+                      : 'bg-muted/50 border-border mr-8'
+                  }`}
                 >
-                  <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
-                    <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
-                      {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                    profile?.registration_type === 'parent' 
-                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                      : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                  }`}>
-                    {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
-                  </span>
+                  <div className="flex items-start gap-3">
+                    <Avatar className="h-10 w-10 border-2 border-border">
+                      <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
+                        {feedback.username[0].toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-sm">{feedback.username}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(feedback.created_at).toLocaleDateString()} at {new Date(feedback.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                        {feedback.user_id === profile?.user_id && (
+                          <Badge variant="outline" className="text-xs">You</Badge>
+                        )}
+                      </div>
+                      <p className="text-sm whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                    </div>
+                  </div>
                 </div>
+              ))
+            )}
+          </div>
+
+          {/* Post Feedback Section */}
+          <div className="border-t pt-4 space-y-3">
+            <div className="flex items-start gap-3">
+              <Avatar className="h-10 w-10 border-2 border-primary">
+                <AvatarImage src={profile?.profile_image_url || ''} />
+                <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">
+                  {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <Textarea
+                  placeholder="Share your experience with the community..."
+                  value={responseText}
+                  onChange={(e) => setResponseText(e.target.value)}
+                  className="min-h-[80px] resize-none"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendResponse();
+                    }
+                  }}
+                />
               </div>
             </div>
-
-            {/* Feedback Section */}
-            <div>
-              <Label htmlFor="response" className="text-sm font-semibold">Feedback</Label>
-              <Textarea
-                id="response"
-                placeholder="Share your thoughts, ask questions, or provide feedback..."
-                value={responseText}
-                onChange={(e) => setResponseText(e.target.value)}
-                className="mt-2 min-h-[120px]"
-              />
-            </div>
-
-            {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
               <Button
                 variant="outline"
                 onClick={() => {
                   setShowProgressDialog(false);
                   setResponseText("");
-                  setUnderstandingLevel(null);
                 }}
               >
-                Cancel
+                Close
               </Button>
-              <Button onClick={handleSendResponse}>
-                Reply
+              <Button onClick={handleSendResponse} disabled={!responseText.trim()}>
+                <Share2 className="h-4 w-4 mr-2" />
+                Post Feedback
               </Button>
             </div>
           </div>
