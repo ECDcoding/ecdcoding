@@ -23,6 +23,7 @@ import FruitItemRecognition from "./pages/FruitItemRecognition";
 import FacialRecognition from "./pages/FacialRecognition";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +50,7 @@ const App = () => (
           <Route path="/facial-recognition" element={<ProtectedRoute><FacialRecognition /></ProtectedRoute>} />
           <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
