@@ -153,9 +153,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [isDragging, setIsDragging] = useState(false);
-  // Initialize ball position - at penalty spot for soccer, center for others
-  const initialX = sport === 'soccer' ? window.innerWidth * 0.20 : 50;
-  const initialY = sport === 'soccer' ? window.innerHeight * 0.30 : 50;
+  // Initialize ball position - at penalty spot for soccer (centered in penalty box), center for others
+  const initialX = sport === 'soccer' ? window.innerWidth * 0.61 : 50;
+  const initialY = sport === 'soccer' ? window.innerHeight * 0.48 : 50;
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -313,9 +313,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
 
   const resetGame = () => {
     setScore(0);
-    // Position ball at penalty spot for soccer, center for others
+    // Position ball at penalty spot for soccer (centered in penalty box), center for others
     const initialPosition = sport === 'soccer' 
-      ? { x: window.innerWidth * 0.20, y: window.innerHeight * 0.30 }
+      ? { x: window.innerWidth * 0.61, y: window.innerHeight * 0.48 }
       : { x: 50, y: 50 };
     setPosition(initialPosition);
     setVelocity({ x: 0, y: 0 });
@@ -379,36 +379,36 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       {/* Soccer Field Elements (for soccer sport only) */}
       {sport === 'soccer' && (
         <>
-          {/* Penalty Area */}
+          {/* Penalty Area - Enlarged */}
           <div 
-            className="absolute border-4 border-white/60 rounded-sm"
+            className="absolute border-4 border-white/70 rounded-sm"
             style={{
-              left: '55%',
-              top: '10%',
-              width: '40%',
+              left: '50%',
+              top: '5%',
+              width: '48%',
+              height: '90%',
+            }}
+          />
+          
+          {/* Goal Area - Enlarged */}
+          <div 
+            className="absolute border-4 border-white/90 rounded-sm"
+            style={{
+              left: '65%',
+              top: '25%',
+              width: '33%',
               height: '50%',
             }}
           />
           
-          {/* Goal Area */}
-          <div 
-            className="absolute border-4 border-white/80 rounded-sm"
-            style={{
-              left: '70%',
-              top: '20%',
-              width: '25%',
-              height: '30%',
-            }}
-          />
-          
-          {/* Realistic Soccer Goal */}
+          {/* Realistic Soccer Goal - Enlarged */}
           <div 
             className="absolute"
             style={{
-              left: '88%',
-              top: '12%',
-              width: '11%',
-              height: '46%',
+              left: '91%',
+              top: '18%',
+              width: '8%',
+              height: '64%',
               perspective: '1000px',
             }}
           >
@@ -424,10 +424,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
               <div 
                 className="absolute left-0 top-0 bottom-0"
                 style={{
-                  width: '6%',
+                  width: '8%',
                   background: 'linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
                   boxShadow: '2px 0 8px rgba(0,0,0,0.3)',
-                  borderRadius: '2px',
+                  borderRadius: '3px',
                 }}
               />
               
@@ -435,10 +435,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
               <div 
                 className="absolute right-0 top-0 bottom-0"
                 style={{
-                  width: '6%',
+                  width: '8%',
                   background: 'linear-gradient(90deg, #e0e0e0 0%, #ffffff 50%, #f0f0f0 100%)',
                   boxShadow: '-2px 0 8px rgba(0,0,0,0.3)',
-                  borderRadius: '2px',
+                  borderRadius: '3px',
                 }}
               />
               
@@ -446,10 +446,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
               <div 
                 className="absolute left-0 right-0 top-0"
                 style={{
-                  height: '6%',
+                  height: '4%',
                   background: 'linear-gradient(180deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                  borderRadius: '2px',
+                  borderRadius: '3px',
                 }}
               />
               
@@ -499,14 +499,14 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             />
           </div>
           
-          {/* Penalty Spot - More Visible */}
+          {/* Penalty Spot - Centered in Penalty Box */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: '65%',
-              top: '30%',
-              width: '2%',
-              height: '3%',
+              left: 'calc(50% + 11%)',
+              top: 'calc(50% - 1.5%)',
+              width: '2.5%',
+              height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
             }}
           />
