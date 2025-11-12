@@ -120,6 +120,31 @@ const sportConfigs = {
       ],
     },
   },
+  netball: {
+    name: "Netball",
+    ball: "🏐",
+    color1: "#FF1493",
+    color2: "#8B0A50",
+    field: "Netball Court - Shoot into the goal!",
+    targets: {
+      easy: [
+        { x: 5, y: 5, width: 15, height: 15, label: "🥅 Left Goal" },
+        { x: 80, y: 5, width: 15, height: 15, label: "🥅 Right Goal" },
+      ],
+      medium: [
+        { x: 7, y: 7, width: 12, height: 12, label: "🥅 Left Goal" },
+        { x: 81, y: 7, width: 12, height: 12, label: "🥅 Right Goal" },
+        { x: 44, y: 44, width: 12, height: 12, label: "Center Circle" },
+      ],
+      hard: [
+        { x: 8, y: 8, width: 10, height: 10, label: "🥅 Left Goal" },
+        { x: 82, y: 8, width: 10, height: 10, label: "🥅 Right Goal" },
+        { x: 20, y: 35, width: 8, height: 8, label: "Left Shooting Circle" },
+        { x: 72, y: 35, width: 8, height: 8, label: "Right Shooting Circle" },
+        { x: 45, y: 45, width: 8, height: 8, label: "Center Circle" },
+      ],
+    },
+  },
   indigenous: {
     name: "Indigenous Games",
     ball: "🥎",
