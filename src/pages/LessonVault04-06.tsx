@@ -809,25 +809,25 @@ const LessonVault0406 = () => {
                          setSelectedSport("soccer");
                          setSportPlayOpen(true);
                        }} className="font-medium text-white hover:bg-white/20">
-                         Soccer
+                         Soccer Tips
                        </DropdownMenuItem>
                        <DropdownMenuItem onClick={() => {
                          setSelectedSport("rugby");
                          setSportPlayOpen(true);
                        }} className="font-medium text-white hover:bg-white/20">
-                         Rugby
+                         Rugby Tips
                        </DropdownMenuItem>
                        <DropdownMenuItem onClick={() => {
                          setSelectedSport("cricket");
                          setSportPlayOpen(true);
                        }} className="font-medium text-white hover:bg-white/20">
-                         Cricket
+                         Cricket Tips
                        </DropdownMenuItem>
                        <DropdownMenuItem onClick={() => {
                          setSelectedSport("tennis");
                          setSportPlayOpen(true);
                        }} className="font-medium text-white hover:bg-white/20">
-                         Tennis
+                         Tennis Tips
                        </DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
