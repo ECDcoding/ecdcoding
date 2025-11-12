@@ -219,11 +219,24 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     const ballXPercent = (position.x / containerWidth) * 100;
     const ballYPercent = (position.y / containerHeight) * 100;
     
-    // Corner kicks - simplified to just "Corner Kick"
-    if ((ballXPercent > 85 && ballYPercent < 15) || 
-        (ballXPercent > 85 && ballYPercent > 85) ||
-        (ballXPercent < 15 && ballYPercent < 15) ||
-        (ballXPercent < 15 && ballYPercent > 85)) {
+    // Corner kicks - all four corners with expanded detection
+    // Top right corner
+    if (ballXPercent > 85 && ballYPercent < 15) {
+      return "🚩 Corner Kick";
+    }
+    
+    // Top left corner
+    if (ballXPercent < 15 && ballYPercent < 15) {
+      return "🚩 Corner Kick";
+    }
+    
+    // Bottom right corner - expanded detection
+    if (ballXPercent > 85 && ballYPercent > 85) {
+      return "🚩 Corner Kick";
+    }
+    
+    // Bottom left corner - expanded detection
+    if (ballXPercent < 15 && ballYPercent > 85) {
       return "🚩 Corner Kick";
     }
     
@@ -488,36 +501,9 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         </div>
       )}
 
-      {/* Score Display - Simplified */}
-      <div className="absolute top-4 right-4 z-50">
-        <div 
-          className={`px-6 py-3 rounded-xl text-center transition-all duration-300 ${
-            celebration ? 'scale-125' : 'scale-100'
-          }`}
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(20px)',
-            boxShadow: celebration ? '0 0 30px rgba(255, 215, 0, 0.8)' : '0 4px 20px rgba(0,0,0,0.2)',
-          }}
-        >
-          <p className="text-sm font-semibold text-gray-600 mb-1">SCORE</p>
-          <p className="text-4xl font-bold" style={{ color: config.color1 }}>
-            {score}
-          </p>
-        </div>
-      </div>
-
-      {/* Reset Button */}
-      <div className="absolute top-4 right-24 z-50 flex gap-2">
-        <Button
-          onClick={resetGame}
-          variant="secondary"
-          size="sm"
-          className="backdrop-blur-sm bg-white/90 hover:bg-white"
-        >
-          Reset Game
-        </Button>
-        {sport === 'soccer' && (
+      {/* Voice Commands Button - For Soccer Only */}
+      {sport === 'soccer' && (
+        <div className="absolute top-4 right-4 z-50">
           <Button
             onClick={isListening ? stopVoiceCommands : startVoiceCommands}
             variant={isListening ? "destructive" : "default"}
@@ -526,8 +512,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           >
             {isListening ? "🎤 Stop Voice" : "🎤 Voice Commands"}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Title removed as requested */}
 
