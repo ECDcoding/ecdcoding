@@ -1201,7 +1201,7 @@ const LessonVault0406 = () => {
                         src={realTriangleShape} 
                         alt="Real triangle shape - colorful educational material" 
                         className="mx-auto rounded-lg max-w-full h-auto"
-                        style={{ maxHeight: '250px', objectFit: 'contain' }}
+                        style={{ maxHeight: '320px', objectFit: 'contain' }}
                       />
                     </div>
                     <p className="text-gray-600 mt-4">This is what a triangle looks like in real life!</p>
@@ -1270,14 +1270,9 @@ const LessonVault0406 = () => {
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Rectangle</h2>
                     <div className="bg-gray-50 p-6 rounded-lg shadow-lg flex items-center justify-center" style={{ minHeight: '350px' }}>
-                      <img 
-                        src={realRectangleShape} 
-                        alt="Real rectangle shape - colorful educational material" 
-                        className="mx-auto rounded-lg w-full h-auto"
-                        style={{ maxHeight: '250px', objectFit: 'cover' }}
-                      />
+                      <div className="mx-auto" style={{ width: '320px', height: '200px', backgroundColor: '#dc2626', borderRadius: '8px' }}></div>
                     </div>
-                    <p className="text-gray-600 mt-4">This is what a rectangle looks like in real life!</p>
+                    <p className="text-gray-600 mt-4">A rectangle has 2 long sides and 2 short sides!</p>
                   </div>
                   
                   {/* Right Column - Child Drawing Rectangle */}
