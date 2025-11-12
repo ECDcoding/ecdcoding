@@ -189,23 +189,22 @@ const LessonVault0406 = () => {
     setCurrentAlphabetIndex(0);
     
     // Start the music
-    alphabetAudioRef.current.volume = 0.4; // Lower music volume so voice is audible
+    alphabetAudioRef.current.volume = 1.0; // Full volume for the song
     alphabetAudioRef.current.currentTime = 0;
     alphabetAudioRef.current.play();
     
-    // Start reciting alphabets with rhythm matching the music
+    // Highlight letters with rhythm matching the music
     let index = 0;
     const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
     
-    // Speak first letter immediately
-    speakVowel(alphabet[0], true);
+    // Start with first letter
+    setCurrentAlphabetIndex(0);
     index++;
     
     // Continue with rhythm (approximately 1.2 seconds per letter to match music tempo)
     alphabetIntervalRef.current = setInterval(() => {
       if (index < alphabet.length) {
         setCurrentAlphabetIndex(index);
-        speakVowel(alphabet[index], true);
         index++;
       } else {
         stopAlphabetPlay();
