@@ -515,12 +515,12 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* RIGHT SIDE - Penalty Spot */}
+          {/* RIGHT SIDE - Penalty Spot - Centered in Goal Area */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(50% + 11%)',
-              top: 'calc(50% - 1.5%)',
+              left: 'calc(65% + 16.5% - 1.25%)',
+              top: 'calc(25% + 25% - 2%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
@@ -647,12 +647,12 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* LEFT SIDE - Penalty Spot */}
+          {/* LEFT SIDE - Penalty Spot - Centered in Goal Area */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(2% + 11%)',
-              top: 'calc(50% - 1.5%)',
+              left: 'calc(2% + 16.5% - 1.25%)',
+              top: 'calc(25% + 25% - 2%)',
               width: '2.5%',
               height: '4%',
               boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
