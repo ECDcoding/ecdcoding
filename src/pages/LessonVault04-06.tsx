@@ -1128,8 +1128,8 @@ const LessonVault0406 = () => {
                   {/* Left Column - Simple Square Shape */}
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Square</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
-                      <div className="mx-auto" style={{ width: '300px', height: '300px', backgroundColor: '#4299e1', borderRadius: '8px' }}></div>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg flex items-center justify-center" style={{ minHeight: '350px' }}>
+                      <div className="mx-auto" style={{ width: '250px', height: '250px', backgroundColor: '#9333ea', borderRadius: '8px' }}></div>
                     </div>
                     <p className="text-gray-600 mt-4">A square has 4 equal sides and 4 right angles!</p>
                   </div>
@@ -1196,11 +1196,12 @@ const LessonVault0406 = () => {
                   {/* Left Column - Real Triangle Shape */}
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Triangle</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg flex items-center justify-center" style={{ minHeight: '350px' }}>
                       <img 
                         src={realTriangleShape} 
                         alt="Real triangle shape - colorful educational material" 
                         className="mx-auto rounded-lg max-w-full h-auto"
+                        style={{ maxHeight: '250px', objectFit: 'contain' }}
                       />
                     </div>
                     <p className="text-gray-600 mt-4">This is what a triangle looks like in real life!</p>
@@ -1268,11 +1269,12 @@ const LessonVault0406 = () => {
                   {/* Left Column - Real Rectangle Shape */}
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Rectangle</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg flex items-center justify-center" style={{ minHeight: '350px' }}>
                       <img 
                         src={realRectangleShape} 
                         alt="Real rectangle shape - colorful educational material" 
-                        className="mx-auto rounded-lg max-w-full h-auto"
+                        className="mx-auto rounded-lg w-full h-auto"
+                        style={{ maxHeight: '250px', objectFit: 'cover' }}
                       />
                     </div>
                     <p className="text-gray-600 mt-4">This is what a rectangle looks like in real life!</p>
@@ -1340,11 +1342,12 @@ const LessonVault0406 = () => {
                   {/* Left Column - Real Circle Shape */}
                   <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">This is a Circle</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-lg flex items-center justify-center" style={{ minHeight: '350px' }}>
                       <img 
                         src={realCircleShape} 
                         alt="Real circle shape - colorful educational material" 
                         className="mx-auto rounded-lg max-w-full h-auto"
+                        style={{ maxHeight: '250px', maxWidth: '250px', objectFit: 'contain' }}
                       />
                     </div>
                     <p className="text-gray-600 mt-4">This is what a circle looks like in real life!</p>
