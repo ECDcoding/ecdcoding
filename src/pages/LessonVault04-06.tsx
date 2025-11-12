@@ -797,21 +797,40 @@ const LessonVault0406 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  ⚽ Soccer
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🏉 Rugby
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🏏 Cricket
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🎾 Tennis
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🏹 Indigenous Games
-                </DropdownMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                        Play
+                        <ChevronDown className="h-4 w-4" />
+                      </DropdownMenuItem>
+                   </DropdownMenuTrigger>
+                     <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                       <DropdownMenuItem onClick={() => {
+                         setSelectedSport("soccer");
+                         setSportPlayOpen(true);
+                       }} className="font-medium text-white hover:bg-white/20">
+                         Soccer
+                       </DropdownMenuItem>
+                       <DropdownMenuItem onClick={() => {
+                         setSelectedSport("rugby");
+                         setSportPlayOpen(true);
+                       }} className="font-medium text-white hover:bg-white/20">
+                         Rugby
+                       </DropdownMenuItem>
+                       <DropdownMenuItem onClick={() => {
+                         setSelectedSport("cricket");
+                         setSportPlayOpen(true);
+                       }} className="font-medium text-white hover:bg-white/20">
+                         Cricket
+                       </DropdownMenuItem>
+                       <DropdownMenuItem onClick={() => {
+                         setSelectedSport("tennis");
+                         setSportPlayOpen(true);
+                       }} className="font-medium text-white hover:bg-white/20">
+                         Tennis
+                       </DropdownMenuItem>
+                     </DropdownMenuContent>
+                  </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
