@@ -217,23 +217,23 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     const ballXPercent = (position.x / containerWidth) * 100;
     const ballYPercent = (position.y / containerHeight) * 100;
     
-    // Top right corner
-    if (ballXPercent > 92 && ballYPercent < 8) {
+    // Top right corner - expanded detection zone
+    if (ballXPercent > 85 && ballYPercent < 15) {
       return "🚩 Corner Kick - Top Right Corner";
     }
     
-    // Bottom right corner
-    if (ballXPercent > 92 && ballYPercent > 92) {
+    // Bottom right corner - expanded detection zone
+    if (ballXPercent > 85 && ballYPercent > 85) {
       return "🚩 Corner Kick - Bottom Right Corner";
     }
     
-    // Top left corner
-    if (ballXPercent < 8 && ballYPercent < 8) {
+    // Top left corner - expanded detection zone
+    if (ballXPercent < 15 && ballYPercent < 15) {
       return "🚩 Corner Kick - Top Left Corner";
     }
     
-    // Bottom left corner
-    if (ballXPercent < 8 && ballYPercent > 92) {
+    // Bottom left corner - expanded detection zone
+    if (ballXPercent < 15 && ballYPercent > 85) {
       return "🚩 Corner Kick - Bottom Left Corner";
     }
     
