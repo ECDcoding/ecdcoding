@@ -414,20 +414,102 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* Goal */}
+          {/* Realistic Soccer Goal */}
           <div 
-            className="absolute border-4 border-white rounded-md"
+            className="absolute"
             style={{
-              left: '90%',
-              top: '12%',
-              width: '9%',
-              height: '26%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              left: '89%',
+              top: '8%',
+              width: '10%',
+              height: '34%',
+              perspective: '1000px',
             }}
           >
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-full h-1 bg-white" />
-            <div className="absolute left-0 top-0 w-1 h-full bg-white" />
-            <div className="absolute right-0 top-0 w-1 h-full bg-white" />
+            {/* Goal Frame - White Posts */}
+            <div 
+              className="absolute w-full h-full"
+              style={{
+                transform: 'rotateY(-15deg)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              {/* Left Post */}
+              <div 
+                className="absolute left-0 top-0 bottom-0"
+                style={{
+                  width: '6%',
+                  background: 'linear-gradient(90deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
+                  boxShadow: '2px 0 8px rgba(0,0,0,0.3)',
+                  borderRadius: '2px',
+                }}
+              />
+              
+              {/* Right Post */}
+              <div 
+                className="absolute right-0 top-0 bottom-0"
+                style={{
+                  width: '6%',
+                  background: 'linear-gradient(90deg, #e0e0e0 0%, #ffffff 50%, #f0f0f0 100%)',
+                  boxShadow: '-2px 0 8px rgba(0,0,0,0.3)',
+                  borderRadius: '2px',
+                }}
+              />
+              
+              {/* Top Bar/Crossbar */}
+              <div 
+                className="absolute left-0 right-0 top-0"
+                style={{
+                  height: '6%',
+                  background: 'linear-gradient(180deg, #f0f0f0 0%, #ffffff 50%, #e0e0e0 100%)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  borderRadius: '2px',
+                }}
+              />
+              
+              {/* Net Pattern */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: `
+                    repeating-linear-gradient(
+                      0deg,
+                      transparent,
+                      transparent 4%,
+                      rgba(200, 200, 200, 0.6) 4%,
+                      rgba(200, 200, 200, 0.6) 5%
+                    ),
+                    repeating-linear-gradient(
+                      90deg,
+                      transparent,
+                      transparent 4%,
+                      rgba(200, 200, 200, 0.6) 4%,
+                      rgba(200, 200, 200, 0.6) 5%
+                    )
+                  `,
+                  opacity: 0.8,
+                  backdropFilter: 'blur(1px)',
+                }}
+              />
+              
+              {/* Net Shadow/Depth */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.2) 100%)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+            
+            {/* Goal Base Shadow */}
+            <div 
+              className="absolute bottom-0 left-0 right-0"
+              style={{
+                height: '10%',
+                background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%)',
+                filter: 'blur(4px)',
+              }}
+            />
           </div>
           
           {/* Penalty Spot */}
