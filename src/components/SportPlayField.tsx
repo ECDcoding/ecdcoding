@@ -217,49 +217,49 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     const ballXPercent = (position.x / containerWidth) * 100;
     const ballYPercent = (position.y / containerHeight) * 100;
     
-    // Center circle (around 50%, 50%)
-    if (Math.abs(ballXPercent - 50) < 8 && Math.abs(ballYPercent - 50) < 12) {
-      return "⚽ Center Circle - This is where play starts!";
-    }
-    
-    // Right penalty spot (around 72%, 50%)
-    if (Math.abs(ballXPercent - 72) < 3 && Math.abs(ballYPercent - 50) < 3) {
-      return "🎯 Right Penalty Spot - Ready for a penalty kick!";
-    }
-    
-    // Left penalty spot (around 28%, 50%)
-    if (Math.abs(ballXPercent - 28) < 3 && Math.abs(ballYPercent - 50) < 3) {
-      return "🎯 Left Penalty Spot - Ready for a penalty kick!";
-    }
-    
     // Top right corner
-    if (ballXPercent > 90 && ballYPercent < 10) {
-      return "🚩 Top Right Corner - Ready for a corner kick!";
+    if (ballXPercent > 92 && ballYPercent < 8) {
+      return "🚩 Corner Kick - Top Right Corner";
     }
     
     // Bottom right corner
-    if (ballXPercent > 90 && ballYPercent > 90) {
-      return "🚩 Bottom Right Corner - Ready for a corner kick!";
+    if (ballXPercent > 92 && ballYPercent > 92) {
+      return "🚩 Corner Kick - Bottom Right Corner";
     }
     
     // Top left corner
-    if (ballXPercent < 10 && ballYPercent < 10) {
-      return "🚩 Top Left Corner - Ready for a corner kick!";
+    if (ballXPercent < 8 && ballYPercent < 8) {
+      return "🚩 Corner Kick - Top Left Corner";
     }
     
     // Bottom left corner
-    if (ballXPercent < 10 && ballYPercent > 90) {
-      return "🚩 Bottom Left Corner - Ready for a corner kick!";
+    if (ballXPercent < 8 && ballYPercent > 92) {
+      return "🚩 Corner Kick - Bottom Left Corner";
+    }
+    
+    // Right penalty spot (center of right goal area: 81.5%, 50%)
+    if (Math.abs(ballXPercent - 81.5) < 4 && Math.abs(ballYPercent - 50) < 4) {
+      return "🎯 Penalty Spot - Right Side";
+    }
+    
+    // Left penalty spot (center of left goal area: 18.5%, 50%)
+    if (Math.abs(ballXPercent - 18.5) < 4 && Math.abs(ballYPercent - 50) < 4) {
+      return "🎯 Penalty Spot - Left Side";
+    }
+    
+    // Center circle (around 50%, 50%)
+    if (Math.abs(ballXPercent - 50) < 8 && Math.abs(ballYPercent - 50) < 12) {
+      return "⚽ Center of Pitch - Where play begins!";
     }
     
     // Right goal area
     if (ballXPercent > 65 && ballXPercent < 98 && ballYPercent > 25 && ballYPercent < 75) {
-      return "⚡ Right Goal Area - Close to the goal!";
+      return "⚡ Right Goal Area";
     }
     
     // Left goal area
     if (ballXPercent > 2 && ballXPercent < 35 && ballYPercent > 25 && ballYPercent < 75) {
-      return "⚡ Left Goal Area - Close to the goal!";
+      return "⚡ Left Goal Area";
     }
     
     // Right half
@@ -602,11 +602,11 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* RIGHT SIDE - Penalty Spot - Standard position (12 yards from goal) */}
+          {/* RIGHT SIDE - Penalty Spot - Center of goal area square */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(72% - 1.25%)',
+              left: 'calc(65% + 16.5% - 1.25%)',
               top: 'calc(50% - 2%)',
               width: '2.5%',
               height: '4%',
@@ -734,11 +734,11 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             }}
           />
           
-          {/* LEFT SIDE - Penalty Spot - Standard position (12 yards from goal) */}
+          {/* LEFT SIDE - Penalty Spot - Center of goal area square */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: 'calc(28% - 1.25%)',
+              left: 'calc(2% + 16.5% - 1.25%)',
               top: 'calc(50% - 2%)',
               width: '2.5%',
               height: '4%',
