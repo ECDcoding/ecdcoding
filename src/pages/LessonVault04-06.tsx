@@ -40,7 +40,7 @@ import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
-import alphabetSong from "@/assets/alphabet-song.mp3";
+import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
 
 const LessonVault0406 = () => {
