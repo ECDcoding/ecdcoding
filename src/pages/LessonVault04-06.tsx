@@ -208,7 +208,11 @@ const LessonVault0406 = () => {
           setCurrentAlphabetIndex(index);
           index++;
         } else {
-          stopAlphabetPlay();
+          // Stop highlighting but keep music playing
+          if (alphabetIntervalRef.current) {
+            clearInterval(alphabetIntervalRef.current);
+            alphabetIntervalRef.current = null;
+          }
         }
       }, 1400); // 1.4 seconds per letter - adjusted to sync with song tempo
     }, 2000); // 2 second delay for musical intro
