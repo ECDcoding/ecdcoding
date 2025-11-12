@@ -131,7 +131,13 @@ const AdminDashboard = () => {
 
   const getPaymentStatusBadge = (payment?: SubscriptionPayment) => {
     if (!payment) {
-      return <Badge variant="outline" className="bg-gray-100">No Subscription</Badge>;
+      return (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-gray-300" />
+          <div className="w-6 h-6 rounded-full bg-gray-300" />
+          <div className="w-6 h-6 rounded-full bg-gray-300" />
+        </div>
+      );
     }
 
     const now = new Date();
@@ -139,18 +145,42 @@ const AdminDashboard = () => {
     const isOverdue = isAfter(now, dueDate);
     const isDueSoon = isBefore(now, dueDate) && isAfter(dueDate, now) && isAfter(addDays(now, 7), dueDate);
 
-    if (payment.payment_status === "active") {
-      return <Badge className="bg-green-500">Active</Badge>;
-    } else if (payment.payment_status === "cancelled") {
-      return <Badge variant="destructive">Cancelled</Badge>;
-    } else if (isOverdue) {
-      return <Badge variant="destructive" className="bg-red-600">Overdue</Badge>;
-    } else if (isDueSoon) {
-      return <Badge variant="outline" className="bg-yellow-100 text-yellow-800">Due Soon</Badge>;
-    } else if (payment.payment_status === "pending") {
-      return <Badge variant="outline" className="bg-blue-100 text-blue-800">Pending</Badge>;
+    // Determine which light should be active
+    let activeLight: 'red' | 'yellow' | 'green' = 'green';
+    
+    if (payment.payment_status === "cancelled" || isOverdue) {
+      activeLight = 'red';
+    } else if (isDueSoon || payment.payment_status === "pending") {
+      activeLight = 'yellow';
+    } else if (payment.payment_status === "active") {
+      activeLight = 'green';
     }
-    return <Badge variant="outline">{payment.payment_status}</Badge>;
+
+    return (
+      <div className="flex items-center gap-2">
+        <div 
+          className={`w-6 h-6 rounded-full transition-all ${
+            activeLight === 'red' 
+              ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)]' 
+              : 'bg-red-200'
+          }`} 
+        />
+        <div 
+          className={`w-6 h-6 rounded-full transition-all ${
+            activeLight === 'yellow' 
+              ? 'bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.6)]' 
+              : 'bg-yellow-200'
+          }`} 
+        />
+        <div 
+          className={`w-6 h-6 rounded-full transition-all ${
+            activeLight === 'green' 
+              ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]' 
+              : 'bg-green-200'
+          }`} 
+        />
+      </div>
+    );
   };
 
   const handleAction = async () => {
