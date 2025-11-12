@@ -164,6 +164,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const dragStart = useRef({ x: 0, y: 0, time: 0 });
   const animationFrame = useRef<number>();
   const lastScoredZone = useRef<string | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
 
   // Check if ball is in any target zone
   const checkScoring = (ballX: number, ballY: number) => {
@@ -380,6 +382,79 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     toast.info("Game reset!");
   };
 
+  // Voice command functionality
+  const moveBallToPosition = (x: number, y: number) => {
+    setPosition({ x, y });
+    setVelocity({ x: 0, y: 0 });
+  };
+
+  const startVoiceCommands = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast.error("Voice commands not supported in this browser");
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    recognitionRef.current = new SpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = false;
+    recognitionRef.current.lang = 'en-US';
+
+    recognitionRef.current.onstart = () => {
+      setIsListening(true);
+      toast.success("🎤 Voice commands active - Say 'penalty spot', 'corner kick', or 'center'");
+    };
+
+    recognitionRef.current.onresult = (event: any) => {
+      const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+      
+      if (transcript.includes('penalty spot') || transcript.includes('penalty')) {
+        // Move to right penalty spot
+        moveBallToPosition(window.innerWidth * 0.815, window.innerHeight * 0.50);
+        toast.success("⚽ Moving to penalty spot!");
+      } else if (transcript.includes('corner kick') || transcript.includes('corner')) {
+        // Move to top right corner
+        moveBallToPosition(window.innerWidth * 0.95, window.innerHeight * 0.05);
+        toast.success("⚽ Moving to corner kick!");
+      } else if (transcript.includes('center') || transcript.includes('centre')) {
+        // Move to center
+        moveBallToPosition(window.innerWidth * 0.50, window.innerHeight * 0.50);
+        toast.success("⚽ Moving to center!");
+      }
+    };
+
+    recognitionRef.current.onerror = (event: any) => {
+      console.error('Speech recognition error:', event.error);
+      if (event.error !== 'no-speech') {
+        toast.error(`Voice command error: ${event.error}`);
+      }
+    };
+
+    recognitionRef.current.onend = () => {
+      if (isListening) {
+        recognitionRef.current.start();
+      }
+    };
+
+    recognitionRef.current.start();
+  };
+
+  const stopVoiceCommands = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      toast.info("🎤 Voice commands stopped");
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -433,7 +508,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       </div>
 
       {/* Reset Button */}
-      <div className="absolute top-4 right-24 z-50">
+      <div className="absolute top-4 right-24 z-50 flex gap-2">
         <Button
           onClick={resetGame}
           variant="secondary"
@@ -442,6 +517,16 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         >
           Reset Game
         </Button>
+        {sport === 'soccer' && (
+          <Button
+            onClick={isListening ? stopVoiceCommands : startVoiceCommands}
+            variant={isListening ? "destructive" : "default"}
+            size="sm"
+            className="backdrop-blur-sm"
+          >
+            {isListening ? "🎤 Stop Voice" : "🎤 Voice Commands"}
+          </Button>
+        )}
       </div>
 
       {/* Title removed as requested */}
