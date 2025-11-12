@@ -2661,6 +2661,19 @@ const LessonVault0406 = () => {
       {/* Sport Play Field Full Screen Overlay */}
       {sportPlayOpen && selectedSport && (
         <div className="fixed inset-0 z-[100] bg-background">
+          <div className="absolute top-4 left-4 z-50">
+            <Button
+              variant="outline"
+              className="bg-background/80 backdrop-blur-sm hover:bg-background/90 gap-2"
+              onClick={() => {
+                setSportPlayOpen(false);
+                setSelectedSport(null);
+              }}
+            >
+              <X className="h-4 w-4" />
+              Back to My Lesson Vault
+            </Button>
+          </div>
           <Button
             variant="ghost"
             size="icon"
