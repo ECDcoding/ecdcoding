@@ -338,10 +338,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Score Display & Controls */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50">
+      {/* Score Display - Simplified */}
+      <div className="absolute top-4 right-4 z-50">
         <div 
-          className={`px-8 py-4 rounded-2xl text-center transition-all duration-300 ${
+          className={`px-6 py-3 rounded-xl text-center transition-all duration-300 ${
             celebration ? 'scale-125' : 'scale-100'
           }`}
           style={{
@@ -350,35 +350,15 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             boxShadow: celebration ? '0 0 30px rgba(255, 215, 0, 0.8)' : '0 4px 20px rgba(0,0,0,0.2)',
           }}
         >
-          {/* Difficulty Selection */}
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-xs font-semibold text-gray-600">Difficulty:</span>
-            {(['easy', 'medium', 'hard'] as Difficulty[]).map((level) => (
-              <Button
-                key={level}
-                variant={difficulty === level ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => {
-                  setDifficulty(level);
-                  resetGame();
-                }}
-                style={difficulty === level ? { backgroundColor: config.color1 } : undefined}
-                className="capitalize text-xs px-3 py-1 h-7"
-              >
-                {level}
-              </Button>
-            ))}
-          </div>
-          
           <p className="text-sm font-semibold text-gray-600 mb-1">SCORE</p>
-          <p className="text-5xl font-bold" style={{ color: config.color1 }}>
+          <p className="text-4xl font-bold" style={{ color: config.color1 }}>
             {score}
           </p>
         </div>
       </div>
 
       {/* Reset Button */}
-      <div className="absolute top-4 right-4 z-50">
+      <div className="absolute top-4 right-24 z-50">
         <Button
           onClick={resetGame}
           variant="secondary"
@@ -519,46 +499,22 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             />
           </div>
           
-          {/* Penalty Spot */}
+          {/* Penalty Spot - More Visible */}
           <div 
             className="absolute rounded-full bg-white"
             style={{
               left: '65%',
               top: '30%',
-              width: '1.5%',
-              height: '2.5%',
+              width: '2%',
+              height: '3%',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)',
             }}
           />
-          
-          {/* Player Emoji */}
-          <div 
-            className="absolute text-6xl select-none pointer-events-none"
-            style={{
-              left: '20%',
-              top: '25%',
-              transform: 'scaleX(-1)',
-              filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
-            }}
-          >
-            🧑‍🦱
-          </div>
-          
-          {/* Goalkeeper Emoji */}
-          <div 
-            className="absolute text-5xl select-none pointer-events-none"
-            style={{
-              left: '88%',
-              top: '28%',
-              filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
-            }}
-          >
-            🧤
-          </div>
         </>
       )}
 
-      {/* Target Zones */}
-      {config.targets[difficulty].map((target, index) => (
+      {/* Target Zones - Hidden for Soccer */}
+      {sport !== 'soccer' && config.targets[difficulty].map((target, index) => (
         <div
           key={index}
           className="absolute border-4 border-dashed rounded-lg transition-all duration-300"
@@ -567,16 +523,16 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             top: `${target.y}%`,
             width: `${target.width}%`,
             height: `${target.height}%`,
-            borderColor: sport === 'soccer' ? 'rgba(255, 215, 0, 0.8)' : 'rgba(255, 255, 255, 0.6)',
-            backgroundColor: sport === 'soccer' ? 'rgba(255, 215, 0, 0.15)' : 'rgba(255, 255, 255, 0.1)',
+            borderColor: 'rgba(255, 255, 255, 0.6)',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(5px)',
           }}
         >
           <div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none"
             style={{
-              color: sport === 'soccer' ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.9)',
-              fontSize: sport === 'soccer' ? '1rem' : '0.75rem',
+              color: 'rgba(255, 255, 255, 0.9)',
+              fontSize: '0.75rem',
               fontWeight: 'bold',
               textShadow: '0 2px 4px rgba(0,0,0,0.5)',
             }}
@@ -585,21 +541,23 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           </div>
         </div>
       ))}
-      {/* Large Sport Name in Background */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-0">
-        <h1 
-          className="text-6xl md:text-8xl font-bold mb-4"
-          style={{ 
-            color: config.color1,
-            mixBlendMode: 'color-burn',
-            fontFamily: 'Montserrat, sans-serif',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em'
-          }}
-        >
-          {config.name}
-        </h1>
-      </div>
+      {/* Large Sport Name in Background - Hidden for Soccer */}
+      {sport !== 'soccer' && (
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-0">
+          <h1 
+            className="text-6xl md:text-8xl font-bold mb-4"
+            style={{ 
+              color: config.color1,
+              mixBlendMode: 'color-burn',
+              fontFamily: 'Montserrat, sans-serif',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}
+          >
+            {config.name}
+          </h1>
+        </div>
+      )}
 
       {/* Ball */}
       <div
