@@ -154,8 +154,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [isDragging, setIsDragging] = useState(false);
   // Initialize ball position - at penalty spot for soccer, center for others
-  const initialX = sport === 'soccer' ? window.innerWidth * 0.30 : 50;
-  const initialY = sport === 'soccer' ? window.innerHeight * 0.25 : 50;
+  const initialX = sport === 'soccer' ? window.innerWidth * 0.20 : 50;
+  const initialY = sport === 'soccer' ? window.innerHeight * 0.30 : 50;
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -315,7 +315,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
     setScore(0);
     // Position ball at penalty spot for soccer, center for others
     const initialPosition = sport === 'soccer' 
-      ? { x: window.innerWidth * 0.30, y: window.innerHeight * 0.25 }
+      ? { x: window.innerWidth * 0.20, y: window.innerHeight * 0.30 }
       : { x: 50, y: 50 };
     setPosition(initialPosition);
     setVelocity({ x: 0, y: 0 });
@@ -389,6 +389,13 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         </Button>
       </div>
 
+      {/* Title - Positioned at top left under Back button */}
+      <div className="absolute top-20 left-8 z-20">
+        <h3 className="text-lg font-bold text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
+          {config.field}
+        </h3>
+      </div>
+
       {/* Soccer Field Elements (for soccer sport only) */}
       {sport === 'soccer' && (
         <>
@@ -396,10 +403,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           <div 
             className="absolute border-4 border-white/60 rounded-sm"
             style={{
-              left: '65%',
-              top: '5%',
-              width: '32%',
-              height: '40%',
+              left: '55%',
+              top: '10%',
+              width: '40%',
+              height: '50%',
             }}
           />
           
@@ -407,10 +414,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           <div 
             className="absolute border-4 border-white/80 rounded-sm"
             style={{
-              left: '73%',
-              top: '15%',
-              width: '24%',
-              height: '20%',
+              left: '70%',
+              top: '20%',
+              width: '25%',
+              height: '30%',
             }}
           />
           
@@ -418,10 +425,10 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           <div 
             className="absolute"
             style={{
-              left: '89%',
-              top: '8%',
-              width: '10%',
-              height: '34%',
+              left: '88%',
+              top: '12%',
+              width: '11%',
+              height: '46%',
               perspective: '1000px',
             }}
           >
@@ -516,8 +523,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           <div 
             className="absolute rounded-full bg-white"
             style={{
-              left: '77%',
-              top: '23.5%',
+              left: '65%',
+              top: '30%',
               width: '1.5%',
               height: '2.5%',
             }}
@@ -527,8 +534,8 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           <div 
             className="absolute text-6xl select-none pointer-events-none"
             style={{
-              left: '30%',
-              top: '18%',
+              left: '20%',
+              top: '25%',
               transform: 'scaleX(-1)',
               filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
             }}
@@ -541,7 +548,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
             className="absolute text-5xl select-none pointer-events-none"
             style={{
               left: '88%',
-              top: '19%',
+              top: '28%',
               filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))',
             }}
           >
@@ -578,7 +585,7 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
           </div>
         </div>
       ))}
-      {/* Title */}
+      {/* Large Sport Name in Background */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none z-0">
         <h1 
           className="text-6xl md:text-8xl font-bold mb-4"
@@ -592,16 +599,6 @@ export const SportPlayField = ({ sport }: SportPlayFieldProps) => {
         >
           {config.name}
         </h1>
-        <p 
-          className="text-xl md:text-2xl font-semibold"
-          style={{ 
-            color: config.color2,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em'
-          }}
-        >
-          {config.field}
-        </p>
       </div>
 
       {/* Ball */}
