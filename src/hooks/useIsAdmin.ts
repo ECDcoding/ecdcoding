@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "./useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "./useAuth";
 
 export const useIsAdmin = () => {
   const { user } = useAuth();
@@ -21,9 +21,9 @@ export const useIsAdmin = () => {
           .select("role")
           .eq("user_id", user.id)
           .eq("role", "admin")
-          .single();
+          .maybeSingle();
 
-        if (error && error.code !== "PGRST116") {
+        if (error) {
           console.error("Error checking admin status:", error);
           setIsAdmin(false);
         } else {
