@@ -2022,6 +2022,13 @@ const LessonVault0406 = () => {
                     Parents must get involved offline with coding and logic skills at home with the kid to enable them to figure things out on paper first
                   </p>
                 </div>
+
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">2. Allow Independent Exploration</h2>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    The 4-year-old needs to be allowed to test himself out.
+                  </p>
+                </div>
                 
                 <div className="text-center">
                   <img 
