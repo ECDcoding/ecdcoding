@@ -1468,7 +1468,7 @@ const LessonVault0406 = () => {
               Tailormade Lessons
             </h1>
             <p className="mt-6 text-foreground/90">
-              Outsourced from Reputable Service Providers and Researchers
+              A Suggested List of Lessons to Expect this Week or this Month
             </p>
           </div>
           
