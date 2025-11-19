@@ -1,10 +1,10 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +21,8 @@ interface ProfileDropdownProps {
 
 export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [voice2FAOpen, setVoice2FAOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [mediaUploadOpen, setMediaUploadOpen] = useState(false);
@@ -42,6 +44,17 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
     title: string;
     description: string;
   }>>([]);
+  
+  // 2FA Voice Recording states
+  const [recordingKidVoice, setRecordingKidVoice] = useState(false);
+  const [recordingParentVoice, setRecordingParentVoice] = useState(false);
+  const [kidVoiceRecorded, setKidVoiceRecorded] = useState(false);
+  const [parentVoiceRecorded, setParentVoiceRecorded] = useState(false);
+  const [kidVoiceBlob, setKidVoiceBlob] = useState<Blob | null>(null);
+  const [parentVoiceBlob, setParentVoiceBlob] = useState<Blob | null>(null);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
   const [formData, setFormData] = useState({
     // Parent fields
     learner_first_name: "",
@@ -461,6 +474,117 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
       toast({
         title: "Error",
         description: "Failed to send response",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // 2FA Voice Recording Functions
+  const startVoiceRecording = async (type: 'kid' | 'parent') => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        
+        if (type === 'kid') {
+          setKidVoiceBlob(audioBlob);
+          setKidVoiceRecorded(true);
+        } else {
+          setParentVoiceBlob(audioBlob);
+          setParentVoiceRecorded(true);
+        }
+
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorder.start();
+      
+      if (type === 'kid') {
+        setRecordingKidVoice(true);
+      } else {
+        setRecordingParentVoice(true);
+      }
+
+      // Stop recording after 3 seconds
+      let time = 0;
+      const interval = setInterval(() => {
+        time += 100;
+        setRecordingTime(Math.floor(time / 1000));
+        
+        if (time >= 3000) {
+          clearInterval(interval);
+          mediaRecorder.stop();
+          if (type === 'kid') {
+            setRecordingKidVoice(false);
+          } else {
+            setRecordingParentVoice(false);
+          }
+          setRecordingTime(0);
+        }
+      }, 100);
+
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      toast({
+        title: "Error",
+        description: "Could not access microphone. Please check permissions.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const save2FAVoiceRecordings = async () => {
+    if (!kidVoiceBlob || !parentVoiceBlob || !user) {
+      toast({
+        title: "Error",
+        description: "Please record both voices before saving",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Upload kid's voice
+      const kidFileName = `${user.id}/2fa-kid-voice.webm`;
+      const { error: kidUploadError } = await supabase.storage
+        .from('voice-auth')
+        .upload(kidFileName, kidVoiceBlob, { upsert: true });
+
+      if (kidUploadError) throw kidUploadError;
+
+      // Upload parent's voice
+      const parentFileName = `${user.id}/2fa-parent-voice.webm`;
+      const { error: parentUploadError } = await supabase.storage
+        .from('voice-auth')
+        .upload(parentFileName, parentVoiceBlob, { upsert: true });
+
+      if (parentUploadError) throw parentUploadError;
+
+      toast({
+        title: "Success",
+        description: "Voice authentication recordings saved successfully!",
+      });
+
+      setVoice2FAOpen(false);
+      setKidVoiceRecorded(false);
+      setParentVoiceRecorded(false);
+      setKidVoiceBlob(null);
+      setParentVoiceBlob(null);
+    } catch (error) {
+      console.error('Error saving voice recordings:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save voice recordings",
         variant: "destructive",
       });
     }
@@ -1125,6 +1249,142 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
               </Button>
               <Button onClick={handleSendResponse}>
                 Send to ECDCoding
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Dialog */}
+      <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Settings</DialogTitle>
+            <DialogDescription>
+              Manage your account settings and security
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {profile?.registration_type === 'parent' && (
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold flex items-center gap-2">
+                      <Mic className="h-5 w-5" />
+                      Voice Authentication (2FA)
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Set up one-time voice recording for authentication. This will record your voice and your child's voice for 3 seconds each.
+                    </p>
+                    <Button 
+                      onClick={() => setVoice2FAOpen(true)}
+                      className="w-full"
+                    >
+                      Set Up Voice 2FA
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* 2FA Voice Recording Dialog */}
+      <Dialog open={voice2FAOpen} onOpenChange={setVoice2FAOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Voice Authentication Setup</DialogTitle>
+            <DialogDescription>
+              Record both voices for authentication. Each recording will be 3 seconds.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            {/* Kid's Voice Recording */}
+            <Card>
+              <CardContent className="pt-6">
+                <div className="space-y-3">
+                  <h4 className="font-semibold">1. Child's Voice</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Have your child speak clearly for 3 seconds
+                  </p>
+                  {recordingKidVoice && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{recordingTime}s</div>
+                      <p className="text-sm text-muted-foreground">Recording...</p>
+                    </div>
+                  )}
+                  {kidVoiceRecorded && !recordingKidVoice && (
+                    <div className="text-center text-green-600 font-semibold">
+                      ✓ Recorded Successfully
+                    </div>
+                  )}
+                  <Button
+                    onClick={() => startVoiceRecording('kid')}
+                    disabled={recordingKidVoice || recordingParentVoice || kidVoiceRecorded}
+                    className="w-full"
+                    variant={kidVoiceRecorded ? "outline" : "default"}
+                  >
+                    <Mic className="h-4 w-4 mr-2" />
+                    {kidVoiceRecorded ? "Re-record Child's Voice" : "Record Child's Voice"}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Parent's Voice Recording */}
+            <Card>
+              <CardContent className="pt-6">
+                <div className="space-y-3">
+                  <h4 className="font-semibold">2. Parent/Guardian's Voice</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Speak clearly for 3 seconds
+                  </p>
+                  {recordingParentVoice && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{recordingTime}s</div>
+                      <p className="text-sm text-muted-foreground">Recording...</p>
+                    </div>
+                  )}
+                  {parentVoiceRecorded && !recordingParentVoice && (
+                    <div className="text-center text-green-600 font-semibold">
+                      ✓ Recorded Successfully
+                    </div>
+                  )}
+                  <Button
+                    onClick={() => startVoiceRecording('parent')}
+                    disabled={recordingKidVoice || recordingParentVoice || parentVoiceRecorded}
+                    className="w-full"
+                    variant={parentVoiceRecorded ? "outline" : "default"}
+                  >
+                    <Mic className="h-4 w-4 mr-2" />
+                    {parentVoiceRecorded ? "Re-record Parent's Voice" : "Record Parent's Voice"}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Save Button */}
+            <div className="flex gap-2 justify-end pt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setVoice2FAOpen(false);
+                  setKidVoiceRecorded(false);
+                  setParentVoiceRecorded(false);
+                  setKidVoiceBlob(null);
+                  setParentVoiceBlob(null);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={save2FAVoiceRecordings}
+                disabled={!kidVoiceRecorded || !parentVoiceRecorded}
+              >
+                Save Voice Authentication
               </Button>
             </div>
           </div>
