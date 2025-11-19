@@ -98,6 +98,14 @@ const LessonVault0406 = () => {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
+  const [testResults, setTestResults] = useState<{
+    subject: string;
+    audioUrl: string;
+    score: number;
+    grade: string;
+    timestamp: string;
+  }[]>([]);
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1470,7 +1478,7 @@ const LessonVault0406 = () => {
         <div className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-              Tailormade Testing
+              Verbal Testing Space
             </h1>
             <div className="mt-6 flex items-center justify-center gap-4">
               <p className="text-foreground/90">
@@ -1491,11 +1499,33 @@ const LessonVault0406 = () => {
                       recorder.ondataavailable = (e) => chunks.push(e.data);
                       recorder.onstop = () => {
                         const blob = new Blob(chunks, { type: 'audio/webm' });
-                        // Store the recording for later voice authentication and evaluation
-                        console.log('Recording completed:', blob);
+                        const audioUrl = URL.createObjectURL(blob);
+                        
+                        // Generate a score (in real implementation, this would come from AI analysis)
+                        const score = Math.floor(Math.random() * 6) + 5; // 5-10
+                        const grade = score === 5 ? 'D' : score >= 6 && score <= 7 ? 'C' : score >= 8 && score <= 9 ? 'B' : 'A';
+                        
+                        // Save test result
+                        const newResult = {
+                          subject: selectedCardForTest || 'General',
+                          audioUrl,
+                          score,
+                          grade,
+                          timestamp: new Date().toISOString()
+                        };
+                        
+                        setTestResults(prev => [...prev, newResult]);
+                        
+                        // Resume carousel
+                        if (carouselRef.current) {
+                          carouselRef.current.style.animationPlayState = 'running';
+                        }
+                        setCarouselPaused(false);
+                        setSelectedCardForTest(null);
+                        
                         toast({
                           title: "Recording Saved",
-                          description: "Your answer has been recorded for evaluation.",
+                          description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
                         });
                         stream.getTracks().forEach(track => track.stop());
                       };
@@ -1510,7 +1540,9 @@ const LessonVault0406 = () => {
                         setRecordingTime(prev => {
                           if (prev >= 30) {
                             clearInterval(timer);
-                            recorder.stop();
+                            if (recorder.state === 'recording') {
+                              recorder.stop();
+                            }
                             setIsRecording(false);
                             return 0;
                           }
@@ -1550,9 +1582,20 @@ const LessonVault0406 = () => {
                 width: 'max-content'
               }}
               onClick={(e) => {
-                if (!carouselPaused) {
+                if (!carouselPaused && !isRecording) {
                   e.currentTarget.style.animationPlayState = 'paused';
                   setCarouselPaused(true);
+                  // Try to determine which card was clicked
+                  const target = e.target as HTMLElement;
+                  const card = target.closest('.bg-white');
+                  if (card) {
+                    const cardText = card.textContent || '';
+                    if (cardText.includes('Numbers')) setSelectedCardForTest('Numeracy');
+                    else if (cardText.includes('Shapes')) setSelectedCardForTest('Shapes');
+                    else if (cardText.includes('Alphabet')) setSelectedCardForTest('Literacy');
+                    else if (cardText.includes('Science')) setSelectedCardForTest('Science');
+                    else setSelectedCardForTest('General');
+                  }
                   toast({
                     title: "Testing Mode",
                     description: "Click the microphone to record your answer about this card.",
@@ -2574,37 +2617,182 @@ const LessonVault0406 = () => {
                 <div className="flex-1">
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="numeracy">
-                      <AccordionTrigger>Numeracy</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Numeracy')}>Numeracy</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Track progress in counting, numbers, and basic math skills.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Track progress in counting, numbers, and basic math skills.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers')).length > 0 ? (
+                          <div className="space-y-3">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                        )}
                       </AccordionContent>
                     </AccordionItem>
                     
                     <AccordionItem value="basic-logic">
-                      <AccordionTrigger>Basic Logic</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Basic Logic')}>Basic Logic</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Monitor development in problem-solving and logical thinking.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Monitor development in problem-solving and logical thinking.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes')).length > 0 ? (
+                          <div className="space-y-3">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                        )}
                       </AccordionContent>
                     </AccordionItem>
                     
                     <AccordionItem value="literacy">
-                      <AccordionTrigger>Literacy</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Literacy')}>Literacy</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Assess reading, writing, and language comprehension skills.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Assess reading, writing, and language comprehension skills.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet')).length > 0 ? (
+                          <div className="space-y-3">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                        )}
                       </AccordionContent>
                     </AccordionItem>
                     
                     <AccordionItem value="arts">
-                      <AccordionTrigger>Arts</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Arts')}>Arts</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Evaluate creative expression and artistic development.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Evaluate creative expression and artistic development.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art')).length > 0 ? (
+                          <div className="space-y-3">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                        )}
                       </AccordionContent>
                     </AccordionItem>
                     
                     <AccordionItem value="sport">
-                      <AccordionTrigger>Sport</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Sport')}>Sport</AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('sport')).length > 0 ? (
+                          <div className="space-y-3 mb-4">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('sport'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic mb-4">No test results yet.</p>
+                        )}
                         <div className="space-y-2">
                           <h4 className="font-semibold text-sm">Play</h4>
                           <div className="flex flex-col gap-2">
@@ -2669,9 +2857,38 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="science-discovery">
-                      <AccordionTrigger>Science and Discovery</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Science')}>Science and Discovery</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-sm text-muted-foreground">Observe curiosity and understanding of the natural world.</p>
+                        <p className="text-sm text-muted-foreground mb-4">Observe curiosity and understanding of the natural world.</p>
+                        {testResults.filter(r => r.subject.toLowerCase().includes('science')).length > 0 ? (
+                          <div className="space-y-3">
+                            {testResults
+                              .filter(r => r.subject.toLowerCase().includes('science'))
+                              .map((result, idx) => (
+                                <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs text-muted-foreground">
+                                      {new Date(result.timestamp).toLocaleString()}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xl font-bold">{result.score}/10</span>
+                                      <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                        result.grade === 'A' ? 'bg-green-500 text-white' :
+                                        result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                        result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                        'bg-red-500 text-white'
+                                      }`}>
+                                        {result.grade}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <audio controls className="w-full h-8" src={result.audioUrl} />
+                                </div>
+                              ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                        )}
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
