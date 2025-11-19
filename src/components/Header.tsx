@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
-import { ChevronDown, Shield } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import SignIn from "./SignIn";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -46,25 +46,13 @@ const Header = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         {user ? (
-          <>
-            <Button 
-              variant="outline" 
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground gap-2"
-              asChild
-            >
-              <Link to="/admin">
-                <Shield className="h-4 w-4" />
-                Admin
-              </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              onClick={signOut}
-            >
-              Sign out
-            </Button>
-          </>
+          <Button 
+            variant="outline" 
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            onClick={signOut}
+          >
+            Sign out
+          </Button>
         ) : (
           <Button 
             variant="outline" 
