@@ -748,9 +748,6 @@ const LessonVault0406 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  Problem Solving
-                </DropdownMenuItem>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -995,7 +992,7 @@ const LessonVault0406 = () => {
                       className="font-medium text-white hover:bg-white/20 cursor-pointer"
                       onClick={() => setObjectCharactersOpen(true)}
                     >
-                      Object Characters
+                      The Young and Old
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -1571,15 +1568,6 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-orange-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-orange-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Problem Solving</h3>
-                  <h4 className="text-lg italic mb-4">Think smart, solve fast</h4>
-                  <p className="text-base mb-4">Develop critical thinking skills through fun challenges and puzzles.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-orange-500">Read more</a>
-                </CardContent>
-              </Card>
-
               <Card className="bg-white p-8 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold text-green-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Shapes</h3>
@@ -1641,15 +1629,6 @@ const LessonVault0406 = () => {
                   <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
                   <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
                   <a href="#" className="font-bold underline text-black hover:text-purple-500">Read more</a>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-orange-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-orange-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Problem Solving</h3>
-                  <h4 className="text-lg italic mb-4">Think smart, solve fast</h4>
-                  <p className="text-base mb-4">Develop critical thinking skills through fun challenges and puzzles.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-orange-500">Read more</a>
                 </CardContent>
               </Card>
 
@@ -2491,7 +2470,7 @@ const LessonVault0406 = () => {
           </div>
         )}
 
-        {/* Object Characters View */}
+        {/* The Young and Old View */}
         {objectCharactersOpen && (
           <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
         )}
