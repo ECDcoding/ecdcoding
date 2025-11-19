@@ -1575,12 +1575,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-teal-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Cryptogram</h3>
-                  <h4 className="text-lg italic mb-4">Think deep, build deeper</h4>
-                  <p className="text-base mb-4">Where calm logic meets complex flows beneath the surface of design.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-teal-600">Read more</a>
+                  <img src={wildAnimalsChart} alt="Wild Animals" className="w-full h-auto" />
                 </CardContent>
               </Card>
               
@@ -1636,12 +1633,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-teal-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Cryptogram</h3>
-                  <h4 className="text-lg italic mb-4">Think deep, build deeper</h4>
-                  <p className="text-base mb-4">Where calm logic meets complex flows beneath the surface of design.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-teal-600">Read more</a>
+                  <img src={wildAnimalsChart} alt="Wild Animals" className="w-full h-auto" />
                 </CardContent>
               </Card>
               
