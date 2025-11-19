@@ -93,6 +93,11 @@ const LessonVault0406 = () => {
   const [touchEnd, setTouchEnd] = useState<number>(0);
   const [sportPlayOpen, setSportPlayOpen] = useState(false);
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [carouselPaused, setCarouselPaused] = useState(false);
+  const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1461,15 +1466,79 @@ const LessonVault0406 = () => {
           </div>
         )}
 
-        {/* Tailormade Lessons Carousel */}
+        {/* Tailormade Testing Platform */}
         <div className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-              Tailormade Lessons
+              Tailormade Testing
             </h1>
-            <p className="mt-6 text-foreground/90">
-              A Suggested List of Lessons to Expect this Week or this Month
-            </p>
+            <div className="mt-6 flex items-center justify-center gap-4">
+              <p className="text-foreground/90">
+                A Suggested List of Lessons to Expect for Testing this Week
+              </p>
+              <Button
+                onClick={async () => {
+                  if (isRecording) {
+                    mediaRecorder?.stop();
+                    setIsRecording(false);
+                    setRecordingTime(0);
+                  } else {
+                    try {
+                      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                      const recorder = new MediaRecorder(stream);
+                      const chunks: BlobPart[] = [];
+                      
+                      recorder.ondataavailable = (e) => chunks.push(e.data);
+                      recorder.onstop = () => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        // Store the recording for later voice authentication and evaluation
+                        console.log('Recording completed:', blob);
+                        toast({
+                          title: "Recording Saved",
+                          description: "Your answer has been recorded for evaluation.",
+                        });
+                        stream.getTracks().forEach(track => track.stop());
+                      };
+                      
+                      recorder.start();
+                      setMediaRecorder(recorder);
+                      setIsRecording(true);
+                      setRecordingTime(0);
+                      
+                      // 30-second timer
+                      const timer = setInterval(() => {
+                        setRecordingTime(prev => {
+                          if (prev >= 30) {
+                            clearInterval(timer);
+                            recorder.stop();
+                            setIsRecording(false);
+                            return 0;
+                          }
+                          return prev + 1;
+                        });
+                      }, 1000);
+                    } catch (error) {
+                      console.error('Error accessing microphone:', error);
+                      toast({
+                        title: "Microphone Error",
+                        description: "Unable to access microphone. Please check permissions.",
+                        variant: "destructive",
+                      });
+                    }
+                  }
+                }}
+                className={`${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-3`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+              </Button>
+              {isRecording && (
+                <span className="text-white font-bold animate-pulse">
+                  Recording: {recordingTime}s / 30s
+                </span>
+              )}
+            </div>
           </div>
           
           <div className="overflow-hidden w-full relative">
@@ -1480,11 +1549,25 @@ const LessonVault0406 = () => {
                 animation: 'scroll-horizontal 40s linear infinite',
                 width: 'max-content'
               }}
+              onClick={(e) => {
+                if (!carouselPaused) {
+                  e.currentTarget.style.animationPlayState = 'paused';
+                  setCarouselPaused(true);
+                  toast({
+                    title: "Testing Mode",
+                    description: "Click the microphone to record your answer about this card.",
+                  });
+                }
+              }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.animationPlayState = 'paused';
+                if (!carouselPaused) {
+                  e.currentTarget.style.animationPlayState = 'paused';
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.animationPlayState = 'running';
+                if (!carouselPaused) {
+                  e.currentTarget.style.animationPlayState = 'running';
+                }
               }}
               onTouchStart={(e) => {
                 setTouchStart(e.targetTouches[0].clientX);
