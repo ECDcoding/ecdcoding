@@ -140,7 +140,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
                 textShadow: '0 2px 0 black, 2px 0 0 black, 2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black'
               }}
             >
-              Pick your character
+              The Young and Old
             </h1>
           </div>
           <div className="hidden md:flex items-end gap-4 opacity-50">
