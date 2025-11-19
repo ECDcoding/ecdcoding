@@ -44,6 +44,7 @@ import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
 import shapesBasicColor from "@/assets/shapes-basic-color.png";
+import beeCharacter from "@/assets/bee-character.jpg";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -1581,12 +1582,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-blue-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>IoT</h3>
-                  <h4 className="text-lg italic mb-4">Fast ideas in a faster world</h4>
-                  <p className="text-base mb-4">Move with clarity, build with momentum. You're ready for the climb.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-blue-500">Read more</a>
+                  <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
                 </CardContent>
               </Card>
               
@@ -1639,12 +1637,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-blue-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>IoT</h3>
-                  <h4 className="text-lg italic mb-4">Fast ideas in a faster world</h4>
-                  <p className="text-base mb-4">Move with clarity, build with momentum. You're ready for the climb.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-blue-500">Read more</a>
+                  <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
                 </CardContent>
               </Card>
             </div>
