@@ -45,6 +45,8 @@ import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
 import shapesBasicColor from "@/assets/shapes-basic-color.png";
 import beeCharacter from "@/assets/bee-character.jpg";
+import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
+import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -1648,12 +1650,9 @@ const LessonVault0406 = () => {
               }}
             >
               {/* First set of cards */}
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-yellow-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>HTML Basics</h3>
-                  <h4 className="text-lg italic mb-4">Bright ideas wrapped in yellow</h4>
-                  <p className="text-base mb-4">A vision powered by creativity and a splash of light-hearted boldness.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-yellow-400">Read more</a>
+                  <img src={girlBodyMyBody} alt="Girl's My Body" className="w-full h-auto" />
                 </CardContent>
               </Card>
               
@@ -1678,12 +1677,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
-                  <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
-                  <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                  <img src={boyBodyMyBody} alt="Boy's My Body" className="w-full h-auto" />
                 </CardContent>
               </Card>
 
@@ -1715,12 +1711,9 @@ const LessonVault0406 = () => {
               </Card>
               
               {/* Duplicate cards for infinite loop */}
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-yellow-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>HTML Basics</h3>
-                  <h4 className="text-lg italic mb-4">Bright ideas wrapped in yellow</h4>
-                  <p className="text-base mb-4">A vision powered by creativity and a splash of light-hearted boldness.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-yellow-400">Read more</a>
+                  <img src={girlBodyMyBody} alt="Girl's My Body" className="w-full h-auto" />
                 </CardContent>
               </Card>
               
@@ -1733,12 +1726,9 @@ const LessonVault0406 = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-red-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Numbers</h3>
-                  <h4 className="text-lg italic mb-4">Bold colors for bolder moves</h4>
-                  <p className="text-base mb-4">Let your work simmer with energy and burn bright on every screen.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-red-400">Read more</a>
+                  <img src={boyBodyMyBody} alt="Boy's My Body" className="w-full h-auto" />
                 </CardContent>
               </Card>
 
