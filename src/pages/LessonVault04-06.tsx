@@ -1534,7 +1534,7 @@ const LessonVault0406 = () => {
             </h1>
             <div className="mt-6 flex items-center justify-center gap-4">
               <p className="text-foreground/90">
-                A Suggested List of Lessons to Expect for Testing this Week
+                Click a Test, Click on the Mic and Share in Only 30 Seconds
               </p>
               <Button
                 onClick={async () => {
