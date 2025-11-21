@@ -47,6 +47,9 @@ import shapesBasicColor from "@/assets/shapes-basic-color.png";
 import beeCharacter from "@/assets/bee-character.jpg";
 import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
 import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
+import girlBodyPartsDiagram from "@/assets/body-parts-diagram.jpg";
+import boyBodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
+import fiveSensesDiagram from "@/assets/five-senses.jpg";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -108,6 +111,9 @@ const LessonVault0406 = () => {
     timestamp: string;
   }[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [humanBeingOpen, setHumanBeingOpen] = useState(false);
+  const [selectedBodyType, setSelectedBodyType] = useState<'girl' | 'boy' | null>(null);
+  const [fiveSensesOpen, setFiveSensesOpen] = useState(false);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1010,6 +1016,50 @@ const LessonVault0406 = () => {
                       onClick={() => setObjectCharactersOpen(true)}
                     >
                       The Young and Old
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Human Being
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          My Body
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenuItem 
+                          className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                          onClick={() => {
+                            setSelectedBodyType('girl');
+                            setHumanBeingOpen(true);
+                          }}
+                        >
+                          Girl's Body
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                          onClick={() => {
+                            setSelectedBodyType('boy');
+                            setHumanBeingOpen(true);
+                          }}
+                        >
+                          Boy's Body
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setFiveSensesOpen(true)}
+                    >
+                      Five Senses
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -2574,6 +2624,50 @@ const LessonVault0406 = () => {
         {objectCharactersOpen && (
           <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
         )}
+
+        {/* Human Being - My Body Dialog */}
+        <Dialog open={humanBeingOpen} onOpenChange={setHumanBeingOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">
+                {selectedBodyType === 'girl' ? "Girl's Body Parts" : "Boy's Body Parts"}
+              </DialogTitle>
+              <DialogDescription>
+                Learn about different parts of the human body
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div className="flex flex-col items-center justify-center gap-4">
+                <img 
+                  src={selectedBodyType === 'girl' ? girlBodyPartsDiagram : boyBodyPartsDiagram}
+                  alt={selectedBodyType === 'girl' ? "Girl's body parts diagram" : "Boy's body parts diagram"}
+                  className="w-full max-w-2xl h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Five Senses Dialog */}
+        <Dialog open={fiveSensesOpen} onOpenChange={setFiveSensesOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">The Five Senses</DialogTitle>
+              <DialogDescription>
+                Explore the five senses: sight, hearing, smell, taste, and touch
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div className="flex flex-col items-center justify-center gap-4">
+                <img 
+                  src={fiveSensesDiagram}
+                  alt="The five senses diagram"
+                  className="w-full max-w-2xl h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
        </main>
 
