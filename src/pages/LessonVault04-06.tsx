@@ -47,8 +47,8 @@ import shapesBasicColor from "@/assets/shapes-basic-color.png";
 import beeCharacter from "@/assets/bee-character.jpg";
 import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
 import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
-import girlBodyPartsDiagram from "@/assets/body-parts-diagram.jpg";
-import boyBodyPartsDiagram from "@/assets/child-body-parts-diagram.jpg";
+import girlBodyPartsDiagram from "@/assets/girl-body-parts-diagram.jpg";
+import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
 
 const LessonVault0406 = () => {
