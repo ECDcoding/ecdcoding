@@ -142,6 +142,148 @@ const LessonVault0406 = () => {
     return cleanup;
   }, [credits]);
   
+  // Helper function to create recording handler for carousel cards
+  const createRecordingHandler = (cardName: string) => async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!carouselPaused) {
+      toast({
+        title: "Select Card First",
+        description: "Click on the card to stop the carousel before recording.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (isRecording) {
+      mediaRecorder?.stop();
+      setIsRecording(false);
+      setRecordingTime(0);
+    } else {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        const chunks: BlobPart[] = [];
+        
+        recorder.ondataavailable = (e) => chunks.push(e.data);
+        recorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'audio/webm' });
+          const audioUrl = URL.createObjectURL(blob);
+          
+          const score = Math.floor(Math.random() * 6) + 5;
+          const grade = score === 5 ? 'D' : score >= 6 && score <= 7 ? 'C' : score >= 8 && score <= 9 ? 'B' : 'A';
+          
+          const newResult = {
+            subject: selectedCardForTest || cardName,
+            audioUrl,
+            score,
+            grade,
+            timestamp: new Date().toISOString()
+          };
+          
+          setTestResults(prev => [...prev, newResult]);
+          
+          if (carouselRef.current) {
+            carouselRef.current.style.animationPlayState = 'running';
+          }
+          setCarouselPaused(false);
+          setSelectedCardForTest(null);
+          
+          toast({
+            title: "Recording Saved",
+            description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
+          });
+          stream.getTracks().forEach(track => track.stop());
+        };
+        
+        recorder.start();
+        setMediaRecorder(recorder);
+        setIsRecording(true);
+        setRecordingTime(0);
+        
+        const timer = setInterval(() => {
+          setRecordingTime(prev => {
+            if (prev >= 30) {
+              clearInterval(timer);
+              if (recorder.state === 'recording') {
+                recorder.stop();
+              }
+              setIsRecording(false);
+              return 0;
+            }
+            return prev + 1;
+          });
+        }, 1000);
+      } catch (error) {
+        console.error('Error accessing microphone:', error);
+        toast({
+          title: "Microphone Error",
+          description: "Unable to access microphone. Please check permissions.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+  
+  // Helper function to handle card click for stopping carousel
+  const handleCardClick = (cardName: string) => (e: React.MouseEvent) => {
+    if (!carouselPaused && !isRecording && !(e.target as HTMLElement).closest('button, a')) {
+      if (carouselRef.current) {
+        carouselRef.current.style.animationPlayState = 'paused';
+      }
+      setCarouselPaused(true);
+      setSelectedCardForTest(cardName);
+      toast({
+        title: "Card Selected",
+        description: "Click the microphone on this card to record.",
+      });
+    }
+  };
+  
+  // Function to play narration on demand
+  const playNarration = async () => {
+    if (narrationPlayed) {
+      toast({
+        title: "Narration Playing",
+        description: "The narration has already been played.",
+      });
+      return;
+    }
+    
+    setNarrationPlayed(true);
+    
+    const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 30 seconds verbal recording to be successful and saved in the relevant lesson archive. And if the 30 seconds is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { text: narrationText, voice: 'nova' }
+      });
+
+      if (error) throw error;
+
+      if (data?.audioContent) {
+        const audioBlob = new Blob(
+          [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
+          { type: 'audio/mp3' }
+        );
+        const audioUrl = URL.createObjectURL(audioBlob);
+        narrationAudioRef.current = new Audio(audioUrl);
+        narrationAudioRef.current.play();
+        
+        toast({
+          title: "Playing Instructions",
+          description: "Listen carefully to the testing instructions.",
+        });
+      }
+    } catch (error) {
+      console.error('Error playing narration:', error);
+      toast({
+        title: "Error",
+        description: "Failed to play narration. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+  
   // Intersection Observer for Verbal Testing Space narration
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1585,95 +1727,16 @@ const LessonVault0406 = () => {
               Verbal Testing Space
             </h1>
             <div className="mt-6 flex items-center justify-center gap-4">
-              <p className="text-foreground/90">
-                Click a Test, Click on the Mic and Share in Only 30 Seconds
-              </p>
               <Button
-                onClick={async () => {
-                  if (isRecording) {
-                    mediaRecorder?.stop();
-                    setIsRecording(false);
-                    setRecordingTime(0);
-                  } else {
-                    try {
-                      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                      const recorder = new MediaRecorder(stream);
-                      const chunks: BlobPart[] = [];
-                      
-                      recorder.ondataavailable = (e) => chunks.push(e.data);
-                      recorder.onstop = () => {
-                        const blob = new Blob(chunks, { type: 'audio/webm' });
-                        const audioUrl = URL.createObjectURL(blob);
-                        
-                        // Generate a score (in real implementation, this would come from AI analysis)
-                        const score = Math.floor(Math.random() * 6) + 5; // 5-10
-                        const grade = score === 5 ? 'D' : score >= 6 && score <= 7 ? 'C' : score >= 8 && score <= 9 ? 'B' : 'A';
-                        
-                        // Save test result
-                        const newResult = {
-                          subject: selectedCardForTest || 'General',
-                          audioUrl,
-                          score,
-                          grade,
-                          timestamp: new Date().toISOString()
-                        };
-                        
-                        setTestResults(prev => [...prev, newResult]);
-                        
-                        // Resume carousel
-                        if (carouselRef.current) {
-                          carouselRef.current.style.animationPlayState = 'running';
-                        }
-                        setCarouselPaused(false);
-                        setSelectedCardForTest(null);
-                        
-                        toast({
-                          title: "Recording Saved",
-                          description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
-                        });
-                        stream.getTracks().forEach(track => track.stop());
-                      };
-                      
-                      recorder.start();
-                      setMediaRecorder(recorder);
-                      setIsRecording(true);
-                      setRecordingTime(0);
-                      
-                      // 30-second timer
-                      const timer = setInterval(() => {
-                        setRecordingTime(prev => {
-                          if (prev >= 30) {
-                            clearInterval(timer);
-                            if (recorder.state === 'recording') {
-                              recorder.stop();
-                            }
-                            setIsRecording(false);
-                            return 0;
-                          }
-                          return prev + 1;
-                        });
-                      }, 1000);
-                    } catch (error) {
-                      console.error('Error accessing microphone:', error);
-                      toast({
-                        title: "Microphone Error",
-                        description: "Unable to access microphone. Please check permissions.",
-                        variant: "destructive",
-                      });
-                    }
-                  }
-                }}
-                className={`${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-3`}
+                onClick={playNarration}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                </svg>
+                Before Testing...
               </Button>
-              {isRecording && (
-                <span className="text-white font-bold animate-pulse">
-                  Recording: {recordingTime}s / 30s
-                </span>
-              )}
+              <p className="text-foreground/90">
+                Click a Card, Click on the Mic and Present in Only 30 Seconds
+              </p>
+              {/* Removed central mic - now on each card */}
             </div>
           </div>
           
@@ -1684,27 +1747,6 @@ const LessonVault0406 = () => {
               style={{
                 animation: 'scroll-horizontal 40s linear infinite',
                 width: 'max-content'
-              }}
-              onClick={(e) => {
-                if (!carouselPaused && !isRecording) {
-                  e.currentTarget.style.animationPlayState = 'paused';
-                  setCarouselPaused(true);
-                  // Try to determine which card was clicked
-                  const target = e.target as HTMLElement;
-                  const card = target.closest('.bg-white');
-                  if (card) {
-                    const cardText = card.textContent || '';
-                    if (cardText.includes('Numbers')) setSelectedCardForTest('Numeracy');
-                    else if (cardText.includes('Shapes')) setSelectedCardForTest('Shapes');
-                    else if (cardText.includes('Alphabet')) setSelectedCardForTest('Literacy');
-                    else if (cardText.includes('Science')) setSelectedCardForTest('Science');
-                    else setSelectedCardForTest('General');
-                  }
-                  toast({
-                    title: "Testing Mode",
-                    description: "Click the microphone to record your answer about this card.",
-                  });
-                }
               }}
               onMouseEnter={(e) => {
                 if (!carouselPaused) {
@@ -1752,112 +1794,443 @@ const LessonVault0406 = () => {
               }}
             >
               {/* First set of cards */}
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={(e) => {
+                  if (!carouselPaused && !isRecording && !(e.target as HTMLElement).closest('button')) {
+                    if (carouselRef.current) {
+                      carouselRef.current.style.animationPlayState = 'paused';
+                    }
+                    setCarouselPaused(true);
+                    setSelectedCardForTest("Girl's Body");
+                    toast({
+                      title: "Card Selected",
+                      description: "Click the microphone on this card to record.",
+                    });
+                  }
+                }}
+              >
                 <CardContent className="p-0">
                   <img src={girlBodyMyBody} alt="Girl's My Body" className="w-full h-auto" />
+                  <Button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      if (!carouselPaused) {
+                        toast({
+                          title: "Select Card First",
+                          description: "Click on the card to stop the carousel before recording.",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+                      
+                      if (isRecording) {
+                        mediaRecorder?.stop();
+                        setIsRecording(false);
+                        setRecordingTime(0);
+                      } else {
+                        try {
+                          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                          const recorder = new MediaRecorder(stream);
+                          const chunks: BlobPart[] = [];
+                          
+                          recorder.ondataavailable = (e) => chunks.push(e.data);
+                          recorder.onstop = () => {
+                            const blob = new Blob(chunks, { type: 'audio/webm' });
+                            const audioUrl = URL.createObjectURL(blob);
+                            
+                            const score = Math.floor(Math.random() * 6) + 5;
+                            const grade = score === 5 ? 'D' : score >= 6 && score <= 7 ? 'C' : score >= 8 && score <= 9 ? 'B' : 'A';
+                            
+                            const newResult = {
+                              subject: selectedCardForTest || 'General',
+                              audioUrl,
+                              score,
+                              grade,
+                              timestamp: new Date().toISOString()
+                            };
+                            
+                            setTestResults(prev => [...prev, newResult]);
+                            
+                            if (carouselRef.current) {
+                              carouselRef.current.style.animationPlayState = 'running';
+                            }
+                            setCarouselPaused(false);
+                            setSelectedCardForTest(null);
+                            
+                            toast({
+                              title: "Recording Saved",
+                              description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
+                            });
+                            stream.getTracks().forEach(track => track.stop());
+                          };
+                          
+                          recorder.start();
+                          setMediaRecorder(recorder);
+                          setIsRecording(true);
+                          setRecordingTime(0);
+                          
+                          const timer = setInterval(() => {
+                            setRecordingTime(prev => {
+                              if (prev >= 30) {
+                                clearInterval(timer);
+                                if (recorder.state === 'recording') {
+                                  recorder.stop();
+                                }
+                                setIsRecording(false);
+                                return 0;
+                              }
+                              return prev + 1;
+                            });
+                          }, 1000);
+                        } catch (error) {
+                          console.error('Error accessing microphone:', error);
+                          toast({
+                            title: "Microphone Error",
+                            description: "Unable to access microphone. Please check permissions.",
+                            variant: "destructive",
+                          });
+                        }
+                      }
+                    }}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Girl's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Girl's Body" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Logic")}
+              >
+                <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
                   <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                  <Button
+                    onClick={createRecordingHandler("Basic Logic")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Logic" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Logic" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Transportation")}
+              >
+                <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
                   <h4 className="text-lg italic mb-4">Exploring vehicles and travel</h4>
                   <p className="text-base mb-4">Learn about different types of transport and how they move us around.</p>
                   <div className="space-y-2">
-                    <button onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
-                    <button onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
+                    <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
+                    <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
                   </div>
+                  <Button
+                    onClick={createRecordingHandler("Transportation")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Transportation" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Transportation" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Boy's Body")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={boyBodyMyBody} alt="Boy's My Body" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Boy's Body")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Boy's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Boy's Body" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Counting")}
+              >
+                <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
                   <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
                   <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                  <a href="#" onClick={(e) => e.stopPropagation()} className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                  <Button
+                    onClick={createRecordingHandler("Basic Counting")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Counting" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Counting" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Shapes")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Basic Shapes")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Shapes" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Wild Animals")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={wildAnimalsChart} alt="Wild Animals" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Wild Animals")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Wild Animals" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Wild Animals" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Bee Character")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Bee Character")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Bee Character" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Bee Character" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
               {/* Duplicate cards for infinite loop */}
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Girl's Body")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={girlBodyMyBody} alt="Girl's My Body" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Girl's Body")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Girl's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Girl's Body" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Logic")}
+              >
+                <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
                   <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
                   <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                  <a href="/emoji-ai" onClick={(e) => e.stopPropagation()} className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                  <Button
+                    onClick={createRecordingHandler("Basic Logic")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Logic" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Logic" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-red-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Boy's Body")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={boyBodyMyBody} alt="Boy's My Body" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Boy's Body")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Boy's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Boy's Body" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Counting")}
+              >
+                <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
                   <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
                   <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
-                  <a href="#" className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                  <a href="#" onClick={(e) => e.stopPropagation()} className="font-bold underline text-black hover:text-purple-500">Read more</a>
+                  <Button
+                    onClick={createRecordingHandler("Basic Counting")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Counting" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Counting" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Basic Shapes")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Basic Shapes")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Basic Shapes" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-teal-600 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Wild Animals")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={wildAnimalsChart} alt="Wild Animals" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Wild Animals")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Wild Animals" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Wild Animals" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
-              <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0">
-                <CardContent className="p-0">
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Bee Character")}
+              >
+                <CardContent className="p-0 relative">
                   <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
+                  <Button
+                    onClick={createRecordingHandler("Bee Character")}
+                    className={`absolute top-2 right-2 ${isRecording && selectedCardForTest === "Bee Character" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === "Bee Character" && (
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
