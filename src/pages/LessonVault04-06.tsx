@@ -114,6 +114,9 @@ const LessonVault0406 = () => {
   const [humanBeingOpen, setHumanBeingOpen] = useState(false);
   const [selectedBodyType, setSelectedBodyType] = useState<'girl' | 'boy' | null>(null);
   const [fiveSensesOpen, setFiveSensesOpen] = useState(false);
+  const [narrationPlayed, setNarrationPlayed] = useState(false);
+  const verbalTestingRef = useRef<HTMLDivElement>(null);
+  const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -138,6 +141,55 @@ const LessonVault0406 = () => {
     const cleanup = cycle();
     return cleanup;
   }, [credits]);
+  
+  // Intersection Observer for Verbal Testing Space narration
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        if (entries[0].isIntersecting && !narrationPlayed) {
+          setNarrationPlayed(true);
+          
+          const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 30 seconds verbal recording to be successful and saved in the relevant lesson archive. And if the 30 seconds is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
+          
+          try {
+            const { data, error } = await supabase.functions.invoke('text-to-speech', {
+              body: { text: narrationText, voice: 'nova' }
+            });
+
+            if (error) throw error;
+
+            if (data?.audioContent) {
+              const audioBlob = new Blob(
+                [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
+                { type: 'audio/mp3' }
+              );
+              const audioUrl = URL.createObjectURL(audioBlob);
+              narrationAudioRef.current = new Audio(audioUrl);
+              narrationAudioRef.current.play();
+            }
+          } catch (error) {
+            console.error('Error playing narration:', error);
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (verbalTestingRef.current) {
+      observer.observe(verbalTestingRef.current);
+    }
+
+    return () => {
+      if (verbalTestingRef.current) {
+        observer.unobserve(verbalTestingRef.current);
+      }
+      if (narrationAudioRef.current) {
+        narrationAudioRef.current.pause();
+        narrationAudioRef.current = null;
+      }
+    };
+  }, [narrationPlayed]);
+  
   const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
@@ -1527,7 +1579,7 @@ const LessonVault0406 = () => {
         )}
 
         {/* Tailormade Testing Platform */}
-        <div className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
+        <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
               Verbal Testing Space
