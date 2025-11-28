@@ -833,61 +833,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <Volume2 className="h-5 w-5" />
                 What to Expect
               </Button>
-              
-              {credits <= 5 && isBuyCreditsVisible ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2 animate-fade-in"
-                    >
-                      <Coins className="h-5 w-5" />
-                      {creditsLoading ? "..." : `${credits} Credits - Buy More`}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
-                    <DropdownMenuItem
-                      onClick={async () => {
-                        await purchaseCredits(2000, 100.0);
-                      }}
-                      className="cursor-pointer py-3"
-                    >
-                      <div className="flex flex-col gap-1">
-                        <span className="font-semibold">2000 Credits</span>
-                        <span className="text-sm text-muted-foreground">ZAR 100.00</span>
-                      </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={async () => {
-                        await purchaseCredits(4000, 200.0);
-                      }}
-                      className="cursor-pointer py-3"
-                    >
-                      <div className="flex flex-col gap-1">
-                        <span className="font-semibold">4000 Credits</span>
-                        <span className="text-sm text-muted-foreground">ZAR 200.00</span>
-                      </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={async () => {
-                        await purchaseCredits(6000, 300.0);
-                      }}
-                      className="cursor-pointer py-3"
-                    >
-                      <div className="flex flex-col gap-1">
-                        <span className="font-semibold">6000 Credits</span>
-                        <span className="text-sm text-muted-foreground">ZAR 300.00</span>
-                      </div>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Button 
-                  className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full flex items-center gap-2"
-                >
-                  <Coins className="h-5 w-5" />
-                  {creditsLoading ? "..." : `${credits} Credits`}
-                </Button>
-              )}
             </div>
           </div>
 
