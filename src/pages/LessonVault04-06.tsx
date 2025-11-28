@@ -111,6 +111,7 @@ const LessonVault0406 = () => {
     timestamp: string;
   }[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | undefined>(undefined);
   const [humanBeingOpen, setHumanBeingOpen] = useState(false);
   const [selectedBodyType, setSelectedBodyType] = useState<'girl' | 'boy' | null>(null);
   const [fiveSensesOpen, setFiveSensesOpen] = useState(false);
@@ -3014,10 +3015,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   />
                 </div>
                 <div className="flex-1">
-                  <Accordion type="single" collapsible className="w-full">
+                  <Accordion type="single" collapsible className="w-full" value={expandedAccordion} onValueChange={setExpandedAccordion}>
                     <AccordionItem value="numeracy">
                       <AccordionTrigger onClick={() => setSelectedSubject('Numeracy')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['numeracy', 'numbers', 'counting'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'numeracy' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Numeracy
                       </AccordionTrigger>
                       <AccordionContent>
@@ -3056,7 +3057,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     
                     <AccordionItem value="basic-logic">
                       <AccordionTrigger onClick={() => setSelectedSubject('Basic Logic')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['logic', 'shapes'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'basic-logic' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Basic Logic
                       </AccordionTrigger>
                       <AccordionContent>
@@ -3095,7 +3096,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     
                     <AccordionItem value="literacy">
                       <AccordionTrigger onClick={() => setSelectedSubject('Literacy')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['literacy', 'alphabet'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'literacy' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Literacy
                       </AccordionTrigger>
                       <AccordionContent>
@@ -3134,7 +3135,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     
                     <AccordionItem value="arts">
                       <AccordionTrigger onClick={() => setSelectedSubject('Arts')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['arts', 'art'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'arts' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Arts
                       </AccordionTrigger>
                       <AccordionContent>
@@ -3173,7 +3174,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     
                     <AccordionItem value="sport">
                       <AccordionTrigger onClick={() => setSelectedSubject('Sport')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['sport'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'sport' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Sport
                       </AccordionTrigger>
                       <AccordionContent>
@@ -3272,7 +3273,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     
                     <AccordionItem value="science-discovery">
                       <AccordionTrigger onClick={() => setSelectedSubject('Science')} className="flex items-center gap-2">
-                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['science', 'body', 'animals', 'senses'])}`} />
+                        <Bot className={`h-5 w-5 transition-colors ${expandedAccordion === 'science-discovery' ? 'text-red-500' : 'text-muted-foreground/30'}`} />
                         Science and Discovery
                       </AccordionTrigger>
                       <AccordionContent>
