@@ -117,6 +117,7 @@ const LessonVault0406 = () => {
   const [narrationPlayed, setNarrationPlayed] = useState(false);
   const verbalTestingRef = useRef<HTMLDivElement>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
+  const cardAutoResumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -159,6 +160,12 @@ const LessonVault0406 = () => {
       setIsRecording(false);
       setRecordingTime(0);
     } else {
+      // Clear the auto-resume timeout since user clicked the mic
+      if (cardAutoResumeTimeoutRef.current) {
+        clearTimeout(cardAutoResumeTimeoutRef.current);
+        cardAutoResumeTimeoutRef.current = null;
+      }
+      
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const recorder = new MediaRecorder(stream);
@@ -227,6 +234,11 @@ const LessonVault0406 = () => {
   // Helper function to handle card click for stopping carousel
   const handleCardClick = (cardName: string) => (e: React.MouseEvent) => {
     if (!carouselPaused && !isRecording && !(e.target as HTMLElement).closest('button, a')) {
+      // Clear any existing timeout
+      if (cardAutoResumeTimeoutRef.current) {
+        clearTimeout(cardAutoResumeTimeoutRef.current);
+      }
+      
       if (carouselRef.current) {
         carouselRef.current.style.animationPlayState = 'paused';
       }
@@ -234,8 +246,21 @@ const LessonVault0406 = () => {
       setSelectedCardForTest(cardName);
       toast({
         title: "Card Selected",
-        description: "Click the microphone on this card to record.",
+        description: "Click the microphone within 5 seconds to record.",
       });
+      
+      // Set 5-second timeout to auto-resume carousel if mic isn't clicked
+      cardAutoResumeTimeoutRef.current = setTimeout(() => {
+        if (carouselRef.current) {
+          carouselRef.current.style.animationPlayState = 'running';
+        }
+        setCarouselPaused(false);
+        setSelectedCardForTest(null);
+        toast({
+          title: "Time's Up",
+          description: "Carousel resumed. Click a card again to try recording.",
+        });
+      }, 5000);
     }
   };
   
@@ -1732,115 +1757,24 @@ const LessonVault0406 = () => {
               {/* First set of cards */}
               <Card 
                 className="bg-white p-4 w-80 border-4 border-dashed border-yellow-400 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={(e) => {
-                  if (!carouselPaused && !isRecording && !(e.target as HTMLElement).closest('button')) {
-                    if (carouselRef.current) {
-                      carouselRef.current.style.animationPlayState = 'paused';
-                    }
-                    setCarouselPaused(true);
-                    setSelectedCardForTest("Girl's Body");
-                    toast({
-                      title: "Card Selected",
-                      description: "Click the microphone on this card to record.",
-                    });
-                  }
-                }}
+                onClick={handleCardClick("Girl's Body")}
               >
                 <CardContent className="p-0">
                   <img src={girlBodyMyBody} alt="Girl's My Body" className="w-full h-auto" />
-                  <Button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      if (!carouselPaused) {
-                        toast({
-                          title: "Select Card First",
-                          description: "Click on the card to stop the carousel before recording.",
-                          variant: "destructive",
-                        });
-                        return;
-                      }
-                      
-                      if (isRecording) {
-                        mediaRecorder?.stop();
-                        setIsRecording(false);
-                        setRecordingTime(0);
-                      } else {
-                        try {
-                          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                          const recorder = new MediaRecorder(stream);
-                          const chunks: BlobPart[] = [];
-                          
-                          recorder.ondataavailable = (e) => chunks.push(e.data);
-                          recorder.onstop = () => {
-                            const blob = new Blob(chunks, { type: 'audio/webm' });
-                            const audioUrl = URL.createObjectURL(blob);
-                            
-                            const score = Math.floor(Math.random() * 6) + 5;
-                            const grade = score === 5 ? 'D' : score >= 6 && score <= 7 ? 'C' : score >= 8 && score <= 9 ? 'B' : 'A';
-                            
-                            const newResult = {
-                              subject: selectedCardForTest || 'General',
-                              audioUrl,
-                              score,
-                              grade,
-                              timestamp: new Date().toISOString()
-                            };
-                            
-                            setTestResults(prev => [...prev, newResult]);
-                            
-                            if (carouselRef.current) {
-                              carouselRef.current.style.animationPlayState = 'running';
-                            }
-                            setCarouselPaused(false);
-                            setSelectedCardForTest(null);
-                            
-                            toast({
-                              title: "Recording Saved",
-                              description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
-                            });
-                            stream.getTracks().forEach(track => track.stop());
-                          };
-                          
-                          recorder.start();
-                          setMediaRecorder(recorder);
-                          setIsRecording(true);
-                          setRecordingTime(0);
-                          
-                          const timer = setInterval(() => {
-                            setRecordingTime(prev => {
-                              if (prev >= 30) {
-                                clearInterval(timer);
-                                if (recorder.state === 'recording') {
-                                  recorder.stop();
-                                }
-                                setIsRecording(false);
-                                return 0;
-                              }
-                              return prev + 1;
-                            });
-                          }, 1000);
-                        } catch (error) {
-                          console.error('Error accessing microphone:', error);
-                          toast({
-                            title: "Microphone Error",
-                            description: "Unable to access microphone. Please check permissions.",
-                            variant: "destructive",
-                          });
-                        }
-                      }
-                    }}
-                    className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Girl's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                    </svg>
-                  </Button>
                   {isRecording && selectedCardForTest === "Girl's Body" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
                     </div>
                   )}
                 </CardContent>
+                <Button
+                  onClick={createRecordingHandler("Girl's Body")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Girl's Body" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                </Button>
               </Card>
               
               <Card 
