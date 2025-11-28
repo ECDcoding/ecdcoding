@@ -774,7 +774,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
-            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+              {/* Credit Gauge */}
+              <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <div className="relative w-8 h-8">
+                  <svg className="w-8 h-8 -rotate-90" viewBox="0 0 36 36">
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.2)"
+                      strokeWidth="3"
+                    />
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#22c55e"
+                      strokeWidth="3"
+                      strokeDasharray={`${Math.min(credits, 100)}, 100`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <Coins className="absolute inset-0 m-auto h-4 w-4 text-yellow-400" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-semibold text-white">{credits}</span>
+                  <span className="text-[10px] text-white/60">credits</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
