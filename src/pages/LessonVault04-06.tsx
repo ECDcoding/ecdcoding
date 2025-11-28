@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -293,10 +293,30 @@ const LessonVault0406 = () => {
   };
   
   
-  const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
+const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+
+  // Helper function to determine robot color based on test results for a subject
+  const getSubjectRobotColor = (subjectKeywords: string[]) => {
+    const subjectResults = testResults.filter(r => 
+      subjectKeywords.some(keyword => r.subject.toLowerCase().includes(keyword.toLowerCase()))
+    );
+    
+    if (subjectResults.length === 0) {
+      return 'text-red-500'; // Red - no tests yet
+    }
+    
+    // Calculate average grade
+    const grades = subjectResults.map(r => r.grade);
+    const gradeValues = grades.map(g => g === 'A' ? 4 : g === 'B' ? 3 : g === 'C' ? 2 : 1);
+    const avgGrade = gradeValues.reduce((a, b) => a + b, 0) / gradeValues.length;
+    
+    if (avgGrade >= 3) return 'text-green-500'; // Green - A or B average (good understanding)
+    if (avgGrade >= 2) return 'text-yellow-500'; // Yellow - C average (moderate understanding)
+    return 'text-red-500'; // Red - D average (needs improvement)
+  };
 
   // Fetch all feedback when community feed is shown
   useEffect(() => {
@@ -2996,7 +3016,10 @@ const LessonVault0406 = () => {
                 <div className="flex-1">
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="numeracy">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Numeracy')}>Numeracy</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Numeracy')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['numeracy', 'numbers', 'counting'])}`} />
+                        Numeracy
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Track progress in counting, numbers, and basic math skills.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers')).length > 0 ? (
@@ -3032,7 +3055,10 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="basic-logic">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Basic Logic')}>Basic Logic</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Basic Logic')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['logic', 'shapes'])}`} />
+                        Basic Logic
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Monitor development in problem-solving and logical thinking.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes')).length > 0 ? (
@@ -3068,7 +3094,10 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="literacy">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Literacy')}>Literacy</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Literacy')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['literacy', 'alphabet'])}`} />
+                        Literacy
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Assess reading, writing, and language comprehension skills.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet')).length > 0 ? (
@@ -3104,7 +3133,10 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="arts">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Arts')}>Arts</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Arts')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['arts', 'art'])}`} />
+                        Arts
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Evaluate creative expression and artistic development.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art')).length > 0 ? (
@@ -3140,7 +3172,10 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="sport">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Sport')}>Sport</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Sport')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['sport'])}`} />
+                        Sport
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('sport')).length > 0 ? (
@@ -3236,7 +3271,10 @@ const LessonVault0406 = () => {
                     </AccordionItem>
                     
                     <AccordionItem value="science-discovery">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Science')}>Science and Discovery</AccordionTrigger>
+                      <AccordionTrigger onClick={() => setSelectedSubject('Science')} className="flex items-center gap-2">
+                        <Bot className={`h-5 w-5 ${getSubjectRobotColor(['science', 'body', 'animals', 'senses'])}`} />
+                        Science and Discovery
+                      </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-4">Observe curiosity and understanding of the natural world.</p>
                         {testResults.filter(r => r.subject.toLowerCase().includes('science')).length > 0 ? (
