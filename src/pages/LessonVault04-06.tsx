@@ -770,28 +770,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       {/* Navigation Bar */}
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-end gap-4 flex-1">
+          <div className="flex items-end gap-4">
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
             <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
-            {/* Credit Level Gauge - positioned to the right */}
-            <div className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 ml-auto">
-              <Coins className="h-4 w-4 text-yellow-400" />
-              <div className="flex flex-col gap-0.5">
-                <div className="flex items-center justify-between w-20">
-                  <span className="text-[10px] text-white/60">0</span>
-                  <span className="text-[10px] font-semibold text-white">{credits}</span>
-                  <span className="text-[10px] text-white/60">100</span>
-                </div>
-                <div className="w-20 h-1.5 bg-white/20 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.min(credits, 100)}%` }}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -833,6 +816,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <Volume2 className="h-5 w-5" />
                 What to Expect
               </Button>
+              
+              {/* Credit Level Gauge */}
+              <div className="flex items-center gap-2 bg-[#395B50] rounded-full px-4 py-2 shadow-md">
+                <Coins className="h-5 w-5 text-yellow-400" />
+                <div className="flex flex-col gap-0.5">
+                  <div className="flex items-center justify-between w-24">
+                    <span className="text-[10px] text-white/60">0</span>
+                    <span className="text-xs font-semibold text-white">{credits}</span>
+                    <span className="text-[10px] text-white/60">100</span>
+                  </div>
+                  <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(credits, 100)}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
