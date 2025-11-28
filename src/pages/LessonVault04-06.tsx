@@ -817,22 +817,77 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 What to Expect
               </Button>
               
-              {/* Credit Level Gauge */}
-              <div className="flex items-center gap-2 bg-[#395B50] rounded-full px-4 py-2 shadow-md">
-                <Coins className="h-5 w-5 text-yellow-400" />
-                <div className="flex flex-col gap-0.5">
-                  <div className="flex items-center justify-between w-24">
-                    <span className="text-[10px] text-white/60">0</span>
-                    <span className="text-xs font-semibold text-white">{credits}</span>
-                    <span className="text-[10px] text-white/60">100</span>
-                  </div>
-                  <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-300"
-                      style={{ width: `${Math.min(credits, 100)}%` }}
-                    />
+              {/* Credit Level Gauge with embedded Buy More button */}
+              <div className="relative">
+                <div className="flex items-center gap-2 bg-[#395B50] rounded-full px-4 py-2 shadow-md">
+                  <Coins className="h-5 w-5 text-yellow-400" />
+                  <div className="flex flex-col gap-0.5">
+                    <div className="flex items-center justify-between w-24">
+                      <span className="text-[10px] text-white/60">0</span>
+                      <span className="text-xs font-semibold text-white">{credits}</span>
+                      <span className="text-[10px] text-white/60">100</span>
+                    </div>
+                    <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full rounded-full transition-all duration-300 ${
+                          credits <= 20 
+                            ? 'bg-gradient-to-r from-red-400 to-red-500' 
+                            : 'bg-gradient-to-r from-green-400 to-green-500'
+                        }`}
+                        style={{ width: `${Math.min(credits, 100)}%` }}
+                      />
+                    </div>
                   </div>
                 </div>
+                
+                {/* Buy More Credits - surfaces when credits <= 20% */}
+                {credits <= 20 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 translate-y-full bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg animate-pulse"
+                        size="sm"
+                      >
+                        Buy More
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
+                      <DropdownMenuItem
+                        onClick={async () => {
+                          await purchaseCredits(2000, 100.0);
+                        }}
+                        className="cursor-pointer py-3"
+                      >
+                        <div className="flex flex-col gap-1">
+                          <span className="font-semibold">2000 Credits</span>
+                          <span className="text-sm text-muted-foreground">ZAR 100.00</span>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={async () => {
+                          await purchaseCredits(4000, 200.0);
+                        }}
+                        className="cursor-pointer py-3"
+                      >
+                        <div className="flex flex-col gap-1">
+                          <span className="font-semibold">4000 Credits</span>
+                          <span className="text-sm text-muted-foreground">ZAR 200.00</span>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={async () => {
+                          await purchaseCredits(6000, 300.0);
+                        }}
+                        className="cursor-pointer py-3"
+                      >
+                        <div className="flex flex-col gap-1">
+                          <span className="font-semibold">6000 Credits</span>
+                          <span className="text-sm text-muted-foreground">ZAR 300.00</span>
+                        </div>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
               </div>
             </div>
           </div>
