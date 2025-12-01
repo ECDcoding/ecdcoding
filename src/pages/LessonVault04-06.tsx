@@ -50,6 +50,7 @@ import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
 import girlBodyPartsDiagram from "@/assets/girl-body-parts-diagram.jpg";
 import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
+import alphabetChart from "@/assets/alphabet-chart.jpg";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -1871,23 +1872,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </Card>
 
               <Card 
-                className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Basic Counting")}
+                className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("ABCs Chart")}
               >
                 <CardContent className="p-0 relative">
-                  <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
-                  <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
-                  <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
-                  <a href="#" onClick={(e) => e.stopPropagation()} className="font-bold underline text-black hover:text-purple-500">Read more</a>
-                  {isRecording && selectedCardForTest === "Basic Counting" && (
+                  <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABCs Chart</h3>
+                  <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
+                  {isRecording && selectedCardForTest === "ABCs Chart" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
                     </div>
                   )}
                 </CardContent>
                 <Button
-                  onClick={createRecordingHandler("Basic Counting")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Counting" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  onClick={createRecordingHandler("ABCs Chart")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABCs Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -2032,23 +2031,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </Card>
 
               <Card 
-                className="bg-white p-8 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Basic Counting")}
+                className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("ABCs Chart")}
               >
                 <CardContent className="p-0 relative">
-                  <h3 className="text-2xl font-bold text-purple-500 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Counting</h3>
-                  <h4 className="text-lg italic mb-4">Building blocks of numeracy</h4>
-                  <p className="text-base mb-4">Master counting from 1-20 with fun interactive exercises and engaging activities.</p>
-                  <a href="#" onClick={(e) => e.stopPropagation()} className="font-bold underline text-black hover:text-purple-500">Read more</a>
-                  {isRecording && selectedCardForTest === "Basic Counting" && (
+                  <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABCs Chart</h3>
+                  <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
+                  {isRecording && selectedCardForTest === "ABCs Chart" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
                     </div>
                   )}
                 </CardContent>
                 <Button
-                  onClick={createRecordingHandler("Basic Counting")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Counting" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  onClick={createRecordingHandler("ABCs Chart")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABCs Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
