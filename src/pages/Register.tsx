@@ -274,6 +274,7 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [schedulePaymentDialogOpen, setSchedulePaymentDialogOpen] = useState(false);
+  const [reloadingCreditsAgreed, setReloadingCreditsAgreed] = useState(false);
   
   const [formData, setFormData] = useState({
     // Common fields
@@ -1006,9 +1007,16 @@ const Register = () => {
           <p className="text-base font-semibold">
             Annual Payment <span className="text-primary">R1200.00</span>
           </p>
-          <p className="text-base font-semibold">
-            Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <Checkbox 
+              id="reloading-credits-ecd" 
+              checked={reloadingCreditsAgreed}
+              onCheckedChange={(checked) => setReloadingCreditsAgreed(checked === true)}
+            />
+            <Label htmlFor="reloading-credits-ecd" className="text-base font-semibold cursor-pointer">
+              Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
+            </Label>
+          </div>
         </div>
       </div>
 
@@ -1398,9 +1406,16 @@ const Register = () => {
                       <p className="text-base font-semibold">
                         Annual Payment <span className="text-primary">R1200.00</span>
                       </p>
-                      <p className="text-base font-semibold">
-                        Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
-                      </p>
+                      <div className="flex items-center justify-center gap-2">
+                        <Checkbox 
+                          id="reloading-credits-parent" 
+                          checked={reloadingCreditsAgreed}
+                          onCheckedChange={(checked) => setReloadingCreditsAgreed(checked === true)}
+                        />
+                        <Label htmlFor="reloading-credits-parent" className="text-base font-semibold cursor-pointer">
+                          Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
+                        </Label>
+                      </div>
                     </div>
                   </div>
 
