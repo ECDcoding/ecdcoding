@@ -60,7 +60,6 @@ const LessonVault0406 = () => {
   const { credits, loading: creditsLoading, purchaseCredits } = useCredits();
   const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -842,67 +841,54 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </div>
                 </div>
                 
-                {/* Buy More Credits - surfaces when credits <= 20% */}
+                {/* Add Credits - surfaces when credits <= 20% */}
                 {credits <= 20 && (
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 translate-y-full flex gap-2">
-                    {!showPaymentOptions ? (
-                      <Button 
-                        className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg animate-pulse"
-                        size="sm"
-                        onClick={() => setShowPaymentOptions(true)}
-                      >
-                        Buy More
-                      </Button>
-                    ) : (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button 
-                            className="bg-green-500 hover:bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg animate-bounce"
-                            size="sm"
-                          >
-                            💳 Pay Now
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
-                          <DropdownMenuItem
-                            onClick={async () => {
-                              await purchaseCredits(2000, 100.0);
-                              setShowPaymentOptions(false);
-                            }}
-                            className="cursor-pointer py-3"
-                          >
-                            <div className="flex flex-col gap-1">
-                              <span className="font-semibold">2000 Credits</span>
-                              <span className="text-sm text-muted-foreground">ZAR 100.00</span>
-                            </div>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={async () => {
-                              await purchaseCredits(4000, 200.0);
-                              setShowPaymentOptions(false);
-                            }}
-                            className="cursor-pointer py-3"
-                          >
-                            <div className="flex flex-col gap-1">
-                              <span className="font-semibold">4000 Credits</span>
-                              <span className="text-sm text-muted-foreground">ZAR 200.00</span>
-                            </div>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={async () => {
-                              await purchaseCredits(6000, 300.0);
-                              setShowPaymentOptions(false);
-                            }}
-                            className="cursor-pointer py-3"
-                          >
-                            <div className="flex flex-col gap-1">
-                              <span className="font-semibold">6000 Credits</span>
-                              <span className="text-sm text-muted-foreground">ZAR 300.00</span>
-                            </div>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    )}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button 
+                          className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg animate-pulse"
+                          size="sm"
+                        >
+                          💳 Add Credits
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            await purchaseCredits(2000, 100.0);
+                          }}
+                          className="cursor-pointer py-3"
+                        >
+                          <div className="flex flex-col gap-1">
+                            <span className="font-semibold">2000 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 100.00</span>
+                          </div>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            await purchaseCredits(4000, 200.0);
+                          }}
+                          className="cursor-pointer py-3"
+                        >
+                          <div className="flex flex-col gap-1">
+                            <span className="font-semibold">4000 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 200.00</span>
+                          </div>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={async () => {
+                            await purchaseCredits(6000, 300.0);
+                          }}
+                          className="cursor-pointer py-3"
+                        >
+                          <div className="flex flex-col gap-1">
+                            <span className="font-semibold">6000 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 300.00</span>
+                          </div>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 )}
               </div>
