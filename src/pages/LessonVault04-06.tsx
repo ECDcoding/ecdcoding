@@ -1375,6 +1375,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(roadTransportVehicles); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={roadTransportVehicles} alt="Road Transport Types" className="w-8 h-8 object-cover rounded" /> Types of Road Transport
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(fourWheelVehicles); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={fourWheelVehicles} alt="Four Wheel Vehicles" className="w-8 h-8 object-cover rounded" /> Four Wheel Vehicles
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(twoWheelVehicles); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={twoWheelVehicles} alt="Two Wheel Vehicles" className="w-8 h-8 object-cover rounded" /> Two Wheel Vehicles
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => {setSelectedEmoji(schoolBusIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
                       <img src={schoolBusIcon} alt="School Bus" className="w-8 h-8" /> School Bus
                     </DropdownMenuItem>
@@ -1421,12 +1430,19 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuContent>
                 </DropdownMenu>
                 {/* Rail Transport */}
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}}
-                >
-                  🚂 Rail Transport
-                </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      🚂 Rail Transport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(railTransportVehicles); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={railTransportVehicles} alt="Rail Transport Types" className="w-8 h-8 object-cover rounded" /> Types of Rail Transport
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
