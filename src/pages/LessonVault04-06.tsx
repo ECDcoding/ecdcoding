@@ -1067,17 +1067,93 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </DropdownMenuItem>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                              🎹 Piano
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                            {/* Piano Skills */}
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🎹 Piano
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Shared-Piano/', '_blank')}>
+                                  🎹 Shared Piano
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Piano-Roll/', '_blank')}>
+                                  🎼 Piano Roll
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Arpeggios/', '_blank')}>
+                                  🎶 Arpeggios
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Chords/', '_blank')}>
+                                  🎵 Chords
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            {/* Strings Skills */}
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Strings/', '_blank')}>
                               🎻 Strings
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                              🥁 Rhythm
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                              🎤 Voice
+                            {/* Rhythm Skills */}
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🥁 Rhythm
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Rhythm/', '_blank')}>
+                                  🥁 Rhythm Maker
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Song-Maker/', '_blank')}>
+                                  🎧 Song Maker
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Melody-Maker/', '_blank')}>
+                                  🎵 Melody Maker
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            {/* Voice Skills */}
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🎤 Voice
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Voice-Spinner/', '_blank')}>
+                                  🌀 Voice Spinner
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Spectrogram/', '_blank')}>
+                                  📊 Spectrogram
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            {/* Sound Science */}
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🔊 Sound Science
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Sound-Waves/', '_blank')}>
+                                  🌊 Sound Waves
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Harmonics/', '_blank')}>
+                                  🎼 Harmonics
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Oscillators/', '_blank')}>
+                                  📈 Oscillators
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            {/* Creative Music Art */}
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => window.open('https://musiclab.chromeexperiments.com/Kandinsky/', '_blank')}>
+                              🎨 Kandinsky (Art + Music)
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
