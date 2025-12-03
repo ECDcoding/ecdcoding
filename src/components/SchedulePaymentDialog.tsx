@@ -10,9 +10,10 @@ import { toast } from "sonner";
 interface SchedulePaymentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onPaymentComplete?: () => void;
 }
 
-export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDialogProps) => {
+export const SchedulePaymentDialog = ({ open, onOpenChange, onPaymentComplete }: SchedulePaymentDialogProps) => {
   const [fullName, setFullName] = useState("");
   const [userType, setUserType] = useState("");
   const [paymentType, setPaymentType] = useState("");
@@ -36,6 +37,7 @@ export const SchedulePaymentDialog = ({ open, onOpenChange }: SchedulePaymentDia
     setTimeout(() => {
       setIsSubmitting(false);
       toast.success("Payment request submitted successfully!");
+      onPaymentComplete?.();
       onOpenChange(false);
       // Reset form
       setFullName("");
