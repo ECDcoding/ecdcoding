@@ -275,6 +275,13 @@ const Register = () => {
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [schedulePaymentDialogOpen, setSchedulePaymentDialogOpen] = useState(false);
   const [reloadingCreditsAgreed, setReloadingCreditsAgreed] = useState(false);
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
+  
+  // Admin user ID - can register without payment
+  const ADMIN_USER_ID = "d1577987-f3c2-4573-aee5-fd83f403f03b";
+  
+  // Check if payment is required (parent and ecd-manager must pay, tech-teacher has different flow)
+  const requiresPayment = registrationType === 'parent' || registrationType === 'ecd-manager';
   
   const [formData, setFormData] = useState({
     // Common fields
@@ -1560,12 +1567,17 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center pt-6">
+              <div className="flex flex-col items-center gap-2 pt-6">
+                {requiresPayment && !paymentCompleted && (
+                  <p className="text-sm text-destructive font-medium">
+                    ⚠️ Please complete payment above before submitting registration
+                  </p>
+                )}
                 <Button 
                   type="submit" 
                   size="lg" 
                   className="w-full max-w-md"
-                  disabled={!formData.agreeToTerms || isSubmitting}
+                  disabled={!formData.agreeToTerms || isSubmitting || (requiresPayment && !paymentCompleted)}
                 >
                   {isSubmitting ? 'Submitting...' : 
                    registrationType === 'tech-teacher' ? 'Submit Application' : 'Submit Registration'}
@@ -1579,11 +1591,13 @@ const Register = () => {
       {/* Payment Dialogs */}
       <DebitCardPaymentDialog 
         open={debitCardDialogOpen} 
-        onOpenChange={setDebitCardDialogOpen} 
+        onOpenChange={setDebitCardDialogOpen}
+        onPaymentComplete={() => setPaymentCompleted(true)}
       />
       <SchedulePaymentDialog 
         open={schedulePaymentDialogOpen} 
-        onOpenChange={setSchedulePaymentDialogOpen} 
+        onOpenChange={setSchedulePaymentDialogOpen}
+        onPaymentComplete={() => setPaymentCompleted(true)}
       />
     </div>
   );

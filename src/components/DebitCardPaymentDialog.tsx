@@ -9,9 +9,10 @@ import { toast } from "sonner";
 interface DebitCardPaymentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onPaymentComplete?: () => void;
 }
 
-export const DebitCardPaymentDialog = ({ open, onOpenChange }: DebitCardPaymentDialogProps) => {
+export const DebitCardPaymentDialog = ({ open, onOpenChange, onPaymentComplete }: DebitCardPaymentDialogProps) => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardName, setCardName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -26,6 +27,7 @@ export const DebitCardPaymentDialog = ({ open, onOpenChange }: DebitCardPaymentD
     setTimeout(() => {
       setIsProcessing(false);
       toast.success("Payment processed successfully!");
+      onPaymentComplete?.();
       onOpenChange(false);
       // Reset form
       setCardNumber("");
