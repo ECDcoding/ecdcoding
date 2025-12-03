@@ -132,6 +132,8 @@ const LessonVault0406 = () => {
   const cardAutoResumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
   const [emojiDialogOpen, setEmojiDialogOpen] = useState(false);
+  const [capsOpen, setCapsOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<string>('ZA');
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1043,8 +1045,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenuItem className="font-medium hover:bg-gray-100">
                   🎓 Tech Teachers
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
-                  🏫 ECD Institutions
+                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100">
+                  🏫 ECD Institutions (CAPS)
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -3922,6 +3924,137 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[80vh] object-contain" />
             ) : (
               <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* CAPS - Curriculum and Assessment Policy Statement Dialog */}
+      <Dialog open={capsOpen} onOpenChange={setCapsOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">📚 Curriculum & Assessment Policy Statement (CAPS)</DialogTitle>
+            <DialogDescription>
+              All ECD Institutions are allocated Curriculum and Assessment Policy Statement for children 1 to 4 years old.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {/* Country Flags Dropdown */}
+            <div className="flex items-center gap-3">
+              <label className="font-semibold text-sm">Select Country:</label>
+              <select 
+                value={selectedCountry} 
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="border rounded-lg px-3 py-2 bg-background text-foreground"
+              >
+                <option value="ZA">🇿🇦 South Africa</option>
+                <option value="NG">🇳🇬 Nigeria</option>
+                <option value="KE">🇰🇪 Kenya</option>
+                <option value="GH">🇬🇭 Ghana</option>
+                <option value="EG">🇪🇬 Egypt</option>
+                <option value="TZ">🇹🇿 Tanzania</option>
+                <option value="UG">🇺🇬 Uganda</option>
+                <option value="ET">🇪🇹 Ethiopia</option>
+                <option value="RW">🇷🇼 Rwanda</option>
+                <option value="ZW">🇿🇼 Zimbabwe</option>
+                <option value="BW">🇧🇼 Botswana</option>
+                <option value="NA">🇳🇦 Namibia</option>
+                <option value="MZ">🇲🇿 Mozambique</option>
+                <option value="ZM">🇿🇲 Zambia</option>
+                <option value="MW">🇲🇼 Malawi</option>
+                <option value="US">🇺🇸 United States</option>
+                <option value="GB">🇬🇧 United Kingdom</option>
+                <option value="CA">🇨🇦 Canada</option>
+                <option value="AU">🇦🇺 Australia</option>
+                <option value="IN">🇮🇳 India</option>
+                <option value="DE">🇩🇪 Germany</option>
+                <option value="FR">🇫🇷 France</option>
+                <option value="BR">🇧🇷 Brazil</option>
+                <option value="CN">🇨🇳 China</option>
+                <option value="JP">🇯🇵 Japan</option>
+              </select>
+            </div>
+
+            {/* South Africa CAPS Time Allocation Table */}
+            {selectedCountry === 'ZA' && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-center bg-primary/10 p-2 rounded">1.4 TIME ALLOCATION - Year 1-4</h3>
+                <p className="text-sm text-muted-foreground text-center">
+                  (a) The instructional time in the Year 1-4 is as follows:<br />
+                  <strong>Instructional Time for the Year 1-4 is 27½ hours in a five-day cycle</strong>
+                </p>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse border border-border text-sm">
+                    <thead>
+                      <tr className="bg-muted">
+                        <th className="border border-border p-2 text-left" colSpan={2}>Subjects</th>
+                        <th className="border border-border p-2 text-center">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="bg-muted/50">
+                        <td className="border border-border p-2 font-semibold" colSpan={3}>Fundamental Subjects</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2" colSpan={2}>
+                          <strong>Languages</strong><br />
+                          <span className="text-xs text-muted-foreground">(Home Language and First Additional Language)</span>
+                        </td>
+                        <td className="border border-border p-2 text-center">3 Hours for Home Language</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2" colSpan={2}>
+                          <span className="text-xs">All 11 official languages (Afrikaans, English, isiNdebele, isiXhosa, isiZulu, Siswati, Sesotho, Setswana, Sepedi, Tshivenda, Xitsonga)</span>
+                        </td>
+                        <td className="border border-border p-2 text-center text-xs">2 hours for First Additional Language</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2 font-semibold" colSpan={2}>Mathematics</td>
+                        <td className="border border-border p-2 text-center">3 hours</td>
+                      </tr>
+                      <tr className="bg-muted/50">
+                        <td className="border border-border p-2 font-semibold">Life Skills</td>
+                        <td className="border border-border p-2 text-center font-semibold">Areas of Study</td>
+                        <td className="border border-border p-2 text-center font-semibold">Time</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2" rowSpan={4}></td>
+                        <td className="border border-border p-2">
+                          <strong>Personal and Social Well-being</strong><br />
+                          <span className="text-xs text-muted-foreground">(including aspects of Life Orientation, Social Sciences and Economic and Management Sciences)</span>
+                        </td>
+                        <td className="border border-border p-2 text-center">2½ hours</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2">Physical Education</td>
+                        <td className="border border-border p-2 text-center">1 hour</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2">Creative Arts</td>
+                        <td className="border border-border p-2 text-center">1 hour</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-border p-2">Natural Sciences</td>
+                        <td className="border border-border p-2 text-center text-xs">
+                          1½ hours from year 2 onwards<br />
+                          <span className="text-muted-foreground">This time to be used in year 1 to support Languages and Mathematics</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-center text-muted-foreground mt-2">CAPS: YEAR 1-4 EARLY CHILDHOOD EDUCATION</p>
+              </div>
+            )}
+
+            {/* Other Countries - Placeholder */}
+            {selectedCountry !== 'ZA' && (
+              <div className="text-center py-8 text-muted-foreground">
+                <p className="text-lg">🌍 {selectedCountry === 'NG' ? 'Nigeria' : selectedCountry === 'KE' ? 'Kenya' : selectedCountry === 'GH' ? 'Ghana' : selectedCountry === 'EG' ? 'Egypt' : selectedCountry === 'TZ' ? 'Tanzania' : selectedCountry === 'UG' ? 'Uganda' : selectedCountry === 'ET' ? 'Ethiopia' : selectedCountry === 'RW' ? 'Rwanda' : selectedCountry === 'ZW' ? 'Zimbabwe' : selectedCountry === 'BW' ? 'Botswana' : selectedCountry === 'NA' ? 'Namibia' : selectedCountry === 'MZ' ? 'Mozambique' : selectedCountry === 'ZM' ? 'Zambia' : selectedCountry === 'MW' ? 'Malawi' : selectedCountry === 'US' ? 'United States' : selectedCountry === 'GB' ? 'United Kingdom' : selectedCountry === 'CA' ? 'Canada' : selectedCountry === 'AU' ? 'Australia' : selectedCountry === 'IN' ? 'India' : selectedCountry === 'DE' ? 'Germany' : selectedCountry === 'FR' ? 'France' : selectedCountry === 'BR' ? 'Brazil' : selectedCountry === 'CN' ? 'China' : 'Japan'} Early Childhood Curriculum</p>
+                <p className="text-sm mt-2">Curriculum guidelines for this country are being compiled. Please check back soon or contact your local education department for specific requirements.</p>
+              </div>
             )}
           </div>
         </DialogContent>
