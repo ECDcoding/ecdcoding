@@ -1366,48 +1366,61 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(schoolBusIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={schoolBusIcon} alt="School Bus" className="w-8 h-8" /> School Bus
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(sedanIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={sedanIcon} alt="Sedan" className="w-8 h-8" /> Sedan
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(dumpTruckIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={dumpTruckIcon} alt="Dump Truck" className="w-8 h-8" /> Dump Truck
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(bulldozerIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={bulldozerIcon} alt="Bulldozer" className="w-8 h-8" /> Bulldozer
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(boatShipIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={boatShipIcon} alt="Boat Ship" className="w-8 h-8" /> Boat Ship
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(airplaneIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={airplaneIcon} alt="Airplane" className="w-8 h-8" /> Airplane
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
-                  onClick={() => {setSelectedEmoji(deliveryTruckIcon); setEmojiDialogOpen(true);}}
-                >
-                  <img src={deliveryTruckIcon} alt="Delivery Truck" className="w-8 h-8" /> Delivery Truck
-                </DropdownMenuItem>
+                {/* Road Transport */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      🚗 Road Transport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(schoolBusIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={schoolBusIcon} alt="School Bus" className="w-8 h-8" /> School Bus
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(sedanIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={sedanIcon} alt="Sedan" className="w-8 h-8" /> Sedan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(dumpTruckIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={dumpTruckIcon} alt="Dump Truck" className="w-8 h-8" /> Dump Truck
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(bulldozerIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={bulldozerIcon} alt="Bulldozer" className="w-8 h-8" /> Bulldozer
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(deliveryTruckIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={deliveryTruckIcon} alt="Delivery Truck" className="w-8 h-8" /> Delivery Truck
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Water Transport */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      🚢 Water Transport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(boatShipIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={boatShipIcon} alt="Boat Ship" className="w-8 h-8" /> Boat Ship
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Air Transport */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      ✈️ Air Transport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(airplaneIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={airplaneIcon} alt="Airplane" className="w-8 h-8" /> Airplane
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Rail Transport */}
                 <DropdownMenuItem 
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
                   onClick={() => {setSelectedTransportType("rail-transport"); setTransportOpen(true);}}
