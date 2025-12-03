@@ -3900,9 +3900,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       {/* Full Screen Emoji Dialog */}
       <Dialog open={emojiDialogOpen} onOpenChange={setEmojiDialogOpen}>
         <DialogContent className="max-w-full w-screen h-screen flex items-center justify-center bg-background/95 backdrop-blur-lg border-none">
-          <DialogTitle className="sr-only">Emoji Display</DialogTitle>
+          <DialogTitle className="sr-only">Display</DialogTitle>
           <div className="text-center">
-            <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
+            {selectedEmoji && (selectedEmoji.includes('/') || selectedEmoji.includes('data:')) ? (
+              <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[80vh] object-contain" />
+            ) : (
+              <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
+            )}
           </div>
         </DialogContent>
       </Dialog>
