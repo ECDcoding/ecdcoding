@@ -2164,14 +2164,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 className="bg-white p-8 w-80 border-4 border-dashed border-blue-600 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
                 onClick={handleCardClick("Transportation")}
               >
-                <CardContent className="p-0 relative">
-                  <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
-                  <img src={dumpTruckIcon} alt="Dump Truck" className="w-24 h-24 object-contain mx-auto mb-3" />
-                  <h4 className="text-lg italic mb-2">Exploring vehicles and travel</h4>
-                  <div className="space-y-2">
-                    <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
-                    <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
-                  </div>
+                <CardContent className="p-0 relative flex flex-col items-center">
+                  <h3 className="text-2xl font-bold text-blue-600 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
+                  <img src={dumpTruckIcon} alt="Dump Truck" className="w-48 h-48 object-contain" />
                   {isRecording && selectedCardForTest === "Transportation" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
