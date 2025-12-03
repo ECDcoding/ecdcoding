@@ -1038,70 +1038,80 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Arts
+                  Life Skills
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🎭 Performing Arts
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🎨 Visual Art
-                </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  ✂️ Craft
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Sport
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                        Play
-                        <ChevronDown className="h-4 w-4" />
-                      </DropdownMenuItem>
-                   </DropdownMenuTrigger>
-                     <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                       <DropdownMenuItem onClick={() => {
-                         setSelectedSport("soccer");
-                         setSportPlayOpen(true);
-                       }} className="font-medium text-white hover:bg-white/20">
-                         Soccer Tips
-                       </DropdownMenuItem>
-                       <DropdownMenuItem onClick={() => {
-                         setSelectedSport("rugby");
-                         setSportPlayOpen(true);
-                       }} className="font-medium text-white hover:bg-white/20">
-                         Rugby Tips
-                       </DropdownMenuItem>
-                       <DropdownMenuItem onClick={() => {
-                         setSelectedSport("cricket");
-                         setSportPlayOpen(true);
-                       }} className="font-medium text-white hover:bg-white/20">
-                         Cricket Tips
-                       </DropdownMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Arts
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      🎭 Performing Arts
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      🎨 Visual Art
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      ✂️ Craft
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Sport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          Play Fields Info
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("soccer");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Soccer
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("rugby");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Rugby
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("cricket");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Cricket
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
                           setSelectedSport("tennis");
                           setSportPlayOpen(true);
                         }} className="font-medium text-white hover:bg-white/20">
-                          Tennis Tips
+                          Tennis
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
                           setSelectedSport("netball");
                           setSportPlayOpen(true);
                         }} className="font-medium text-white hover:bg-white/20">
-                          Netball Tips
+                          Netball
                         </DropdownMenuItem>
                       </DropdownMenuContent>
-                  </DropdownMenu>
+                    </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
