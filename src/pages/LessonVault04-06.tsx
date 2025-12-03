@@ -1243,10 +1243,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                {/* People Emojis Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Emojis
+                      People Emojis
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
@@ -1291,26 +1292,61 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
-                    {/* Sport Emojis */}
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          ⚽ Sport
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                        {['⚽', '🏉', '🎾', '🥊', '🏏'].map((emoji, idx) => (
-                          <DropdownMenuItem
-                            key={idx}
-                            className="text-4xl cursor-pointer hover:bg-white/20 py-2"
-                            onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
-                          >
-                            {emoji}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Activity Emojis Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Activity
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    {['⚽', '🏉', '🎾', '🥊', '🏏', '🏃', '🚴', '🏊', '⛹️', '🤸'].map((emoji, idx) => (
+                      <DropdownMenuItem
+                        key={idx}
+                        className="text-4xl cursor-pointer hover:bg-white/20 py-2"
+                        onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
+                      >
+                        {emoji}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Icons Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Icons
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 grid grid-cols-4 gap-2 p-3">
+                    {[
+                      { icon: 'f', bg: '#1877F2', name: 'Facebook' },
+                      { icon: '📷', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
+                      { icon: '𝕏', bg: '#000000', name: 'X' },
+                      { icon: '♪', bg: '#000000', name: 'TikTok' },
+                      { icon: '📞', bg: '#25D366', name: 'WhatsApp' },
+                      { icon: '▶', bg: '#FF0000', name: 'YouTube' },
+                      { icon: '📌', bg: '#E60023', name: 'Pinterest' },
+                      { icon: 'in', bg: '#0A66C2', name: 'LinkedIn' },
+                    ].map((item, idx) => (
+                      <DropdownMenuItem
+                        key={idx}
+                        className="cursor-pointer hover:opacity-80 p-0 flex items-center justify-center"
+                        onClick={() => { setSelectedEmoji(item.icon); setEmojiDialogOpen(true); }}
+                      >
+                        <div 
+                          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl"
+                          style={{ background: item.bg }}
+                          title={item.name}
+                        >
+                          {item.icon}
+                        </div>
+                      </DropdownMenuItem>
+                    ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
