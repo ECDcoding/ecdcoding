@@ -119,6 +119,8 @@ const LessonVault0406 = () => {
   const verbalTestingRef = useRef<HTMLDivElement>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const cardAutoResumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
+  const [emojiDialogOpen, setEmojiDialogOpen] = useState(false);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -1226,6 +1228,87 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         }} className="font-medium text-white hover:bg-white/20">
                           Netball
                         </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* Tech Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Tech
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Emojis
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    {/* Faces Group 1 */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          😀 Happy Faces
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        {['😀', '☺️', '😍', '😋', '😉'].map((emoji, idx) => (
+                          <DropdownMenuItem
+                            key={idx}
+                            className="text-4xl cursor-pointer hover:bg-white/20 py-2"
+                            onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
+                          >
+                            {emoji}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {/* Faces Group 2 */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          😅 Emotion Faces
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        {['😅', '😡', '😪', '🙄', '😭'].map((emoji, idx) => (
+                          <DropdownMenuItem
+                            key={idx}
+                            className="text-4xl cursor-pointer hover:bg-white/20 py-2"
+                            onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
+                          >
+                            {emoji}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {/* Sport Emojis */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          ⚽ Sport
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        {['⚽', '🏉', '🎾', '🥊', '🏏'].map((emoji, idx) => (
+                          <DropdownMenuItem
+                            key={idx}
+                            className="text-4xl cursor-pointer hover:bg-white/20 py-2"
+                            onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
+                          >
+                            {emoji}
+                          </DropdownMenuItem>
+                        ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </DropdownMenuContent>
@@ -3705,6 +3788,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <SportPlayField sport={selectedSport} />
         </div>
       )}
+
+      {/* Full Screen Emoji Dialog */}
+      <Dialog open={emojiDialogOpen} onOpenChange={setEmojiDialogOpen}>
+        <DialogContent className="max-w-full w-screen h-screen flex items-center justify-center bg-background/95 backdrop-blur-lg border-none">
+          <DialogTitle className="sr-only">Emoji Display</DialogTitle>
+          <div className="text-center">
+            <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
+          </div>
+        </DialogContent>
+      </Dialog>
       
     </div>
   );
