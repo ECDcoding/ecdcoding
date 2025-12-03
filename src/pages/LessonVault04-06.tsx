@@ -2166,8 +2166,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-2xl font-bold text-blue-600 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Transportation</h3>
-                  <h4 className="text-lg italic mb-4">Exploring vehicles and travel</h4>
-                  <p className="text-base mb-4">Learn about different types of transport and how they move us around.</p>
+                  <img src={dumpTruckIcon} alt="Dump Truck" className="w-24 h-24 object-contain mx-auto mb-3" />
+                  <h4 className="text-lg italic mb-2">Exploring vehicles and travel</h4>
                   <div className="space-y-2">
                     <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("road-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚗 Road Transport</button>
                     <button onClick={(e) => {e.stopPropagation(); setSelectedTransportType("rail-transport"); setTransportOpen(true);}} className="block font-bold underline text-black hover:text-blue-600 text-left">🚂 Rail Transport</button>
