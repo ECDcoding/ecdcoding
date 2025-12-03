@@ -48,6 +48,13 @@ import beeCharacter from "@/assets/bee-character.jpg";
 import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
 import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
 import girlBodyPartsDiagram from "@/assets/girl-body-parts-diagram.jpg";
+import schoolBusIcon from "@/assets/transport/school-bus.png";
+import sedanIcon from "@/assets/transport/sedan.png";
+import dumpTruckIcon from "@/assets/transport/dump-truck.png";
+import bulldozerIcon from "@/assets/transport/bulldozer.png";
+import boatShipIcon from "@/assets/transport/boat-ship.png";
+import airplaneIcon from "@/assets/transport/airplane.png";
+import deliveryTruckIcon from "@/assets/transport/delivery-truck.png";
 import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
@@ -1360,10 +1367,46 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
                 <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => {setSelectedTransportType("road-transport"); setTransportOpen(true);}}
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(schoolBusIcon); setEmojiDialogOpen(true);}}
                 >
-                  🚗 Road Transport
+                  <img src={schoolBusIcon} alt="School Bus" className="w-8 h-8" /> School Bus
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(sedanIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={sedanIcon} alt="Sedan" className="w-8 h-8" /> Sedan
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(dumpTruckIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={dumpTruckIcon} alt="Dump Truck" className="w-8 h-8" /> Dump Truck
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(bulldozerIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={bulldozerIcon} alt="Bulldozer" className="w-8 h-8" /> Bulldozer
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(boatShipIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={boatShipIcon} alt="Boat Ship" className="w-8 h-8" /> Boat Ship
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(airplaneIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={airplaneIcon} alt="Airplane" className="w-8 h-8" /> Airplane
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer flex items-center gap-2"
+                  onClick={() => {setSelectedEmoji(deliveryTruckIcon); setEmojiDialogOpen(true);}}
+                >
+                  <img src={deliveryTruckIcon} alt="Delivery Truck" className="w-8 h-8" /> Delivery Truck
                 </DropdownMenuItem>
                 <DropdownMenuItem 
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
