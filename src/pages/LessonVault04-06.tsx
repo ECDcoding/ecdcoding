@@ -55,6 +55,10 @@ import bulldozerIcon from "@/assets/transport/bulldozer.png";
 import boatShipIcon from "@/assets/transport/boat-ship.png";
 import airplaneIcon from "@/assets/transport/airplane.png";
 import deliveryTruckIcon from "@/assets/transport/delivery-truck.png";
+import skateShoeIcon from "@/assets/transport/skate-shoe.png";
+import craneTruckIcon from "@/assets/transport/crane-truck.png";
+import taxiCarIcon from "@/assets/transport/taxi-car.png";
+import armyTankIcon from "@/assets/transport/army-tank.png";
 import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
@@ -1398,6 +1402,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => {setSelectedEmoji(deliveryTruckIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
                       <img src={deliveryTruckIcon} alt="Delivery Truck" className="w-8 h-8" /> Delivery Truck
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(taxiCarIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={taxiCarIcon} alt="Taxi Car" className="w-8 h-8" /> Taxi Car
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(craneTruckIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={craneTruckIcon} alt="Crane Truck" className="w-8 h-8" /> Crane Truck
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(armyTankIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={armyTankIcon} alt="Army Tank" className="w-8 h-8" /> Army Tank
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(skateShoeIcon); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={skateShoeIcon} alt="Roller Skates" className="w-8 h-8" /> Roller Skates
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
