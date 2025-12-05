@@ -283,7 +283,8 @@ const Register = () => {
   // Check if payment is required (parent and ecd-manager must pay, tech-teacher has different flow)
   const requiresPayment = registrationType === 'parent' || registrationType === 'ecd-manager';
   
-  const [formData, setFormData] = useState({
+  // Initial empty form state - used for resetting
+  const getInitialFormData = () => ({
     // Common fields
     firstName: "",
     lastName: "",
@@ -336,6 +337,18 @@ const Register = () => {
     // Terms agreement
     agreeToTerms: false,
   });
+  
+  const [formData, setFormData] = useState(getInitialFormData());
+  
+  // SECURITY: Clear all form data when component mounts or registration type changes
+  // This ensures no previous user's data persists between registration attempts
+  useEffect(() => {
+    setFormData(getInitialFormData());
+    setReloadingCreditsAgreed(false);
+    setPaymentCompleted(false);
+    setDebitCardDialogOpen(false);
+    setSchedulePaymentDialogOpen(false);
+  }, [registrationType]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
