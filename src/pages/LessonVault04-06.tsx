@@ -1347,7 +1347,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      😀 Emojis
+                      Emojis
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
