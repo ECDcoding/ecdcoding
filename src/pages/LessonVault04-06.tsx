@@ -138,38 +138,37 @@ const LessonVault0406 = () => {
   const [musicLabOpen, setMusicLabOpen] = useState(false);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
-  const [displayCredits, setDisplayCredits] = useState(0);
-  const [gaugeAnimated, setGaugeAnimated] = useState(false);
+  const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
+  const [gaugeAnimated, setGaugeAnimated] = useState(true); // Already animated/filled
+  const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
   const openMusicLab = (title: string, url: string) => {
     setMusicLabTitle(title);
     setMusicLabUrl(url);
     setMusicLabOpen(true);
   };
 
-  // Animate credit gauge counting up from 0 on load
+  // Sync displayCredits with actual credits from database
   useEffect(() => {
-    if (!creditsLoading && credits > 0 && !gaugeAnimated) {
-      setGaugeAnimated(true);
-      let current = 0;
-      const target = Math.min(credits, 100);
-      const duration = 1500; // 1.5 seconds
-      const steps = 60;
-      const increment = target / steps;
-      const stepTime = duration / steps;
-      
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          setDisplayCredits(target);
-          clearInterval(timer);
-        } else {
-          setDisplayCredits(Math.floor(current));
-        }
-      }, stepTime);
-      
-      return () => clearInterval(timer);
+    if (!creditsLoading && credits > 0) {
+      setDisplayCredits(Math.min(credits, 100));
     }
-  }, [credits, creditsLoading, gaugeAnimated]);
+  }, [credits, creditsLoading]);
+
+  // Alert user when credits reach 20 or below
+  useEffect(() => {
+    if (displayCredits <= 20 && displayCredits > 0 && !lowCreditsNotified) {
+      setLowCreditsNotified(true);
+      toast({
+        title: "⚠️ Low Credits Alert!",
+        description: `You have ${displayCredits} credits remaining. Get ready to buy more credits to continue learning!`,
+        variant: "destructive",
+      });
+    }
+    // Reset notification flag when credits go back above 20
+    if (displayCredits > 20) {
+      setLowCreditsNotified(false);
+    }
+  }, [displayCredits, lowCreditsNotified, toast]);
 
   // Track user activity for idle detection
   const [isUserActive, setIsUserActive] = useState(true);
@@ -219,9 +218,12 @@ const LessonVault0406 = () => {
     return () => clearInterval(creditDeductionInterval);
   }, [creditsLoading, credits, consumeCredits, isUserActive]);
 
-  // Buy Credits visibility cycle
+  // Buy Credits visibility when credits reach 20 or below
   useEffect(() => {
-    if (credits > 40) return;
+    if (displayCredits > 20) {
+      setIsBuyCreditsVisible(false);
+      return;
+    }
     
     const cycle = () => {
       setIsBuyCreditsVisible(false);
