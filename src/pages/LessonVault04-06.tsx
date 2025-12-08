@@ -1127,24 +1127,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
                   <span>👨‍👩‍👧‍👦 Parents</span>
-                  <span className="relative flex h-3 w-3 ml-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
-                  </span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium hover:bg-gray-100 flex items-center justify-between">
                   <span>🎓 Tech Teachers</span>
-                  <span className="relative flex h-3 w-3 ml-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
-                  </span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
                   <span>🏫 ECD Institutions (CAPS)</span>
-                  <span className="relative flex h-3 w-3 ml-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
-                  </span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
