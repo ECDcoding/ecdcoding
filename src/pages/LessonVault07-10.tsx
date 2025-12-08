@@ -96,7 +96,7 @@ const LessonVault0710 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#313056]">
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
