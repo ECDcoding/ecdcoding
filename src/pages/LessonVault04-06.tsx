@@ -1120,7 +1120,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Notes to
+                  Note of the Week
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
