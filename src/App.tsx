@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import LessonVault0406 from "./pages/LessonVault04-06";
 import LessonVault0710 from "./pages/LessonVault07-10";
 import PaymentForm from "./pages/PaymentForm";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancelled from "./pages/PaymentCancelled";
 import SignInPage from "./pages/SignInPage";
 import DomesticEcology from "./pages/DomesticEcology";
 import BiologyNature from "./pages/BiologyNature";
@@ -39,6 +41,8 @@ const App = () => (
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancelled" element={<PaymentCancelled />} />
           <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
           <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
           <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
