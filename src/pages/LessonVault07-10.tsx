@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut, Users } from "lucide-react";
+import { Search, Home, Code2, Brain, Cpu, Zap, Database, Globe, LogOut, Users, Construction } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -11,9 +12,45 @@ import { useState } from "react";
 
 const LessonVault0710 = () => {
   const { signOut } = useAuth();
+  const { isAdmin, loading: adminLoading } = useIsAdmin();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-07-10');
+
+  // Show loading state while checking admin status
+  if (adminLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-white">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Restrict access to admin only
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
+        <div className="text-center max-w-md mx-auto p-8">
+          <Construction className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
+          <h1 className="text-3xl font-bold text-white mb-4">Under Construction</h1>
+          <p className="text-white/80 mb-6">
+            The Kids Aged 08-12 section is currently being developed. 
+            Please check back soon for exciting STEM courses!
+          </p>
+          <Button 
+            onClick={() => navigate("/")}
+            className="bg-primary hover:bg-primary/90"
+          >
+            <Home className="h-4 w-4 mr-2" />
+            Return Home
+          </Button>
+        </div>
+      </div>
+    );
+  }
   
   const handleLogout = async () => {
     await signOut();
