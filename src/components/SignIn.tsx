@@ -13,6 +13,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import { SiGoogle } from "react-icons/si";
 
 interface SignInProps {
   open: boolean;
@@ -24,7 +25,8 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const { signIn, resetPassword } = useAuth();
+  const [isOAuthSubmitting, setIsOAuthSubmitting] = useState(false);
+  const { signIn, signInWithOAuth, resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +58,17 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
     setShowForgotPassword(false);
   };
 
+  const handleGoogleSignIn = async () => {
+    setIsOAuthSubmitting(true);
+    try {
+      await signInWithOAuth('google');
+    } catch (error) {
+      console.error('Google sign in error:', error);
+    } finally {
+      setIsOAuthSubmitting(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
@@ -65,8 +78,27 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
         
         <Card className="border-0 shadow-none">
           <CardContent className="pt-6">
+            <Button 
+              type="button"
+              variant="outline" 
+              className="w-full flex items-center justify-center gap-2"
+              onClick={handleGoogleSignIn}
+              disabled={isOAuthSubmitting}
+            >
+              <SiGoogle className="h-4 w-4" />
+              {isOAuthSubmitting ? 'Signing in...' : 'Sign in with Google'}
+            </Button>
             
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or continue with email</span>
+              </div>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="signin-email">Email</Label>
                 <Input
