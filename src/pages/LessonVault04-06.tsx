@@ -69,7 +69,7 @@ const LessonVault0406 = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
-  const { credits, loading: creditsLoading, purchaseCredits } = useCredits();
+  const { credits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits } = useCredits();
   const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -170,6 +170,20 @@ const LessonVault0406 = () => {
       return () => clearInterval(timer);
     }
   }, [credits, creditsLoading, gaugeAnimated]);
+
+  // Auto-deduct 1 credit every 60 seconds while lesson is active
+  useEffect(() => {
+    if (creditsLoading || credits <= 0) return;
+    
+    const creditDeductionInterval = setInterval(async () => {
+      const success = await consumeCredits(1);
+      if (success) {
+        setDisplayCredits(prev => Math.max(0, prev - 1));
+      }
+    }, 60000); // 60 seconds
+    
+    return () => clearInterval(creditDeductionInterval);
+  }, [creditsLoading, credits, consumeCredits]);
 
   // Buy Credits visibility cycle
   useEffect(() => {
