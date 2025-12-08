@@ -13,7 +13,6 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { ChevronDown, Home } from "lucide-react";
-import { SiGoogle } from "react-icons/si";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
@@ -21,8 +20,7 @@ const SignInPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const [isOAuthSubmitting, setIsOAuthSubmitting] = useState(false);
-  const { signIn, signInWithOAuth, resetPassword, user } = useAuth();
+  const { signIn, resetPassword, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already signed in
@@ -71,16 +69,6 @@ const SignInPage = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setIsOAuthSubmitting(true);
-    try {
-      await signInWithOAuth('google');
-    } catch (error) {
-      console.error('Google sign in error:', error);
-    } finally {
-      setIsOAuthSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
@@ -97,26 +85,6 @@ const SignInPage = () => {
         </CardHeader>
         
         <CardContent>
-          <Button 
-            type="button"
-            variant="outline" 
-            className="w-full flex items-center justify-center gap-2"
-            onClick={handleGoogleSignIn}
-            disabled={isOAuthSubmitting}
-          >
-            <SiGoogle className="h-4 w-4" />
-            {isOAuthSubmitting ? 'Signing in...' : 'Sign in with Google'}
-          </Button>
-          
-          <div className="relative my-4">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or continue with email</span>
-            </div>
-          </div>
-          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="signin-email">Email</Label>
