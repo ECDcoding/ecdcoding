@@ -1129,13 +1129,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <span>👨‍👩‍👧‍👦 Parents</span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100 flex items-center justify-between">
-                  <span>🎓 Tech Teachers</span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  🎓 Tech Teachers
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
-                  <span>🏫 ECD Institutions (CAPS)</span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
+                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100">
+                  🏫 ECD Institutions (CAPS)
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
