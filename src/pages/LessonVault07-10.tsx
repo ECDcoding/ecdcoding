@@ -637,9 +637,9 @@ const LessonVault0710 = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#313056]">
+    <div className="min-h-screen bg-[#395B50]">
       {/* Navigation Bar */}
-      <nav className="bg-[#252045] text-white p-4 shadow-lg">
+      <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-end gap-4">
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
