@@ -17,7 +17,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
-import { PromoCodeBanner } from "@/components/PromoCodeBanner";
+
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
 import { SportPlayField } from "@/components/SportPlayField";
@@ -635,62 +635,6 @@ const LessonVault0710 = () => {
     }
   };
 
-  const stemCourses = [
-    {
-      id: 1,
-      title: "Python Programming",
-      description: "Learn programming fundamentals with Python",
-      icon: Code,
-      color: "bg-blue-600",
-      lessons: 25,
-      duration: "30 mins each"
-    },
-    {
-      id: 2,
-      title: "Robotics & Engineering",
-      description: "Build and program simple robots",
-      icon: Calculator,
-      color: "bg-green-600",
-      lessons: 18,
-      duration: "45 mins each"
-    },
-    {
-      id: 3,
-      title: "Data Science for Kids",
-      description: "Introduction to data analysis and visualization",
-      icon: Beaker,
-      color: "bg-purple-600",
-      lessons: 15,
-      duration: "35 mins each"
-    },
-    {
-      id: 4,
-      title: "Web Development Basics",
-      description: "Create websites with HTML, CSS and JavaScript",
-      icon: BookOpen,
-      color: "bg-orange-600",
-      lessons: 22,
-      duration: "40 mins each"
-    },
-    {
-      id: 5,
-      title: "AI & Machine Learning",
-      description: "Understanding artificial intelligence concepts",
-      icon: Gamepad2,
-      color: "bg-red-600",
-      lessons: 12,
-      duration: "50 mins each"
-    },
-    {
-      id: 6,
-      title: "Electronics & Circuits",
-      description: "Learn about electricity and electronic components",
-      icon: Calculator,
-      color: "bg-yellow-600",
-      lessons: 16,
-      duration: "35 mins each"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-[#313056]">
@@ -733,7 +677,7 @@ const LessonVault0710 = () => {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
-        <PromoCodeBanner />
+        
         
         <div className="mb-8 mt-12 text-center">
           <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Advanced STEM Learning</h2>
@@ -1213,40 +1157,6 @@ const LessonVault0710 = () => {
           </div>
         </div>
 
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {stemCourses.map((course) => {
-            const IconComponent = course.icon;
-            return (
-              <Card key={course.id} className="hover:shadow-lg transition-shadow cursor-pointer bg-white/10 border-white/20">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className={`${course.color} p-3 rounded-lg`}>
-                      <IconComponent className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg text-white">{course.title}</CardTitle>
-                      <p className="text-sm text-white/70">{course.description}</p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm text-white/70">{course.lessons} lessons</span>
-                    <span className="text-sm text-white/70">{course.duration}</span>
-                  </div>
-                  <Button className="w-full bg-primary hover:bg-primary/90">Start Learning</Button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Target Market Banner */}
-        <div className="mt-12 bg-lime-500 text-black p-6 rounded-lg text-center">
-          <h3 className="text-xl font-bold mb-2">Target Market</h3>
-          <p className="text-lg">ECD Centers | Pre-Schools | Creches | Primary Schools</p>
-        </div>
       </main>
 
       {/* Music Lab Wrapper Dialog */}
