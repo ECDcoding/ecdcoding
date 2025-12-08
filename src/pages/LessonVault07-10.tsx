@@ -162,14 +162,99 @@ const LessonVault0710 = () => {
     setMusicLabOpen(true);
   };
 
-  // Sync displayCredits with actual credits from database
+  const numberWords = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", 
+    "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", 
+    "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine",
+    "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five",
+    "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine", "forty", "forty-one",
+    "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven",
+    "forty-eight", "forty-nine", "fifty", "fifty-one", "fifty-two", "fifty-three",
+    "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine",
+    "sixty", "sixty-one", "sixty-two", "sixty-three", "sixty-four", "sixty-five",
+    "sixty-six", "sixty-seven", "sixty-eight", "sixty-nine", "seventy", "seventy-one",
+    "seventy-two", "seventy-three", "seventy-four", "seventy-five", "seventy-six",
+    "seventy-seven", "seventy-eight", "seventy-nine", "eighty", "eighty-one", "eighty-two",
+    "eighty-three", "eighty-four", "eighty-five", "eighty-six", "eighty-seven", "eighty-eight",
+    "eighty-nine", "ninety", "ninety-one", "ninety-two", "ninety-three", "ninety-four",
+    "ninety-five", "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine", "one hundred"
+  ];
+
+  const speakNumber = (number: number) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(numberWords[number - 1]);
+      utterance.rate = 0.8;
+      utterance.volume = 1.0;
+      utterance.pitch = 1.2;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const stopAlphabetPlay = () => {
+    setIsAlphabetPlaying(false);
+    setCurrentAlphabetIndex(0);
+    
+    if (alphabetIntervalRef.current) {
+      clearInterval(alphabetIntervalRef.current);
+      alphabetIntervalRef.current = null;
+    }
+    
+    if (alphabetAudioRef.current) {
+      alphabetAudioRef.current.pause();
+      alphabetAudioRef.current.currentTime = 0;
+    }
+    
+    window.speechSynthesis.cancel();
+  };
+
+  const stopCountingPlay = () => {
+    setIsCountingPlaying(false);
+    setCurrentCountingIndex(0);
+    
+    if (countingIntervalRef.current) {
+      clearInterval(countingIntervalRef.current);
+      countingIntervalRef.current = null;
+    }
+    
+    if (countingAudioRef.current) {
+      countingAudioRef.current.pause();
+      countingAudioRef.current.currentTime = 0;
+    }
+    
+    window.speechSynthesis.cancel();
+  };
+
+  const stopAutoCounting = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setIsAutoCounting(false);
+    setCurrentAutoIndex(0);
+  };
+
+  const fetchAllFeedback = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_feedback')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setAllFeedback(data || []);
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+    }
+  };
+
+  // All useEffects must come after function definitions
   useEffect(() => {
     if (!creditsLoading && credits > 0) {
       setDisplayCredits(Math.min(credits, 100));
     }
   }, [credits, creditsLoading]);
 
-  // Alert user when credits reach 20 or below
   useEffect(() => {
     if (displayCredits <= 20 && displayCredits > 0 && !lowCreditsNotified) {
       setLowCreditsNotified(true);
@@ -351,73 +436,6 @@ const LessonVault0710 = () => {
     );
   }
 
-  useEffect(() => {
-    if (showCommunityFeed && showProgressDialog) {
-      fetchAllFeedback();
-      
-      const channel = supabase
-        .channel('feedback-changes')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'user_feedback'
-          },
-          () => fetchAllFeedback()
-        )
-        .subscribe();
-      
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }
-  }, [showCommunityFeed, showProgressDialog]);
-
-  const fetchAllFeedback = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('user_feedback')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      setAllFeedback(data || []);
-    } catch (error) {
-      console.error('Error fetching feedback:', error);
-    }
-  };
-  
-  
-  const numberWords = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", 
-    "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", 
-    "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine",
-    "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five",
-    "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine", "forty", "forty-one",
-    "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven",
-    "forty-eight", "forty-nine", "fifty", "fifty-one", "fifty-two", "fifty-three",
-    "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine",
-    "sixty", "sixty-one", "sixty-two", "sixty-three", "sixty-four", "sixty-five",
-    "sixty-six", "sixty-seven", "sixty-eight", "sixty-nine", "seventy", "seventy-one",
-    "seventy-two", "seventy-three", "seventy-four", "seventy-five", "seventy-six",
-    "seventy-seven", "seventy-eight", "seventy-nine", "eighty", "eighty-one", "eighty-two",
-    "eighty-three", "eighty-four", "eighty-five", "eighty-six", "eighty-seven", "eighty-eight",
-    "eighty-nine", "ninety", "ninety-one", "ninety-two", "ninety-three", "ninety-four",
-    "ninety-five", "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine", "one hundred"
-  ];
-
-  const speakNumber = (number: number) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(numberWords[number - 1]);
-      utterance.rate = 0.8;
-      utterance.volume = 1.0;
-      utterance.pitch = 1.2;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   const vowels = ["A", "E", "I", "O", "U"];
   
   const speakVowel = (vowel: string, isAlphabet = false) => {
@@ -485,24 +503,6 @@ const LessonVault0710 = () => {
     }, 2000);
   };
 
-  const stopAlphabetPlay = () => {
-    setIsAlphabetPlaying(false);
-    setCurrentAlphabetIndex(0);
-    
-    if (alphabetIntervalRef.current) {
-      clearInterval(alphabetIntervalRef.current);
-      alphabetIntervalRef.current = null;
-    }
-    
-    if (alphabetAudioRef.current) {
-      alphabetAudioRef.current.pause();
-      alphabetAudioRef.current.currentTime = 0;
-    }
-    
-    window.speechSynthesis.cancel();
-  };
-
-
   const startCountingPlay = () => {
     if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
     
@@ -535,23 +535,6 @@ const LessonVault0710 = () => {
     }, 1500);
   };
 
-  const stopCountingPlay = () => {
-    setIsCountingPlaying(false);
-    setCurrentCountingIndex(0);
-    
-    if (countingIntervalRef.current) {
-      clearInterval(countingIntervalRef.current);
-      countingIntervalRef.current = null;
-    }
-    
-    if (countingAudioRef.current) {
-      countingAudioRef.current.pause();
-      countingAudioRef.current.currentTime = 0;
-    }
-    
-    window.speechSynthesis.cancel();
-  };
-
   const startAutoCounting = () => {
     if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
     
@@ -574,15 +557,6 @@ const LessonVault0710 = () => {
         setCurrentAutoIndex(0);
       }
     }, 2000);
-  };
-
-  const stopAutoCounting = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    setIsAutoCounting(false);
-    setCurrentAutoIndex(0);
   };
 
 
