@@ -143,46 +143,24 @@ const LessonVault0710 = () => {
   const [displayCredits, setDisplayCredits] = useState(100);
   const [gaugeAnimated, setGaugeAnimated] = useState(true);
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
+  const [isUserActive, setIsUserActive] = useState(true);
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const IDLE_THRESHOLD = 30000;
+  const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
+  const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
+  const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+  const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
+  const [isCountingPlaying, setIsCountingPlaying] = useState(false);
+  const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
+  const countingAudioRef = useRef<HTMLAudioElement | null>(null);
+  const countingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const openMusicLab = (title: string, url: string) => {
     setMusicLabTitle(title);
     setMusicLabUrl(url);
     setMusicLabOpen(true);
   };
-
-  // Show loading state while checking admin status
-  if (adminLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
-          <p className="mt-4 text-white">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Restrict access to admin only
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center max-w-md mx-auto p-8">
-          <Construction className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
-          <h1 className="text-3xl font-bold text-white mb-4">Under Construction</h1>
-          <p className="text-white/80 mb-6">
-            The Kids Aged 08-12 section is currently being developed. 
-            Please check back soon for exciting STEM courses!
-          </p>
-          <Button 
-            onClick={() => navigate("/")}
-            className="bg-primary hover:bg-primary/90"
-          >
-            <Home className="h-4 w-4 mr-2" />
-            Return Home
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   // Sync displayCredits with actual credits from database
   useEffect(() => {
@@ -205,11 +183,6 @@ const LessonVault0710 = () => {
       setLowCreditsNotified(false);
     }
   }, [displayCredits, lowCreditsNotified, toast]);
-
-  // Track user activity for idle detection
-  const [isUserActive, setIsUserActive] = useState(true);
-  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const IDLE_THRESHOLD = 30000;
 
   useEffect(() => {
     const resetIdleTimer = () => {
@@ -275,10 +248,108 @@ const LessonVault0710 = () => {
     return cleanup;
   }, [credits]);
 
-  const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
-  const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
-  const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+  useEffect(() => {
+    if (showCommunityFeed && showProgressDialog) {
+      fetchAllFeedback();
+      
+      const channel = supabase
+        .channel('feedback-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'user_feedback'
+          },
+          () => fetchAllFeedback()
+        )
+        .subscribe();
+      
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }
+  }, [showCommunityFeed, showProgressDialog]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!countingOpen) {
+      stopAutoCounting();
+      stopCountingPlay();
+      stopAlphabetPlay();
+    }
+  }, [countingOpen]);
+
+  useEffect(() => {
+    if (selectedCountingRange && isCountingPlaying && 
+        selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets") {
+      const [start, end] = selectedCountingRange.split('-').map(Number);
+      const totalNumbers = end - start + 1;
+      
+      if (countingIntervalRef.current) {
+        clearInterval(countingIntervalRef.current);
+      }
+      
+      setCurrentCountingIndex(0);
+      let index = 0;
+      
+      countingIntervalRef.current = setInterval(() => {
+        if (index < totalNumbers) {
+          setCurrentCountingIndex(index);
+          const currentNumber = start + index;
+          speakNumber(currentNumber);
+          index++;
+        } else {
+          if (countingIntervalRef.current) {
+            clearInterval(countingIntervalRef.current);
+            countingIntervalRef.current = null;
+          }
+        }
+      }, 1500);
+    }
+  }, [selectedCountingRange, isCountingPlaying]);
+
+  // Show loading state while checking admin status
+  if (adminLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          <p className="mt-4 text-white">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Restrict access to admin only
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
+        <div className="text-center max-w-md mx-auto p-8">
+          <Construction className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
+          <h1 className="text-3xl font-bold text-white mb-4">Under Construction</h1>
+          <p className="text-white/80 mb-6">
+            The Kids Aged 08-12 section is currently being developed. 
+            Please check back soon for exciting STEM courses!
+          </p>
+          <Button 
+            onClick={() => navigate("/")}
+            className="bg-primary hover:bg-primary/90"
+          >
+            <Home className="h-4 w-4 mr-2" />
+            Return Home
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (showCommunityFeed && showProgressDialog) {
@@ -317,9 +388,6 @@ const LessonVault0710 = () => {
     }
   };
   
-  const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
-  const [isCountingPlaying, setIsCountingPlaying] = useState(false);
-  const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
   
   const numberWords = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
@@ -434,8 +502,6 @@ const LessonVault0710 = () => {
     window.speechSynthesis.cancel();
   };
 
-  const countingAudioRef = useRef<HTMLAudioElement | null>(null);
-  const countingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startCountingPlay = () => {
     if (!selectedCountingRange || selectedCountingRange === "vowels" || selectedCountingRange === "alphabets") return;
@@ -519,50 +585,6 @@ const LessonVault0710 = () => {
     setCurrentAutoIndex(0);
   };
 
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!countingOpen) {
-      stopAutoCounting();
-      stopCountingPlay();
-      stopAlphabetPlay();
-    }
-  }, [countingOpen]);
-
-  useEffect(() => {
-    if (selectedCountingRange && isCountingPlaying && 
-        selectedCountingRange !== "vowels" && selectedCountingRange !== "alphabets") {
-      const [start, end] = selectedCountingRange.split('-').map(Number);
-      const totalNumbers = end - start + 1;
-      
-      if (countingIntervalRef.current) {
-        clearInterval(countingIntervalRef.current);
-      }
-      
-      setCurrentCountingIndex(0);
-      let index = 0;
-      
-      countingIntervalRef.current = setInterval(() => {
-        if (index < totalNumbers) {
-          setCurrentCountingIndex(index);
-          const currentNumber = start + index;
-          speakNumber(currentNumber);
-          index++;
-        } else {
-          if (countingIntervalRef.current) {
-            clearInterval(countingIntervalRef.current);
-            countingIntervalRef.current = null;
-          }
-        }
-      }, 1500);
-    }
-  }, [selectedCountingRange]);
 
   const emojiCategories = {
     "Facial Recognition": [
