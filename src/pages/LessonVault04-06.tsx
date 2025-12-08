@@ -171,19 +171,53 @@ const LessonVault0406 = () => {
     }
   }, [credits, creditsLoading, gaugeAnimated]);
 
-  // Auto-deduct 1 credit every 60 seconds while lesson is active
+  // Track user activity for idle detection
+  const [isUserActive, setIsUserActive] = useState(true);
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const IDLE_THRESHOLD = 30000; // 30 seconds of inactivity
+
+  // Reset idle timer on user activity
   useEffect(() => {
-    if (creditsLoading || credits <= 0) return;
+    const resetIdleTimer = () => {
+      setIsUserActive(true);
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current);
+      }
+      idleTimeoutRef.current = setTimeout(() => {
+        setIsUserActive(false);
+      }, IDLE_THRESHOLD);
+    };
+
+    // Activity events to track
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'];
+    events.forEach(event => window.addEventListener(event, resetIdleTimer));
+    
+    // Start the initial idle timer
+    resetIdleTimer();
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, resetIdleTimer));
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Auto-deduct 1 credit every 60 seconds while lesson is active AND user is not idle
+  useEffect(() => {
+    if (creditsLoading || credits <= 0 || !isUserActive) return;
     
     const creditDeductionInterval = setInterval(async () => {
-      const success = await consumeCredits(1);
-      if (success) {
-        setDisplayCredits(prev => Math.max(0, prev - 1));
+      if (isUserActive) {
+        const success = await consumeCredits(1);
+        if (success) {
+          setDisplayCredits(prev => Math.max(0, prev - 1));
+        }
       }
     }, 60000); // 60 seconds
     
     return () => clearInterval(creditDeductionInterval);
-  }, [creditsLoading, credits, consumeCredits]);
+  }, [creditsLoading, credits, consumeCredits, isUserActive]);
 
   // Buy Credits visibility cycle
   useEffect(() => {
