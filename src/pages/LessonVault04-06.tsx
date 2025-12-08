@@ -881,35 +881,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
                         <DropdownMenuItem
                           onClick={async () => {
-                            await purchaseCredits(2000, 100.0);
+                            await purchaseCredits(100, 5.0);
                           }}
                           className="cursor-pointer py-3"
                         >
                           <div className="flex flex-col gap-1">
-                            <span className="font-semibold">2000 Credits</span>
-                            <span className="text-sm text-muted-foreground">ZAR 100.00</span>
+                            <span className="font-semibold">100 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 5.00</span>
                           </div>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={async () => {
-                            await purchaseCredits(4000, 200.0);
+                            await purchaseCredits(200, 10.0);
                           }}
                           className="cursor-pointer py-3"
                         >
                           <div className="flex flex-col gap-1">
-                            <span className="font-semibold">4000 Credits</span>
-                            <span className="text-sm text-muted-foreground">ZAR 200.00</span>
+                            <span className="font-semibold">200 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 10.00</span>
                           </div>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={async () => {
-                            await purchaseCredits(6000, 300.0);
+                            await purchaseCredits(300, 15.0);
                           }}
                           className="cursor-pointer py-3"
                         >
                           <div className="flex flex-col gap-1">
-                            <span className="font-semibold">6000 Credits</span>
-                            <span className="text-sm text-muted-foreground">ZAR 300.00</span>
+                            <span className="font-semibold">300 Credits</span>
+                            <span className="text-sm text-muted-foreground">ZAR 15.00</span>
                           </div>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -1261,7 +1261,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Tech
+                  Tech Skills
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
