@@ -1125,14 +1125,26 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100">
-                  👨‍👩‍👧‍👦 Parents
+                <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
+                  <span>👨‍👩‍👧‍👦 Parents</span>
+                  <span className="relative flex h-3 w-3 ml-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                  </span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
-                  🎓 Tech Teachers
+                <DropdownMenuItem className="font-medium hover:bg-gray-100 flex items-center justify-between">
+                  <span>🎓 Tech Teachers</span>
+                  <span className="relative flex h-3 w-3 ml-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                  </span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100">
-                  🏫 ECD Institutions (CAPS)
+                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
+                  <span>🏫 ECD Institutions (CAPS)</span>
+                  <span className="relative flex h-3 w-3 ml-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
