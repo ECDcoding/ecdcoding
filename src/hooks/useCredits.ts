@@ -3,6 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { useToast } from "@/hooks/use-toast";
 
+const INITIAL_CREDITS = 100; // New users start with 100 credits
+
 export const useCredits = () => {
   const [credits, setCredits] = useState<number>(0);
   const [loading, setLoading] = useState(true);
@@ -31,15 +33,20 @@ export const useCredits = () => {
       if (data) {
         setCredits(data.credits);
       } else {
-        // Create initial credits record
+        // Create initial credits record with 100 credits for new users
         const { data: newData, error: insertError } = await supabase
           .from("user_credits")
-          .insert({ user_id: user.id, credits: 0 })
+          .insert({ user_id: user.id, credits: INITIAL_CREDITS })
           .select()
           .single();
 
         if (insertError) throw insertError;
-        setCredits(newData?.credits || 0);
+        setCredits(newData?.credits || INITIAL_CREDITS);
+        
+        toast({
+          title: "Welcome!",
+          description: `You've received ${INITIAL_CREDITS} credits to start learning!`,
+        });
       }
     } catch (error) {
       console.error("Error managing credits:", error);
@@ -50,6 +57,36 @@ export const useCredits = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Use credits when interacting with lessons
+  const useCredits = async (amount: number = 1) => {
+    if (!user) return false;
+    if (credits < amount) {
+      toast({
+        title: "Insufficient Credits",
+        description: "Please add more credits to continue learning.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    try {
+      const newCredits = Math.max(0, credits - amount);
+      
+      const { error } = await supabase
+        .from("user_credits")
+        .update({ credits: newCredits })
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+      
+      setCredits(newCredits);
+      return true;
+    } catch (error) {
+      console.error("Error using credits:", error);
+      return false;
     }
   };
 
@@ -111,6 +148,7 @@ export const useCredits = () => {
     credits,
     loading,
     purchaseCredits,
+    useCredits,
     refreshCredits: fetchCredits,
   };
 };
