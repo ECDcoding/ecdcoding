@@ -138,12 +138,38 @@ const LessonVault0406 = () => {
   const [musicLabOpen, setMusicLabOpen] = useState(false);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
-
+  const [displayCredits, setDisplayCredits] = useState(0);
+  const [gaugeAnimated, setGaugeAnimated] = useState(false);
   const openMusicLab = (title: string, url: string) => {
     setMusicLabTitle(title);
     setMusicLabUrl(url);
     setMusicLabOpen(true);
   };
+
+  // Animate credit gauge counting up from 0 on load
+  useEffect(() => {
+    if (!creditsLoading && credits > 0 && !gaugeAnimated) {
+      setGaugeAnimated(true);
+      let current = 0;
+      const target = Math.min(credits, 100);
+      const duration = 1500; // 1.5 seconds
+      const steps = 60;
+      const increment = target / steps;
+      const stepTime = duration / steps;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setDisplayCredits(target);
+          clearInterval(timer);
+        } else {
+          setDisplayCredits(Math.floor(current));
+        }
+      }, stepTime);
+      
+      return () => clearInterval(timer);
+    }
+  }, [credits, creditsLoading, gaugeAnimated]);
 
   // Buy Credits visibility cycle
   useEffect(() => {
@@ -850,17 +876,17 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <div className="flex flex-col gap-0.5">
                     <div className="flex items-center justify-between w-24">
                       <span className="text-[10px] text-white/60">0</span>
-                      <span className="text-xs font-semibold text-white">{credits}</span>
+                      <span className="text-xs font-semibold text-white">{displayCredits}</span>
                       <span className="text-[10px] text-white/60">100</span>
                     </div>
                     <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded-full transition-all duration-300 ${
-                          credits <= 20 
+                        className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                          displayCredits <= 20 
                             ? 'bg-gradient-to-r from-red-400 to-red-500' 
                             : 'bg-gradient-to-r from-green-400 to-green-500'
                         }`}
-                        style={{ width: `${Math.min(credits, 100)}%` }}
+                        style={{ width: `${displayCredits}%` }}
                       />
                     </div>
                   </div>
