@@ -36,7 +36,7 @@ const Index = () => {
           <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
             <FaWhatsapp className="h-5 w-5" />
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61568116623673" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+          <a href="https://www.facebook.com/61568116623673" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
             <FaFacebook className="h-5 w-5" />
           </a>
           {isAdmin && (
