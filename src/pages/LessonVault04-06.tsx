@@ -158,15 +158,21 @@ const LessonVault0406 = () => {
   // Helper function to get robot status based on highest score for a subject
   const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean): { status: 'red' | 'yellow' | 'green', label: string } => {
     const filteredResults = testResults.filter(subjectFilter);
+    console.log('getRobotStatus - filteredResults:', filteredResults);
     if (filteredResults.length === 0) {
+      console.log('getRobotStatus - No results, returning red');
       return { status: 'red', label: 'Not learned' };
     }
     const highestScore = Math.max(...filteredResults.map(r => r.score));
+    console.log('getRobotStatus - highestScore:', highestScore);
     if (highestScore >= 8) {
+      console.log('getRobotStatus - returning green');
       return { status: 'green', label: 'Ready!' };
     } else if (highestScore >= 5) {
+      console.log('getRobotStatus - returning yellow');
       return { status: 'yellow', label: 'Promising' };
     }
+    console.log('getRobotStatus - returning red (score < 5)');
     return { status: 'red', label: 'Not learned' };
   };
 
