@@ -154,6 +154,21 @@ const LessonVault0406 = () => {
     setMusicLabOpen(true);
   };
 
+  // Helper function to get robot status based on highest score for a subject
+  const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean) => {
+    const filteredResults = testResults.filter(subjectFilter);
+    if (filteredResults.length === 0) {
+      return { color: 'text-red-500', label: 'Not learned' };
+    }
+    const highestScore = Math.max(...filteredResults.map(r => r.score));
+    if (highestScore >= 8) {
+      return { color: 'text-green-500', label: 'Ready!' };
+    } else if (highestScore >= 5) {
+      return { color: 'text-yellow-500', label: 'Promising' };
+    }
+    return { color: 'text-red-500', label: 'Not learned' };
+  };
+
   // Sync displayCredits with actual credits from database
   useEffect(() => {
     if (!creditsLoading && credits > 0) {
@@ -3547,10 +3562,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Track progress in counting, numbers, and basic math skills.</p>
                             {testResults.filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes')).length > 0 ? (
@@ -3593,10 +3613,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Monitor development in problem-solving and logical thinking.</p>
                             {testResults.filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic')).length > 0 ? (
@@ -3639,10 +3664,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Assess reading, writing, and language comprehension skills.</p>
                             {testResults.filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc')).length > 0 ? (
@@ -3685,10 +3715,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Evaluate creative expression and artistic development.</p>
                             
@@ -3790,10 +3825,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('sport'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
                             
@@ -3903,10 +3943,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Observe curiosity and understanding of the natural world.</p>
                             {testResults.filter(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation')).length > 0 ? (
@@ -3949,10 +3994,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <Bot className="h-16 w-16 text-red-500" />
-                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
-                          </div>
+                          {(() => {
+                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon'));
+                            return (
+                              <div className="flex-shrink-0">
+                                <Bot className={`h-16 w-16 ${status.color}`} />
+                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                              </div>
+                            );
+                          })()}
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Track digital literacy and technology awareness skills.</p>
                             {testResults.filter(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon')).length > 0 ? (
