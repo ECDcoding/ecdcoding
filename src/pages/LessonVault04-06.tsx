@@ -346,7 +346,7 @@ const LessonVault0406 = () => {
     "Basic Logic": { title: "", content: (
       <div className="flex flex-col items-center justify-center">
         <div className="transform scale-150">
-          <TrafficLightProgress />
+          <TrafficLightProgress mode="traffic" />
         </div>
       </div>
     ), borderColor: "border-pink-400" },
