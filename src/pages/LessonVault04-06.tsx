@@ -3553,10 +3553,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Track progress in counting, numbers, and basic math skills.</p>
-                            {testResults.filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers')).length > 0 ? (
+                            {testResults.filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes')).length > 0 ? (
                               <div className="space-y-3">
                                 {testResults
-                                  .filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers'))
+                                  .filter(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes'))
                                   .map((result, idx) => (
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
@@ -3645,10 +3645,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Assess reading, writing, and language comprehension skills.</p>
-                            {testResults.filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet')).length > 0 ? (
+                            {testResults.filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc')).length > 0 ? (
                               <div className="space-y-3">
                                 {testResults
-                                  .filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet'))
+                                  .filter(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc'))
                                   .map((result, idx) => (
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
@@ -3843,10 +3843,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Observe curiosity and understanding of the natural world.</p>
-                            {testResults.filter(r => r.subject.toLowerCase().includes('science')).length > 0 ? (
+                            {testResults.filter(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation')).length > 0 ? (
                               <div className="space-y-3">
                                 {testResults
-                                  .filter(r => r.subject.toLowerCase().includes('science'))
+                                  .filter(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation'))
                                   .map((result, idx) => (
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
