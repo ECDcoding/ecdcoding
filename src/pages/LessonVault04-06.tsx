@@ -3691,6 +3691,65 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Evaluate creative expression and artistic development.</p>
+                            
+                            {/* Performing Arts Filter Buttons */}
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {[
+                                { key: 'piano', label: '🎹 Piano' },
+                                { key: 'voice', label: '🎤 Voice' },
+                                { key: 'rhythm', label: '🥁 Rhythm' },
+                                { key: 'strings', label: '🎻 Strings' },
+                                { key: 'drama', label: '🎭 Drama' }
+                              ].map((art) => {
+                                const artRecordings = testResults.filter(r => 
+                                  (r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art')) && 
+                                  r.subject.toLowerCase().includes(art.key)
+                                );
+                                return (
+                                  <Button
+                                    key={art.key}
+                                    variant={artRecordings.length > 0 ? "default" : "outline"}
+                                    size="sm"
+                                    className="flex items-center gap-1"
+                                    onClick={() => {
+                                      if (artRecordings.length > 0) {
+                                        const audioEl = document.getElementById(`arts-audio-${art.key}`) as HTMLAudioElement;
+                                        if (audioEl) {
+                                          audioEl.play();
+                                        }
+                                      } else {
+                                        toast({
+                                          title: "No Recording",
+                                          description: `No ${art.label.split(' ')[1]} verbal test recorded yet.`,
+                                        });
+                                      }
+                                    }}
+                                  >
+                                    {art.label}
+                                    {artRecordings.length > 0 && (
+                                      <Play className="h-3 w-3 ml-1" />
+                                    )}
+                                  </Button>
+                                );
+                              })}
+                            </div>
+                            
+                            {/* Hidden audio elements for each performing art */}
+                            {['piano', 'voice', 'rhythm', 'strings', 'drama'].map((art) => {
+                              const artRecording = testResults.find(r => 
+                                (r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art')) && 
+                                r.subject.toLowerCase().includes(art)
+                              );
+                              return artRecording ? (
+                                <audio 
+                                  key={art}
+                                  id={`arts-audio-${art}`}
+                                  src={artRecording.audioUrl}
+                                  className="hidden"
+                                />
+                              ) : null;
+                            })}
+                            
                             {testResults.filter(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art')).length > 0 ? (
                               <div className="space-y-3">
                                 {testResults
@@ -3699,7 +3758,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
                                         <span className="text-xs text-muted-foreground">
-                                          {new Date(result.timestamp).toLocaleString()}
+                                          {result.subject} - {new Date(result.timestamp).toLocaleString()}
                                         </span>
                                         <div className="flex items-center gap-2">
                                           <span className="text-xl font-bold">{result.score}/10</span>
