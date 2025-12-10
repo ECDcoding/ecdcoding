@@ -2264,9 +2264,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 className="bg-white p-4 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
                 onClick={handleCardClick("Basic Logic")}
               >
-                <CardContent className="p-0 relative flex flex-col items-center justify-center">
-                  <div className="scale-90">
-                    <TrafficLightProgress />
+                <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
+                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Understanding Level</h3>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="scale-90">
+                      <TrafficLightProgress />
+                    </div>
                   </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
@@ -2445,9 +2448,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 className="bg-white p-4 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
                 onClick={handleCardClick("Basic Logic")}
               >
-                <CardContent className="p-0 relative flex flex-col items-center justify-center">
-                  <div className="scale-90">
-                    <TrafficLightProgress />
+                <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
+                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Understanding Level</h3>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="scale-90">
+                      <TrafficLightProgress />
+                    </div>
                   </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
