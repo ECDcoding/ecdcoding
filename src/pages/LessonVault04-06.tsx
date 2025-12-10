@@ -136,6 +136,13 @@ const LessonVault0406 = () => {
   const [capsOpen, setCapsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string>('ZA');
   const [musicLabOpen, setMusicLabOpen] = useState(false);
+  const [fullScreenCard, setFullScreenCard] = useState<{
+    name: string;
+    image?: string;
+    title?: string;
+    content?: React.ReactNode;
+    borderColor?: string;
+  } | null>(null);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
   const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
@@ -333,9 +340,28 @@ const LessonVault0406 = () => {
     }
   };
   
-  // Helper function to handle card click for stopping carousel
+  // Carousel card data for full-screen view
+  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }> = {
+    "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
+    "Basic Logic": { title: "Basic Logic", content: (
+      <div className="text-center">
+        <h3 className="text-4xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
+        <h4 className="text-2xl italic mb-6">Whimsical and wild at heart</h4>
+        <p className="text-xl mb-6">Every design begins with a playful thought and a soft edge of wonder.</p>
+        <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400 text-2xl">🎨 Emoji AI</a>
+      </div>
+    ), borderColor: "border-pink-400" },
+    "Transportation": { image: dumpTruckIcon, title: "Transportation", borderColor: "border-blue-600" },
+    "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400" },
+    "ABC Chart": { image: alphabetChart, title: "ABC Chart", borderColor: "border-purple-500" },
+    "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
+    "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
+    "Bee Character": { image: beeCharacter, title: "Bee Character", borderColor: "border-blue-500" },
+  };
+
+  // Helper function to handle card click for stopping carousel and opening full-screen view
   const handleCardClick = (cardName: string) => (e: React.MouseEvent) => {
-    if (!carouselPaused && !isRecording && !(e.target as HTMLElement).closest('button, a')) {
+    if (!isRecording && !(e.target as HTMLElement).closest('button, a')) {
       // Clear any existing timeout
       if (cardAutoResumeTimeoutRef.current) {
         clearTimeout(cardAutoResumeTimeoutRef.current);
@@ -346,24 +372,26 @@ const LessonVault0406 = () => {
       }
       setCarouselPaused(true);
       setSelectedCardForTest(cardName);
-      toast({
-        title: "Card Selected",
-        description: "Click the microphone within 5 seconds to record.",
-      });
       
-      // Set 5-second timeout to auto-resume carousel if mic isn't clicked
-      cardAutoResumeTimeoutRef.current = setTimeout(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.animationPlayState = 'running';
-        }
-        setCarouselPaused(false);
-        setSelectedCardForTest(null);
-        toast({
-          title: "Time's Up",
-          description: "Carousel resumed. Click a card again to try recording.",
+      // Open full-screen view with card data
+      const cardData = carouselCardData[cardName];
+      if (cardData) {
+        setFullScreenCard({
+          name: cardName,
+          ...cardData
         });
-      }, 5000);
+      }
     }
+  };
+  
+  // Function to close full-screen card and resume carousel
+  const closeFullScreenCard = () => {
+    setFullScreenCard(null);
+    if (carouselRef.current) {
+      carouselRef.current.style.animationPlayState = 'running';
+    }
+    setCarouselPaused(false);
+    setSelectedCardForTest(null);
   };
   
   // Function to play narration on demand using Web Speech API
@@ -3365,6 +3393,74 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         {/* The Young and Old View */}
         {objectCharactersOpen && (
           <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
+        )}
+
+        {/* Full Screen Carousel Card View */}
+        {fullScreenCard && (
+          <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 animate-fade-in">
+            <div className="relative w-full max-w-4xl">
+              {/* Close button */}
+              <button 
+                onClick={closeFullScreenCard}
+                className="absolute -top-12 right-0 text-white hover:text-yellow-400 transition-colors z-10"
+              >
+                <X className="h-10 w-10" />
+              </button>
+              
+              {/* Card content */}
+              <div className={`bg-white rounded-2xl p-8 border-8 ${fullScreenCard.borderColor} shadow-2xl`}>
+                {fullScreenCard.title && (
+                  <h2 className="text-4xl font-bold text-center mb-6" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+                    {fullScreenCard.title}
+                  </h2>
+                )}
+                
+                {fullScreenCard.image && (
+                  <div className="flex items-center justify-center">
+                    <img 
+                      src={fullScreenCard.image} 
+                      alt={fullScreenCard.name}
+                      className="max-w-full max-h-[60vh] object-contain rounded-lg shadow-lg"
+                    />
+                  </div>
+                )}
+                
+                {fullScreenCard.content && (
+                  <div className="py-8">
+                    {fullScreenCard.content}
+                  </div>
+                )}
+                
+                {/* Microphone button for recording */}
+                <div className="mt-6 flex items-center justify-center gap-4">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      createRecordingHandler(fullScreenCard.name)(e);
+                    }}
+                    className={`${isRecording && selectedCardForTest === fullScreenCard.name ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-4 shadow-lg`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  </Button>
+                  {isRecording && selectedCardForTest === fullScreenCard.name && (
+                    <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
+                      Recording: {recordingTime}s / 30s
+                    </span>
+                  )}
+                  {!isRecording && (
+                    <span className="text-gray-600 text-lg">Click mic to record your answer</span>
+                  )}
+                </div>
+              </div>
+              
+              {/* Navigation hint */}
+              <p className="text-white text-center mt-4 opacity-75">
+                Click X or press outside to close
+              </p>
+            </div>
+          </div>
         )}
 
         {/* Human Being - My Body Dialog */}
