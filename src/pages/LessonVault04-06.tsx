@@ -3599,10 +3599,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Monitor development in problem-solving and logical thinking.</p>
-                            {testResults.filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes')).length > 0 ? (
+                            {testResults.filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic')).length > 0 ? (
                               <div className="space-y-3">
                                 {testResults
-                                  .filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes'))
+                                  .filter(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic'))
                                   .map((result, idx) => (
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
@@ -3679,9 +3679,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionContent>
                     </AccordionItem>
                     
-                    <AccordionItem value="arts">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Arts')}>
-                        Arts
+                    <AccordionItem value="life-skills-arts">
+                      <AccordionTrigger onClick={() => setSelectedSubject('Life Skills - Arts')}>
+                        Life Skills - Arts
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
@@ -3725,9 +3725,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </AccordionContent>
                     </AccordionItem>
                     
-                    <AccordionItem value="sport">
-                      <AccordionTrigger onClick={() => setSelectedSubject('Sport')}>
-                        Sport
+                    <AccordionItem value="life-skills-sport">
+                      <AccordionTrigger onClick={() => setSelectedSubject('Life Skills - Sport')}>
+                        Life Skills - Sport
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex items-start gap-4">
@@ -3847,6 +3847,52 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               <div className="space-y-3">
                                 {testResults
                                   .filter(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation'))
+                                  .map((result, idx) => (
+                                    <div key={idx} className="p-3 bg-secondary rounded-lg">
+                                      <div className="flex justify-between items-center mb-2">
+                                        <span className="text-xs text-muted-foreground">
+                                          {new Date(result.timestamp).toLocaleString()}
+                                        </span>
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xl font-bold">{result.score}/10</span>
+                                          <span className={`text-lg font-bold px-2 py-0.5 rounded ${
+                                            result.grade === 'A' ? 'bg-green-500 text-white' :
+                                            result.grade === 'B' ? 'bg-blue-500 text-white' :
+                                            result.grade === 'C' ? 'bg-yellow-500 text-white' :
+                                            'bg-red-500 text-white'
+                                          }`}>
+                                            {result.grade}
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <audio controls className="w-full h-8" src={result.audioUrl} />
+                                    </div>
+                                  ))}
+                              </div>
+                            ) : (
+                              <p className="text-xs text-muted-foreground italic">No test results yet.</p>
+                            )}
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="tech-skills">
+                      <AccordionTrigger onClick={() => setSelectedSubject('Tech Skills')}>
+                        Tech Skills
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0">
+                            <Bot className="h-16 w-16 text-red-500" />
+                            <p className="text-xs text-red-500 text-center mt-1">Not learned</p>
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm text-muted-foreground mb-4">Track digital literacy and technology awareness skills.</p>
+                            {testResults.filter(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon')).length > 0 ? (
+                              <div className="space-y-3">
+                                {testResults
+                                  .filter(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon'))
                                   .map((result, idx) => (
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
