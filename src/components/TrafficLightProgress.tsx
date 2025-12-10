@@ -10,16 +10,28 @@ interface TrafficLightProgressProps {
 export const TrafficLightProgress = ({ onLevelChange, initialLevel = null, mode = 'learning' }: TrafficLightProgressProps) => {
   const [selectedLevel, setSelectedLevel] = useState<'red' | 'yellow' | 'green' | null>(initialLevel);
 
-  const handleLevelClick = (level: 'red' | 'yellow' | 'green') => {
-    setSelectedLevel(level);
-    onLevelChange?.(level);
-  };
-
   const getLabel = (level: 'red' | 'yellow' | 'green') => {
     if (mode === 'traffic') {
       return { red: "Stop", yellow: "Get Ready", green: "Cross" }[level];
     }
     return { red: "Struggling", yellow: "Promising", green: "Ready!" }[level];
+  };
+
+  const speakLabel = (level: 'red' | 'yellow' | 'green') => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const label = getLabel(level);
+      const utterance = new SpeechSynthesisUtterance(label);
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const handleLevelClick = (level: 'red' | 'yellow' | 'green') => {
+    setSelectedLevel(level);
+    speakLabel(level);
+    onLevelChange?.(level);
   };
   return (
     <div className="flex flex-col items-center gap-2 p-4 bg-gradient-to-b from-gray-800 to-gray-900 rounded-3xl shadow-2xl w-24">
