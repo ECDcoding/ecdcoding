@@ -2265,7 +2265,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 onClick={handleCardClick("Basic Logic")}
               >
                 <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
-                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Understanding Level</h3>
+                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
                   <div className="flex-1 flex items-center justify-center">
                     <div className="scale-90">
                       <TrafficLightProgress />
@@ -2449,7 +2449,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 onClick={handleCardClick("Basic Logic")}
               >
                 <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
-                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Understanding Level</h3>
+                  <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
                   <div className="flex-1 flex items-center justify-center">
                     <div className="scale-90">
                       <TrafficLightProgress />
