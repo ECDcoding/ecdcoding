@@ -55,9 +55,14 @@ export const SchedulePaymentDialog = ({ open, onOpenChange, onPaymentComplete }:
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Request to Pay with PayFast
+            Schedule Payment Request
+            <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-yellow-500 text-black rounded">DEMO</span>
           </DialogTitle>
         </DialogHeader>
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded mb-4">
+          <p className="text-sm font-medium">⚠️ This is a demonstration form only.</p>
+          <p className="text-xs mt-1">No real payment request will be sent. For actual payments, please use the PayFast payment option.</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="fullName">Name and Surname</Label>
