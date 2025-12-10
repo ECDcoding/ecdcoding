@@ -2268,7 +2268,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
                   <div className="flex-1 flex items-center justify-center">
                     <div className="scale-90">
-                      <TrafficLightProgress />
+                      <TrafficLightProgress mode="traffic" />
                     </div>
                   </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (
@@ -2452,7 +2452,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
                   <div className="flex-1 flex items-center justify-center">
                     <div className="scale-90">
-                      <TrafficLightProgress />
+                      <TrafficLightProgress mode="traffic" />
                     </div>
                   </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (

@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 interface TrafficLightProgressProps {
   onLevelChange?: (level: 'red' | 'yellow' | 'green') => void;
   initialLevel?: 'red' | 'yellow' | 'green' | null;
+  mode?: 'traffic' | 'learning';
 }
 
-export const TrafficLightProgress = ({ onLevelChange, initialLevel = null }: TrafficLightProgressProps) => {
+export const TrafficLightProgress = ({ onLevelChange, initialLevel = null, mode = 'learning' }: TrafficLightProgressProps) => {
   const [selectedLevel, setSelectedLevel] = useState<'red' | 'yellow' | 'green' | null>(initialLevel);
 
   const handleLevelClick = (level: 'red' | 'yellow' | 'green') => {
@@ -14,6 +15,12 @@ export const TrafficLightProgress = ({ onLevelChange, initialLevel = null }: Tra
     onLevelChange?.(level);
   };
 
+  const getLabel = (level: 'red' | 'yellow' | 'green') => {
+    if (mode === 'traffic') {
+      return { red: "Stop", yellow: "Get Ready", green: "Cross" }[level];
+    }
+    return { red: "Struggling", yellow: "Promising", green: "Ready!" }[level];
+  };
   return (
     <div className="flex flex-col items-center gap-2 p-4 bg-gradient-to-b from-gray-800 to-gray-900 rounded-3xl shadow-2xl w-24">
       {/* Red Light */}
@@ -74,9 +81,7 @@ export const TrafficLightProgress = ({ onLevelChange, initialLevel = null }: Tra
       {selectedLevel && (
         <div className="mt-2 text-center">
           <p className="text-xs font-medium text-white">
-            {selectedLevel === 'red' && "Stop"}
-            {selectedLevel === 'yellow' && "Get Ready"}
-            {selectedLevel === 'green' && "Cross"}
+            {getLabel(selectedLevel)}
           </p>
         </div>
       )}
