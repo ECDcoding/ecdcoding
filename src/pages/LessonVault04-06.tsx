@@ -8,7 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins } from "lucide-react";
+import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -155,18 +156,18 @@ const LessonVault0406 = () => {
   };
 
   // Helper function to get robot status based on highest score for a subject
-  const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean) => {
+  const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean): { status: 'red' | 'yellow' | 'green', label: string } => {
     const filteredResults = testResults.filter(subjectFilter);
     if (filteredResults.length === 0) {
-      return { color: 'text-red-500', label: 'Not learned' };
+      return { status: 'red', label: 'Not learned' };
     }
     const highestScore = Math.max(...filteredResults.map(r => r.score));
     if (highestScore >= 8) {
-      return { color: 'text-green-500', label: 'Ready!' };
+      return { status: 'green', label: 'Ready!' };
     } else if (highestScore >= 5) {
-      return { color: 'text-yellow-500', label: 'Promising' };
+      return { status: 'yellow', label: 'Promising' };
     }
-    return { color: 'text-red-500', label: 'Not learned' };
+    return { status: 'red', label: 'Not learned' };
   };
 
   // Sync displayCredits with actual credits from database
@@ -3563,11 +3564,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('numeracy') || r.subject.toLowerCase().includes('numbers') || r.subject.toLowerCase().includes('shapes'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3614,11 +3614,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('logic') || r.subject.toLowerCase().includes('shapes') || r.subject.toLowerCase().includes('traffic'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3665,11 +3664,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('literacy') || r.subject.toLowerCase().includes('alphabet') || r.subject.toLowerCase().includes('abc'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3716,11 +3714,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('arts') || r.subject.toLowerCase().includes('art'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3826,11 +3823,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('sport'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('sport'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3944,11 +3940,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('science') || r.subject.toLowerCase().includes('body') || r.subject.toLowerCase().includes('animals') || r.subject.toLowerCase().includes('bee') || r.subject.toLowerCase().includes('transportation'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
@@ -3995,11 +3990,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <AccordionContent>
                         <div className="flex items-start gap-4">
                           {(() => {
-                            const status = getRobotStatus(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon'));
+                            const robotStatus = getRobotStatus(r => r.subject.toLowerCase().includes('tech') || r.subject.toLowerCase().includes('emoji') || r.subject.toLowerCase().includes('icon'));
                             return (
                               <div className="flex-shrink-0">
-                                <Bot className={`h-16 w-16 ${status.color}`} />
-                                <p className={`text-xs ${status.color} text-center mt-1`}>{status.label}</p>
+                                <MiniTrafficRobot status={robotStatus.status} label={robotStatus.label} />
                               </div>
                             );
                           })()}
