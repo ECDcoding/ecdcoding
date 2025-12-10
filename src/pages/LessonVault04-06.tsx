@@ -3737,6 +3737,73 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-muted-foreground mb-4">Track physical development and motor skills.</p>
+                            
+                            {/* Sport Filter Buttons */}
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {[
+                                { key: 'soccer', label: '⚽ Soccer' },
+                                { key: 'rugby', label: '🏉 Rugby' },
+                                { key: 'cricket', label: '🏏 Cricket' },
+                                { key: 'tennis', label: '🎾 Tennis' },
+                                { key: 'netball', label: '🏀 Netball' },
+                                { key: 'indigenous', label: '🥎 Indigenous' }
+                              ].map((sport) => {
+                                const sportRecordings = testResults.filter(r => 
+                                  r.subject.toLowerCase().includes('sport') && 
+                                  r.subject.toLowerCase().includes(sport.key)
+                                );
+                                return (
+                                  <Button
+                                    key={sport.key}
+                                    variant={sportRecordings.length > 0 ? "default" : "outline"}
+                                    size="sm"
+                                    className="flex items-center gap-1"
+                                    onClick={() => {
+                                      if (sportRecordings.length > 0) {
+                                        const audioEl = document.getElementById(`sport-audio-${sport.key}`) as HTMLAudioElement;
+                                        if (audioEl) {
+                                          audioEl.play();
+                                        }
+                                      } else {
+                                        toast({
+                                          title: "No Recording",
+                                          description: `No ${sport.label.split(' ')[1]} verbal test recorded yet.`,
+                                        });
+                                      }
+                                    }}
+                                  >
+                                    {sport.label}
+                                    {sportRecordings.length > 0 && (
+                                      <Play className="h-3 w-3 ml-1" />
+                                    )}
+                                  </Button>
+                                );
+                              })}
+                            </div>
+                            
+                            {/* Hidden audio elements for each sport */}
+                            {[
+                              { key: 'soccer' },
+                              { key: 'rugby' },
+                              { key: 'cricket' },
+                              { key: 'tennis' },
+                              { key: 'netball' },
+                              { key: 'indigenous' }
+                            ].map((sport) => {
+                              const sportRecording = testResults.find(r => 
+                                r.subject.toLowerCase().includes('sport') && 
+                                r.subject.toLowerCase().includes(sport.key)
+                              );
+                              return sportRecording ? (
+                                <audio 
+                                  key={sport.key}
+                                  id={`sport-audio-${sport.key}`}
+                                  src={sportRecording.audioUrl}
+                                  className="hidden"
+                                />
+                              ) : null;
+                            })}
+                            
                             {testResults.filter(r => r.subject.toLowerCase().includes('sport')).length > 0 ? (
                               <div className="space-y-3 mb-4">
                                 {testResults
@@ -3745,7 +3812,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     <div key={idx} className="p-3 bg-secondary rounded-lg">
                                       <div className="flex justify-between items-center mb-2">
                                         <span className="text-xs text-muted-foreground">
-                                          {new Date(result.timestamp).toLocaleString()}
+                                          {result.subject} - {new Date(result.timestamp).toLocaleString()}
                                         </span>
                                         <div className="flex items-center gap-2">
                                           <span className="text-xl font-bold">{result.score}/10</span>
@@ -3766,66 +3833,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             ) : (
                               <p className="text-xs text-muted-foreground italic mb-4">No test results yet.</p>
                             )}
-                            <div className="space-y-2">
-                              <h4 className="font-semibold text-sm">Play</h4>
-                              <div className="flex flex-col gap-2">
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => {
-                                    setSelectedSport("soccer");
-                                    setSportPlayOpen(true);
-                                  }}
-                                  className="justify-start"
-                                >
-                                  ⚽ Soccer
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => {
-                                    setSelectedSport("rugby");
-                                    setSportPlayOpen(true);
-                                  }}
-                                  className="justify-start"
-                                >
-                                  🏉 Rugby
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => {
-                                    setSelectedSport("cricket");
-                                    setSportPlayOpen(true);
-                                  }}
-                                  className="justify-start"
-                                >
-                                  🏏 Cricket
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => {
-                                    setSelectedSport("tennis");
-                                    setSportPlayOpen(true);
-                                  }}
-                                  className="justify-start"
-                                >
-                                  🎾 Tennis
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  onClick={() => {
-                                    setSelectedSport("indigenous");
-                                    setSportPlayOpen(true);
-                                  }}
-                                  className="justify-start"
-                                >
-                                  🥎 Indigenous Games
-                                </Button>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </AccordionContent>
