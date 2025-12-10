@@ -344,11 +344,14 @@ const LessonVault0406 = () => {
   const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
     "Basic Logic": { title: "Basic Logic", content: (
-      <div className="text-center">
-        <h3 className="text-4xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
-        <h4 className="text-2xl italic mb-6">Whimsical and wild at heart</h4>
-        <p className="text-xl mb-6">Every design begins with a playful thought and a soft edge of wonder.</p>
-        <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400 text-2xl">🎨 Emoji AI</a>
+      <div className="flex flex-col items-center gap-6">
+        <h3 className="text-4xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
+        <h4 className="text-xl italic">How well do you understand?</h4>
+        <TrafficLightProgress />
+        <div className="mt-4 text-center">
+          <p className="text-lg mb-4">Click a light to show your understanding level</p>
+          <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400 text-xl">🎨 Emoji AI</a>
+        </div>
       </div>
     ), borderColor: "border-pink-400" },
     "Transportation": { image: dumpTruckIcon, title: "Transportation", borderColor: "border-blue-600" },
