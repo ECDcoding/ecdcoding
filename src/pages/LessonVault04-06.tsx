@@ -343,14 +343,10 @@ const LessonVault0406 = () => {
   // Carousel card data for full-screen view
   const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
-    "Basic Logic": { title: "Basic Logic", content: (
-      <div className="flex flex-col items-center gap-6">
-        <h3 className="text-4xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
-        <h4 className="text-xl italic">How well do you understand?</h4>
-        <TrafficLightProgress />
-        <div className="mt-4 text-center">
-          <p className="text-lg mb-4">Click a light to show your understanding level</p>
-          <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400 text-xl">🎨 Emoji AI</a>
+    "Basic Logic": { title: "", content: (
+      <div className="flex flex-col items-center justify-center">
+        <div className="transform scale-150">
+          <TrafficLightProgress />
         </div>
       </div>
     ), borderColor: "border-pink-400" },
@@ -2265,14 +2261,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </Card>
               
               <Card 
-                className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                className="bg-white p-4 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
                 onClick={handleCardClick("Basic Logic")}
               >
-                <CardContent className="p-0 relative">
-                  <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
-                  <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
-                  <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <a href="/emoji-ai" className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                <CardContent className="p-0 relative flex flex-col items-center justify-center">
+                  <div className="scale-90">
+                    <TrafficLightProgress />
+                  </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
@@ -2447,14 +2442,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </Card>
               
               <Card 
-                className="bg-white p-8 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                className="bg-white p-4 w-80 border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
                 onClick={handleCardClick("Basic Logic")}
               >
-                <CardContent className="p-0 relative">
-                  <h3 className="text-2xl font-bold text-pink-400 mb-2" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic</h3>
-                  <h4 className="text-lg italic mb-4">Whimsical and wild at heart</h4>
-                  <p className="text-base mb-4">Every design begins with a playful thought and a soft edge of wonder.</p>
-                  <a href="/emoji-ai" onClick={(e) => e.stopPropagation()} className="block font-bold underline text-black hover:text-pink-400">🎨 Emoji AI</a>
+                <CardContent className="p-0 relative flex flex-col items-center justify-center">
+                  <div className="scale-90">
+                    <TrafficLightProgress />
+                  </div>
                   {isRecording && selectedCardForTest === "Basic Logic" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
