@@ -74,9 +74,9 @@ export const TrafficLightProgress = ({ onLevelChange, initialLevel = null }: Tra
       {selectedLevel && (
         <div className="mt-2 text-center">
           <p className="text-xs font-medium text-white">
-            {selectedLevel === 'red' && "Struggling"}
-            {selectedLevel === 'yellow' && "Promising"}
-            {selectedLevel === 'green' && "Ready!"}
+            {selectedLevel === 'red' && "Stop"}
+            {selectedLevel === 'yellow' && "Get Ready"}
+            {selectedLevel === 'green' && "Cross"}
           </p>
         </div>
       )}
