@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
 import boyBodyMyBody from "@/assets/boy-body-my-body.jpg";
 
@@ -20,6 +21,7 @@ const FlipBodyCard = ({
   recordingTime,
 }: FlipBodyCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   const currentSide = isFlipped ? "Boy's Body" : "Girl's Body";
   const currentImage = isFlipped ? boyBodyMyBody : girlBodyMyBody;
@@ -27,12 +29,14 @@ const FlipBodyCard = ({
   
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setIsAnimating(true);
     setIsFlipped(!isFlipped);
+    setTimeout(() => setIsAnimating(false), 600);
   };
   
   const handleClick = (e: React.MouseEvent) => {
-    // Don't trigger card click when clicking the mic button
-    if ((e.target as HTMLElement).closest('button')) {
+    // Don't trigger card click when clicking the mic button or flip icon
+    if ((e.target as HTMLElement).closest('button, .flip-indicator')) {
       return;
     }
     onCardClick(currentSide);
@@ -62,8 +66,23 @@ const FlipBodyCard = ({
           onDoubleClick={handleDoubleClick}
         >
           <CardContent className="p-0 relative">
-            <div className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-red-400 text-white text-xs px-2 py-1 rounded-full font-bold z-10 shadow-md">
-              Double-click to flip
+            {/* Flip indicator icon */}
+            <div 
+              className="flip-indicator absolute top-2 right-2 z-20 cursor-pointer group"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDoubleClick(e);
+              }}
+              title="Click to flip card"
+            >
+              <div className="bg-gradient-to-r from-yellow-400 to-red-400 p-2 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110">
+                <RefreshCw 
+                  className={`h-5 w-5 text-white ${isAnimating ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-300'}`}
+                />
+              </div>
+              <span className="absolute -bottom-6 right-0 text-xs bg-black/70 text-white px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                Tap to flip
+              </span>
             </div>
             <h3 className="text-lg font-bold text-center mb-2" style={{ color: isFlipped ? "#f87171" : "#facc15" }}>
               {isFlipped ? "Boy's Body" : "Girl's Body"}
