@@ -22,6 +22,7 @@ import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
 import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
+import FlipBodyCard from "@/components/FlipBodyCard";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -1131,22 +1132,9 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          My Body
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                        <DropdownMenuItem onClick={() => {setSelectedBodyType('girl'); setHumanBeingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                          Girl
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {setSelectedBodyType('boy'); setHumanBeingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                          Boy
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
+                      My Body
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setFiveSensesOpen(true)} className="font-medium text-white hover:bg-white/20">
                       Five Senses
                     </DropdownMenuItem>
@@ -1185,6 +1173,27 @@ const LessonVault0710 = () => {
             <DialogTitle>The Young and Old</DialogTitle>
           </DialogHeader>
           <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
+        </DialogContent>
+      </Dialog>
+
+      {/* My Body Dialog with Flip Card */}
+      <Dialog open={humanBeingOpen} onOpenChange={setHumanBeingOpen}>
+        <DialogContent className="max-w-md bg-[#313056] border-none">
+          <DialogHeader>
+            <DialogTitle className="text-white text-center">My Body</DialogTitle>
+            <DialogDescription className="text-white/70 text-center">
+              Click the flip icon to switch between Girl's Body and Boy's Body
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center py-4">
+            <FlipBodyCard
+              onCardClick={() => {}}
+              onRecordingClick={() => async () => {}}
+              isRecording={false}
+              selectedCardForTest={null}
+              recordingTime={0}
+            />
+          </div>
         </DialogContent>
       </Dialog>
 
