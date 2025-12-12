@@ -26,7 +26,9 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
+import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
 import { supabase } from "@/integrations/supabase/client";
+import VerifiedBadge from "@/components/VerifiedBadge";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -72,6 +74,7 @@ const LessonVault0406 = () => {
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits } = useCredits();
   const { profile } = useProfile();
+  const { isEarlyAdopter } = useEarlyAdopter();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
@@ -925,7 +928,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
-            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+              {isEarlyAdopter && <VerifiedBadge size="lg" />}
+            </div>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
