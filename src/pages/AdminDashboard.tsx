@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users } from "lucide-react";
 import { format } from "date-fns";
+import VerifiedBadge from "@/components/VerifiedBadge";
 
 interface UserProfile {
   id: string;
@@ -52,7 +53,7 @@ const AdminDashboard = () => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true }); // Order by oldest first to identify first 200
 
       if (error) throw error;
       setProfiles(data || []);
@@ -62,6 +63,25 @@ const AdminDashboard = () => {
       setLoading(false);
     }
   };
+
+  // Get first 200 parent/ECD manager user IDs for the orange tick
+  const getEarlyAdopterIds = () => {
+    const eligibleProfiles = profiles.filter(
+      (p) => p.registration_type === "parent" || p.registration_type === "ecd-manager"
+    );
+    return new Set(eligibleProfiles.slice(0, 200).map((p) => p.user_id));
+  };
+
+  const earlyAdopterIds = getEarlyAdopterIds();
+
+  const isEarlyAdopter = (profile: UserProfile) => {
+    return earlyAdopterIds.has(profile.user_id);
+  };
+
+  // Re-sort for display (newest first)
+  const displayProfiles = [...profiles].sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 
   const getRegistrationTypeBadge = (type: string) => {
     const variants: Record<string, "default" | "secondary" | "outline"> = {
@@ -140,18 +160,31 @@ const AdminDashboard = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {profiles.map((profile) => (
+                  {displayProfiles.map((profile) => (
                     <TableRow key={profile.id} className="hover:bg-muted/30">
                       <TableCell>
-                        <Avatar>
-                          <AvatarImage src={profile.profile_image_url} />
-                          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                            {getInitials(profile.first_name, profile.last_name)}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative">
+                          <Avatar>
+                            <AvatarImage src={profile.profile_image_url} />
+                            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                              {getInitials(profile.first_name, profile.last_name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          {isEarlyAdopter(profile) && (
+                            <VerifiedBadge 
+                              size="sm" 
+                              className="absolute -bottom-1 -right-1 ring-2 ring-background" 
+                            />
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="font-medium">
-                        {profile.first_name} {profile.last_name}
+                        <div className="flex items-center gap-1.5">
+                          {profile.first_name} {profile.last_name}
+                          {isEarlyAdopter(profile) && (
+                            <VerifiedBadge size="sm" />
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         @{profile.username}
