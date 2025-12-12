@@ -163,20 +163,12 @@ const AdminDashboard = () => {
                   {displayProfiles.map((profile) => (
                     <TableRow key={profile.id} className="hover:bg-muted/30">
                       <TableCell>
-                        <div className="relative">
-                          <Avatar>
-                            <AvatarImage src={profile.profile_image_url} />
-                            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                              {getInitials(profile.first_name, profile.last_name)}
-                            </AvatarFallback>
-                          </Avatar>
-                          {isEarlyAdopter(profile) && (
-                            <VerifiedBadge 
-                              size="sm" 
-                              className="absolute -bottom-1 -right-1 ring-2 ring-background" 
-                            />
-                          )}
-                        </div>
+                        <Avatar>
+                          <AvatarImage src={profile.profile_image_url} />
+                          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                            {getInitials(profile.first_name, profile.last_name)}
+                          </AvatarFallback>
+                        </Avatar>
                       </TableCell>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-1.5">
