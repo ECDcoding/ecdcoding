@@ -48,7 +48,7 @@ const FlipBodyCard = ({
       style={{ perspective: "1000px" }}
     >
       <Card 
-        className={`bg-white p-4 w-80 min-h-[320px] border-4 border-dashed ${borderColor} shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all relative cursor-pointer`}
+        className={`bg-white p-4 w-80 min-h-[400px] border-4 border-dashed ${borderColor} shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all relative cursor-pointer`}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
       >

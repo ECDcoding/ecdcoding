@@ -47,7 +47,7 @@ const FlipTrafficCard = ({
 
   return (
     <Card 
-      className={`bg-white p-4 w-80 min-h-[320px] border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer overflow-hidden ${isAnimating ? 'animate-pulse' : ''}`}
+      className={`bg-white p-4 w-80 min-h-[400px] border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer overflow-hidden ${isAnimating ? 'animate-pulse' : ''}`}
       onClick={handleClick}
       style={{
         perspective: '1000px',
