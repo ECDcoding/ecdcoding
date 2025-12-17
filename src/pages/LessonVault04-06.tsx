@@ -150,6 +150,7 @@ const LessonVault0406 = () => {
   } | null>(null);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
+  const [codingDialogOpen, setCodingDialogOpen] = useState(false);
   const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
   const [gaugeAnimated, setGaugeAnimated] = useState(true); // Already animated/filled
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -1515,6 +1516,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* Coding Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      💻 Coding
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => setCodingDialogOpen(true)}
+                    >
+                      🐱 Finding Gobo
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
@@ -4212,6 +4230,32 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         title={musicLabTitle}
         url={musicLabUrl}
       />
+
+      {/* Coding - Finding Gobo Scratch Dialog */}
+      <Dialog open={codingDialogOpen} onOpenChange={setCodingDialogOpen}>
+        <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              🐱 Finding Gobo
+            </DialogTitle>
+            <DialogDescription>
+              Interactive coding game from Scratch - help find Gobo!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center">
+            <iframe 
+              src="https://scratch.mit.edu/projects/1256375045/embed" 
+              allowTransparency={true}
+              width="485" 
+              height="402" 
+              frameBorder="0" 
+              scrolling="no" 
+              allowFullScreen
+              className="rounded-lg"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Full Screen Emoji Dialog */}
       <Dialog open={emojiDialogOpen} onOpenChange={setEmojiDialogOpen}>
