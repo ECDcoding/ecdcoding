@@ -67,6 +67,7 @@ import armyTankIcon from "@/assets/transport/army-tank.png";
 import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
+import stopSign from "@/assets/stop-sign.png";
 
 const LessonVault0406 = () => {
   const { signOut } = useAuth();
@@ -373,8 +374,9 @@ const LessonVault0406 = () => {
     "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400" },
     "My Body": { image: girlBodyMyBody, title: "My Body", borderColor: "border-gradient" },
     "Basic Logic": { title: "", content: (
-      <div className="flex flex-col items-center justify-center">
-        <div className="transform scale-150">
+      <div className="flex flex-col items-center justify-center relative">
+        <img src={stopSign} alt="Stop Sign" className="absolute w-64 h-64 opacity-30" />
+        <div className="transform scale-150 z-10">
           <TrafficLightProgress mode="traffic" />
         </div>
       </div>
@@ -2300,8 +2302,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
                   <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="scale-90">
+                  <div className="flex-1 flex items-center justify-center relative">
+                    <img src={stopSign} alt="Stop Sign" className="absolute w-40 h-40 opacity-25" />
+                    <div className="scale-90 z-10">
                       <TrafficLightProgress mode="traffic" />
                     </div>
                   </div>
@@ -2448,8 +2451,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative flex flex-col items-center justify-center h-full">
                   <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>Traffic Robot</h3>
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="scale-90">
+                  <div className="flex-1 flex items-center justify-center relative">
+                    <img src={stopSign} alt="Stop Sign" className="absolute w-40 h-40 opacity-25" />
+                    <div className="scale-90 z-10">
                       <TrafficLightProgress mode="traffic" />
                     </div>
                   </div>
