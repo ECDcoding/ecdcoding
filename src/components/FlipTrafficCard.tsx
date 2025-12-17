@@ -43,8 +43,7 @@ const FlipTrafficCard = ({
     onCardClick("Basic Logic");
   };
 
-  const currentMode = isFlipped ? 'learning' : 'traffic';
-  const currentTitle = isFlipped ? 'Learning Progress' : 'Traffic Robot';
+  const currentTitle = isFlipped ? 'Stop Sign' : 'Traffic Robot';
 
   return (
     <Card 
@@ -52,9 +51,6 @@ const FlipTrafficCard = ({
       onClick={handleClick}
       style={{
         perspective: '1000px',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s',
-        transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
       }}
     >
       {/* Flip indicator */}
@@ -71,26 +67,50 @@ const FlipTrafficCard = ({
       <div 
         className="w-full h-full flex flex-col items-center justify-center"
         style={{
-          backfaceVisibility: 'hidden',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.6s',
           transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
-        <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-          {currentTitle}
-        </h3>
-        <div className="flex-1 flex items-center justify-center relative">
-          <img 
-            src={stopSign} 
-            alt="Stop Sign" 
-            className={`absolute w-40 h-40 transition-opacity duration-300 ${isFlipped ? 'opacity-10' : 'opacity-25'}`}
-          />
-          <div className="scale-90 z-10">
-            <TrafficLightProgress mode={currentMode} />
+        {/* Front side - Traffic Robot */}
+        <div 
+          className="absolute inset-0 flex flex-col items-center justify-center p-4"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <h3 className="text-xl font-bold text-pink-400 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+            Traffic Robot
+          </h3>
+          <div className="flex-1 flex items-center justify-center relative">
+            <img 
+              src={stopSign} 
+              alt="Stop Sign" 
+              className="absolute w-40 h-40 opacity-25"
+            />
+            <div className="scale-90 z-10">
+              <TrafficLightProgress mode="traffic" />
+            </div>
+          </div>
+        </div>
+
+        {/* Back side - Stop Sign */}
+        <div 
+          className="absolute inset-0 flex flex-col items-center justify-center p-4"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <h3 className="text-xl font-bold text-red-500 mb-4" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+            Stop Sign
+          </h3>
+          <div className="flex-1 flex items-center justify-center">
+            <img 
+              src={stopSign} 
+              alt="Stop Sign" 
+              className="w-48 h-48 object-contain"
+            />
           </div>
         </div>
 
         {isRecording && selectedCardForTest === "Basic Logic" && (
-          <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+          <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold z-30">
             {recordingTime}s / 30s
           </div>
         )}
