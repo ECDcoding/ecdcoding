@@ -1534,7 +1534,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                       onClick={() => setCodingDialogOpen(true)}
                     >
-                      🔤 Learn the Alphabet
+                      🔤 Coding in Alphabets
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -4204,7 +4204,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              🔤 Learn the Alphabet
+              🔤 Coding in Alphabets
             </DialogTitle>
             <DialogDescription>
               Click on the letter to see the next one!
