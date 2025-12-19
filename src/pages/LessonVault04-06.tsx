@@ -497,6 +497,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
+  const [wordToCode, setWordToCode] = useState('');
   const [isCountingPlaying, setIsCountingPlaying] = useState(false);
   const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
   
@@ -4243,6 +4244,36 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </button>
               ))}
             </div>
+          </div>
+          
+          {/* Word to Number Code Converter */}
+          <div className="border-t pt-4 mt-2">
+            <p className="text-sm font-semibold text-center mb-2">🔢 Word to Number Code</p>
+            <div className="flex gap-2 px-2">
+              <Input
+                placeholder="Type a word (e.g. MOM, DAD)"
+                value={wordToCode}
+                onChange={(e) => setWordToCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 text-center font-bold"
+                maxLength={10}
+              />
+            </div>
+            {wordToCode && (
+              <div className="mt-3 text-center">
+                <p className="text-xs text-muted-foreground mb-1">
+                  {wordToCode.split('').map((letter, i) => (
+                    <span key={i}>
+                      {letter}={letter.charCodeAt(0) - 64}
+                      {i < wordToCode.length - 1 ? ', ' : ''}
+                    </span>
+                  ))}
+                </p>
+                <p className="text-2xl font-bold text-primary tracking-wider">
+                  {wordToCode.split('').map(letter => letter.charCodeAt(0) - 64).join('')}
+                </p>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
