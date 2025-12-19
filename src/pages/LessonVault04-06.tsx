@@ -4224,8 +4224,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               Tap to see the next letter
             </p>
             
-            {/* Numbered blocks 1-26 */}
-            <div className="grid grid-cols-13 gap-1 mt-4 w-full max-w-[500px] px-2">
+            {/* Numbered blocks 1-26 in rows of 10 */}
+            <div className="grid grid-cols-10 gap-1 mt-4 w-full max-w-[420px] px-2">
               {Array.from({ length: 26 }, (_, i) => (
                 <button
                   key={i}
@@ -4233,7 +4233,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     e.stopPropagation();
                     setCurrentAlphabetIndex(i);
                   }}
-                  className={`w-8 h-8 rounded-md text-xs font-bold transition-all duration-200 ${
+                  className={`w-9 h-9 rounded-md text-xs font-bold transition-all duration-200 ${
                     currentAlphabetIndex === i
                       ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
                       : 'bg-muted text-muted-foreground hover:bg-muted/80'
