@@ -4211,18 +4211,38 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </DialogDescription>
           </DialogHeader>
           <div 
-            className="flex flex-col items-center justify-center cursor-pointer select-none py-8"
+            className="flex flex-col items-center justify-center cursor-pointer select-none py-6"
             onClick={() => setCurrentAlphabetIndex(prev => (prev + 1) % 26)}
           >
-            <div className="text-[180px] font-bold text-primary leading-none animate-bounce">
+            <div className="text-[150px] font-bold text-primary leading-none animate-bounce">
               {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentAlphabetIndex]}
             </div>
-            <p className="text-lg text-muted-foreground mt-4">
+            <p className="text-lg text-muted-foreground mt-3">
               Letter {currentAlphabetIndex + 1} of 26
             </p>
             <p className="text-sm text-muted-foreground mt-2">
               Tap to see the next letter
             </p>
+            
+            {/* Numbered blocks 1-26 */}
+            <div className="grid grid-cols-13 gap-1 mt-4 w-full max-w-[500px] px-2">
+              {Array.from({ length: 26 }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentAlphabetIndex(i);
+                  }}
+                  className={`w-8 h-8 rounded-md text-xs font-bold transition-all duration-200 ${
+                    currentAlphabetIndex === i
+                      ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
