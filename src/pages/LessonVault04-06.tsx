@@ -1534,7 +1534,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                       onClick={() => setCodingDialogOpen(true)}
                     >
-                      🐱 Finding Gobo
+                      🔤 Learn the Alphabet
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -4196,28 +4196,33 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         url={musicLabUrl}
       />
 
-      {/* Coding - Finding Gobo Scratch Dialog */}
-      <Dialog open={codingDialogOpen} onOpenChange={setCodingDialogOpen}>
+      {/* Coding - Interactive Alphabet Dialog */}
+      <Dialog open={codingDialogOpen} onOpenChange={(open) => {
+        setCodingDialogOpen(open);
+        if (!open) setCurrentAlphabetIndex(0); // Reset to A when closing
+      }}>
         <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              🐱 Finding Gobo
+              🔤 Learn the Alphabet
             </DialogTitle>
             <DialogDescription>
-              Interactive coding game from Scratch - help find Gobo!
+              Click on the letter to see the next one!
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-center">
-            <iframe 
-              src="https://scratch.mit.edu/projects/1256375045/embed" 
-              allowTransparency={true}
-              width="485" 
-              height="402" 
-              frameBorder="0" 
-              scrolling="no" 
-              allowFullScreen
-              className="rounded-lg"
-            />
+          <div 
+            className="flex flex-col items-center justify-center cursor-pointer select-none py-8"
+            onClick={() => setCurrentAlphabetIndex(prev => (prev + 1) % 26)}
+          >
+            <div className="text-[180px] font-bold text-primary leading-none animate-bounce">
+              {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentAlphabetIndex]}
+            </div>
+            <p className="text-lg text-muted-foreground mt-4">
+              Letter {currentAlphabetIndex + 1} of 26
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Tap to see the next letter
+            </p>
           </div>
         </DialogContent>
       </Dialog>
