@@ -13,8 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ArrowLeft, FileText, ChevronDown } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
-import { SchedulePaymentDialog } from "@/components/SchedulePaymentDialog";
+import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { countryCodes } from "@/lib/countryCodes";
 
 // Comprehensive country list
@@ -272,10 +271,7 @@ const Register = () => {
   const registrationType = searchParams.get('type') || 'parent';
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [payfastDialogOpen, setPayfastDialogOpen] = useState(false);
-  const [schedulePaymentDialogOpen, setSchedulePaymentDialogOpen] = useState(false);
-  const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(100);
-  const [selectedPaymentName, setSelectedPaymentName] = useState("Monthly Subscription");
+  const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [reloadingCreditsAgreed, setReloadingCreditsAgreed] = useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   
@@ -348,8 +344,7 @@ const Register = () => {
     setFormData(getInitialFormData());
     setReloadingCreditsAgreed(false);
     setPaymentCompleted(false);
-    setPayfastDialogOpen(false);
-    setSchedulePaymentDialogOpen(false);
+    setDebitCardDialogOpen(false);
   }, [registrationType]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -1052,18 +1047,9 @@ const Register = () => {
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuItem onClick={() => {
-                setSelectedPaymentAmount(100);
-                setSelectedPaymentName("Monthly Subscription");
-                setPayfastDialogOpen(true);
-              }}>Monthly Payment - R100</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => {
-                setSelectedPaymentAmount(1200);
-                setSelectedPaymentName("Annual Subscription");
-                setPayfastDialogOpen(true);
-              }}>Annual Payment - R1200</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
+            <DropdownMenuContent className="w-56 bg-background border border-border">
+              <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Monthly Payment - R100</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Annual Payment - R1200</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -1459,18 +1445,9 @@ const Register = () => {
                             <ChevronDown className="ml-2 h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedPaymentAmount(100);
-                            setSelectedPaymentName("Monthly Subscription");
-                            setPayfastDialogOpen(true);
-                          }}>Monthly Payment - R100</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => {
-                            setSelectedPaymentAmount(1200);
-                            setSelectedPaymentName("Annual Subscription");
-                            setPayfastDialogOpen(true);
-                          }}>Annual Payment - R1200</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => setSchedulePaymentDialogOpen(true)}>Schedule a Payment Date</DropdownMenuItem>
+                        <DropdownMenuContent className="w-56 bg-background border border-border">
+                          <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Monthly Payment - R100</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Annual Payment - R1200</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
@@ -1621,21 +1598,10 @@ const Register = () => {
         </Card>
       </div>
 
-      {/* Payment Dialogs */}
-      <PayFastPaymentDialog 
-        open={payfastDialogOpen} 
-        onOpenChange={setPayfastDialogOpen}
-        amount={selectedPaymentAmount}
-        itemName={selectedPaymentName}
-        paymentType="subscription"
-        userEmail={formData.email}
-        userFirstName={formData.firstName}
-        userLastName={formData.lastName}
-        onPaymentComplete={() => setPaymentCompleted(true)}
-      />
-      <SchedulePaymentDialog 
-        open={schedulePaymentDialogOpen} 
-        onOpenChange={setSchedulePaymentDialogOpen}
+      {/* Payment Dialog */}
+      <DebitCardPaymentDialog 
+        open={debitCardDialogOpen} 
+        onOpenChange={setDebitCardDialogOpen}
         onPaymentComplete={() => setPaymentCompleted(true)}
       />
     </div>
