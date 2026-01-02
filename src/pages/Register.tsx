@@ -272,6 +272,8 @@ const Register = () => {
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
+  const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(100);
+  const [selectedPaymentType, setSelectedPaymentType] = useState("monthly");
   const [reloadingCreditsAgreed, setReloadingCreditsAgreed] = useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   
@@ -1048,8 +1050,8 @@ const Register = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 bg-background border border-border">
-              <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Monthly Payment - R100</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Annual Payment - R1200</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -1446,8 +1448,8 @@ const Register = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 bg-background border border-border">
-                          <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Monthly Payment - R100</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => setDebitCardDialogOpen(true)}>Annual Payment - R1200</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
@@ -1603,6 +1605,8 @@ const Register = () => {
         open={debitCardDialogOpen} 
         onOpenChange={setDebitCardDialogOpen}
         onPaymentComplete={() => setPaymentCompleted(true)}
+        amount={selectedPaymentAmount}
+        paymentType={selectedPaymentType}
       />
     </div>
   );
