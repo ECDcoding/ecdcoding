@@ -1,65 +1,92 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface DebitCardPaymentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onPaymentComplete?: () => void;
+  amount?: number;
+  paymentType?: string;
 }
 
-export const DebitCardPaymentDialog = ({ open, onOpenChange, onPaymentComplete }: DebitCardPaymentDialogProps) => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
+export const DebitCardPaymentDialog = ({ 
+  open, 
+  onOpenChange, 
+  onPaymentComplete,
+  amount = 100,
+  paymentType = "monthly"
+}: DebitCardPaymentDialogProps) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     setIsProcessing(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const { data, error } = await supabase.functions.invoke('payfast-payment', {
+        body: {
+          amount: amount,
+          item_name: `ECDcoding ${paymentType === 'annual' ? 'Annual' : 'Monthly'} Subscription`,
+          email_address: email,
+          name_first: firstName,
+          name_last: lastName,
+          user_id: user?.id || 'guest',
+          payment_type: paymentType,
+          return_url: `${window.location.origin}/payment-success`,
+          cancel_url: `${window.location.origin}/payment-cancelled`,
+        }
+      });
+
+      if (error) {
+        console.error('PayFast error:', error);
+        toast.error("Failed to initialize payment. Please try again.");
+        setIsProcessing(false);
+        return;
+      }
+
+      if (data?.success && data?.payfast_url && data?.payment_data) {
+        // Create a form and submit it to PayFast
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.payfast_url;
+        
+        // Add all payment data as hidden fields
+        Object.entries(data.payment_data).forEach(([key, value]) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = value as string;
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        toast.error("Payment initialization failed. Please try again.");
+        setIsProcessing(false);
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error("An error occurred. Please try again.");
       setIsProcessing(false);
-      toast.success("Payment processed successfully!");
-      onPaymentComplete?.();
-      onOpenChange(false);
-      // Reset form
-      setCardNumber("");
-      setCardName("");
-      setExpiryDate("");
-      setCvv("");
-    }, 2000);
-  };
-
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
-    const parts = [];
-
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
     }
-
-    if (parts.length) {
-      return parts.join(" ");
-    } else {
-      return value;
-    }
-  };
-
-  const formatExpiryDate = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    if (v.length >= 2) {
-      return v.slice(0, 2) + "/" + v.slice(2, 4);
-    }
-    return v;
   };
 
   return (
@@ -68,62 +95,66 @@ export const DebitCardPaymentDialog = ({ open, onOpenChange, onPaymentComplete }
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
-            Debit Card Payment
-            <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-yellow-500 text-black rounded">DEMO</span>
+            Pay with PayFast
           </DialogTitle>
+          <DialogDescription>
+            You will be redirected to PayFast's secure payment page to complete your payment of R{amount}.
+          </DialogDescription>
         </DialogHeader>
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded mb-4">
-          <p className="text-sm font-medium">⚠️ This is a demonstration form only.</p>
-          <p className="text-xs mt-1">No real payment will be processed. For actual payments, please use the PayFast payment option.</p>
+        
+        <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded mb-4">
+          <p className="text-sm font-medium">🔒 Secure Payment via PayFast</p>
+          <p className="text-xs mt-1">Your payment will be processed securely through PayFast's payment gateway.</p>
         </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="cardNumber">Card Number</Label>
-            <Input
-              id="cardNumber"
-              placeholder="1234 5678 9012 3456"
-              value={cardNumber}
-              onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-              maxLength={19}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="cardName">Cardholder Name</Label>
-            <Input
-              id="cardName"
-              placeholder="John Doe"
-              value={cardName}
-              onChange={(e) => setCardName(e.target.value)}
-              required
-            />
-          </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="expiryDate">Expiry Date</Label>
+              <Label htmlFor="firstName">First Name</Label>
               <Input
-                id="expiryDate"
-                placeholder="MM/YY"
-                value={expiryDate}
-                onChange={(e) => setExpiryDate(formatExpiryDate(e.target.value))}
-                maxLength={5}
+                id="firstName"
+                placeholder="John"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 required
+                disabled={isProcessing}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="cvv">CVV</Label>
+              <Label htmlFor="lastName">Last Name</Label>
               <Input
-                id="cvv"
-                placeholder="123"
-                type="password"
-                value={cvv}
-                onChange={(e) => setCvv(e.target.value.replace(/[^0-9]/g, "").slice(0, 3))}
-                maxLength={3}
+                id="lastName"
+                placeholder="Doe"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
+                disabled={isProcessing}
               />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email Address</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={isProcessing}
+            />
+          </div>
+
+          <div className="bg-muted p-4 rounded-lg">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Payment Amount:</span>
+              <span className="text-lg font-bold text-primary">R{amount}</span>
+            </div>
+            <div className="flex justify-between items-center mt-1">
+              <span className="text-xs text-muted-foreground">Subscription Type:</span>
+              <span className="text-sm capitalize">{paymentType}</span>
             </div>
           </div>
 
@@ -132,7 +163,14 @@ export const DebitCardPaymentDialog = ({ open, onOpenChange, onPaymentComplete }
             className="w-full bg-[#132a13] text-yellow-400 hover:bg-[#132a13]/90"
             disabled={isProcessing}
           >
-            {isProcessing ? "Processing..." : "Pay Now"}
+            {isProcessing ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Redirecting to PayFast...
+              </>
+            ) : (
+              `Pay R${amount} with PayFast`
+            )}
           </Button>
         </form>
       </DialogContent>
