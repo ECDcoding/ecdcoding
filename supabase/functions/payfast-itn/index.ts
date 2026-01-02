@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -9,6 +10,82 @@ const corsHeaders = {
 
 const PAYFAST_MERCHANT_ID = Deno.env.get('PAYFAST_MERCHANT_ID');
 const PAYFAST_PASSPHRASE = Deno.env.get('PAYFAST_PASSPHRASE');
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+// Send payment confirmation email
+async function sendPaymentConfirmationEmail(
+  email: string,
+  firstName: string,
+  amount: number,
+  paymentType: string,
+  paymentId: string
+) {
+  try {
+    const subscriptionType = paymentType === 'credits' ? 'Credit Purchase' : 
+                             amount === 1200 ? 'Annual Subscription' : 'Monthly Subscription';
+    
+    const emailResponse = await resend.emails.send({
+      from: "ECDcoding <onboarding@resend.dev>",
+      to: [email],
+      subject: "Payment Confirmation - ECDcoding",
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #132a13 0%, #1a3a1a 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: #fbbf24; margin: 0; font-size: 28px;">Payment Successful! 🎉</h1>
+          </div>
+          
+          <div style="background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none;">
+            <p style="font-size: 18px; margin-top: 0;">Hi ${firstName || 'Valued Customer'},</p>
+            
+            <p>Thank you for your payment! Your transaction has been successfully processed.</p>
+            
+            <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid #e5e7eb;">
+              <h3 style="margin-top: 0; color: #132a13;">Payment Details</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; color: #6b7280;">Payment Type:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold;">${subscriptionType}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; color: #6b7280;">Amount Paid:</td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold; color: #16a34a;">R${amount.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: #6b7280;">Reference:</td>
+                  <td style="padding: 8px 0; text-align: right; font-family: monospace; font-size: 12px;">${paymentId}</td>
+                </tr>
+              </table>
+            </div>
+            
+            <p>You can now access all the features included in your subscription. If you have any questions, please don't hesitate to contact us.</p>
+            
+            <div style="text-align: center; margin-top: 30px;">
+              <a href="https://ecdcoding.lovable.app" style="background: #132a13; color: #fbbf24; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Go to Dashboard</a>
+            </div>
+          </div>
+          
+          <div style="text-align: center; padding: 20px; color: #6b7280; font-size: 12px;">
+            <p style="margin: 0;">© 2025 ECDcoding. All rights reserved.</p>
+            <p style="margin: 5px 0 0 0;">Early Childhood Development Coding Platform</p>
+          </div>
+        </body>
+        </html>
+      `,
+    });
+
+    console.log("Payment confirmation email sent:", emailResponse);
+    return { success: true, response: emailResponse };
+  } catch (error) {
+    console.error("Error sending payment confirmation email:", error);
+    return { success: false, error };
+  }
+}
 
 // PayFast valid IP ranges (as of 2024)
 // https://developers.payfast.co.za/docs#step_4_confirm_payment
@@ -222,6 +299,10 @@ serve(async (req) => {
     console.log('Processing ITN for user:', userId, 'Payment type:', paymentType, 'Status:', paymentStatus);
 
     if (paymentStatus === 'COMPLETE') {
+      // Get user email for confirmation
+      const userEmail = itnData.email_address;
+      const firstName = itnData.name_first || '';
+      
       // Payment successful - update database
       if (paymentType === 'credits') {
         // Credit purchase
@@ -265,6 +346,11 @@ serve(async (req) => {
 
         console.log('Credits updated for user:', userId, 'New balance:', newCredits);
 
+        // Send confirmation email for credits
+        if (userEmail) {
+          await sendPaymentConfirmationEmail(userEmail, firstName, amount, paymentType, paymentId);
+        }
+
       } else {
         // Subscription payment
         const subscriptionType = amount === 100 ? 'monthly' : amount === 1200 ? 'annual' : 'monthly';
@@ -290,6 +376,11 @@ serve(async (req) => {
         }
 
         console.log('Subscription recorded for user:', userId, 'Type:', subscriptionType);
+
+        // Send confirmation email for subscription
+        if (userEmail) {
+          await sendPaymentConfirmationEmail(userEmail, firstName, amount, subscriptionType, paymentId);
+        }
       }
     } else {
       console.log('Payment not complete, status:', paymentStatus);
