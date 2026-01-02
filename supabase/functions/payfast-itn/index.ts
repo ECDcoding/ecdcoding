@@ -25,7 +25,7 @@ async function sendPaymentConfirmationEmail(
                              amount === 1200 ? 'Annual Subscription' : 'Monthly Subscription';
     
     const emailResponse = await resend.emails.send({
-      from: "ECDcoding <onboarding@resend.dev>",
+      from: "ECDcoding <info@ecdcoding.co.za>",
       to: [email],
       subject: "Payment Confirmation - ECDcoding",
       html: `
