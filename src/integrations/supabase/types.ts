@@ -456,6 +456,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_get_sensitive_profile_data: {
+        Args: { target_user_id: string }
+        Returns: {
+          age_groups: string
+          ecd_email: string
+          ecd_phone: string
+          facility_name: string
+          facility_type: string
+          learner_first_name: string
+          learner_gender: string
+          learner_last_name: string
+          learner_progress_report: string
+          number_of_kids: string
+          number_of_learners: string
+          phone: string
+          user_id: string
+        }[]
+      }
       get_sensitive_profile_data: {
         Args: never
         Returns: {
