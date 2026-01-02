@@ -1582,7 +1582,7 @@ const Register = () => {
               <div className="flex flex-col items-center gap-2 pt-6">
                 {requiresPayment && !paymentCompleted && (
                   <p className="text-sm text-muted-foreground">
-                    To finalize your registration, please complete the payment step above. Thank you!
+                    Please complete payment above before submitting registration. Thank you!
                   </p>
                 )}
                 <Button 
