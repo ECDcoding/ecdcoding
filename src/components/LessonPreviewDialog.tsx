@@ -45,14 +45,15 @@ interface FreeClassCard {
   image: string;
   color: string;
   description: string;
+  route: string;
 }
 
 const freeClassCards: FreeClassCard[] = [
-  { id: "transportation", title: "Transportation", image: dumpTruckIcon, color: "from-blue-500 to-cyan-400", description: "Learn about vehicles that move us around!" },
-  { id: "my-body", title: "My Body", image: girlBodyMyBody, color: "from-pink-500 to-rose-400", description: "Discover the amazing human body!" },
-  { id: "shapes", title: "Shapes", image: shapesBasicColor, color: "from-green-500 to-emerald-400", description: "Explore circles, squares and more!" },
-  { id: "animals", title: "Animals", image: wildAnimalsChart, color: "from-orange-500 to-amber-400", description: "Meet wild and domestic animals!" },
-  { id: "abc-chart", title: "ABC Chart", image: alphabetChart, color: "from-purple-500 to-violet-400", description: "Learn the alphabet with fun!" },
+  { id: "transportation", title: "Transportation", image: dumpTruckIcon, color: "from-blue-500 to-cyan-400", description: "Learn about vehicles that move us around!", route: "/transportation" },
+  { id: "my-body", title: "My Body", image: girlBodyMyBody, color: "from-pink-500 to-rose-400", description: "Discover the amazing human body!", route: "/lesson-vault-04-06#my-body" },
+  { id: "shapes", title: "Shapes", image: shapesBasicColor, color: "from-green-500 to-emerald-400", description: "Explore circles, squares and more!", route: "/lesson-vault-04-06#shapes" },
+  { id: "animals", title: "Animals", image: wildAnimalsChart, color: "from-orange-500 to-amber-400", description: "Meet wild and domestic animals!", route: "/biology-nature" },
+  { id: "abc-chart", title: "ABC Chart", image: alphabetChart, color: "from-purple-500 to-violet-400", description: "Learn the alphabet with fun!", route: "/lesson-vault-04-06#abc-chart" },
 ];
 
 interface LessonPreviewDialogProps {
@@ -96,16 +97,10 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
     }
   };
 
-  const handleFreeClassCardClick = () => {
-    if (user) {
-      setShowFreeClassDialog(false);
-      onOpenChange(false);
-      navigate(targetRoute);
-    } else {
-      setShowFreeClassDialog(false);
-      setSelectedLesson({ id: "free-class", title: "Try A Free Class", subItems: [] });
-      setShowRegistrationDialog(true);
-    }
+  const handleFreeClassCardClick = (card: FreeClassCard) => {
+    setShowFreeClassDialog(false);
+    onOpenChange(false);
+    navigate(card.route);
   };
 
   const handleRegistrationTypeSelect = (type: "parent" | "ecd") => {
@@ -253,7 +248,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
                   return (
                     <Card
                       key={card.id}
-                      onClick={handleFreeClassCardClick}
+                      onClick={() => handleFreeClassCardClick(card)}
                       className={`cursor-pointer transition-all duration-500 transform ${
                         isActive 
                           ? "scale-110 z-20 shadow-2xl" 
