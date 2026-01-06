@@ -390,7 +390,7 @@ const Register = () => {
       case 'parent':
         return 'Parent / Guardian Registration Form';
       case 'ecd-manager':
-        return 'ECD Manager Registration';
+        return '';
       case 'tech-teacher':
         return 'Tech Teacher Application';
       default:
@@ -1382,7 +1382,7 @@ const Register = () => {
               />
             </div>
             <CardTitle className="text-2xl">{getFormTitle()}</CardTitle>
-            {registrationType !== 'parent' && (
+            {registrationType !== 'parent' && registrationType !== 'ecd-manager' && (
               <p className="text-muted-foreground">
                 {getFormSubtitle()}
               </p>
