@@ -988,14 +988,15 @@ const Register = () => {
         <Separator />
 
         {/* Add More Credits Section */}
-        <div className="space-y-2">
-          <h4 className="text-base font-semibold text-center">Add More Credits</h4>
-          <div className="grid grid-cols-2 gap-2 text-center text-sm">
-            <p className="font-semibold">50 Credits - <span className="text-primary">R50.00</span></p>
-            <p className="font-semibold">100 Credits - <span className="text-primary">R100.00</span></p>
-            <p className="font-semibold">200 Credits - <span className="text-primary">R200.00</span></p>
-            <p className="font-semibold">500 Credits - <span className="text-primary">R500.00</span></p>
-          </div>
+        <div className="flex items-center justify-center gap-2">
+          <Checkbox 
+            id="reloading-credits-ecd" 
+            checked={reloadingCreditsAgreed}
+            onCheckedChange={(checked) => setReloadingCreditsAgreed(checked === true)}
+          />
+          <Label htmlFor="reloading-credits-ecd" className="text-base font-semibold cursor-pointer">
+            Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
+          </Label>
         </div>
       </div>
 
@@ -1012,10 +1013,7 @@ const Register = () => {
             <DropdownMenuContent className="w-56 bg-background border border-border">
               <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
               <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(50); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>50 Credits - R50</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>100 Credits - R100</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(200); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>200 Credits - R200</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(500); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>500 Credits - R500</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>Reloading Credits - R100</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
