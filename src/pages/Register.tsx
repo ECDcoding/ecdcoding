@@ -384,7 +384,7 @@ const Register = () => {
   const getFormTitle = () => {
     switch (registrationType) {
       case 'parent':
-        return 'Membership Registration for a Learner(s)';
+        return 'Parent / Guardian Registration Form';
       case 'ecd-manager':
         return 'ECD Manager Registration';
       case 'tech-teacher':
@@ -409,9 +409,8 @@ const Register = () => {
 
   const renderParentForm = () => (
     <>
-      {/* Parent/Guardian Information */}
+      {/* Registration Form */}
       <div className="space-y-6">
-        <h3 className="text-lg font-semibold">Parent/Guardian Information</h3>
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -568,16 +567,16 @@ const Register = () => {
             onValueChange={(value) => handleInputChange("registrationStatus", value)}
           >
             <div className="flex items-center space-x-2">
+              <RadioGroupItem value="extra" id="extra" />
+              <Label htmlFor="extra">Extra Class for My Kid(s)</Label>
+            </div>
+            <div className="flex items-center space-x-2">
               <RadioGroupItem value="home" id="home" />
               <Label htmlFor="home">Home Schooling</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="ecd" id="ecd" />
               <Label htmlFor="ecd">ECD Institution</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="extra" id="extra" />
-              <Label htmlFor="extra">Extra Class for My Kid(s)</Label>
             </div>
           </RadioGroup>
         </div>
