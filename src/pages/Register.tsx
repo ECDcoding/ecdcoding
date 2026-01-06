@@ -1342,9 +1342,11 @@ const Register = () => {
               />
             </div>
             <CardTitle className="text-2xl">{getFormTitle()}</CardTitle>
-            <p className="text-muted-foreground">
-              {registrationType === 'parent' ? 'ECD Centers | Pre-Schools | Creches | Primary Schools and Other' : getFormSubtitle()}
-            </p>
+            {registrationType !== 'parent' && (
+              <p className="text-muted-foreground">
+                {getFormSubtitle()}
+              </p>
+            )}
           </CardHeader>
           
           <CardContent className="register-form-theme">
