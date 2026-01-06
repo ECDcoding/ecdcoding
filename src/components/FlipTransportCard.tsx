@@ -5,7 +5,7 @@ import { RefreshCw } from "lucide-react";
 import dumpTruckIcon from "@/assets/transport/dump-truck.png";
 import airplaneIcon from "@/assets/transport/airplane.png";
 import boatShipIcon from "@/assets/transport/boat-ship.png";
-import trainRailIcon from "@/assets/transport/train-rail.jpg";
+import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
 
 interface FlipTransportCardProps {
   onCardClick: (cardName: string) => void;
@@ -21,7 +21,7 @@ const transportData: Record<TransportSide, { title: string; image: string; color
   road: { title: 'Road', image: dumpTruckIcon, color: 'text-blue-600' },
   air: { title: 'Air', image: airplaneIcon, color: 'text-sky-500' },
   sea: { title: 'Sea', image: boatShipIcon, color: 'text-teal-500' },
-  rail: { title: 'Rail', image: trainRailIcon, color: 'text-orange-500' },
+  rail: { title: 'Rail', image: railTransportVehicles, color: 'text-orange-500' },
 };
 
 const sideOrder: TransportSide[] = ['road', 'air', 'sea', 'rail'];
