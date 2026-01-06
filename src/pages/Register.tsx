@@ -562,22 +562,22 @@ const Register = () => {
       {/* Registration Details */}
       <div className="space-y-6">
         <div className="space-y-4">
-          <Label>Registration Status *</Label>
+          <Label>Registration Status for Learning Environment(s) *</Label>
           <RadioGroup 
             value={formData.registrationStatus}
             onValueChange={(value) => handleInputChange("registrationStatus", value)}
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="home" id="home" />
-              <Label htmlFor="home">for my kid at home</Label>
+              <Label htmlFor="home">Home Schooling</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="ecd" id="ecd" />
-              <Label htmlFor="ecd">for my ECD kids</Label>
+              <Label htmlFor="ecd">ECD Institution</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="school" id="school" />
-              <Label htmlFor="school">for my school kids</Label>
+              <RadioGroupItem value="extra" id="extra" />
+              <Label htmlFor="extra">Extra Class for My Kid(s)</Label>
             </div>
           </RadioGroup>
         </div>
@@ -628,8 +628,8 @@ const Register = () => {
                 <SelectValue placeholder="Select age group" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="04-06">04 - 06</SelectItem>
-                <SelectItem value="07-10">07 - 10</SelectItem>
+                <SelectItem value="04-07">04 - 07</SelectItem>
+                <SelectItem value="08-12">08 - 12</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -649,13 +649,16 @@ const Register = () => {
 
         <div className="space-y-2">
           <Label htmlFor="relationship">Relationship *</Label>
-          <Input
-            id="relationship"
-            value={formData.relationship}
-            onChange={(e) => handleInputChange("relationship", e.target.value)}
-            placeholder="e.g., Parent, Guardian, Teacher"
-            required
-          />
+          <Select value={formData.relationship} onValueChange={(value) => handleInputChange("relationship", value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select relationship" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="parent">Parent</SelectItem>
+              <SelectItem value="guardian">Guardian</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </>
