@@ -64,18 +64,9 @@ const AdminDashboard = () => {
     }
   };
 
-  // Get first 200 parent/ECD manager user IDs for the orange tick
-  const getEarlyAdopterIds = () => {
-    const eligibleProfiles = profiles.filter(
-      (p) => p.registration_type === "parent" || p.registration_type === "ecd-manager"
-    );
-    return new Set(eligibleProfiles.slice(0, 200).map((p) => p.user_id));
-  };
-
-  const earlyAdopterIds = getEarlyAdopterIds();
-
-  const isEarlyAdopter = (profile: UserProfile) => {
-    return earlyAdopterIds.has(profile.user_id);
+  // All registered users get the verified badge
+  const isRegisteredUser = (profile: UserProfile) => {
+    return !!profile.user_id;
   };
 
   // Re-sort for display (newest first)
@@ -173,7 +164,7 @@ const AdminDashboard = () => {
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-1.5">
                           {profile.first_name} {profile.last_name}
-                          {isEarlyAdopter(profile) && (
+                          {isRegisteredUser(profile) && (
                             <VerifiedBadge size="sm" />
                           )}
                         </div>
