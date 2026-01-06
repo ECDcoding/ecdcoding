@@ -9,13 +9,25 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Users, Building2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const CallToAction = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string | null>(null);
 
   const handleButtonClick = (ageGroup: string) => {
+    // If user is already signed in, navigate directly to lesson content
+    if (user) {
+      if (ageGroup === "04-07") {
+        navigate("/lesson-vault-04-06");
+      } else {
+        navigate("/lesson-vault-07-10");
+      }
+      return;
+    }
+    // Otherwise, show registration dialog
     setSelectedAgeGroup(ageGroup);
     setDialogOpen(true);
   };
