@@ -349,6 +349,7 @@ export type Database = {
           created_at: string
           credits: number
           id: string
+          last_daily_credit_at: string | null
           updated_at: string
           user_id: string
         }
@@ -356,6 +357,7 @@ export type Database = {
           created_at?: string
           credits?: number
           id?: string
+          last_daily_credit_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -363,6 +365,7 @@ export type Database = {
           created_at?: string
           credits?: number
           id?: string
+          last_daily_credit_at?: string | null
           updated_at?: string
           user_id?: string
         }
