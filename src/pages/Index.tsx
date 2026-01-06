@@ -28,7 +28,7 @@ const Index = () => {
         <div className="flex items-center justify-center space-x-8">
           <div className="flex items-center space-x-2 text-muted-foreground">
             <Copyright className="h-4 w-4" />
-            <span className="text-sm">ECDcoding 2025</span>
+            <span className="text-sm">ECDcoding 2026</span>
           </div>
           <Link to="/contact" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
             <img src={emailIcon} alt="Contact Us" className="h-6 w-6" />
