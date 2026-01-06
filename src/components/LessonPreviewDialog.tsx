@@ -24,7 +24,7 @@ const lessons: Lesson[] = [
   { id: "literacy", title: "Literacy", subItems: ["ABC Chart", "Letter Sounds", "Simple Words"] },
   { id: "note-of-week", title: "Note of the Week", subItems: ["Weekly Song", "Music Basics"] },
   { id: "life-skills", title: "Life Skills", subItems: ["My Body", "Five Senses", "Daily Routines"] },
-  { id: "tech-skills", title: "Tech Skills", subItems: ["Coding in Alphabets", "Emoji AI"] },
+  { id: "tech-skills", title: "Tech Skills", subItems: ["AI Logic", "Coding in Alphabets"] },
   { id: "transportation", title: "Transportation", subItems: ["Road Vehicles", "Water Transport", "Air Transport"] },
   { id: "road-safety", title: "Road Safety", subItems: ["Traffic Lights", "Road Signs", "Crossing Safely"] },
   { id: "science", title: "Science and Discovery", subItems: ["Animals", "Plants", "Weather"] },
