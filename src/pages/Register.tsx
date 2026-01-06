@@ -973,76 +973,49 @@ const Register = () => {
 
       {/* Payment Information */}
       <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-4">
-        <h3 className="text-lg font-semibold text-center mb-4">Pay with PayFast</h3>
-        
-        {/* Subscription Options */}
-        <div className="space-y-3">
-          <h4 className="text-base font-semibold text-center">Subscription Plans</h4>
-          <div className="grid grid-cols-2 gap-3">
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300"
-              onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">Monthly</span>
-              <span className="text-lg font-bold">R100.00</span>
-            </Button>
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300"
-              onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">Annual</span>
-              <span className="text-lg font-bold">R1200.00</span>
-            </Button>
-          </div>
+        <h3 className="text-lg font-semibold text-center mb-4">Subscription Plans</h3>
+        <div className="space-y-2 text-center">
+          <p className="text-base font-semibold">
+            Monthly Payment <span className="text-primary">R100.00</span>
+          </p>
+          <p className="text-base font-semibold">
+            Annual Payment <span className="text-primary">R1200.00</span>
+          </p>
         </div>
 
         <Separator />
 
         {/* Add More Credits Section */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h4 className="text-base font-semibold text-center">Add More Credits</h4>
-          <div className="grid grid-cols-2 gap-3">
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-muted hover:bg-muted/80 border-border"
-              onClick={() => { setSelectedPaymentAmount(50); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">50 Credits</span>
-              <span className="text-lg font-bold text-primary">R50.00</span>
-            </Button>
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-muted hover:bg-muted/80 border-border"
-              onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">100 Credits</span>
-              <span className="text-lg font-bold text-primary">R100.00</span>
-            </Button>
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-muted hover:bg-muted/80 border-border"
-              onClick={() => { setSelectedPaymentAmount(200); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">200 Credits</span>
-              <span className="text-lg font-bold text-primary">R200.00</span>
-            </Button>
-            <Button 
-              type="button"
-              variant="outline" 
-              className="h-auto py-3 flex flex-col bg-muted hover:bg-muted/80 border-border"
-              onClick={() => { setSelectedPaymentAmount(500); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}
-            >
-              <span className="text-sm">500 Credits</span>
-              <span className="text-lg font-bold text-primary">R500.00</span>
-            </Button>
+          <div className="grid grid-cols-2 gap-2 text-center text-sm">
+            <p className="font-semibold">50 Credits - <span className="text-primary">R50.00</span></p>
+            <p className="font-semibold">100 Credits - <span className="text-primary">R100.00</span></p>
+            <p className="font-semibold">200 Credits - <span className="text-primary">R200.00</span></p>
+            <p className="font-semibold">500 Credits - <span className="text-primary">R500.00</span></p>
           </div>
+        </div>
+      </div>
+
+      {/* PayFast Payment Button */}
+      <div className="space-y-4">
+        <div className="p-4 bg-muted rounded-lg">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">
+                Pay with PayFast
+                <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 bg-background border border-border">
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(50); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>50 Credits - R50</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>100 Credits - R100</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(200); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>200 Credits - R200</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(500); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>500 Credits - R500</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </>
