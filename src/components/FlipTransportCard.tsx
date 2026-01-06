@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
@@ -34,7 +33,6 @@ const FlipTransportCard = ({
   selectedCardForTest,
   recordingTime
 }: FlipTransportCardProps) => {
-  const navigate = useNavigate();
   const [currentSideIndex, setCurrentSideIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -58,8 +56,7 @@ const FlipTransportCard = ({
     if (target.closest('button') || target.closest('.flip-indicator')) {
       return;
     }
-    // Navigate directly to Transportation page
-    navigate('/transportation');
+    onCardClick("Transportation");
   };
 
   return (
