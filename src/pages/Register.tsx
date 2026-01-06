@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +11,14 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, FileText, ChevronDown } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { ArrowLeft, FileText, ChevronDown, CalendarIcon } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { countryCodes } from "@/lib/countryCodes";
+import { cn } from "@/lib/utils";
 
 // Comprehensive country list
 const countries = [
@@ -581,21 +585,50 @@ const Register = () => {
           </RadioGroup>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
-          <Select
-            value={formData.hearAbout}
-            onValueChange={(value) => handleInputChange("hearAbout", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select duration" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="6-months">06 Months</SelectItem>
-              <SelectItem value="12-months">12 Months</SelectItem>
-              <SelectItem value="24-months">24 Months</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
+            <Select
+              value={formData.hearAbout}
+              onValueChange={(value) => handleInputChange("hearAbout", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select duration" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="12-months">12 Months</SelectItem>
+                <SelectItem value="24-months">24 Months</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Starting Date *</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !formData.startDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formData.startDate ? format(new Date(formData.startDate), "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={formData.startDate ? new Date(formData.startDate) : undefined}
+                  onSelect={(date) => handleInputChange("startDate", date?.toISOString() || "")}
+                  disabled={(date) => date < new Date()}
+                  initialFocus
+                  className={cn("p-3 pointer-events-auto")}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
 
