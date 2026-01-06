@@ -391,8 +391,11 @@ const LessonVault0406 = () => {
   };
 
   // Helper function to handle card click for stopping carousel and opening full-screen view
-  const handleCardClick = (cardName: string) => (e: React.MouseEvent) => {
-    if (!isRecording && !(e.target as HTMLElement).closest('button, a')) {
+  const handleCardClick = (cardName: string) => (e?: React.MouseEvent) => {
+    // Check if target exists before using closest (for flip cards that don't pass event)
+    const targetIsButton = e?.target ? (e.target as HTMLElement).closest('button, a') : false;
+    
+    if (!isRecording && !targetIsButton) {
       // Clear any existing timeout
       if (cardAutoResumeTimeoutRef.current) {
         clearTimeout(cardAutoResumeTimeoutRef.current);
@@ -2292,7 +2295,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             >
               {/* First set of cards */}
               <FlipBodyCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -2300,7 +2303,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               />
               
               <FlipTrafficCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -2308,7 +2311,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               />
               
               <FlipTransportCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -2407,7 +2410,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               
               {/* Duplicate cards for infinite loop */}
               <FlipBodyCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -2415,7 +2418,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               />
               
               <FlipTrafficCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -2423,7 +2426,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               />
 
               <FlipTransportCard
-                onCardClick={(cardName) => handleCardClick(cardName)({} as React.MouseEvent)}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
                 selectedCardForTest={selectedCardForTest}
@@ -3372,60 +3375,33 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </div>
                 )}
                 
-                {/* Action buttons */}
-                <div className="mt-6 flex flex-col items-center gap-4">
-                  {/* Learn More button - navigates to the lesson page */}
+                {/* Microphone button for recording */}
+                <div className="mt-6 flex items-center justify-center gap-4">
                   <Button
-                    onClick={() => {
-                      closeFullScreenCard();
-                      // Navigate based on card name
-                      const navigationMap: Record<string, string> = {
-                        "Transportation": "/transportation",
-                        "Girl's Body": "/biology-nature",
-                        "Boy's Body": "/biology-nature",
-                        "My Body": "/biology-nature",
-                        "Basic Logic": "/domestic-ecology",
-                        "Wild Animals": "/biology-nature",
-                        "Busy Bee": "/biology-nature",
-                      };
-                      const route = navigationMap[fullScreenCard.name];
-                      if (route) {
-                        navigate(route);
-                      }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      createRecordingHandler(fullScreenCard.name)(e);
                     }}
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold px-8 py-3 rounded-full shadow-lg text-lg"
+                    className={`${isRecording && selectedCardForTest === fullScreenCard.name ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-4 shadow-lg`}
                   >
-                    Learn More →
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
                   </Button>
-                  
-                  {/* Microphone button for recording */}
-                  <div className="flex items-center gap-4">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        createRecordingHandler(fullScreenCard.name)(e);
-                      }}
-                      className={`${isRecording && selectedCardForTest === fullScreenCard.name ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-4 shadow-lg`}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                      </svg>
-                    </Button>
-                    {isRecording && selectedCardForTest === fullScreenCard.name && (
-                      <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
-                        Recording: {recordingTime}s / 30s
-                      </span>
-                    )}
-                    {!isRecording && (
-                      <span className="text-gray-600 text-lg">Or record your answer</span>
-                    )}
-                  </div>
+                  {isRecording && selectedCardForTest === fullScreenCard.name && (
+                    <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
+                      Recording: {recordingTime}s / 30s
+                    </span>
+                  )}
+                  {!isRecording && (
+                    <span className="text-gray-600 text-lg">Click to record your answer</span>
+                  )}
                 </div>
               </div>
               
               {/* Navigation hint */}
               <p className="text-white text-center mt-4 opacity-75">
-                Click "Learn More" to open the lesson or X to close
+                Click X to close
               </p>
             </div>
           </div>
