@@ -13,6 +13,8 @@ interface FlipBodyCardProps {
   recordingTime: number;
 }
 
+const bodySides = ["Girl's Body", "Boy's Body"] as const;
+
 const FlipBodyCard = ({
   onCardClick,
   onRecordingClick,
@@ -20,17 +22,17 @@ const FlipBodyCard = ({
   selectedCardForTest,
   recordingTime,
 }: FlipBodyCardProps) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   
-  const currentSide = isFlipped ? "Boy's Body" : "Girl's Body";
-  const currentImage = isFlipped ? boyBodyMyBody : girlBodyMyBody;
-  const borderColor = isFlipped ? "border-red-400" : "border-yellow-400";
+  const currentSide = bodySides[currentIndex];
+  const currentImage = currentIndex === 0 ? girlBodyMyBody : boyBodyMyBody;
+  const borderColor = currentIndex === 0 ? "border-yellow-400" : "border-red-400";
   
-  const handleDoubleClick = (e: React.MouseEvent) => {
+  const handleFlip = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsAnimating(true);
-    setIsFlipped(!isFlipped);
+    setCurrentIndex((prev) => (prev + 1) % bodySides.length);
     setTimeout(() => setIsAnimating(false), 600);
   };
   
@@ -50,19 +52,29 @@ const FlipBodyCard = ({
       <Card 
         className={`bg-white p-4 w-80 min-h-[400px] border-4 border-dashed ${borderColor} shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all relative cursor-pointer`}
         onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
       >
         <CardContent className="p-0 relative">
+          {/* Side indicator dots */}
+          <div className="absolute top-2 left-2 z-20 flex gap-1">
+            {bodySides.map((_, index) => (
+              <div 
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentIndex 
+                    ? (currentIndex === 0 ? 'bg-yellow-400' : 'bg-red-400') + ' scale-125' 
+                    : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
+          
           {/* Flip indicator icon */}
           <div 
             className="flip-indicator absolute top-2 right-2 z-20 cursor-pointer group"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDoubleClick(e);
-            }}
+            onClick={handleFlip}
             title="Click to flip card"
           >
-            <div className={`bg-gradient-to-r ${isFlipped ? 'from-red-400 to-yellow-400' : 'from-yellow-400 to-red-400'} p-2 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110`}>
+            <div className={`bg-gradient-to-r ${currentIndex === 1 ? 'from-red-400 to-yellow-400' : 'from-yellow-400 to-red-400'} p-2 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110`}>
               <RefreshCw 
                 className={`h-5 w-5 text-white ${isAnimating ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-300'}`}
               />
@@ -71,7 +83,7 @@ const FlipBodyCard = ({
               Tap to flip
             </span>
           </div>
-          <h3 className="text-lg font-bold text-center mb-2" style={{ color: isFlipped ? "#f87171" : "#facc15" }}>
+          <h3 className="text-lg font-bold text-center mb-2" style={{ color: currentIndex === 1 ? "#f87171" : "#facc15" }}>
             {currentSide}
           </h3>
           <div className={`transition-transform duration-500 ${isAnimating ? 'scale-95' : 'scale-100'}`}>
