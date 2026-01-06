@@ -154,6 +154,7 @@ const LessonVault0406 = () => {
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
   const [codingDialogOpen, setCodingDialogOpen] = useState(false);
+  const [selectedTechSkill, setSelectedTechSkill] = useState<string | null>(null);
   const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
   const [gaugeAnimated, setGaugeAnimated] = useState(true); // Already animated/filled
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -4251,84 +4252,142 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         url={musicLabUrl}
       />
 
-      {/* Coding - Interactive Alphabet Dialog */}
+      {/* Tech Skills Selection Dialog */}
       <Dialog open={codingDialogOpen} onOpenChange={(open) => {
         setCodingDialogOpen(open);
-        if (!open) setCurrentAlphabetIndex(0); // Reset to A when closing
+        if (!open) {
+          setCurrentAlphabetIndex(0); // Reset to A when closing
+          setSelectedTechSkill(null);
+        }
       }}>
         <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              🔤 Coding in Alphabets
-            </DialogTitle>
-            <DialogDescription>
-              Click on the letter to see the next one!
-            </DialogDescription>
-          </DialogHeader>
-          <div 
-            className="flex flex-col items-center justify-center cursor-pointer select-none py-6"
-            onClick={() => setCurrentAlphabetIndex(prev => (prev + 1) % 26)}
-          >
-            <div className="text-[150px] font-bold text-primary leading-none animate-bounce">
-              {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentAlphabetIndex]}
-            </div>
-            <p className="text-lg text-muted-foreground mt-3">
-              Letter {currentAlphabetIndex + 1} of 26
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Tap to see the next letter
-            </p>
-            
-            {/* Numbered blocks 1-26 in rows of 10 */}
-            <div className="grid grid-cols-10 gap-1 mt-4 w-full max-w-[420px] px-2">
-              {Array.from({ length: 26 }, (_, i) => (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentAlphabetIndex(i);
-                  }}
-                  className={`w-9 h-9 rounded-md text-xs font-bold transition-all duration-200 ${
-                    currentAlphabetIndex === i
-                      ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
-                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                  }`}
+          {!selectedTechSkill ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                  💻 Tech Skills
+                </DialogTitle>
+                <DialogDescription>
+                  Select a skill to explore
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-1 gap-3 py-4">
+                <Button
+                  variant="outline"
+                  className="h-16 text-lg font-semibold justify-start gap-3 hover:bg-primary/10"
+                  onClick={() => navigate('/facial-recognition')}
                 >
-                  {i + 1}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Word to Number Code Converter */}
-          <div className="border-t pt-4 mt-2">
-            <p className="text-sm font-semibold text-center mb-2">🔢 Word to Number Code</p>
-            <div className="flex gap-2 px-2">
-              <Input
-                placeholder="Type a word (e.g. MOM, DAD)"
-                value={wordToCode}
-                onChange={(e) => setWordToCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
-                onClick={(e) => e.stopPropagation()}
-                className="flex-1 text-center font-bold"
-                maxLength={10}
-              />
-            </div>
-            {wordToCode && (
-              <div className="mt-3 text-center">
-                <p className="text-xs text-muted-foreground mb-1">
-                  {wordToCode.split('').map((letter, i) => (
-                    <span key={i}>
-                      {letter}={letter.charCodeAt(0) - 64}
-                      {i < wordToCode.length - 1 ? ', ' : ''}
-                    </span>
-                  ))}
-                </p>
-                <p className="text-2xl font-bold text-primary tracking-wider">
-                  {wordToCode.split('').map(letter => letter.charCodeAt(0) - 64).join('')}
-                </p>
+                  🤖 Facial Recognition
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-16 text-lg font-semibold justify-start gap-3 hover:bg-primary/10"
+                  onClick={() => setSelectedTechSkill('alphabets')}
+                >
+                  🔤 Coding in Alphabets
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-16 text-lg font-semibold justify-start gap-3 hover:bg-primary/10"
+                  onClick={() => navigate('/emoji-ai')}
+                >
+                  😊 Emoji AI
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-16 text-lg font-semibold justify-start gap-3 hover:bg-primary/10"
+                  onClick={() => navigate('/fruit-item-recognition')}
+                >
+                  🍎 Fruit Item Recognition
+                </Button>
               </div>
-            )}
-          </div>
+            </>
+          ) : (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedTechSkill(null)}
+                    className="p-1"
+                  >
+                    ← Back
+                  </Button>
+                  <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                    🔤 Coding in Alphabets
+                  </DialogTitle>
+                </div>
+                <DialogDescription>
+                  Click on the letter to see the next one!
+                </DialogDescription>
+              </DialogHeader>
+              <div 
+                className="flex flex-col items-center justify-center cursor-pointer select-none py-6"
+                onClick={() => setCurrentAlphabetIndex(prev => (prev + 1) % 26)}
+              >
+                <div className="text-[150px] font-bold text-primary leading-none animate-bounce">
+                  {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentAlphabetIndex]}
+                </div>
+                <p className="text-lg text-muted-foreground mt-3">
+                  Letter {currentAlphabetIndex + 1} of 26
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Tap to see the next letter
+                </p>
+                
+                {/* Numbered blocks 1-26 in rows of 10 */}
+                <div className="grid grid-cols-10 gap-1 mt-4 w-full max-w-[420px] px-2">
+                  {Array.from({ length: 26 }, (_, i) => (
+                    <button
+                      key={i}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentAlphabetIndex(i);
+                      }}
+                      className={`w-9 h-9 rounded-md text-xs font-bold transition-all duration-200 ${
+                        currentAlphabetIndex === i
+                          ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
+                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Word to Number Code Converter */}
+              <div className="border-t pt-4 mt-2">
+                <p className="text-sm font-semibold text-center mb-2">🔢 Word to Number Code</p>
+                <div className="flex gap-2 px-2">
+                  <Input
+                    placeholder="Type a word (e.g. MOM, DAD)"
+                    value={wordToCode}
+                    onChange={(e) => setWordToCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 text-center font-bold"
+                    maxLength={10}
+                  />
+                </div>
+                {wordToCode && (
+                  <div className="mt-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {wordToCode.split('').map((letter, i) => (
+                        <span key={i}>
+                          {letter}={letter.charCodeAt(0) - 64}
+                          {i < wordToCode.length - 1 ? ', ' : ''}
+                        </span>
+                      ))}
+                    </p>
+                    <p className="text-2xl font-bold text-primary tracking-wider">
+                      {wordToCode.split('').map(letter => letter.charCodeAt(0) - 64).join('')}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </DialogContent>
       </Dialog>
 
