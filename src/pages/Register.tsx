@@ -284,8 +284,8 @@ const Register = () => {
   // Admin user ID - can register without payment
   const ADMIN_USER_ID = "d1577987-f3c2-4573-aee5-fd83f403f03b";
   
-  // Check if payment is required (parent and ecd-manager must pay, tech-teacher has different flow)
-  const requiresPayment = registrationType === 'parent' || registrationType === 'ecd-manager';
+  // Check if payment is required (parent and ecd/ecd-manager must pay, tech-teacher has different flow)
+  const requiresPayment = registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd';
   
   // Initial empty form state - used for resetting
   const getInitialFormData = () => ({
@@ -390,6 +390,7 @@ const Register = () => {
       case 'parent':
         return 'Parent / Guardian Registration Form';
       case 'ecd-manager':
+      case 'ecd':
         return '';
       case 'tech-teacher':
         return 'Tech Teacher Application';
@@ -403,6 +404,7 @@ const Register = () => {
       case 'parent':
         return 'Register your child for our learning programs';
       case 'ecd-manager':
+      case 'ecd':
         return 'Join our network of Early Childhood Development partners';
       case 'tech-teacher':
         return 'Apply to join our team of tech educators';
@@ -1327,6 +1329,7 @@ const Register = () => {
       case 'parent':
         return renderParentForm();
       case 'ecd-manager':
+      case 'ecd':
         return renderECDManagerForm();
       case 'tech-teacher':
         return renderTechTeacherForm();
@@ -1355,7 +1358,7 @@ const Register = () => {
               />
             </div>
             <CardTitle className="text-2xl">{getFormTitle()}</CardTitle>
-            {registrationType !== 'parent' && registrationType !== 'ecd-manager' && (
+            {registrationType !== 'parent' && registrationType !== 'ecd-manager' && registrationType !== 'ecd' && (
               <p className="text-muted-foreground">
                 {getFormSubtitle()}
               </p>
