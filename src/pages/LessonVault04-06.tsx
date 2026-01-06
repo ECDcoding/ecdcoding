@@ -948,7 +948,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </Link>
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
-              {isEarlyAdopter && <VerifiedBadge size="lg" />}
             </div>
           </div>
           <div className="flex flex-col items-end gap-1">
