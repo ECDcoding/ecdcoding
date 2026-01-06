@@ -1,40 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Users, Building2 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import LessonPreviewDialog from "@/components/LessonPreviewDialog";
 
 const CallToAction = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string | null>(null);
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<"04-07" | "08-12" | null>(null);
 
-  const handleButtonClick = (ageGroup: string) => {
-    // If user is already signed in, navigate directly to lesson content
-    if (user) {
-      if (ageGroup === "04-07") {
-        navigate("/lesson-vault-04-06");
-      } else {
-        navigate("/lesson-vault-07-10");
-      }
-      return;
-    }
-    // Otherwise, show registration dialog
+  const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
     setSelectedAgeGroup(ageGroup);
     setDialogOpen(true);
-  };
-
-  const handleRegistrationTypeSelect = (type: "parent" | "ecd") => {
-    setDialogOpen(false);
-    navigate(`/register?type=${type}`);
   };
 
   return (
@@ -56,36 +30,11 @@ const CallToAction = () => {
         </Button>
       </div>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-center text-xl">Register to Get Started</DialogTitle>
-            <DialogDescription className="text-center">
-              Please select your registration type to continue
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
-            <Button
-              size="lg"
-              className="w-full py-6 text-lg flex items-center justify-center gap-3"
-              variant="outline"
-              onClick={() => handleRegistrationTypeSelect("parent")}
-            >
-              <Users className="h-6 w-6" />
-              Parent / Guardian
-            </Button>
-            <Button
-              size="lg"
-              className="w-full py-6 text-lg flex items-center justify-center gap-3"
-              variant="outline"
-              onClick={() => handleRegistrationTypeSelect("ecd")}
-            >
-              <Building2 className="h-6 w-6" />
-              ECD Manager
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <LessonPreviewDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        ageGroup={selectedAgeGroup}
+      />
     </>
   );
 };
