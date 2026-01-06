@@ -582,23 +582,6 @@ const Register = () => {
           </RadioGroup>
         </div>
 
-        <div className="space-y-4">
-          <Label>How Many Kids Are You Registering For? *</Label>
-          <RadioGroup 
-            value={formData.numberOfKids}
-            onValueChange={(value) => handleInputChange("numberOfKids", value)}
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="1" id="one" />
-              <Label htmlFor="one">1 Kid</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="more" id="more" />
-              <Label htmlFor="more">More than 1 Kid</Label>
-            </div>
-          </RadioGroup>
-        </div>
-
         <div className="space-y-2">
           <Label htmlFor="hearAbout">How did you hear about ECDcoding? *</Label>
           <Input
@@ -608,17 +591,6 @@ const Register = () => {
             required
           />
         </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="aspiration">Tech Education Aspiration for Your Kid(s) (200 words)</Label>
-          <Textarea
-            id="aspiration"
-            rows={6}
-            value={formData.aspiration}
-            onChange={(e) => handleInputChange("aspiration", e.target.value)}
-            placeholder="Share your aspirations for your child's tech education..."
-          />
-        </div>
       </div>
 
       <Separator />
@@ -626,16 +598,6 @@ const Register = () => {
       {/* Learner Information */}
       <div className="space-y-6">
         <h3 className="text-lg font-semibold">ECD Learner Information</h3>
-        
-        <div className="space-y-2">
-          <Label htmlFor="institution">Name of Learning Institution *</Label>
-          <Input
-            id="institution"
-            value={formData.institution}
-            onChange={(e) => handleInputChange("institution", e.target.value)}
-            required
-          />
-        </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -692,61 +654,6 @@ const Register = () => {
             value={formData.relationship}
             onChange={(e) => handleInputChange("relationship", e.target.value)}
             placeholder="e.g., Parent, Guardian, Teacher"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>ECD Institution Phone Number *</Label>
-          <div className="flex gap-2">
-            <Select value={formData.ecdPhoneCountryCode} onValueChange={(value) => handleInputChange("ecdPhoneCountryCode", value)}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {countryCodes.map((country) => (
-                  <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              className="w-20"
-              placeholder="###"
-              maxLength={3}
-              value={formData.ecdPhone1}
-              onChange={(e) => handleInputChange("ecdPhone1", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-20"
-              placeholder="###"
-              maxLength={3}
-              value={formData.ecdPhone2}
-              onChange={(e) => handleInputChange("ecdPhone2", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-24"
-              placeholder="####"
-              maxLength={4}
-              value={formData.ecdPhone3}
-              onChange={(e) => handleInputChange("ecdPhone3", e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="ecdEmail">ECD Institution Email *</Label>
-          <Input
-            id="ecdEmail"
-            type="email"
-            value={formData.ecdEmail}
-            onChange={(e) => handleInputChange("ecdEmail", e.target.value)}
             required
           />
         </div>
