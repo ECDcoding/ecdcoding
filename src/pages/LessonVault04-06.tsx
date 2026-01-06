@@ -386,7 +386,7 @@ const LessonVault0406 = () => {
     "ABC Chart": { image: alphabetChart, title: "ABC Chart", borderColor: "border-purple-500" },
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
     "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
-    "Bee Character": { image: beeCharacter, title: "Bee Character", borderColor: "border-blue-500" },
+    "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
   };
 
   // Helper function to handle card click for stopping carousel and opening full-screen view
@@ -2398,19 +2398,20 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               
               <Card 
                 className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Bee Character")}
+                onClick={handleCardClick("Busy Bee")}
               >
                 <CardContent className="p-0 relative">
-                  <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
-                  {isRecording && selectedCardForTest === "Bee Character" && (
+                  <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
+                  <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
+                  {isRecording && selectedCardForTest === "Busy Bee" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
                     </div>
                   )}
                 </CardContent>
                 <Button
-                  onClick={createRecordingHandler("Bee Character")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Bee Character" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  onClick={createRecordingHandler("Busy Bee")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -2504,19 +2505,20 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               
               <Card 
                 className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Bee Character")}
+                onClick={handleCardClick("Busy Bee")}
               >
                 <CardContent className="p-0 relative">
-                  <img src={beeCharacter} alt="Bee Character" className="w-full h-auto" />
-                  {isRecording && selectedCardForTest === "Bee Character" && (
+                  <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
+                  <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
+                  {isRecording && selectedCardForTest === "Busy Bee" && (
                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
                     </div>
                   )}
                 </CardContent>
                 <Button
-                  onClick={createRecordingHandler("Bee Character")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Bee Character" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                  onClick={createRecordingHandler("Busy Bee")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
