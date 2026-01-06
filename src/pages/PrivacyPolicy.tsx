@@ -66,7 +66,23 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">4. Information Sharing and Disclosure</h2>
+              <h2 className="text-xl font-semibold mb-3">4. Credit System and Daily Free Credits</h2>
+              <p className="mb-2">ECDcoding uses a credit-based system to provide access to educational content:</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><strong>Initial Credits:</strong> New users receive 100 free credits upon registration to start their learning journey.</li>
+                <li><strong>Daily Free Credits:</strong> All registered users receive 5 free credits automatically every 24 hours. This ensures continuous access to learning content even when credits are depleted.</li>
+                <li><strong>Credit Usage:</strong> Credits are deducted when accessing interactive lessons and educational content.</li>
+                <li><strong>Credit Purchases:</strong> Additional credits may be purchased through our secure payment system.</li>
+                <li><strong>No Rollover:</strong> Daily free credits are awarded once per 24-hour period and do not accumulate if not claimed.</li>
+              </ul>
+              <p className="mt-2 text-sm text-muted-foreground">
+                This daily credit offering is provided to ensure all learners have continuous access to educational resources, 
+                regardless of their financial situation.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold mb-3">5. Information Sharing and Disclosure</h2>
               <p className="mb-2">We do not sell your personal information. We may share information with:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Service Providers:</strong> Third-party vendors who assist in operating our platform (payment processors, hosting providers)</li>
@@ -77,7 +93,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">5. Child Privacy Protection</h2>
+              <h2 className="text-xl font-semibold mb-3">6. Child Privacy Protection</h2>
               <p className="mb-2">We take child privacy seriously and comply with applicable child protection laws:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Parental consent is required before collecting child information</li>
@@ -89,7 +105,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">6. Data Security</h2>
+              <h2 className="text-xl font-semibold mb-3">7. Data Security</h2>
               <p className="mb-2">We implement appropriate security measures to protect your information:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Encryption of data in transit and at rest</li>
@@ -104,7 +120,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">7. Your Rights and Choices</h2>
+              <h2 className="text-xl font-semibold mb-3">8. Your Rights and Choices</h2>
               <p className="mb-2">You have the following rights regarding your information:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Access:</strong> Request access to your personal information</li>
@@ -116,7 +132,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">8. Data Retention</h2>
+              <h2 className="text-xl font-semibold mb-3">9. Data Retention</h2>
               <p>
                 We retain your information for as long as necessary to provide our services and comply with legal obligations. 
                 When you request deletion, we will remove your information within 30 days, except where retention is required by law.
@@ -124,7 +140,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">9. Cookies and Tracking Technologies</h2>
+              <h2 className="text-xl font-semibold mb-3">10. Cookies and Tracking Technologies</h2>
               <p className="mb-2">We use cookies and similar technologies to:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Maintain user sessions and preferences</li>
@@ -135,7 +151,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">10. Changes to This Privacy Policy</h2>
+              <h2 className="text-xl font-semibold mb-3">11. Changes to This Privacy Policy</h2>
               <p>
                 We may update this Privacy Policy from time to time. We will notify you of significant changes by email or 
                 through a notice on our platform. Your continued use of our services after changes constitutes acceptance of the updated policy.
@@ -143,7 +159,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3">11. Contact Us</h2>
+              <h2 className="text-xl font-semibold mb-3">12. Contact Us</h2>
               <p className="mb-2">If you have questions about this Privacy Policy or our data practices, please contact us:</p>
               <ul className="list-none space-y-2 ml-4">
                 <li><strong>Email:</strong> privacy@ecdcoding.com</li>

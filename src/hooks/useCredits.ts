@@ -4,12 +4,44 @@ import { useAuth } from "./useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 const INITIAL_CREDITS = 100; // New users start with 100 credits
+const DAILY_FREE_CREDITS = 5; // Free credits awarded daily
 
 export const useCredits = () => {
   const [credits, setCredits] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { toast } = useToast();
+
+  const checkAndAwardDailyCredits = async (userId: string, currentCredits: number, lastDailyCreditAt: string | null) => {
+    const now = new Date();
+    const lastAward = lastDailyCreditAt ? new Date(lastDailyCreditAt) : null;
+    
+    // Check if more than 24 hours have passed since last daily credit
+    const shouldAwardDailyCredits = !lastAward || 
+      (now.getTime() - lastAward.getTime()) >= 24 * 60 * 60 * 1000;
+    
+    if (shouldAwardDailyCredits) {
+      const newCredits = currentCredits + DAILY_FREE_CREDITS;
+      
+      const { error } = await supabase
+        .from("user_credits")
+        .update({ 
+          credits: newCredits, 
+          last_daily_credit_at: now.toISOString() 
+        })
+        .eq("user_id", userId);
+      
+      if (!error) {
+        setCredits(newCredits);
+        toast({
+          title: "Daily Bonus!",
+          description: `You've received ${DAILY_FREE_CREDITS} free credits for today!`,
+        });
+        return newCredits;
+      }
+    }
+    return currentCredits;
+  };
 
   const fetchCredits = async () => {
     if (!user) {
@@ -21,7 +53,7 @@ export const useCredits = () => {
     try {
       const { data, error } = await supabase
         .from("user_credits")
-        .select("credits")
+        .select("credits, last_daily_credit_at")
         .eq("user_id", user.id)
         .single();
 
@@ -31,12 +63,20 @@ export const useCredits = () => {
       }
 
       if (data) {
-        setCredits(data.credits);
+        // Check and award daily credits if eligible
+        await checkAndAwardDailyCredits(user.id, data.credits, data.last_daily_credit_at);
+        if (credits === 0) {
+          setCredits(data.credits);
+        }
       } else {
         // Create initial credits record with 100 credits for new users
         const { data: newData, error: insertError } = await supabase
           .from("user_credits")
-          .insert({ user_id: user.id, credits: INITIAL_CREDITS })
+          .insert({ 
+            user_id: user.id, 
+            credits: INITIAL_CREDITS,
+            last_daily_credit_at: new Date().toISOString()
+          })
           .select()
           .single();
 
