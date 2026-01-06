@@ -582,13 +582,20 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="hearAbout">How did you hear about ECDcoding? *</Label>
-          <Input
-            id="hearAbout"
+          <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
+          <Select
             value={formData.hearAbout}
-            onChange={(e) => handleInputChange("hearAbout", e.target.value)}
-            required
-          />
+            onValueChange={(value) => handleInputChange("hearAbout", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select duration" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="6-months">06 Months</SelectItem>
+              <SelectItem value="12-months">12 Months</SelectItem>
+              <SelectItem value="24-months">24 Months</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
