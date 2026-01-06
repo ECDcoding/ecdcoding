@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift } from "lucide-react";
+import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift, Clock, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
+import { differenceInDays } from "date-fns";
 
 // Import images for free class cards
 import dumpTruckIcon from "@/assets/transport/dump-truck.png";
@@ -62,17 +63,55 @@ interface LessonPreviewDialogProps {
   ageGroup: "04-07" | "08-12" | null;
 }
 
+const FREE_TRIAL_KEY = "ecdcoding_free_trial_start";
+const FREE_TRIAL_DAYS = 14;
+
 const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDialogProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [showFreeClassDialog, setShowFreeClassDialog] = useState(false);
+  const [showTrialExpiredDialog, setShowTrialExpiredDialog] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [openLessons, setOpenLessons] = useState<string[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
+
+  // Calculate days remaining in free trial
+  useEffect(() => {
+    const trialStart = localStorage.getItem(FREE_TRIAL_KEY);
+    if (trialStart) {
+      const startDate = new Date(trialStart);
+      const daysPassed = differenceInDays(new Date(), startDate);
+      const remaining = FREE_TRIAL_DAYS - daysPassed;
+      setDaysRemaining(remaining > 0 ? remaining : 0);
+    } else {
+      setDaysRemaining(FREE_TRIAL_DAYS);
+    }
+  }, [showFreeClassDialog]);
+
+  const checkAndStartTrial = (): boolean => {
+    const trialStart = localStorage.getItem(FREE_TRIAL_KEY);
+    
+    if (!trialStart) {
+      // Start the trial
+      localStorage.setItem(FREE_TRIAL_KEY, new Date().toISOString());
+      return true;
+    }
+    
+    const startDate = new Date(trialStart);
+    const daysPassed = differenceInDays(new Date(), startDate);
+    
+    if (daysPassed >= FREE_TRIAL_DAYS) {
+      // Trial expired
+      return false;
+    }
+    
+    return true;
+  };
 
   const toggleLesson = (lessonId: string) => {
     setOpenLessons(prev => 
@@ -98,9 +137,14 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   };
 
   const handleFreeClassCardClick = (card: FreeClassCard) => {
-    setShowFreeClassDialog(false);
-    onOpenChange(false);
-    navigate(card.route);
+    if (checkAndStartTrial()) {
+      setShowFreeClassDialog(false);
+      onOpenChange(false);
+      navigate(card.route);
+    } else {
+      setShowFreeClassDialog(false);
+      setShowTrialExpiredDialog(true);
+    }
   };
 
   const handleRegistrationTypeSelect = (type: "parent" | "ecd") => {
@@ -220,6 +264,14 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
             <DialogDescription className="text-center text-base">
               Explore 5 exciting lessons for free! Click any card to start your learning adventure.
             </DialogDescription>
+            {daysRemaining !== null && daysRemaining > 0 && (
+              <div className="flex items-center justify-center gap-2 mt-3 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <Clock className="h-4 w-4 text-amber-500" />
+                <span className="text-sm font-medium text-amber-600">
+                  {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} remaining in your free trial
+                </span>
+              </div>
+            )}
           </DialogHeader>
           
           <div className="relative py-8">
@@ -362,6 +414,56 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
               onClick={handleBackToLessons}
             >
               ← Back to lessons
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Trial Expired Dialog */}
+      <Dialog open={showTrialExpiredDialog} onOpenChange={setShowTrialExpiredDialog}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-background to-destructive/5">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
+                <AlertTriangle className="h-8 w-8 text-destructive" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-xl">Free Trial Expired</DialogTitle>
+            <DialogDescription className="text-center">
+              Your 14-day free trial has ended. Register now to continue accessing all our amazing lessons!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-4">
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+              variant="outline"
+              onClick={() => {
+                setShowTrialExpiredDialog(false);
+                handleRegistrationTypeSelect("parent");
+              }}
+            >
+              <Users className="h-6 w-6" />
+              Register as Parent / Guardian
+            </Button>
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+              variant="outline"
+              onClick={() => {
+                setShowTrialExpiredDialog(false);
+                handleRegistrationTypeSelect("ecd");
+              }}
+            >
+              <Building2 className="h-6 w-6" />
+              Register as ECD Manager
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-sm"
+              onClick={() => setShowTrialExpiredDialog(false)}
+            >
+              Maybe later
             </Button>
           </div>
         </DialogContent>
