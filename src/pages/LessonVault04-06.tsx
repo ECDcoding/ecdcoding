@@ -1394,7 +1394,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      🧠 Basic Logic
+                      Basic Logic
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
@@ -1585,7 +1585,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      💻 Coding
+                      Coding
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
