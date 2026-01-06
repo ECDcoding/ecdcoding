@@ -1,14 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import LessonPreviewDialog from "@/components/LessonPreviewDialog";
+import { useAuth } from "@/hooks/useAuth";
 
 const CallToAction = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<"04-07" | "08-12" | null>(null);
 
   const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
-    setSelectedAgeGroup(ageGroup);
-    setDialogOpen(true);
+    if (user) {
+      // Signed-in users go directly to lesson vault
+      navigate(ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10");
+    } else {
+      // Non-signed-in users see the lesson preview dialog
+      setSelectedAgeGroup(ageGroup);
+      setDialogOpen(true);
+    }
   };
 
   return (
