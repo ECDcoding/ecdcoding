@@ -375,10 +375,17 @@ const LessonVault0406 = () => {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
     "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400" },
     "My Body": { image: girlBodyMyBody, title: "My Body", borderColor: "border-gradient" },
+    "Traffic Robot": { title: "Traffic Robot", content: (
+      <div className="flex flex-col items-center justify-center">
+        <div className="transform scale-150">
+          <TrafficLightProgress mode="traffic" />
+        </div>
+      </div>
+    ), borderColor: "border-pink-400" },
+    "Stop Sign": { image: stopSign, title: "Stop Sign", borderColor: "border-red-500" },
     "Basic Logic": { title: "", content: (
-      <div className="flex flex-col items-center justify-center relative">
-        <img src={stopSign} alt="Stop Sign" className="absolute w-64 h-64 opacity-30" />
-        <div className="transform scale-150 z-10">
+      <div className="flex flex-col items-center justify-center">
+        <div className="transform scale-150">
           <TrafficLightProgress mode="traffic" />
         </div>
       </div>
