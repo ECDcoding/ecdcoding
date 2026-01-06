@@ -8,28 +8,26 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, Building2, BookOpen, Calculator, Music, Car, Heart, Brain, Code, ShieldCheck, Microscope } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Users, Building2, ChevronDown } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 interface Lesson {
   id: string;
   title: string;
-  description: string;
-  icon: React.ReactNode;
-  color: string;
+  subItems: string[];
 }
 
 const lessons: Lesson[] = [
-  { id: "numeracy", title: "Numeracy", description: "Numbers, counting & math basics", icon: <Calculator className="h-6 w-6" />, color: "bg-blue-500" },
-  { id: "logic", title: "Basic Logic", description: "Critical thinking & problem solving", icon: <Brain className="h-6 w-6" />, color: "bg-purple-500" },
-  { id: "literacy", title: "Literacy", description: "Reading, writing & alphabet", icon: <BookOpen className="h-6 w-6" />, color: "bg-orange-500" },
-  { id: "note-of-week", title: "Note of the Week", description: "Weekly learning highlights", icon: <Music className="h-6 w-6" />, color: "bg-pink-500" },
-  { id: "life-skills", title: "Life Skills", description: "Essential everyday skills", icon: <Heart className="h-6 w-6" />, color: "bg-red-500" },
-  { id: "tech-skills", title: "Tech Skills", description: "Technology & digital literacy", icon: <Code className="h-6 w-6" />, color: "bg-violet-500" },
-  { id: "transportation", title: "Transportation", description: "Vehicles & how we travel", icon: <Car className="h-6 w-6" />, color: "bg-yellow-500" },
-  { id: "road-safety", title: "Road Safety", description: "Traffic rules & staying safe", icon: <ShieldCheck className="h-6 w-6" />, color: "bg-green-500" },
-  { id: "science", title: "Science and Discovery", description: "Explore the world around us", icon: <Microscope className="h-6 w-6" />, color: "bg-cyan-500" },
+  { id: "numeracy", title: "Numeracy", subItems: ["Counting 1-10", "Basic Addition", "Number Recognition"] },
+  { id: "logic", title: "Basic Logic", subItems: ["Shapes", "Patterns", "Problem Solving"] },
+  { id: "literacy", title: "Literacy", subItems: ["ABC Chart", "Letter Sounds", "Simple Words"] },
+  { id: "note-of-week", title: "Note of the Week", subItems: ["Weekly Song", "Music Basics"] },
+  { id: "life-skills", title: "Life Skills", subItems: ["My Body", "Five Senses", "Daily Routines"] },
+  { id: "tech-skills", title: "Tech Skills", subItems: ["Computer Basics", "Coding Games"] },
+  { id: "transportation", title: "Transportation", subItems: ["Road Vehicles", "Water Transport", "Air Transport"] },
+  { id: "road-safety", title: "Road Safety", subItems: ["Traffic Lights", "Road Signs", "Crossing Safely"] },
+  { id: "science", title: "Science and Discovery", subItems: ["Animals", "Plants", "Weather"] },
 ];
 
 interface LessonPreviewDialogProps {
@@ -43,16 +41,23 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const { user } = useAuth();
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [openLessons, setOpenLessons] = useState<string[]>([]);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
 
+  const toggleLesson = (lessonId: string) => {
+    setOpenLessons(prev => 
+      prev.includes(lessonId) 
+        ? prev.filter(id => id !== lessonId)
+        : [...prev, lessonId]
+    );
+  };
+
   const handleLessonClick = (lesson: Lesson) => {
     if (user) {
-      // User is signed in, navigate directly
       onOpenChange(false);
       navigate(targetRoute);
     } else {
-      // User not signed in, show registration dialog
       setSelectedLesson(lesson);
       setShowRegistrationDialog(true);
     }
@@ -81,21 +86,37 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
               Explore our fun and interactive lessons. Click on any lesson to get started!
             </DialogDescription>
           </DialogHeader>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 py-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 py-4">
             {lessons.map((lesson) => (
-              <Card
+              <Collapsible
                 key={lesson.id}
-                className="cursor-pointer hover:scale-105 transition-transform duration-200 hover:shadow-lg"
-                onClick={() => handleLessonClick(lesson)}
+                open={openLessons.includes(lesson.id)}
+                onOpenChange={() => toggleLesson(lesson.id)}
               >
-                <CardContent className="p-4 flex flex-col items-center text-center gap-2">
-                  <div className={`${lesson.color} text-white p-3 rounded-full`}>
-                    {lesson.icon}
+                <CollapsibleTrigger className="w-full">
+                  <div className="flex items-center justify-between w-full px-4 py-3 bg-muted/50 hover:bg-muted rounded-lg border border-border transition-colors">
+                    <span className="font-medium text-sm">{lesson.title}</span>
+                    <ChevronDown 
+                      className={`h-4 w-4 transition-transform duration-200 ${
+                        openLessons.includes(lesson.id) ? "rotate-180" : ""
+                      }`} 
+                    />
                   </div>
-                  <h3 className="font-semibold text-sm">{lesson.title}</h3>
-                  <p className="text-xs text-muted-foreground line-clamp-2">{lesson.description}</p>
-                </CardContent>
-              </Card>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-1">
+                  <div className="pl-4 space-y-1">
+                    {lesson.subItems.map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleLessonClick(lesson)}
+                        className="w-full text-left px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             ))}
           </div>
         </DialogContent>
