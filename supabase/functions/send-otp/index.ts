@@ -91,6 +91,11 @@ Deno.serve(async (req) => {
     const authToken = Deno.env.get('TWILIO_AUTH_TOKEN')!;
     const twilioPhone = Deno.env.get('TWILIO_PHONE_NUMBER')!;
 
+    // Helpful masked logs for debugging (never log secrets)
+    console.log(
+      `Twilio send attempt: accountSid=****${accountSid.slice(-4)}, from=${twilioPhone}, to=${normalizedPhone}`
+    );
+
     const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
 
     const message = `Your ECDcoding free trial verification code is: ${otpCode}. This code expires in 10 minutes.`;
@@ -109,9 +114,26 @@ Deno.serve(async (req) => {
     });
 
     if (!twilioResponse.ok) {
-      const twilioError = await twilioResponse.text();
-      console.error('Twilio error:', twilioError);
-      throw new Error(`Failed to send SMS: ${twilioError}`);
+      const twilioErrorText = await twilioResponse.text();
+      console.error('Twilio error:', twilioErrorText);
+
+      // Twilio trial limitation: can only send to verified recipient numbers.
+      // Return a 400 so the UI can show a clean message instead of a blank-screen 500.
+      if (twilioErrorText.includes('"code":21608')) {
+        return new Response(
+          JSON.stringify({
+            error:
+              'SMS cannot be delivered from the current Twilio account (trial restriction: recipient must be verified on this same account). Please confirm the verified number is on the same Twilio Account SID configured in the backend, or upgrade the Twilio account.',
+            code: 21608,
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
+      throw new Error(`Failed to send SMS: ${twilioErrorText}`);
     }
 
     console.log(`OTP sent successfully to ${normalizedPhone}`);
