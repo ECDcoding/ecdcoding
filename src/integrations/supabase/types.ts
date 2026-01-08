@@ -92,6 +92,45 @@ export type Database = {
         }
         Relationships: []
       }
+      phone_trials: {
+        Row: {
+          created_at: string
+          id: string
+          is_verified: boolean | null
+          notification_sent: boolean | null
+          otp_code: string | null
+          otp_expires_at: string | null
+          phone_number: string
+          trial_end_date: string | null
+          trial_start_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_verified?: boolean | null
+          notification_sent?: boolean | null
+          otp_code?: string | null
+          otp_expires_at?: string | null
+          phone_number: string
+          trial_end_date?: string | null
+          trial_start_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_verified?: boolean | null
+          notification_sent?: boolean | null
+          otp_code?: string | null
+          otp_expires_at?: string | null
+          phone_number?: string
+          trial_end_date?: string | null
+          trial_start_date?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profile_sensitive_data: {
         Row: {
           age_groups: string | null
