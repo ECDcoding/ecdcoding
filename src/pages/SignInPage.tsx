@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { ChevronDown, Home } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +22,8 @@ const SignInPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  const { signIn, resetPassword, user } = useAuth();
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const { signIn, signInWithOAuth, resetPassword, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already signed in
@@ -69,6 +72,14 @@ const SignInPage = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true);
+    try {
+      await signInWithOAuth('google');
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
@@ -84,7 +95,28 @@ const SignInPage = () => {
           <CardTitle className="text-center text-2xl">Sign In to ECDcoding</CardTitle>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="space-y-6">
+          {/* Google Sign-In Button */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full flex items-center justify-center gap-3 h-12"
+            onClick={handleGoogleSignIn}
+            disabled={isGoogleLoading}
+          >
+            <FcGoogle className="h-5 w-5" />
+            {isGoogleLoading ? 'Connecting...' : 'Continue with Google'}
+          </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <Separator className="w-full" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="signin-email">Email</Label>
