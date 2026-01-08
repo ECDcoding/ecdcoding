@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -9,13 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift, Clock, AlertTriangle, Phone, Loader2 } from "lucide-react";
+import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 // Import images for free class cards
 import dumpTruckIcon from "@/assets/transport/dump-truck.png";
@@ -66,179 +62,31 @@ interface LessonPreviewDialogProps {
   ageGroup: "04-07" | "08-12" | null;
 }
 
-const PHONE_TRIAL_KEY = "ecdcoding_phone_trial";
-const FREE_TRIAL_DAYS = 14;
-
 const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDialogProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [showFreeClassDialog, setShowFreeClassDialog] = useState(false);
-  const [showTrialExpiredDialog, setShowTrialExpiredDialog] = useState(false);
-  const [showPhoneVerificationDialog, setShowPhoneVerificationDialog] = useState(false);
-  const [showOTPVerificationDialog, setShowOTPVerificationDialog] = useState(false);
+  const [showSignInPromptDialog, setShowSignInPromptDialog] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [pendingFreeClassCard, setPendingFreeClassCard] = useState<FreeClassCard | null>(null);
   const [openLessons, setOpenLessons] = useState<string[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [otpCode, setOtpCode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
 
-  // Load verified phone from localStorage on mount
-  useEffect(() => {
-    const storedPhone = localStorage.getItem(PHONE_TRIAL_KEY);
-    if (storedPhone) {
-      setVerifiedPhone(storedPhone);
-    }
-  }, []);
-
-  // Check trial status when free class dialog opens
-  useEffect(() => {
-    const checkTrialStatus = async () => {
-      if (!showFreeClassDialog || !verifiedPhone) {
-        if (!verifiedPhone) setDaysRemaining(null);
-        return;
-      }
-
-      try {
-        const { data, error } = await supabase.functions.invoke('check-trial-status', {
-          body: { phoneNumber: verifiedPhone }
-        });
-
-        if (error) throw error;
-
-        if (data.hasActiveTrial) {
-          setDaysRemaining(data.daysRemaining);
-        } else if (data.isExpired) {
-          setDaysRemaining(0);
-        }
-      } catch (error) {
-        console.error('Error checking trial status:', error);
-      }
-    };
-
-    checkTrialStatus();
-  }, [showFreeClassDialog, verifiedPhone]);
-
-  const sendOTP = async () => {
-    if (!phoneNumber || phoneNumber.length < 10) {
-      toast.error("Please enter a valid phone number");
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('send-otp', {
-        body: { phoneNumber }
-      });
-
-      if (error) throw error;
-
-      if (data.alreadyVerified) {
-        // Already verified, store phone and show trial info
-        localStorage.setItem(PHONE_TRIAL_KEY, phoneNumber);
-        setVerifiedPhone(phoneNumber);
-        setDaysRemaining(data.daysRemaining);
-        setShowPhoneVerificationDialog(false);
-        setShowFreeClassDialog(true);
-        toast.success("Welcome back! Your trial is still active.");
-        
-        if (pendingFreeClassCard) {
-          if (data.daysRemaining > 0) {
-            navigate(pendingFreeClassCard.route);
-            onOpenChange(false);
-          } else {
-            setShowTrialExpiredDialog(true);
-          }
-          setPendingFreeClassCard(null);
-        }
-      } else {
-        toast.success("Verification code sent to your phone!");
-        setShowPhoneVerificationDialog(false);
-        setShowOTPVerificationDialog(true);
-      }
-    } catch (error) {
-      console.error('Error sending OTP:', error);
-      toast.error("Failed to send verification code. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const verifyOTP = async () => {
-    if (otpCode.length !== 6) {
-      toast.error("Please enter the complete 6-digit code");
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('verify-otp', {
-        body: { phoneNumber, otpCode }
-      });
-
-      if (error) throw error;
-
-      if (data.success) {
-        localStorage.setItem(PHONE_TRIAL_KEY, phoneNumber);
-        setVerifiedPhone(phoneNumber);
-        setDaysRemaining(data.daysRemaining);
-        setShowOTPVerificationDialog(false);
-        toast.success("Phone verified! Your 14-day free trial has started.");
-
-        if (pendingFreeClassCard) {
-          navigate(pendingFreeClassCard.route);
-          onOpenChange(false);
-          setPendingFreeClassCard(null);
-        } else {
-          setShowFreeClassDialog(true);
-        }
-      }
-    } catch (error: any) {
-      console.error('Error verifying OTP:', error);
-      toast.error(error.message || "Invalid verification code. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleFreeClassCardClick = async (card: FreeClassCard) => {
-    // If already verified, check trial status from API
-    if (verifiedPhone) {
-      setIsLoading(true);
-      try {
-        const { data, error } = await supabase.functions.invoke('check-trial-status', {
-          body: { phoneNumber: verifiedPhone }
-        });
-
-        if (error) throw error;
-
-        if (data.hasActiveTrial) {
-          setDaysRemaining(data.daysRemaining);
-          setShowFreeClassDialog(false);
-          onOpenChange(false);
-          navigate(card.route);
-        } else {
-          setShowFreeClassDialog(false);
-          setShowTrialExpiredDialog(true);
-        }
-      } catch (error) {
-        console.error('Error checking trial:', error);
-        toast.error("Failed to verify trial status");
-      } finally {
-        setIsLoading(false);
-      }
+  const handleFreeClassCardClick = (card: FreeClassCard) => {
+    if (user) {
+      // User is logged in, navigate directly
+      setShowFreeClassDialog(false);
+      onOpenChange(false);
+      navigate(card.route);
     } else {
-      // Not verified, start phone verification flow
+      // Not logged in, show sign-in prompt
       setPendingFreeClassCard(card);
       setShowFreeClassDialog(false);
-      setShowPhoneVerificationDialog(true);
+      setShowSignInPromptDialog(true);
     }
   };
 
@@ -267,8 +115,15 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
 
   const handleRegistrationTypeSelect = (type: "parent" | "ecd") => {
     setShowRegistrationDialog(false);
+    setShowSignInPromptDialog(false);
     onOpenChange(false);
     navigate(`/register?type=${type}`);
+  };
+
+  const handleSignIn = () => {
+    setShowSignInPromptDialog(false);
+    onOpenChange(false);
+    navigate('/sign-in');
   };
 
   const handleBackToLessons = () => {
@@ -295,7 +150,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
 
   return (
     <>
-      <Dialog open={open && !showRegistrationDialog && !showFreeClassDialog} onOpenChange={onOpenChange}>
+      <Dialog open={open && !showRegistrationDialog && !showFreeClassDialog && !showSignInPromptDialog} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-center text-xl">
@@ -382,14 +237,6 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
             <DialogDescription className="text-center text-base">
               Explore 5 exciting lessons for free! Click any card to start your learning adventure.
             </DialogDescription>
-            {daysRemaining !== null && daysRemaining > 0 && (
-              <div className="flex items-center justify-center gap-2 mt-3 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                <Clock className="h-4 w-4 text-amber-500" />
-                <span className="text-sm font-medium text-amber-600">
-                  {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} remaining in your free trial
-                </span>
-              </div>
-            )}
           </DialogHeader>
           
           <div className="relative py-8">
@@ -537,193 +384,73 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
         </DialogContent>
       </Dialog>
 
-      {/* Phone Verification Dialog */}
-      <Dialog open={showPhoneVerificationDialog} onOpenChange={(open) => {
-        setShowPhoneVerificationDialog(open);
+      {/* Sign In Prompt Dialog */}
+      <Dialog open={showSignInPromptDialog} onOpenChange={(open) => {
+        setShowSignInPromptDialog(open);
         if (!open) setPendingFreeClassCard(null);
       }}>
         <DialogContent className="sm:max-w-md bg-gradient-to-br from-background via-background to-primary/5">
           <DialogHeader>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                <Phone className="h-8 w-8 text-primary" />
+                <LogIn className="h-8 w-8 text-primary" />
               </div>
             </div>
-            <DialogTitle className="text-center text-xl">Verify Your Phone</DialogTitle>
+            <DialogTitle className="text-center text-xl">Sign In to Continue</DialogTitle>
             <DialogDescription className="text-center">
-              Enter your phone number to start your 14-day free trial. We'll send a 6-digit code to verify.
+              {pendingFreeClassCard 
+                ? `To access "${pendingFreeClassCard.title}", please sign in or create an account.`
+                : "Please sign in or create an account to access free lessons."
+              }
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-4">
-            <div className="space-y-2">
-              <label htmlFor="phone" className="text-sm font-medium">
-                Phone Number
-              </label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="e.g., 0712345678"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="text-lg py-6"
-              />
-              <p className="text-xs text-muted-foreground">
-                Enter your South African mobile number
-              </p>
-            </div>
             <Button
               size="lg"
-              className="w-full py-6 text-lg"
-              onClick={sendOTP}
-              disabled={isLoading || phoneNumber.length < 10}
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+              onClick={handleSignIn}
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Sending Code...
-                </>
-              ) : (
-                "Send Verification Code"
-              )}
+              <LogIn className="h-5 w-5" />
+              Sign In
+            </Button>
+            
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or register as</span>
+              </div>
+            </div>
+
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+              variant="outline"
+              onClick={() => handleRegistrationTypeSelect("parent")}
+            >
+              <Users className="h-5 w-5" />
+              Parent / Guardian
+            </Button>
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+              variant="outline"
+              onClick={() => handleRegistrationTypeSelect("ecd")}
+            >
+              <Building2 className="h-5 w-5" />
+              ECD Manager
             </Button>
             <Button
               variant="ghost"
               className="text-sm"
               onClick={() => {
-                setShowPhoneVerificationDialog(false);
+                setShowSignInPromptDialog(false);
                 setShowFreeClassDialog(true);
                 setPendingFreeClassCard(null);
               }}
             >
               ← Back to free classes
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* OTP Verification Dialog */}
-      <Dialog open={showOTPVerificationDialog} onOpenChange={(open) => {
-        setShowOTPVerificationDialog(open);
-        if (!open) {
-          setOtpCode("");
-          setPendingFreeClassCard(null);
-        }
-      }}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-background via-background to-green-500/5">
-          <DialogHeader>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
-                <Sparkles className="h-8 w-8 text-green-500" />
-              </div>
-            </div>
-            <DialogTitle className="text-center text-xl">Enter Verification Code</DialogTitle>
-            <DialogDescription className="text-center">
-              We sent a 6-digit code to <strong>{phoneNumber}</strong>. Enter it below to start your free trial.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col items-center gap-6 py-4">
-            <InputOTP
-              maxLength={6}
-              value={otpCode}
-              onChange={setOtpCode}
-            >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
-            <Button
-              size="lg"
-              className="w-full py-6 text-lg"
-              onClick={verifyOTP}
-              disabled={isLoading || otpCode.length !== 6}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Verifying...
-                </>
-              ) : (
-                "Verify & Start Free Trial"
-              )}
-            </Button>
-            <div className="flex flex-col items-center gap-2">
-              <Button
-                variant="link"
-                className="text-sm"
-                onClick={() => {
-                  setOtpCode("");
-                  sendOTP();
-                }}
-                disabled={isLoading}
-              >
-                Didn't receive the code? Resend
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-sm"
-                onClick={() => {
-                  setShowOTPVerificationDialog(false);
-                  setShowPhoneVerificationDialog(true);
-                  setOtpCode("");
-                }}
-              >
-                ← Change phone number
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Trial Expired Dialog */}
-      <Dialog open={showTrialExpiredDialog} onOpenChange={setShowTrialExpiredDialog}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-background to-destructive/5">
-          <DialogHeader>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
-                <AlertTriangle className="h-8 w-8 text-destructive" />
-              </div>
-            </div>
-            <DialogTitle className="text-center text-xl">Free Trial Expired</DialogTitle>
-            <DialogDescription className="text-center">
-              Your 14-day free trial has ended. Register now to continue accessing all our amazing lessons!
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
-            <Button
-              size="lg"
-              className="w-full py-6 text-lg flex items-center justify-center gap-3"
-              variant="outline"
-              onClick={() => {
-                setShowTrialExpiredDialog(false);
-                handleRegistrationTypeSelect("parent");
-              }}
-            >
-              <Users className="h-6 w-6" />
-              Register as Parent / Guardian
-            </Button>
-            <Button
-              size="lg"
-              className="w-full py-6 text-lg flex items-center justify-center gap-3"
-              variant="outline"
-              onClick={() => {
-                setShowTrialExpiredDialog(false);
-                handleRegistrationTypeSelect("ecd");
-              }}
-            >
-              <Building2 className="h-6 w-6" />
-              Register as ECD Manager
-            </Button>
-            <Button
-              variant="ghost"
-              className="text-sm"
-              onClick={() => setShowTrialExpiredDialog(false)}
-            >
-              Maybe later
             </Button>
           </div>
         </DialogContent>
