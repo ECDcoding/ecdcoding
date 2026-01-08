@@ -83,10 +83,11 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
       onOpenChange(false);
       navigate(card.route);
     } else {
-      // Not logged in, show sign-in prompt
+      // Not logged in, show registration dialog (same as other lessons)
       setPendingFreeClassCard(card);
       setShowFreeClassDialog(false);
-      setShowSignInPromptDialog(true);
+      setSelectedLesson({ id: card.id, title: card.title, subItems: [] });
+      setShowRegistrationDialog(true);
     }
   };
 
