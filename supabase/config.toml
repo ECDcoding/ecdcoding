@@ -5,3 +5,15 @@ verify_jwt = true
 
 [functions.payfast-itn]
 verify_jwt = false
+
+[functions.send-otp]
+verify_jwt = false
+
+[functions.verify-otp]
+verify_jwt = false
+
+[functions.check-trial-status]
+verify_jwt = false
+
+[functions.check-trial-expiry]
+verify_jwt = false

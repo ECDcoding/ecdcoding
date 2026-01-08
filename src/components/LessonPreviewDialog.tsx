@@ -9,10 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift, Clock, AlertTriangle } from "lucide-react";
+import { Users, Building2, ChevronDown, ChevronLeft, ChevronRight, Sparkles, Star, Gift, Clock, AlertTriangle, Phone, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
-import { differenceInDays } from "date-fns";
+import { Input } from "@/components/ui/input";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // Import images for free class cards
 import dumpTruckIcon from "@/assets/transport/dump-truck.png";
@@ -63,7 +66,7 @@ interface LessonPreviewDialogProps {
   ageGroup: "04-07" | "08-12" | null;
 }
 
-const FREE_TRIAL_KEY = "ecdcoding_free_trial_start";
+const PHONE_TRIAL_KEY = "ecdcoding_phone_trial";
 const FREE_TRIAL_DAYS = 14;
 
 const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDialogProps) => {
@@ -72,45 +75,171 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [showFreeClassDialog, setShowFreeClassDialog] = useState(false);
   const [showTrialExpiredDialog, setShowTrialExpiredDialog] = useState(false);
+  const [showPhoneVerificationDialog, setShowPhoneVerificationDialog] = useState(false);
+  const [showOTPVerificationDialog, setShowOTPVerificationDialog] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [pendingFreeClassCard, setPendingFreeClassCard] = useState<FreeClassCard | null>(null);
   const [openLessons, setOpenLessons] = useState<string[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
 
-  // Calculate days remaining in free trial
+  // Load verified phone from localStorage on mount
   useEffect(() => {
-    const trialStart = localStorage.getItem(FREE_TRIAL_KEY);
-    if (trialStart) {
-      const startDate = new Date(trialStart);
-      const daysPassed = differenceInDays(new Date(), startDate);
-      const remaining = FREE_TRIAL_DAYS - daysPassed;
-      setDaysRemaining(remaining > 0 ? remaining : 0);
-    } else {
-      setDaysRemaining(FREE_TRIAL_DAYS);
+    const storedPhone = localStorage.getItem(PHONE_TRIAL_KEY);
+    if (storedPhone) {
+      setVerifiedPhone(storedPhone);
     }
-  }, [showFreeClassDialog]);
+  }, []);
 
-  const checkAndStartTrial = (): boolean => {
-    const trialStart = localStorage.getItem(FREE_TRIAL_KEY);
-    
-    if (!trialStart) {
-      // Start the trial
-      localStorage.setItem(FREE_TRIAL_KEY, new Date().toISOString());
-      return true;
+  // Check trial status when free class dialog opens
+  useEffect(() => {
+    const checkTrialStatus = async () => {
+      if (!showFreeClassDialog || !verifiedPhone) {
+        if (!verifiedPhone) setDaysRemaining(null);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase.functions.invoke('check-trial-status', {
+          body: { phoneNumber: verifiedPhone }
+        });
+
+        if (error) throw error;
+
+        if (data.hasActiveTrial) {
+          setDaysRemaining(data.daysRemaining);
+        } else if (data.isExpired) {
+          setDaysRemaining(0);
+        }
+      } catch (error) {
+        console.error('Error checking trial status:', error);
+      }
+    };
+
+    checkTrialStatus();
+  }, [showFreeClassDialog, verifiedPhone]);
+
+  const sendOTP = async () => {
+    if (!phoneNumber || phoneNumber.length < 10) {
+      toast.error("Please enter a valid phone number");
+      return;
     }
-    
-    const startDate = new Date(trialStart);
-    const daysPassed = differenceInDays(new Date(), startDate);
-    
-    if (daysPassed >= FREE_TRIAL_DAYS) {
-      // Trial expired
-      return false;
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-otp', {
+        body: { phoneNumber }
+      });
+
+      if (error) throw error;
+
+      if (data.alreadyVerified) {
+        // Already verified, store phone and show trial info
+        localStorage.setItem(PHONE_TRIAL_KEY, phoneNumber);
+        setVerifiedPhone(phoneNumber);
+        setDaysRemaining(data.daysRemaining);
+        setShowPhoneVerificationDialog(false);
+        setShowFreeClassDialog(true);
+        toast.success("Welcome back! Your trial is still active.");
+        
+        if (pendingFreeClassCard) {
+          if (data.daysRemaining > 0) {
+            navigate(pendingFreeClassCard.route);
+            onOpenChange(false);
+          } else {
+            setShowTrialExpiredDialog(true);
+          }
+          setPendingFreeClassCard(null);
+        }
+      } else {
+        toast.success("Verification code sent to your phone!");
+        setShowPhoneVerificationDialog(false);
+        setShowOTPVerificationDialog(true);
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      toast.error("Failed to send verification code. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    
-    return true;
+  };
+
+  const verifyOTP = async () => {
+    if (otpCode.length !== 6) {
+      toast.error("Please enter the complete 6-digit code");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('verify-otp', {
+        body: { phoneNumber, otpCode }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        localStorage.setItem(PHONE_TRIAL_KEY, phoneNumber);
+        setVerifiedPhone(phoneNumber);
+        setDaysRemaining(data.daysRemaining);
+        setShowOTPVerificationDialog(false);
+        toast.success("Phone verified! Your 14-day free trial has started.");
+
+        if (pendingFreeClassCard) {
+          navigate(pendingFreeClassCard.route);
+          onOpenChange(false);
+          setPendingFreeClassCard(null);
+        } else {
+          setShowFreeClassDialog(true);
+        }
+      }
+    } catch (error: any) {
+      console.error('Error verifying OTP:', error);
+      toast.error(error.message || "Invalid verification code. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFreeClassCardClick = async (card: FreeClassCard) => {
+    // If already verified, check trial status from API
+    if (verifiedPhone) {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke('check-trial-status', {
+          body: { phoneNumber: verifiedPhone }
+        });
+
+        if (error) throw error;
+
+        if (data.hasActiveTrial) {
+          setDaysRemaining(data.daysRemaining);
+          setShowFreeClassDialog(false);
+          onOpenChange(false);
+          navigate(card.route);
+        } else {
+          setShowFreeClassDialog(false);
+          setShowTrialExpiredDialog(true);
+        }
+      } catch (error) {
+        console.error('Error checking trial:', error);
+        toast.error("Failed to verify trial status");
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      // Not verified, start phone verification flow
+      setPendingFreeClassCard(card);
+      setShowFreeClassDialog(false);
+      setShowPhoneVerificationDialog(true);
+    }
   };
 
   const toggleLesson = (lessonId: string) => {
@@ -133,17 +262,6 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
     } else {
       setSelectedLesson(lesson);
       setShowRegistrationDialog(true);
-    }
-  };
-
-  const handleFreeClassCardClick = (card: FreeClassCard) => {
-    if (checkAndStartTrial()) {
-      setShowFreeClassDialog(false);
-      onOpenChange(false);
-      navigate(card.route);
-    } else {
-      setShowFreeClassDialog(false);
-      setShowTrialExpiredDialog(true);
     }
   };
 
@@ -415,6 +533,148 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
             >
               ← Back to lessons
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Phone Verification Dialog */}
+      <Dialog open={showPhoneVerificationDialog} onOpenChange={(open) => {
+        setShowPhoneVerificationDialog(open);
+        if (!open) setPendingFreeClassCard(null);
+      }}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-background via-background to-primary/5">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                <Phone className="h-8 w-8 text-primary" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-xl">Verify Your Phone</DialogTitle>
+            <DialogDescription className="text-center">
+              Enter your phone number to start your 14-day free trial. We'll send a 6-digit code to verify.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-4">
+            <div className="space-y-2">
+              <label htmlFor="phone" className="text-sm font-medium">
+                Phone Number
+              </label>
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="e.g., 0712345678"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="text-lg py-6"
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter your South African mobile number
+              </p>
+            </div>
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg"
+              onClick={sendOTP}
+              disabled={isLoading || phoneNumber.length < 10}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Sending Code...
+                </>
+              ) : (
+                "Send Verification Code"
+              )}
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-sm"
+              onClick={() => {
+                setShowPhoneVerificationDialog(false);
+                setShowFreeClassDialog(true);
+                setPendingFreeClassCard(null);
+              }}
+            >
+              ← Back to free classes
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* OTP Verification Dialog */}
+      <Dialog open={showOTPVerificationDialog} onOpenChange={(open) => {
+        setShowOTPVerificationDialog(open);
+        if (!open) {
+          setOtpCode("");
+          setPendingFreeClassCard(null);
+        }
+      }}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-background via-background to-green-500/5">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
+                <Sparkles className="h-8 w-8 text-green-500" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-xl">Enter Verification Code</DialogTitle>
+            <DialogDescription className="text-center">
+              We sent a 6-digit code to <strong>{phoneNumber}</strong>. Enter it below to start your free trial.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-6 py-4">
+            <InputOTP
+              maxLength={6}
+              value={otpCode}
+              onChange={setOtpCode}
+            >
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+            <Button
+              size="lg"
+              className="w-full py-6 text-lg"
+              onClick={verifyOTP}
+              disabled={isLoading || otpCode.length !== 6}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Verifying...
+                </>
+              ) : (
+                "Verify & Start Free Trial"
+              )}
+            </Button>
+            <div className="flex flex-col items-center gap-2">
+              <Button
+                variant="link"
+                className="text-sm"
+                onClick={() => {
+                  setOtpCode("");
+                  sendOTP();
+                }}
+                disabled={isLoading}
+              >
+                Didn't receive the code? Resend
+              </Button>
+              <Button
+                variant="ghost"
+                className="text-sm"
+                onClick={() => {
+                  setShowOTPVerificationDialog(false);
+                  setShowPhoneVerificationDialog(true);
+                  setOtpCode("");
+                }}
+              >
+                ← Change phone number
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
