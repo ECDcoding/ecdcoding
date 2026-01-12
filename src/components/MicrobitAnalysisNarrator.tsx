@@ -47,7 +47,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "There are two programmable buttons on the micro bit, labeled A and B. You can program these buttons to do different things when pressed alone, or even when pressed together at the same time!",
     color: "from-blue-500 to-cyan-600",
     side: 'front',
-    arrowPosition: { x: 15, y: 45, direction: 'right' }
+    arrowPosition: { x: 12, y: 50, direction: 'right' }
   },
   {
     id: "usb",
@@ -57,7 +57,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The U S B connector at the top lets you connect the micro bit to your computer. You use this to upload your programs and it also provides power to the micro bit while connected.",
     color: "from-gray-500 to-slate-600",
     side: 'back',
-    arrowPosition: { x: 50, y: 18, direction: 'up' }
+    arrowPosition: { x: 50, y: 8, direction: 'down' }
   },
   {
     id: "microphone",
@@ -67,7 +67,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The micro bit version 2 has a built-in microphone! It can detect sounds like clapping, loud noises, or even respond to your voice. You can make sound-activated projects!",
     color: "from-pink-500 to-rose-600",
     side: 'front',
-    arrowPosition: { x: 85, y: 15, direction: 'left' }
+    arrowPosition: { x: 78, y: 20, direction: 'left' }
   },
   {
     id: "speaker",
