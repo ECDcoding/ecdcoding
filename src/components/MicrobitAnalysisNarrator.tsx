@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Volume2, VolumeX, Cpu, Lightbulb, Battery, Bluetooth, Compass, ThermometerSun, Music, Zap } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 interface MicrobitSection {
   id: string;
@@ -102,66 +100,35 @@ const MicrobitAnalysisNarrator = ({ isOpen, onClose }: MicrobitAnalysisNarratorP
   const [isLoading, setIsLoading] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { toast } = useToast();
 
   const stopNarration = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
     window.speechSynthesis?.cancel();
     setIsNarrating(false);
   }, []);
 
-  const narrateSection = useCallback(async (section: MicrobitSection) => {
+  const narrateSection = useCallback((section: MicrobitSection) => {
     if (isMuted || narratedSections.has(section.id)) return;
     
     stopNarration();
     setIsNarrating(true);
     setIsLoading(true);
     
-    try {
-      // Try OpenAI TTS first
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text: section.narrationText, voice: 'nova' }
-      });
-
-      if (error) throw error;
-
-      if (data?.audioContent) {
-        const audioUrl = `data:audio/mpeg;base64,${data.audioContent}`;
-        const audio = new Audio(audioUrl);
-        audioRef.current = audio;
-        
-        audio.onended = () => {
-          setIsNarrating(false);
-          setNarratedSections(prev => new Set([...prev, section.id]));
-        };
-        
-        audio.onerror = () => {
-          // Fallback to browser speech synthesis
-          fallbackToSpeechSynthesis(section);
-        };
-        
-        setIsLoading(false);
-        await audio.play();
-      } else {
-        fallbackToSpeechSynthesis(section);
-      }
-    } catch (error) {
-      console.log('TTS error, using fallback:', error);
-      fallbackToSpeechSynthesis(section);
-    }
-  }, [isMuted, narratedSections, stopNarration]);
-
-  const fallbackToSpeechSynthesis = (section: MicrobitSection) => {
-    setIsLoading(false);
+    // Use free browser Speech Synthesis API
     if ('speechSynthesis' in window) {
+      setIsLoading(false);
       const utterance = new SpeechSynthesisUtterance(section.narrationText);
       utterance.rate = 0.9;
       utterance.pitch = 1.1;
       utterance.volume = 1;
+      
+      // Try to use a child-friendly voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice = voices.find(v => 
+        v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Google UK English Female')
+      );
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
       
       utterance.onend = () => {
         setIsNarrating(false);
@@ -169,8 +136,11 @@ const MicrobitAnalysisNarrator = ({ isOpen, onClose }: MicrobitAnalysisNarratorP
       };
       
       window.speechSynthesis.speak(utterance);
+    } else {
+      setIsLoading(false);
+      setIsNarrating(false);
     }
-  };
+  }, [isMuted, narratedSections, stopNarration]);
 
   const handleScroll = useCallback(() => {
     if (!scrollContainerRef.current) return;
