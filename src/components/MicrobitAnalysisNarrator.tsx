@@ -66,8 +66,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The Micro:bit V2 has a built-in microphone that can detect sounds, clapping, and voice levels.",
     narrationText: "The micro bit version 2 has a built-in microphone! It can detect sounds like clapping, loud noises, or even respond to your voice. You can make sound-activated projects!",
     color: "from-pink-500 to-rose-600",
-    side: 'back',
-    arrowPosition: { x: 30, y: 25, direction: 'right' }
+    side: 'front',
+    arrowPosition: { x: 85, y: 15, direction: 'left' }
   },
   {
     id: "speaker",
