@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Volume2, VolumeX, Cpu, Lightbulb, Battery, Bluetooth, Compass, ThermometerSun, Music, Zap, Usb, Mic, Speaker, RotateCw, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
-import microbitFront from "@/assets/microbit-front-annotated.png";
-import microbitBack from "@/assets/microbit-back-annotated.png";
+// The files were named incorrectly - swapping the imports to match actual content
+import microbitFront from "@/assets/microbit-back-annotated.png"; // This image shows the LED/button side (front)
+import microbitBack from "@/assets/microbit-front-annotated.png"; // This image shows the battery/processor side (back)
 
 interface MicrobitSection {
   id: string;
