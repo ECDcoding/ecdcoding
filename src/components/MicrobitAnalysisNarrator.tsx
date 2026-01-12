@@ -107,7 +107,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The Bluetooth and radio antenna lets you connect wirelessly to phones, tablets, or other micro bits. You can send messages between devices or control your projects remotely!",
     color: "from-blue-600 to-violet-600",
     side: 'back',
-    arrowPosition: { x: 75, y: 30, direction: 'left' }
+    arrowPosition: { x: 15, y: 30, direction: 'right' }
   },
   {
     id: "power",
@@ -117,7 +117,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The battery connector lets you use 2 triple A batteries to power your micro bit. This makes your projects portable so you can take them anywhere you go!",
     color: "from-amber-500 to-yellow-600",
     side: 'back',
-    arrowPosition: { x: 15, y: 35, direction: 'right' }
+    arrowPosition: { x: 85, y: 15, direction: 'left' }
   },
   {
     id: "pins",
