@@ -24,6 +24,7 @@ import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import FlipBodyCard from "@/components/FlipBodyCard";
 import CodeEditorWrapper from "@/components/CodeEditorWrapper";
+import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -146,6 +147,7 @@ const LessonVault0710 = () => {
   const [codeEditorTitle, setCodeEditorTitle] = useState('');
   const [codeEditorUrl, setCodeEditorUrl] = useState('');
   const [codeEditorDescription, setCodeEditorDescription] = useState('');
+  const [microbitAnalysisOpen, setMicrobitAnalysisOpen] = useState(false);
   const [displayCredits, setDisplayCredits] = useState(100);
   const [gaugeAnimated, setGaugeAnimated] = useState(true);
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -1199,6 +1201,12 @@ const LessonVault0710 = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-purple-400/30 shadow-lg z-50">
                     <DropdownMenuItem 
+                      onClick={() => setMicrobitAnalysisOpen(true)} 
+                      className="font-medium text-white hover:bg-purple-500/20"
+                    >
+                      🔬 Micro:bit Analysis (with Voice)
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
                       onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')} 
                       className="font-medium text-white hover:bg-purple-500/20"
                     >
@@ -1234,6 +1242,12 @@ const LessonVault0710 = () => {
         title={codeEditorTitle}
         url={codeEditorUrl}
         description={codeEditorDescription}
+      />
+
+      {/* Micro:bit Analysis Narrator Dialog */}
+      <MicrobitAnalysisNarrator
+        isOpen={microbitAnalysisOpen}
+        onClose={() => setMicrobitAnalysisOpen(false)}
       />
 
       {/* Sport Play Field Dialog */}
