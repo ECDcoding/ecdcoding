@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Volume2, VolumeX, Cpu, Lightbulb, Battery, Bluetooth, Compass, ThermometerSun, Music, Zap, Usb, Mic, Speaker, RotateCw } from "lucide-react";
+import { X, Volume2, VolumeX, Cpu, Lightbulb, Battery, Bluetooth, Compass, ThermometerSun, Music, Zap, Usb, Mic, Speaker, RotateCw, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
 import microbitFront from "@/assets/microbit-front-annotated.png";
 import microbitBack from "@/assets/microbit-back-annotated.png";
 
@@ -12,7 +12,9 @@ interface MicrobitSection {
   description: string;
   narrationText: string;
   color: string;
-  side: 'front' | 'back'; // Which side of the Micro:bit this feature is on
+  side: 'front' | 'back';
+  // Position for flashing arrow (percentage from top-left of image)
+  arrowPosition: { x: number; y: number; direction: 'left' | 'right' | 'up' | 'down' };
 }
 
 const microbitSections: MicrobitSection[] = [
@@ -23,7 +25,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The BBC micro:bit is a pocket-sized computer that introduces you to how software and hardware work together.",
     narrationText: "Welcome to the Micro bit analysis! The BBC micro bit is a pocket-sized computer that introduces you to how software and hardware work together. It's perfect for learning coding and electronics!",
     color: "from-purple-500 to-indigo-600",
-    side: 'front'
+    side: 'front',
+    arrowPosition: { x: 50, y: 50, direction: 'down' }
   },
   {
     id: "leds",
@@ -32,7 +35,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The front has a 5x5 grid of 25 LEDs that can display images, text, and numbers. Each LED can be individually controlled!",
     narrationText: "The front of the micro bit has a 5 by 5 grid of 25 L E D lights. These can display images, text, and numbers. Each L E D can be controlled individually to create cool patterns and animations!",
     color: "from-yellow-500 to-orange-600",
-    side: 'front'
+    side: 'front',
+    arrowPosition: { x: 50, y: 40, direction: 'down' }
   },
   {
     id: "buttons",
@@ -41,7 +45,8 @@ const microbitSections: MicrobitSection[] = [
     description: "Two buttons labeled A and B on the front can be programmed to do different things when pressed alone or together.",
     narrationText: "There are two programmable buttons on the micro bit, labeled A and B. You can program these buttons to do different things when pressed alone, or even when pressed together at the same time!",
     color: "from-blue-500 to-cyan-600",
-    side: 'front'
+    side: 'front',
+    arrowPosition: { x: 15, y: 45, direction: 'right' }
   },
   {
     id: "usb",
@@ -50,7 +55,8 @@ const microbitSections: MicrobitSection[] = [
     description: "Connect your Micro:bit to a computer using a USB cable to upload your programs and power the device.",
     narrationText: "The U S B connector at the top lets you connect the micro bit to your computer. You use this to upload your programs and it also provides power to the micro bit while connected.",
     color: "from-gray-500 to-slate-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 50, y: 8, direction: 'down' }
   },
   {
     id: "microphone",
@@ -59,7 +65,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The Micro:bit V2 has a built-in microphone that can detect sounds, clapping, and voice levels.",
     narrationText: "The micro bit version 2 has a built-in microphone! It can detect sounds like clapping, loud noises, or even respond to your voice. You can make sound-activated projects!",
     color: "from-pink-500 to-rose-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 30, y: 25, direction: 'right' }
   },
   {
     id: "speaker",
@@ -68,7 +75,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The built-in speaker can play sounds, music, and melodies. Perfect for musical projects!",
     narrationText: "The speaker on the back can play sounds, music, and melodies. You can create your own songs or add sound effects to your projects. It's like having a tiny music player!",
     color: "from-violet-500 to-purple-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 70, y: 50, direction: 'left' }
   },
   {
     id: "processor",
@@ -77,7 +85,8 @@ const microbitSections: MicrobitSection[] = [
     description: "The brain of the Micro:bit! It runs your programs and can also measure the temperature around it.",
     narrationText: "The processor is the brain of the micro bit. It runs all your programs and makes everything work. It also has a temperature sensor built in, so you can measure how warm or cold it is!",
     color: "from-red-500 to-orange-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 50, y: 35, direction: 'down' }
   },
   {
     id: "accelerometer",
@@ -86,7 +95,8 @@ const microbitSections: MicrobitSection[] = [
     description: "Detects movement, tilting, and shaking. The compass tells you which direction is North!",
     narrationText: "The accelerometer detects when you move, tilt, or shake the micro bit. The compass, also called a magnetometer, tells you which direction is North. Great for making games and navigation projects!",
     color: "from-green-500 to-emerald-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 35, y: 55, direction: 'right' }
   },
   {
     id: "bluetooth",
@@ -95,7 +105,8 @@ const microbitSections: MicrobitSection[] = [
     description: "Connect wirelessly to phones, tablets, or other micro:bits. Send messages between devices!",
     narrationText: "The Bluetooth and radio antenna lets you connect wirelessly to phones, tablets, or other micro bits. You can send messages between devices or control your projects remotely!",
     color: "from-blue-600 to-violet-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 75, y: 30, direction: 'left' }
   },
   {
     id: "power",
@@ -104,7 +115,8 @@ const microbitSections: MicrobitSection[] = [
     description: "Use 2 AAA batteries to power your Micro:bit anywhere! Perfect for portable projects.",
     narrationText: "The battery connector lets you use 2 triple A batteries to power your micro bit. This makes your projects portable so you can take them anywhere you go!",
     color: "from-amber-500 to-yellow-600",
-    side: 'back'
+    side: 'back',
+    arrowPosition: { x: 15, y: 35, direction: 'right' }
   },
   {
     id: "pins",
@@ -113,9 +125,55 @@ const microbitSections: MicrobitSection[] = [
     description: "Connect external components like motors, sensors, and LEDs using these gold pins at the bottom.",
     narrationText: "The gold pins at the bottom are called edge connector pins. You can connect external components like motors, sensors, lights, and many other electronic parts to expand what your micro bit can do!",
     color: "from-yellow-600 to-amber-700",
-    side: 'front'
+    side: 'front',
+    arrowPosition: { x: 50, y: 88, direction: 'up' }
   }
 ];
+
+// Flashing Arrow Component
+const FlashingArrow = ({ position, color }: { 
+  position: { x: number; y: number; direction: 'left' | 'right' | 'up' | 'down' };
+  color: string;
+}) => {
+  const ArrowIcon = {
+    up: ArrowUp,
+    down: ArrowDown,
+    left: ArrowLeft,
+    right: ArrowRight
+  }[position.direction];
+
+  // Calculate offset based on direction
+  const getOffset = () => {
+    switch (position.direction) {
+      case 'up': return { transform: 'translate(-50%, 0)' };
+      case 'down': return { transform: 'translate(-50%, -100%)' };
+      case 'left': return { transform: 'translate(0, -50%)' };
+      case 'right': return { transform: 'translate(-100%, -50%)' };
+    }
+  };
+
+  return (
+    <div 
+      className="absolute z-20 pointer-events-none"
+      style={{ 
+        left: `${position.x}%`, 
+        top: `${position.y}%`,
+        ...getOffset()
+      }}
+    >
+      <div className={`animate-pulse`}>
+        <div className={`p-2 rounded-full bg-gradient-to-r ${color} shadow-lg animate-bounce`}>
+          <ArrowIcon className="h-6 w-6 text-white drop-shadow-lg" strokeWidth={3} />
+        </div>
+      </div>
+      {/* Pulsing ring effect */}
+      <div 
+        className={`absolute inset-0 rounded-full bg-gradient-to-r ${color} opacity-50 animate-ping`}
+        style={{ animationDuration: '1s' }}
+      />
+    </div>
+  );
+};
 
 interface MicrobitAnalysisNarratorProps {
   isOpen: boolean;
@@ -344,7 +402,7 @@ const MicrobitAnalysisNarrator = ({ isOpen, onClose }: MicrobitAnalysisNarratorP
                     transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
                   }}
                 >
-                  {/* Front side */}
+                {/* Front side */}
                   <div 
                     className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
                     style={{ backfaceVisibility: 'hidden' }}
@@ -354,6 +412,13 @@ const MicrobitAnalysisNarrator = ({ isOpen, onClose }: MicrobitAnalysisNarratorP
                       alt="Micro:bit Front View" 
                       className="w-full h-full object-contain bg-white p-2"
                     />
+                    {/* Flashing arrow for front side features */}
+                    {!isFlipped && microbitSections[currentSection]?.side === 'front' && isNarrating && (
+                      <FlashingArrow 
+                        position={microbitSections[currentSection].arrowPosition}
+                        color={microbitSections[currentSection].color}
+                      />
+                    )}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                       <p className="text-white font-bold text-center">Front View</p>
                     </div>
@@ -372,6 +437,13 @@ const MicrobitAnalysisNarrator = ({ isOpen, onClose }: MicrobitAnalysisNarratorP
                       alt="Micro:bit Back View" 
                       className="w-full h-full object-contain bg-white p-2"
                     />
+                    {/* Flashing arrow for back side features */}
+                    {isFlipped && microbitSections[currentSection]?.side === 'back' && isNarrating && (
+                      <FlashingArrow 
+                        position={microbitSections[currentSection].arrowPosition}
+                        color={microbitSections[currentSection].color}
+                      />
+                    )}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                       <p className="text-white font-bold text-center">Back View</p>
                     </div>
