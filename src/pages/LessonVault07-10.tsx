@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -23,6 +23,7 @@ import { TrafficLightProgress } from "@/components/TrafficLightProgress";
 import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import FlipBodyCard from "@/components/FlipBodyCard";
+import CodeEditorWrapper from "@/components/CodeEditorWrapper";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -141,6 +142,10 @@ const LessonVault0710 = () => {
   const [musicLabOpen, setMusicLabOpen] = useState(false);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
+  const [codeEditorOpen, setCodeEditorOpen] = useState(false);
+  const [codeEditorTitle, setCodeEditorTitle] = useState('');
+  const [codeEditorUrl, setCodeEditorUrl] = useState('');
+  const [codeEditorDescription, setCodeEditorDescription] = useState('');
   const [displayCredits, setDisplayCredits] = useState(100);
   const [gaugeAnimated, setGaugeAnimated] = useState(true);
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -161,6 +166,13 @@ const LessonVault0710 = () => {
     setMusicLabTitle(title);
     setMusicLabUrl(url);
     setMusicLabOpen(true);
+  };
+
+  const openCodeEditor = (title: string, url: string, description?: string) => {
+    setCodeEditorTitle(title);
+    setCodeEditorUrl(url);
+    setCodeEditorDescription(description || '');
+    setCodeEditorOpen(true);
   };
 
   const numberWords = [
@@ -1142,6 +1154,66 @@ const LessonVault0710 = () => {
                 </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-white border-cyan-400/40 hover:bg-cyan-500/30 font-bold justify-start text-left flex items-center gap-2">
+                  <Cpu className="h-4 w-4 text-cyan-400" />
+                  Coding Skills
+                  <ChevronDown className="h-4 w-4" />
+                  <Badge className="ml-1 bg-cyan-500 text-white text-[10px] px-1.5">NEW</Badge>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[200px]">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-cyan-500/20 flex items-center justify-between cursor-pointer">
+                      <span className="flex items-center gap-2">
+                        🎮 Microsoft MakeCode
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      onClick={() => openCodeEditor('MakeCode Arcade', 'https://arcade.makecode.com/', 'Create retro arcade games with block-based coding')} 
+                      className="font-medium text-white hover:bg-cyan-500/20"
+                    >
+                      🕹️ MakeCode Arcade
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => openCodeEditor('MakeCode Minecraft', 'https://minecraft.makecode.com/', 'Code your own Minecraft adventures')} 
+                      className="font-medium text-white hover:bg-cyan-500/20"
+                    >
+                      ⛏️ MakeCode Minecraft
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
+                      <span className="flex items-center gap-2">
+                        🔌 Micro:bit
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-purple-400/30 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')} 
+                      className="font-medium text-white hover:bg-purple-500/20"
+                    >
+                      💡 Micro:bit Editor
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')} 
+                      className="font-medium text-white hover:bg-purple-500/20"
+                    >
+                      🏫 Micro:bit Classroom
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -1153,6 +1225,15 @@ const LessonVault0710 = () => {
         onClose={() => setMusicLabOpen(false)}
         title={musicLabTitle}
         url={musicLabUrl}
+      />
+
+      {/* Code Editor Wrapper Dialog */}
+      <CodeEditorWrapper
+        isOpen={codeEditorOpen}
+        onClose={() => setCodeEditorOpen(false)}
+        title={codeEditorTitle}
+        url={codeEditorUrl}
+        description={codeEditorDescription}
       />
 
       {/* Sport Play Field Dialog */}
