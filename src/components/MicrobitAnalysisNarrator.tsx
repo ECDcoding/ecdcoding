@@ -77,7 +77,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The speaker on the back can play sounds, music, and melodies. You can create your own songs or add sound effects to your projects. It's like having a tiny music player!",
     color: "from-violet-500 to-purple-600",
     side: 'back',
-    arrowPosition: { x: 70, y: 50, direction: 'left' }
+    arrowPosition: { x: 25, y: 75, direction: 'right' }
   },
   {
     id: "processor",
@@ -87,7 +87,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The processor is the brain of the micro bit. It runs all your programs and makes everything work. It also has a temperature sensor built in, so you can measure how warm or cold it is!",
     color: "from-red-500 to-orange-600",
     side: 'back',
-    arrowPosition: { x: 50, y: 55, direction: 'up' }
+    arrowPosition: { x: 55, y: 40, direction: 'down' }
   },
   {
     id: "accelerometer",
