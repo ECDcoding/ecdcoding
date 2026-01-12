@@ -57,7 +57,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The U S B connector at the top lets you connect the micro bit to your computer. You use this to upload your programs and it also provides power to the micro bit while connected.",
     color: "from-gray-500 to-slate-600",
     side: 'back',
-    arrowPosition: { x: 50, y: 8, direction: 'down' }
+    arrowPosition: { x: 50, y: 18, direction: 'up' }
   },
   {
     id: "microphone",
@@ -87,7 +87,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The processor is the brain of the micro bit. It runs all your programs and makes everything work. It also has a temperature sensor built in, so you can measure how warm or cold it is!",
     color: "from-red-500 to-orange-600",
     side: 'back',
-    arrowPosition: { x: 50, y: 35, direction: 'down' }
+    arrowPosition: { x: 50, y: 55, direction: 'up' }
   },
   {
     id: "accelerometer",
