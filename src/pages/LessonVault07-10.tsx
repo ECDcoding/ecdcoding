@@ -23,7 +23,7 @@ import { TrafficLightProgress } from "@/components/TrafficLightProgress";
 import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import FlipBodyCard from "@/components/FlipBodyCard";
-import CodeEditorWrapper from "@/components/CodeEditorWrapper";
+import BlocklyEditor from "@/components/BlocklyEditor";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
@@ -1235,12 +1235,11 @@ const LessonVault0710 = () => {
         url={musicLabUrl}
       />
 
-      {/* Code Editor Wrapper Dialog */}
-      <CodeEditorWrapper
+      {/* Blockly Code Editor Dialog */}
+      <BlocklyEditor
         isOpen={codeEditorOpen}
         onClose={() => setCodeEditorOpen(false)}
         title={codeEditorTitle}
-        url={codeEditorUrl}
         description={codeEditorDescription}
       />
 
