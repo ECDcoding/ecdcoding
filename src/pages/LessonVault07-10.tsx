@@ -1177,7 +1177,7 @@ const LessonVault0710 = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
                     <DropdownMenuItem 
-                      onClick={() => openCodeEditor('MakeCode Arcade', 'https://arcade.makecode.com/', 'Create retro arcade games with block-based coding')} 
+                      onClick={() => openCodeEditor('MakeCode Arcade', 'https://arcade.makecode.com/#editor', 'Create retro arcade games with block-based coding')} 
                       className="font-medium text-white hover:bg-cyan-500/20"
                     >
                       🕹️ MakeCode Arcade
