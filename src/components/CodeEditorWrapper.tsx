@@ -48,9 +48,8 @@ const CodeEditorWrapper = ({ isOpen, onClose, title, url, description }: CodeEdi
             src={url}
             className="w-full h-full border-0"
             title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; microphone"
             allowFullScreen
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
           />
         </div>
       </DialogContent>
