@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const INITIAL_CREDITS = 100; // New users start with 100 credits
 const DAILY_FREE_CREDITS = 5; // Free credits awarded daily
+const ADMIN_REFILL_CREDITS = 100; // Credits to refill for admin users
 
 export const useCredits = () => {
   const [credits, setCredits] = useState<number>(0);
@@ -100,10 +101,59 @@ export const useCredits = () => {
     }
   };
 
+  // Check if user is admin
+  const checkIsAdmin = async (): Promise<boolean> => {
+    if (!user) return false;
+    try {
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      
+      return !error && !!data;
+    } catch {
+      return false;
+    }
+  };
+
+  // Refill credits for admin users
+  const refillAdminCredits = async () => {
+    if (!user) return;
+    
+    const isAdmin = await checkIsAdmin();
+    if (!isAdmin) return;
+
+    try {
+      const { error } = await supabase
+        .from("user_credits")
+        .update({ credits: ADMIN_REFILL_CREDITS })
+        .eq("user_id", user.id);
+
+      if (!error) {
+        setCredits(ADMIN_REFILL_CREDITS);
+        toast({
+          title: "Admin Credits Refilled! 🎉",
+          description: `Your credits have been refilled to ${ADMIN_REFILL_CREDITS}.`,
+        });
+      }
+    } catch (error) {
+      console.error("Error refilling admin credits:", error);
+    }
+  };
+
   // Use credits when interacting with lessons
   const useCredits = async (amount: number = 1) => {
     if (!user) return false;
     if (credits < amount) {
+      // Check if admin and refill
+      const isAdmin = await checkIsAdmin();
+      if (isAdmin) {
+        await refillAdminCredits();
+        return true; // Allow the action after refill
+      }
+      
       toast({
         title: "Insufficient Credits",
         description: "Please add more credits to continue learning.",
@@ -113,7 +163,17 @@ export const useCredits = () => {
     }
 
     try {
-      const newCredits = Math.max(0, credits - amount);
+      let newCredits = Math.max(0, credits - amount);
+      
+      // Auto-refill for admins when credits hit 0
+      const isAdmin = await checkIsAdmin();
+      if (newCredits === 0 && isAdmin) {
+        newCredits = ADMIN_REFILL_CREDITS;
+        toast({
+          title: "Admin Credits Refilled! 🎉",
+          description: `Your credits have been refilled to ${ADMIN_REFILL_CREDITS}.`,
+        });
+      }
       
       const { error } = await supabase
         .from("user_credits")
