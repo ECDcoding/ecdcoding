@@ -323,7 +323,12 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
       <DialogContent className="max-w-[95vw] max-h-[95vh] w-[95vw] h-[95vh] p-0 bg-gradient-to-br from-[#1e1e3f] via-[#252045] to-[#1a1a2e] border border-cyan-400/30 overflow-hidden">
         <DialogHeader className="px-4 py-3 bg-gradient-to-r from-[#00d4ff] to-[#7c3aed] flex-shrink-0">
           <div className="flex items-center justify-between">
