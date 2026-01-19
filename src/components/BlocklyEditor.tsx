@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Play, Code, Gamepad2, RotateCcw, Volume2 } from "lucide-react";
+import { X, Play, Code, Gamepad2, RotateCcw, Volume2, BookOpen, GraduationCap } from "lucide-react";
+import BlocklyTutorial from "./BlocklyTutorial";
 
 interface BlocklyEditorProps {
   isOpen: boolean;
@@ -25,6 +26,12 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
   const [showCode, setShowCode] = useState(false);
   const [output, setOutput] = useState<string[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Tutorial state
+  const [showTutorial, setShowTutorial] = useState(true);
+  const [activeTutorial, setActiveTutorial] = useState<string | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   // Custom game-oriented toolbox
   const toolbox = {
@@ -138,6 +145,11 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
   useEffect(() => {
     if (isOpen) {
       loadBlocklyFromCDN();
+      // Reset tutorial state when opening
+      setShowTutorial(true);
+      setActiveTutorial(null);
+      setCurrentStep(0);
+      setCompletedSteps([]);
     }
   }, [isOpen, loadBlocklyFromCDN]);
 
@@ -245,7 +257,34 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
     setGeneratedCode("");
     setOutput([]);
     setShowCode(false);
+    setShowTutorial(true);
+    setActiveTutorial(null);
     onClose();
+  };
+
+  // Tutorial handlers
+  const handleStartTutorial = (tutorialId: string) => {
+    setActiveTutorial(tutorialId);
+    setCurrentStep(0);
+    setCompletedSteps([]);
+    // Clear workspace for fresh start
+    if (workspaceRef.current) {
+      workspaceRef.current.clear();
+    }
+  };
+
+  const handleNextStep = () => {
+    setCompletedSteps(prev => [...prev, currentStep]);
+    setCurrentStep(prev => prev + 1);
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(prev => Math.max(0, prev - 1));
+  };
+
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+    setActiveTutorial(null);
   };
 
   return (
@@ -262,18 +301,34 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
                 {description || "Drag and drop blocks to create your code!"}
               </DialogDescription>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:bg-white/20"
-              onClick={handleClose}
-            >
-              <X className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center gap-2">
+              {!showTutorial && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/20"
+                  onClick={() => {
+                    setShowTutorial(true);
+                    setActiveTutorial(null);
+                  }}
+                >
+                  <GraduationCap className="h-4 w-4 mr-1" />
+                  Tutorials
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:bg-white/20"
+                onClick={handleClose}
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </DialogHeader>
 
-        <div className="flex flex-col h-[calc(95vh-80px)]">
+        <div className="flex flex-col h-[calc(95vh-80px)] relative">
           {/* Toolbar */}
           <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1a2e] border-b border-cyan-400/20">
             <Button
@@ -303,13 +358,14 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
               <RotateCcw className="h-4 w-4 mr-1" />
               Reset
             </Button>
-            <div className="ml-auto text-cyan-300 text-xs">
+            <div className="ml-auto text-cyan-300 text-xs flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
               🎯 Drag blocks from the left menu to start coding!
             </div>
           </div>
 
           {/* Main Content Area */}
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1 overflow-hidden relative">
             {/* Blockly Workspace */}
             {!isLoaded ? (
               <div className="flex-1 flex items-center justify-center bg-[#f8f8f8]">
@@ -336,6 +392,20 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
                   {generatedCode || "// Your code will appear here..."}
                 </pre>
               </div>
+            )}
+
+            {/* Tutorial Overlay */}
+            {isLoaded && (
+              <BlocklyTutorial
+                isOpen={showTutorial}
+                onClose={handleCloseTutorial}
+                onStartTutorial={handleStartTutorial}
+                activeTutorial={activeTutorial}
+                currentStep={currentStep}
+                onNextStep={handleNextStep}
+                onPrevStep={handlePrevStep}
+                completedSteps={completedSteps}
+              />
             )}
           </div>
 
