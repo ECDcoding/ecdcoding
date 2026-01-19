@@ -1166,30 +1166,13 @@ const LessonVault0710 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[200px]">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-cyan-500/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        🎮 Microsoft MakeCode
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      onClick={() => openCodeEditor('MakeCode Arcade', 'https://arcade.makecode.com/#editor', 'Create retro arcade games with block-based coding')} 
-                      className="font-medium text-white hover:bg-cyan-500/20"
-                    >
-                      🕹️ MakeCode Arcade
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => openCodeEditor('MakeCode Minecraft', 'https://minecraft.makecode.com/', 'Code your own Minecraft adventures')} 
-                      className="font-medium text-white hover:bg-cyan-500/20"
-                    >
-                      ⛏️ MakeCode Minecraft
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <DropdownMenuItem 
+                  onClick={() => setCodeEditorOpen(true)} 
+                  className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                >
+                  🧩 Blockly Code Editor
+                  <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
+                </DropdownMenuItem>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
