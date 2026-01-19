@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Play, Code, Gamepad2, RotateCcw, Volume2, BookOpen, GraduationCap } from "lucide-react";
+import { X, Play, Code, Puzzle, RotateCcw, Volume2, BookOpen, GraduationCap } from "lucide-react";
 import BlocklyTutorial from "./BlocklyTutorial";
 
 interface BlocklyEditorProps {
@@ -343,7 +343,7 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <DialogTitle className="text-white font-bold text-lg flex items-center gap-2">
-                <Gamepad2 className="h-5 w-5 animate-pulse" />
+                <Puzzle className="h-5 w-5 animate-pulse" />
                 {title}
               </DialogTitle>
               <DialogDescription className="text-white/80 text-sm">
@@ -419,7 +419,7 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
             {!isLoaded ? (
               <div className="flex-1 flex items-center justify-center bg-[#f8f8f8]">
                 <div className="text-center">
-                  <Gamepad2 className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
+                  <Puzzle className="h-12 w-12 text-purple-600 animate-spin mx-auto mb-4" />
                   <p className="text-gray-600">Loading Block Editor...</p>
                 </div>
               </div>
