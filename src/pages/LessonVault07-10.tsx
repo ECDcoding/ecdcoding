@@ -1167,7 +1167,11 @@ const LessonVault0710 = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[200px]">
                 <DropdownMenuItem 
-                  onClick={() => setCodeEditorOpen(true)} 
+                  onClick={() => {
+                    setCodeEditorTitle('Blockly Code Editor');
+                    setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                    setCodeEditorOpen(true);
+                  }} 
                   className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
                 >
                   🧩 Blockly Code Editor
