@@ -154,72 +154,82 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
   }, [isOpen, loadBlocklyFromCDN]);
 
   useEffect(() => {
-    // Initialize workspace when dialog is open and Blockly is loaded
-    if (isOpen && isLoaded && blocklyDiv.current && window.Blockly) {
-      // Clear any existing workspace in the div first
-      if (blocklyDiv.current.firstChild) {
-        blocklyDiv.current.innerHTML = '';
-      }
-      
-      // Dispose any existing workspace reference
-      if (workspaceRef.current) {
-        try {
-          workspaceRef.current.dispose();
-        } catch (e) {
-          // Ignore disposal errors
-        }
-        workspaceRef.current = null;
-      }
+    // Initialize/refresh workspace when dialog is open and Blockly is loaded
+    if (!isOpen || !isLoaded || !blocklyDiv.current || !window.Blockly) return;
 
-      // Small delay to ensure DOM is ready
-      const timeoutId = setTimeout(() => {
-        if (!blocklyDiv.current || !window.Blockly) return;
-        
-        // Initialize Blockly workspace
-        workspaceRef.current = window.Blockly.inject(blocklyDiv.current, {
-          toolbox: toolbox,
-          grid: {
-            spacing: 20,
-            length: 3,
-            colour: "#ccc",
-            snap: true,
-          },
-          zoom: {
-            controls: true,
-            wheel: true,
-            startScale: 1.0,
-            maxScale: 3,
-            minScale: 0.3,
-            scaleSpeed: 1.2,
-          },
-          trashcan: true,
-          move: {
-            scrollbars: true,
-            drag: true,
-            wheel: true,
-          },
-        });
-
-        // Add change listener to generate code
-        workspaceRef.current.addChangeListener(() => {
-          if (workspaceRef.current && window.Blockly?.JavaScript) {
-            try {
-              const code = window.Blockly.JavaScript.workspaceToCode(workspaceRef.current);
-              setGeneratedCode(code);
-            } catch (e) {
-              console.error("Code generation error:", e);
-            }
+    // If we already have a workspace, just refresh sizing/rendering.
+    // This avoids a dispose/re-inject race when the dialog is closed and reopened quickly.
+    if (workspaceRef.current) {
+      const raf1 = requestAnimationFrame(() => {
+        const raf2 = requestAnimationFrame(() => {
+          try {
+            window.Blockly.svgResize(workspaceRef.current);
+            workspaceRef.current.render?.();
+            workspaceRef.current.getToolbox?.()?.refreshSelection?.();
+          } catch {
+            // ignore
           }
         });
 
-        // Force resize to ensure toolbox renders correctly
-        window.Blockly.svgResize(workspaceRef.current);
-      }, 100);
+        return () => cancelAnimationFrame(raf2);
+      });
 
-      return () => {
-        clearTimeout(timeoutId);
-      };
+      return () => cancelAnimationFrame(raf1);
     }
+
+    // Fresh inject (first open)
+    const timeoutId = window.setTimeout(() => {
+      if (!blocklyDiv.current || !window.Blockly) return;
+
+      // Ensure the container is empty before inject
+      blocklyDiv.current.innerHTML = "";
+
+      workspaceRef.current = window.Blockly.inject(blocklyDiv.current, {
+        toolbox,
+        grid: {
+          spacing: 20,
+          length: 3,
+          colour: "#ccc",
+          snap: true,
+        },
+        zoom: {
+          controls: true,
+          wheel: true,
+          startScale: 1.0,
+          maxScale: 3,
+          minScale: 0.3,
+          scaleSpeed: 1.2,
+        },
+        trashcan: true,
+        move: {
+          scrollbars: true,
+          drag: true,
+          wheel: true,
+        },
+      });
+
+      workspaceRef.current.addChangeListener(() => {
+        if (workspaceRef.current && window.Blockly?.JavaScript) {
+          try {
+            const code = window.Blockly.JavaScript.workspaceToCode(workspaceRef.current);
+            setGeneratedCode(code);
+          } catch (e) {
+            console.error("Code generation error:", e);
+          }
+        }
+      });
+
+      try {
+        window.Blockly.svgResize(workspaceRef.current);
+        workspaceRef.current.render?.();
+      } catch {
+        // ignore
+      }
+    }, 0);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [isOpen, isLoaded]);
 
   // Cleanup on unmount or close
@@ -285,10 +295,9 @@ const BlocklyEditor = ({ isOpen, onClose, title, description }: BlocklyEditorPro
   };
 
   const handleClose = () => {
-    if (workspaceRef.current) {
-      workspaceRef.current.dispose();
-      workspaceRef.current = null;
-    }
+    // Do NOT dispose the workspace here.
+    // Disposing + immediate reopen can race with reinjection and cause the toolbox to disappear.
+    // We dispose on component unmount instead.
     setGeneratedCode("");
     setOutput([]);
     setShowCode(false);
