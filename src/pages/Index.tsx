@@ -9,6 +9,7 @@ import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import emailIcon from "@/assets/email-icon.png";
 import adminIcon from "@/assets/admin-icon.png";
+import stemLogo from "@/assets/stem-learning-logo.png";
 
 const Index = () => {
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
@@ -24,9 +25,11 @@ const Index = () => {
       <Chatbot onVoiceModeChange={setIsVoiceModeActive} />
       
       {/* Footer */}
-      <footer className="w-full bg-background border-t border-border py-6">
-        <div className="flex items-center justify-center space-x-8">
-          <div className="flex items-center space-x-2 text-muted-foreground">
+      <footer className="w-full bg-background border-t border-border py-6 px-4">
+        <div className="flex items-center justify-between w-full">
+          <img src={stemLogo} alt="STEM Learning" className="h-10" />
+          <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-2 text-muted-foreground">
             <span className="text-sm">Copyright</span>
             <Copyright className="h-4 w-4" />
             <span className="text-sm">ECDcoding 2026</span>
@@ -45,6 +48,8 @@ const Index = () => {
               <img src={adminIcon} alt="Admin" className="h-6 w-6" />
             </Link>
           )}
+          </div>
+          <div className="w-10" /> {/* Spacer for balance */}
         </div>
       </footer>
     </div>
