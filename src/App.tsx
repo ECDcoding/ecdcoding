@@ -23,6 +23,7 @@ import Transportation from "./pages/Transportation";
 import FruitItemRecognition from "./pages/FruitItemRecognition";
 import FacialRecognition from "./pages/FacialRecognition";
 import AdminDashboard from "./pages/AdminDashboard";
+import ECDExpo2026 from "./pages/ECDExpo2026";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
           <Route path="/payment" element={<PaymentForm />} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
