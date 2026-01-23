@@ -40,7 +40,7 @@ const Header = () => {
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link to="/register?type=tech-teacher" className="cursor-pointer">
-                Tech Teacher
+                Tech Teacher Mentorship
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
