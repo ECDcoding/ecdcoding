@@ -1372,8 +1372,12 @@ const Register = () => {
                 <div className="bg-blue-50 p-6 rounded-lg border-2 border-blue-200 text-center">
                   <h3 className="text-lg font-semibold mb-2">Registration Fee</h3>
                   <p className="text-xl font-bold text-blue-600 mb-4">R500.00 /annual</p>
-                  <Button type="button" className="bg-[#132a13] hover:bg-[#132a13]/90 text-yellow-400 hover:text-yellow-300">
-                    Pay Here
+                  <Button 
+                    type="button" 
+                    className="bg-[#132a13] hover:bg-[#132a13]/90 text-yellow-400 hover:text-yellow-300"
+                    onClick={() => { setSelectedPaymentAmount(500); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}
+                  >
+                    Pay with PayFast
                   </Button>
                 </div>
               )}
