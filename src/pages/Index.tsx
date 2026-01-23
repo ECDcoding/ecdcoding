@@ -35,10 +35,12 @@ const Index = () => {
         <div className="flex items-center justify-between w-full">
           <img src={stemLogo} alt="STEM Learning" className="h-10" />
           <div className="flex items-center space-x-8">
-          <div className="flex items-center space-x-2 text-muted-foreground">
-            <span className="text-sm">Copyright</span>
-            <Copyright className="h-4 w-4" />
-            <span className="text-sm">ECDcoding 2026</span>
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm">Copyright</span>
+              <Copyright className="h-4 w-4" />
+              <span className="text-sm">ECDcoding 2026</span>
+            </div>
             <span className="text-sm">|</span>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-sm hover:text-foreground transition-colors cursor-pointer">
