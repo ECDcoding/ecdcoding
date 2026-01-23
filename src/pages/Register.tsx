@@ -393,7 +393,7 @@ const Register = () => {
       case 'ecd':
         return '';
       case 'tech-teacher':
-        return 'Tech Teacher Application';
+        return 'Tech Teacher Mentorship Form';
       default:
         return 'Registration Form';
     }
@@ -407,7 +407,7 @@ const Register = () => {
       case 'ecd':
         return 'Join our network of Early Childhood Development partners';
       case 'tech-teacher':
-        return 'Apply to join our team of tech educators';
+        return 'Apply to attend our ECD tech teacher mentorship events for 2026';
       default:
         return '';
     }
