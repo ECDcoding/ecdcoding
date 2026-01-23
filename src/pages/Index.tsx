@@ -43,8 +43,8 @@ const Index = () => {
             </div>
             <span className="text-sm">|</span>
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-sm hover:text-foreground transition-colors cursor-pointer">
-                Events <ChevronDown className="ml-1 h-3 w-3" />
+              <DropdownMenuTrigger className="flex items-center text-sm font-semibold hover:text-foreground transition-colors cursor-pointer">
+                <span>Events</span> <ChevronDown className="ml-1 h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
                 <DropdownMenuItem asChild>
