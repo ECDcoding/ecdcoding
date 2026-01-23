@@ -24,6 +24,28 @@ const Header = () => {
               variant="outline" 
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
             >
+              Events <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
+            <DropdownMenuItem asChild>
+              <Link to="/register?type=ecd-expo" className="cursor-pointer">
+                ECD Coding and Robotics Expo 2026
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/register?type=tech-teacher" className="cursor-pointer">
+                Tech Teacher Mentorship Program 2026
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              variant="outline" 
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            >
               Register <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
