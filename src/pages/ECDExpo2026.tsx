@@ -12,8 +12,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
+import ExpoAccessGate from "@/components/ExpoAccessGate";
 
-const ECDExpo2026 = () => {
+const ECDExpo2026Content = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [sponsorForm, setSponsorForm] = useState({
@@ -740,6 +741,15 @@ const ECDExpo2026 = () => {
         paymentType={selectedPaymentType}
       />
     </div>
+  );
+};
+
+// Wrapper component with access gate
+const ECDExpo2026 = () => {
+  return (
+    <ExpoAccessGate>
+      <ECDExpo2026Content />
+    </ExpoAccessGate>
   );
 };
 
