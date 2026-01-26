@@ -92,6 +92,39 @@ export type Database = {
         }
         Relationships: []
       }
+      expo_access_requests: {
+        Row: {
+          company_name: string
+          email: string
+          id: string
+          notes: string | null
+          requested_at: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+        }
+        Insert: {
+          company_name: string
+          email: string
+          id?: string
+          notes?: string | null
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Update: {
+          company_name?: string
+          email?: string
+          id?: string
+          notes?: string | null
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       phone_trials: {
         Row: {
           created_at: string
@@ -544,7 +577,7 @@ export type Database = {
       validate_promo_code: { Args: { code_text: string }; Returns: Json }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      app_role: "admin" | "moderator" | "user" | "sponsor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -672,7 +705,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user"],
+      app_role: ["admin", "moderator", "user", "sponsor"],
     },
   },
 } as const
