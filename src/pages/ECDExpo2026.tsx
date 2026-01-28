@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe } from "lucide-react";
+import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
@@ -40,7 +40,8 @@ const ECDExpo2026Content = () => {
     phone: "",
     topic: "",
     bio: "",
-    experience: ""
+    experience: "",
+    videoFile: null as File | null
   });
   const [delegateForm, setDelegateForm] = useState({
     fullName: "",
@@ -97,8 +98,30 @@ const ECDExpo2026Content = () => {
 
   const handleSpeakerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!speakerForm.videoFile) {
+      toast.error("Please upload a 3-minute introduction video");
+      return;
+    }
     toast.success("Speaker application submitted! Our team will review and contact you.");
-    setSpeakerForm({ fullName: "", email: "", phone: "", topic: "", bio: "", experience: "" });
+    setSpeakerForm({ fullName: "", email: "", phone: "", topic: "", bio: "", experience: "", videoFile: null });
+  };
+
+  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Check if it's a video file
+      if (!file.type.startsWith('video/')) {
+        toast.error("Please upload a video file");
+        return;
+      }
+      // Check file size (max 100MB)
+      if (file.size > 100 * 1024 * 1024) {
+        toast.error("Video file must be less than 100MB");
+        return;
+      }
+      setSpeakerForm({ ...speakerForm, videoFile: file });
+      toast.success("Video uploaded successfully!");
+    }
   };
 
   const handleDelegateSubmit = (e: React.FormEvent) => {
@@ -597,6 +620,38 @@ const ECDExpo2026Content = () => {
                         placeholder="Tell us about your background and expertise..."
                         required
                       />
+                    </div>
+                    <div>
+                      <Label htmlFor="spVideo" className="flex items-center gap-2">
+                        <Video className="h-4 w-4 text-primary" />
+                        3-Minute Introduction Video *
+                      </Label>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Please upload a short video (max 3 minutes) introducing yourself and your topic. Max file size: 100MB.
+                      </p>
+                      <div className="flex items-center gap-4">
+                        <label 
+                          htmlFor="spVideo" 
+                          className="flex items-center gap-2 px-4 py-2 border border-dashed border-primary/50 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors"
+                        >
+                          <Upload className="h-5 w-5 text-primary" />
+                          <span className="text-sm font-medium">
+                            {speakerForm.videoFile ? speakerForm.videoFile.name : "Choose Video File"}
+                          </span>
+                        </label>
+                        <input
+                          id="spVideo"
+                          type="file"
+                          accept="video/*"
+                          onChange={handleVideoUpload}
+                          className="hidden"
+                        />
+                        {speakerForm.videoFile && (
+                          <Badge variant="secondary" className="text-xs">
+                            {(speakerForm.videoFile.size / (1024 * 1024)).toFixed(1)} MB
+                          </Badge>
+                        )}
+                      </div>
                     </div>
                     <Button type="submit" className="w-full" size="lg">
                       Submit Speaker Application
