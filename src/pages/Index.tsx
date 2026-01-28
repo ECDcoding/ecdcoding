@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import Chatbot from "@/components/Chatbot";
-import { Copyright, ChevronDown, Calendar } from "lucide-react";
+import { Copyright, ChevronDown, Calendar, Mail, Phone } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
   DropdownMenu,
@@ -12,6 +12,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import emailIcon from "@/assets/email-icon.png";
 import adminIcon from "@/assets/admin-icon.png";
@@ -60,15 +65,36 @@ const Index = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <Link to="/contact" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-            <img src={emailIcon} alt="Contact Us" className="h-6 w-6" />
-          </Link>
-          <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-            <FaWhatsapp className="h-5 w-5" />
-          </a>
-          <a href="https://www.facebook.com/61568116623673" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-            <FaFacebook className="h-5 w-5" />
-          </a>
+          <Popover>
+            <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+              <img src={emailIcon} alt="Contact Us" className="h-6 w-6" />
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-4 bg-background border border-border shadow-lg z-50">
+              <div className="space-y-3">
+                <p className="font-semibold text-sm text-foreground">Contact Us</p>
+                <div className="flex items-center gap-2 text-sm">
+                  <Mail className="h-4 w-4 text-primary" />
+                  <a href="mailto:info@ecdcoding.co.za" className="text-muted-foreground hover:text-primary transition-colors">
+                    info@ecdcoding.co.za
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Phone className="h-4 w-4 text-primary" />
+                  <a href="tel:+27730639622" className="text-muted-foreground hover:text-primary transition-colors">
+                    +27 73 063 9622
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 pt-2 border-t border-border">
+                  <a href="https://chat.whatsapp.com/FBhE9ZU2KDsKLi5OipxW4I" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-green-500 transition-colors">
+                    <FaWhatsapp className="h-5 w-5" />
+                  </a>
+                  <a href="https://www.facebook.com/61568116623673" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-blue-500 transition-colors">
+                    <FaFacebook className="h-5 w-5" />
+                  </a>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
               <img src={adminIcon} alt="Admin" className="h-6 w-6" />
