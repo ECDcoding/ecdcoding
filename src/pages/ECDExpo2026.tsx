@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
+import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
 
 const ECDExpo2026Content = () => {
@@ -53,8 +54,10 @@ const ECDExpo2026Content = () => {
   });
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isDebitCardDialogOpen, setIsDebitCardDialogOpen] = useState(false);
+  const [isSponsorPaymentDialogOpen, setIsSponsorPaymentDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(0);
   const [selectedPaymentType, setSelectedPaymentType] = useState("");
+  const [sponsorPaymentAmount, setSponsorPaymentAmount] = useState(0);
 
   const mainFocus = [
     { icon: <GraduationCap className="h-8 w-8" />, title: "Developing Tech Savvy Kids", description: "Building the knowledge base for the future world of work" },
@@ -78,9 +81,27 @@ const ECDExpo2026Content = () => {
       toast.error("Please agree to the terms and conditions");
       return;
     }
-    toast.success("Sponsor application submitted! We'll contact you shortly.");
+    if (!sponsorForm.sponsorshipTier) {
+      toast.error("Please select a sponsorship tier");
+      return;
+    }
+    // Determine payment amount based on tier
+    const tierPrices: Record<string, number> = {
+      "platinum": 50000,
+      "gold": 30000,
+      "silver": 15000,
+      "bronze": 5000
+    };
+    const amount = tierPrices[sponsorForm.sponsorshipTier] || 5000;
+    setSponsorPaymentAmount(amount);
+    setIsSponsorPaymentDialogOpen(true);
+  };
+
+  const handleSponsorPaymentComplete = () => {
+    toast.success("Payment successful! Your sponsor application has been submitted.");
     setSponsorForm({ companyName: "", contactPerson: "", email: "", phone: "", sponsorshipTier: "", message: "" });
     setAgreeTerms(false);
+    setIsSponsorPaymentDialogOpen(false);
   };
 
   const handleExhibitorSubmit = (e: React.FormEvent) => {
@@ -425,18 +446,28 @@ const ECDExpo2026Content = () => {
                         placeholder="Tell us about your company and sponsorship goals..."
                       />
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start gap-2">
                       <Checkbox
                         id="terms"
                         checked={agreeTerms}
                         onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
+                        className="mt-0.5"
                       />
                       <Label htmlFor="terms" className="text-sm">
-                        I agree to the terms and conditions
+                        I agree to the{" "}
+                        <a 
+                          href="/documents/Partnership_Memorandum_of_Agreement_Template.pdf" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary underline hover:text-primary/80"
+                        >
+                          Partnership Memorandum of Understanding
+                        </a>{" "}
+                        and terms and conditions
                       </Label>
                     </div>
                     <Button type="submit" className="w-full" size="lg">
-                      Submit Sponsor Application
+                      Pay with PayFast &amp; Submit Application
                     </Button>
                   </form>
                 </CardContent>
@@ -794,6 +825,19 @@ const ECDExpo2026Content = () => {
         }}
         amount={selectedPaymentAmount}
         paymentType={selectedPaymentType}
+      />
+
+      {/* Sponsor PayFast Payment Dialog */}
+      <PayFastPaymentDialog
+        open={isSponsorPaymentDialogOpen}
+        onOpenChange={setIsSponsorPaymentDialogOpen}
+        amount={sponsorPaymentAmount}
+        itemName={`ECD Expo 2026 ${sponsorForm.sponsorshipTier ? sponsorForm.sponsorshipTier.charAt(0).toUpperCase() + sponsorForm.sponsorshipTier.slice(1) : ''} Sponsor`}
+        paymentType="subscription"
+        userEmail={sponsorForm.email}
+        userFirstName={sponsorForm.contactPerson.split(' ')[0]}
+        userLastName={sponsorForm.contactPerson.split(' ').slice(1).join(' ')}
+        onPaymentComplete={handleSponsorPaymentComplete}
       />
     </div>
   );
