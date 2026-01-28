@@ -20,7 +20,7 @@ import {
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import emailIcon from "@/assets/email-icon.png";
 import adminIcon from "@/assets/admin-icon.png";
-import stemLogo from "@/assets/stem-learning-logo.png";
+
 
 const Index = () => {
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
@@ -37,8 +37,7 @@ const Index = () => {
       
       {/* Footer */}
       <footer className="w-full bg-background border-t border-border py-6 px-4">
-        <div className="flex items-center justify-between w-full">
-          <img src={stemLogo} alt="STEM Learning" className="h-10" />
+        <div className="flex items-center justify-center w-full">
           <div className="flex items-center space-x-8">
           <div className="flex items-center gap-4 text-muted-foreground">
             <div className="flex items-center space-x-2">
@@ -101,7 +100,6 @@ const Index = () => {
             </Link>
           )}
           </div>
-          <div className="w-10" /> {/* Spacer for balance */}
         </div>
       </footer>
     </div>
