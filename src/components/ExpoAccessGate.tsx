@@ -124,6 +124,11 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
         <div className="max-w-4xl w-full">
+          <div className="mb-4">
+            <Button variant="ghost" onClick={() => setCurrentStep('verify')} className="text-muted-foreground hover:text-foreground">
+              ← Back to verification
+            </Button>
+          </div>
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">Choose Your Partnership</h1>
             <p className="text-muted-foreground">
@@ -221,10 +226,17 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
             </div>
           </div>
 
-          <div className="text-center mt-6">
-            <Button variant="ghost" onClick={() => setCurrentStep('verify')}>
-              ← Back to verification
-            </Button>
+          <div className="text-center mt-8 p-4 bg-muted/50 rounded-lg">
+            <p className="text-sm text-muted-foreground mb-2 font-medium">Contact Us</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-sm">
+              <a href="mailto:info@ecdcoding.co.za" className="text-primary hover:underline">
+                Email: info@ecdcoding.co.za
+              </a>
+              <span className="hidden sm:inline text-muted-foreground">|</span>
+              <a href="tel:+27730639622" className="text-primary hover:underline">
+                Mobile: +27 73 063 9622
+              </a>
+            </div>
           </div>
         </div>
       </div>
