@@ -455,20 +455,25 @@ const ECDExpo2026Content = () => {
                       />
                       <Label htmlFor="terms" className="text-sm">
                         I agree to the{" "}
-                        <a 
-                          href="/documents/Partnership_Memorandum_of_Agreement_Template.pdf" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            window.open(`${window.location.origin}/documents/Partnership_Memorandum_of_Agreement_Template.pdf`, '_blank', 'noopener,noreferrer');
+                          }}
                           className="text-primary underline hover:text-primary/80"
                         >
                           Partnership Memorandum of Understanding
-                        </a>{" "}
+                        </button>{" "}
                         and terms and conditions
                       </Label>
                     </div>
                     <Button type="submit" className="w-full" size="lg">
-                      Pay with PayFast &amp; Submit Application
+                      Pay with PayFast
                     </Button>
+                    <p className="text-xs text-muted-foreground text-center mt-2">
+                      Your application will be submitted after successful payment
+                    </p>
                   </form>
                 </CardContent>
               </Card>
