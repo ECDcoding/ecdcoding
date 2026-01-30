@@ -1,7 +1,7 @@
 project_id = "nebwdxiurllwwkwivhnr"
 
 [functions.payfast-payment]
-verify_jwt = true
+verify_jwt = false
 
 [functions.payfast-itn]
 verify_jwt = false
@@ -16,4 +16,10 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.check-trial-expiry]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.text-to-speech]
 verify_jwt = false
