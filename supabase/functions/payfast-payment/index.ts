@@ -11,7 +11,17 @@ const PAYFAST_MERCHANT_KEY = Deno.env.get('PAYFAST_MERCHANT_KEY');
 const PAYFAST_PASSPHRASE = Deno.env.get('PAYFAST_PASSPHRASE');
 
 // Valid payment amounts (in ZAR)
-const VALID_AMOUNTS = [100, 1200]; // Monthly: R100, Annual: R1200
+const VALID_AMOUNTS = [
+  100,    // Monthly subscription
+  200,    // Delegate pass
+  500,    // Tech Teacher Mentorship
+  1200,   // Annual subscription
+  2500,   // Local Exhibitor
+  5000,   // Bronze Sponsor / International Exhibitor
+  15000,  // Silver Sponsor
+  30000,  // Gold Sponsor
+  50000,  // Platinum Sponsor
+];
 
 // Use sandbox for testing, production for live
 const PAYFAST_URL = 'https://www.payfast.co.za/eng/process';
@@ -59,40 +69,10 @@ serve(async (req) => {
   }
 
   try {
-    // Extract and verify the JWT token from the Authorization header
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      console.error('Missing or invalid Authorization header');
-      return new Response(
-        JSON.stringify({ error: 'Authentication required' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const token = authHeader.replace('Bearer ', '');
-    
-    // Create Supabase client to verify the user
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      global: {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    });
-
-    // Get the authenticated user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
     
-    if (userError || !user) {
-      console.error('Failed to authenticate user:', userError?.message);
-      return new Response(
-        JSON.stringify({ error: 'Invalid authentication token' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    console.log('Authenticated user:', user.id, user.email);
-
+    // Parse the request body first
     const { 
       amount, 
       item_name, 
@@ -106,12 +86,44 @@ serve(async (req) => {
       notify_url
     } = await req.json();
 
-    // SECURITY: Verify the requesting user matches the user_id in the payload
-    if (user_id && user_id !== user.id) {
-      console.error('User ID mismatch: authenticated user', user.id, 'but payload has', user_id);
+    // Check for authorization header - but allow guest payments for expo registrations
+    const authHeader = req.headers.get('Authorization');
+    let authenticatedUserId: string | null = null;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      
+      // Create Supabase client to verify the user
+      const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+        global: {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      });
+
+      // Try to get the authenticated user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (!userError && user) {
+        authenticatedUserId = user.id;
+        console.log('Authenticated user:', user.id, user.email);
+        
+        // SECURITY: For authenticated users, verify the requesting user matches the user_id in the payload
+        if (user_id && user_id !== 'guest' && user_id !== user.id) {
+          console.error('User ID mismatch: authenticated user', user.id, 'but payload has', user_id);
+          return new Response(
+            JSON.stringify({ error: 'Unauthorized: Cannot create payment for another user' }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+    }
+    
+    // For guest payments (expo registrations), require email address
+    if (!authenticatedUserId && !email_address) {
+      console.error('Guest payment requires email address');
       return new Response(
-        JSON.stringify({ error: 'Unauthorized: Cannot create payment for another user' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'Email address is required for guest payments' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -124,8 +136,11 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    
+    // Use authenticated user ID if available, otherwise use 'guest' with email for tracking
+    const effectiveUserId = authenticatedUserId || `guest_${email_address}`;
 
-    console.log('PayFast payment request received:', { amount: parsedAmount, item_name, email_address, payment_type, user_id: user.id });
+    console.log('PayFast payment request received:', { amount: parsedAmount, item_name, email_address, payment_type, user_id: effectiveUserId });
 
     if (!PAYFAST_MERCHANT_ID || !PAYFAST_MERCHANT_KEY) {
       console.error('PayFast credentials not configured');
@@ -135,7 +150,7 @@ serve(async (req) => {
       );
     }
 
-    // Build PayFast payment data - use authenticated user's ID
+    // Build PayFast payment data
     const paymentData: Record<string, string> = {
       merchant_id: PAYFAST_MERCHANT_ID,
       merchant_key: PAYFAST_MERCHANT_KEY,
@@ -144,11 +159,11 @@ serve(async (req) => {
       notify_url: notify_url || `${supabaseUrl}/functions/v1/payfast-itn`,
       name_first: name_first || '',
       name_last: name_last || '',
-      email_address: email_address || user.email || '',
-      m_payment_id: `${user.id}_${Date.now()}`,
+      email_address: email_address || '',
+      m_payment_id: `${effectiveUserId}_${Date.now()}`,
       amount: parsedAmount.toFixed(2),
       item_name: item_name || 'ECDcoding Subscription',
-      custom_str1: user.id, // Always use authenticated user's ID
+      custom_str1: effectiveUserId,
       custom_str2: payment_type || 'subscription',
     };
 
@@ -160,7 +175,7 @@ serve(async (req) => {
       console.log('Passphrase configured, signature generation available');
     }
 
-    console.log('PayFast payment data prepared for user:', user.id, { ...paymentData, merchant_key: '[REDACTED]' });
+    console.log('PayFast payment data prepared for user:', effectiveUserId, { ...paymentData, merchant_key: '[REDACTED]' });
 
     return new Response(
       JSON.stringify({ 
