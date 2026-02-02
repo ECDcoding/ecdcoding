@@ -475,6 +475,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isVowelsMusicPlaying, setIsVowelsMusicPlaying] = useState(false);
   const [isAlphabetIntroComplete, setIsAlphabetIntroComplete] = useState(false);
   const [alphabetPlayCount, setAlphabetPlayCount] = useState(0);
+  // Vowels two-round state
+  const [isVowelsPlaying, setIsVowelsPlaying] = useState(false);
+  const [isVowelsIntroComplete, setIsVowelsIntroComplete] = useState(false);
+  const [currentVowelIndex, setCurrentVowelIndex] = useState(-1);
+  const vowelsIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Fetch all feedback when community feed is shown
   useEffect(() => {
@@ -698,6 +703,105 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
     
     window.speechSynthesis.cancel();
+  };
+
+  // Vowels play - Two rounds:
+  // Round 1: Voice recites A, E, I, O, U with letters flashing (no music)
+  // Round 2: Music plays once with letters flashing, then stops
+  
+  const startVowelsPlay = () => {
+    setIsVowelsPlaying(true);
+    setCurrentVowelIndex(0);
+    
+    if (!isVowelsIntroComplete) {
+      // ROUND 1: Voice recites vowels with flashing
+      startVowelsVoiceRecitation();
+    } else {
+      // ROUND 2: Play music with flashing
+      startVowelsMusicWithFlashing();
+    }
+  };
+  
+  // Round 1: Voice recites each vowel with flashing
+  const startVowelsVoiceRecitation = () => {
+    let index = 0;
+    
+    // Speak and flash first vowel immediately
+    setCurrentVowelIndex(0);
+    speakVowel(vowels[0]);
+    index++;
+    
+    // Continue through all vowels
+    vowelsIntervalRef.current = setInterval(() => {
+      if (index < vowels.length) {
+        setCurrentVowelIndex(index);
+        speakVowel(vowels[index]);
+        index++;
+      } else {
+        // Voice recitation complete - mark intro as done
+        if (vowelsIntervalRef.current) {
+          clearInterval(vowelsIntervalRef.current);
+          vowelsIntervalRef.current = null;
+        }
+        setCurrentVowelIndex(-1);
+        setIsVowelsPlaying(false);
+        setIsVowelsIntroComplete(true); // Ready for round 2
+      }
+    }, 1400); // 1.4 seconds per vowel
+  };
+  
+  // Round 2: Music plays once with vowels flashing in sync
+  const startVowelsMusicWithFlashing = () => {
+    if (!vowelsAudioRef.current) return;
+    
+    let index = 0;
+    
+    // Start the music (will play once, no loop)
+    vowelsAudioRef.current.volume = 1.0;
+    vowelsAudioRef.current.currentTime = 0;
+    vowelsAudioRef.current.play();
+    setIsVowelsMusicPlaying(true);
+    
+    // Flash first vowel immediately
+    setCurrentVowelIndex(0);
+    index++;
+    
+    // Continue flashing vowels in sync with music (loop through A E I O U)
+    vowelsIntervalRef.current = setInterval(() => {
+      if (index >= vowels.length) {
+        index = 0; // Loop back to A
+      }
+      setCurrentVowelIndex(index);
+      index++;
+    }, 1400); // 1.4 seconds per vowel
+  };
+  
+  // Handle when vowels music ends
+  const handleVowelsMusicEnd = () => {
+    stopVowelsPlay();
+  };
+
+  const stopVowelsPlay = () => {
+    setIsVowelsPlaying(false);
+    setCurrentVowelIndex(-1);
+    setIsVowelsMusicPlaying(false);
+    
+    if (vowelsIntervalRef.current) {
+      clearInterval(vowelsIntervalRef.current);
+      vowelsIntervalRef.current = null;
+    }
+    
+    if (vowelsAudioRef.current) {
+      vowelsAudioRef.current.pause();
+      vowelsAudioRef.current.currentTime = 0;
+    }
+    
+    window.speechSynthesis.cancel();
+  };
+  
+  const resetVowelsState = () => {
+    stopVowelsPlay();
+    setIsVowelsIntroComplete(false);
   };
   
   // Reset everything when leaving alphabets section
@@ -2681,8 +2785,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <audio
                 ref={vowelsAudioRef}
                 src={vowelsBackgroundMusic}
-                loop
                 preload="auto"
+                onEnded={handleVowelsMusicEnd}
               />
             )}
             <div className="min-h-screen flex flex-col">
@@ -2746,39 +2850,39 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                        </Button>
                      )}
                      {/* Play Vowels Background Music button */}
-                     {selectedCountingRange === "vowels" && (
-                       <Button
-                         onClick={() => {
-                           if (vowelsAudioRef.current) {
-                             if (isVowelsMusicPlaying) {
-                               vowelsAudioRef.current.pause();
-                               setIsVowelsMusicPlaying(false);
-                             } else {
-                               vowelsAudioRef.current.play();
-                               setIsVowelsMusicPlaying(true);
-                             }
-                           }
-                         }}
-                         className={`${
-                           isVowelsMusicPlaying 
-                             ? "bg-red-500 hover:bg-red-600" 
-                             : "bg-green-500 hover:bg-green-600"
-                         } text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2`}
-                       >
-                         <Volume2 className="h-5 w-5" />
-                         {isVowelsMusicPlaying ? "Stop Music" : "Play Music"}
-                       </Button>
-                     )}
+                       {selectedCountingRange === "vowels" && (
+                        <Button
+                          onClick={isVowelsPlaying ? stopVowelsPlay : startVowelsPlay}
+                          className={`${
+                            isVowelsPlaying 
+                              ? "bg-red-500 hover:bg-red-600" 
+                              : "bg-green-500 hover:bg-green-600"
+                          } text-white font-bold py-3 px-6 rounded-lg flex flex-col items-center gap-1`}
+                        >
+                          <span>
+                            {isVowelsPlaying 
+                              ? "Stop" 
+                              : isVowelsIntroComplete 
+                                ? "Play Vowels Music" 
+                                : "Start Vowels"
+                            }
+                          </span>
+                          {isVowelsPlaying && (
+                            <span className="text-xs opacity-80">
+                              {isVowelsIntroComplete ? "🎵 Sing Along!" : "🗣️ Voice Reciting..."}
+                            </span>
+                          )}
+                          {!isVowelsPlaying && isVowelsIntroComplete && (
+                            <span className="text-xs opacity-80">🎵 Ready for Music!</span>
+                          )}
+                        </Button>
+                      )}
                     <button 
                       onClick={() => {
                         setCountingOpen(false); 
                         setSelectedCountingRange(null);
-                        // Stop vowels music when closing
-                        if (vowelsAudioRef.current) {
-                          vowelsAudioRef.current.pause();
-                          vowelsAudioRef.current.currentTime = 0;
-                          setIsVowelsMusicPlaying(false);
-                        }
+                        // Reset vowels state when closing
+                        resetVowelsState();
                         // Reset alphabet state when closing
                         resetAlphabetState();
                       }}
@@ -2795,24 +2899,31 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
                    {(() => {
                       if (selectedCountingRange === "vowels") {
-                        const vowelsArray = ['a', 'e', 'i', 'o', 'u'];
-                        return vowelsArray.map((vowel, index) => (
-                          <div 
-                            key={vowel}
-                             className="w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white"
-                            style={{
-                              backgroundColor: [
-                                '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
-                              ][index % 5]
-                            }}
-                            onClick={() => speakVowel(vowel.toUpperCase())}
-                            onMouseEnter={() => speakVowel(vowel.toUpperCase())}
-                            onMouseLeave={() => window.speechSynthesis.cancel()}
-                            title={`Vowel ${vowel.toUpperCase()} - Click to hear tone`}
-                          >
-                            {vowel}
-                          </div>
-                        ));
+                        const vowelsArray = ['A', 'E', 'I', 'O', 'U'];
+                        return vowelsArray.map((vowel, index) => {
+                          const isCurrentlyFlashing = isVowelsPlaying && index === currentVowelIndex;
+                          return (
+                            <div 
+                              key={vowel}
+                              className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white ${
+                                isCurrentlyFlashing ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
+                              }`}
+                              style={{
+                                backgroundColor: isCurrentlyFlashing 
+                                  ? '#fbbf24' // Yellow when active
+                                  : [
+                                      '#3a86ff', '#e76f51', '#00afb9', '#ca6702', '#006d77'
+                                    ][index % 5]
+                              }}
+                              onClick={() => !isVowelsPlaying && speakVowel(vowel)}
+                              onMouseEnter={() => !isVowelsPlaying && speakVowel(vowel)}
+                              onMouseLeave={() => !isVowelsPlaying && window.speechSynthesis.cancel()}
+                              title={`Vowel ${vowel} - Click to hear tone`}
+                            >
+                              {vowel}
+                            </div>
+                          );
+                        });
                      } else if (selectedCountingRange === "alphabets") {
                         const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)); // Capital letters A-Z
                         return alphabet.map((letter, index) => {
