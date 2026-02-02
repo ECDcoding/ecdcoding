@@ -50,6 +50,7 @@ import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
+import vowelsBackgroundMusic from "@/assets/vowels-background-music.mp3";
 import shapesBasicColor from "@/assets/shapes-basic-color.png";
 import beeCharacter from "@/assets/bee-character.jpg";
 import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
@@ -465,9 +466,11 @@ const LessonVault0406 = () => {
   
   
 const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
+  const vowelsAudioRef = useRef<HTMLAudioElement | null>(null);
   const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [starAnimations, setStarAnimations] = useState<{[key: number]: boolean}>({});
   const [isAlphabetPlaying, setIsAlphabetPlaying] = useState(false);
+  const [isVowelsMusicPlaying, setIsVowelsMusicPlaying] = useState(false);
 
   // Fetch all feedback when community feed is shown
   useEffect(() => {
@@ -2602,6 +2605,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 preload="auto"
               />
             )}
+            {/* Hidden audio element for vowels background music */}
+            {selectedCountingRange === "vowels" && (
+              <audio
+                ref={vowelsAudioRef}
+                src={vowelsBackgroundMusic}
+                loop
+                preload="auto"
+              />
+            )}
             <div className="min-h-screen flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/20">
@@ -2647,8 +2659,41 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                          {isAlphabetPlaying ? "Stop" : "Start Alphabet Song"}
                        </Button>
                      )}
+                     {/* Play Vowels Background Music button */}
+                     {selectedCountingRange === "vowels" && (
+                       <Button
+                         onClick={() => {
+                           if (vowelsAudioRef.current) {
+                             if (isVowelsMusicPlaying) {
+                               vowelsAudioRef.current.pause();
+                               setIsVowelsMusicPlaying(false);
+                             } else {
+                               vowelsAudioRef.current.play();
+                               setIsVowelsMusicPlaying(true);
+                             }
+                           }
+                         }}
+                         className={`${
+                           isVowelsMusicPlaying 
+                             ? "bg-red-500 hover:bg-red-600" 
+                             : "bg-green-500 hover:bg-green-600"
+                         } text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2`}
+                       >
+                         <Volume2 className="h-5 w-5" />
+                         {isVowelsMusicPlaying ? "Stop Music" : "Play Music"}
+                       </Button>
+                     )}
                     <button 
-                      onClick={() => {setCountingOpen(false); setSelectedCountingRange(null);}}
+                      onClick={() => {
+                        setCountingOpen(false); 
+                        setSelectedCountingRange(null);
+                        // Stop vowels music when closing
+                        if (vowelsAudioRef.current) {
+                          vowelsAudioRef.current.pause();
+                          vowelsAudioRef.current.currentTime = 0;
+                          setIsVowelsMusicPlaying(false);
+                        }
+                      }}
                       className="text-white hover:text-yellow-400 transition-colors"
                     >
                       <X className="h-8 w-8" />
