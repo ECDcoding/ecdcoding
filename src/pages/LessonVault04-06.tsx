@@ -4505,16 +4505,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
       {/* Traffic Lights Dialog */}
       <Dialog open={trafficLightsOpen} onOpenChange={setTrafficLightsOpen}>
-        <DialogContent className="max-w-sm">
+        <DialogContent className="max-w-sm bg-gradient-to-b from-gray-700 via-gray-800 to-gray-900 border-2 border-gray-600">
           <DialogHeader>
-            <DialogTitle>Traffic Lights</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-white text-center">Traffic Lights</DialogTitle>
+            <DialogDescription className="text-gray-300 text-center">
               Click on each light to learn what it means
             </DialogDescription>
           </DialogHeader>
           
-          <div className="flex flex-col items-center gap-4 py-6">
-            <div className="scale-[1.8]">
+          <div className="flex flex-col items-center gap-4 py-8 bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl mx-2">
+            <div className="scale-[1.8] p-4">
               <TrafficLightProgress 
                 mode="traffic" 
                 onLevelChange={(level) => {
