@@ -586,67 +586,102 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     speakInstruction(message);
   };
 
-  // Alphabet auto-play with music - Two modes:
-  // 1. First play: Song plays as intro (no letter flashing)
-  // 2. Second play onwards: Letters flash in sync for sing-along
-  const startAlphabetPlay = () => {
-    if (!alphabetAudioRef.current) return;
-    
-    setIsAlphabetPlaying(true);
-    setCurrentAlphabetIndex(-1); // Start with no letter highlighted
-    
-    // Start the music
-    alphabetAudioRef.current.volume = 1.0; // Full volume for the song
-    alphabetAudioRef.current.currentTime = 0;
-    alphabetAudioRef.current.play();
-    
-    // Track play count
-    setAlphabetPlayCount(prev => prev + 1);
+  // Alphabet play - Two rounds:
+  // Round 1: Voice alone recites A-Z with letters flashing (no music)
+  // Round 2: Song plays ONCE with letters flashing, then stops
+  
+  // Speak a single alphabet letter
+  const speakAlphabetLetter = (letter: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(letter);
+      utterance.rate = 0.7; // Slow and clear for kids
+      utterance.volume = 1.0;
+      utterance.pitch = 1.2; // Child-friendly pitch
+      window.speechSynthesis.speak(utterance);
+    }
   };
   
-  // Start letter flashing for sing-along mode - continuously loops like a music conductor
-  const startLetterFlashing = () => {
-    if (alphabetIntervalRef.current) {
-      clearInterval(alphabetIntervalRef.current);
+  const startAlphabetPlay = () => {
+    setIsAlphabetPlaying(true);
+    setCurrentAlphabetIndex(0);
+    
+    // Check if this is first round (voice only) or second round (song)
+    if (!isAlphabetIntroComplete) {
+      // ROUND 1: Voice recites A-Z with flashing - no music
+      startVoiceRecitation();
+    } else {
+      // ROUND 2: Play song once with flashing
+      startSongWithFlashing();
     }
+  };
+  
+  // Round 1: Voice recites each letter with flashing
+  const startVoiceRecitation = () => {
+    let index = 0;
+    const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
+    
+    // Speak and flash first letter immediately
+    setCurrentAlphabetIndex(0);
+    speakAlphabetLetter(alphabet[0]);
+    index++;
+    
+    // Continue through all letters
+    alphabetIntervalRef.current = setInterval(() => {
+      if (index < alphabet.length) {
+        setCurrentAlphabetIndex(index);
+        speakAlphabetLetter(alphabet[index]);
+        index++;
+      } else {
+        // Voice recitation complete - mark intro as done
+        if (alphabetIntervalRef.current) {
+          clearInterval(alphabetIntervalRef.current);
+          alphabetIntervalRef.current = null;
+        }
+        setCurrentAlphabetIndex(-1);
+        setIsAlphabetPlaying(false);
+        setIsAlphabetIntroComplete(true); // Ready for round 2
+      }
+    }, 1400); // 1.4 seconds per letter
+  };
+  
+  // Round 2: Song plays once with letters flashing in sync
+  const startSongWithFlashing = () => {
+    if (!alphabetAudioRef.current) return;
     
     let index = 0;
     
-    // Flash first letter IMMEDIATELY when sing-along starts - like a conductor's first beat
+    // Start the music (will play once, no loop)
+    alphabetAudioRef.current.volume = 1.0;
+    alphabetAudioRef.current.currentTime = 0;
+    alphabetAudioRef.current.play();
+    
+    // Flash first letter immediately
     setCurrentAlphabetIndex(0);
     index++;
     
-    // Continue highlighting letters in precise sync with the song tempo
-    // Each letter flashes exactly on beat like following a conductor's baton
-    // Loops continuously from A-Z throughout the entire song
+    // Continue flashing letters in sync with song
     alphabetIntervalRef.current = setInterval(() => {
-      if (index >= 26) {
-        // Loop back to A when we reach the end
+      if (index < 26) {
+        setCurrentAlphabetIndex(index);
+        index++;
+      } else {
+        // All letters done - keep flashing from start if song still playing
         index = 0;
+        setCurrentAlphabetIndex(index);
+        index++;
       }
-      setCurrentAlphabetIndex(index);
-      index++;
-    }, 1400); // 1.4 seconds per letter - precise tempo to match song rhythm
+    }, 1400); // 1.4 seconds per letter - matches song tempo
   };
   
-  // Handle when alphabet song ends (loops)
-  const handleAlphabetSongLoop = () => {
-    if (!isAlphabetPlaying) return;
-    
-    // Mark intro as complete after first play
-    if (!isAlphabetIntroComplete) {
-      setIsAlphabetIntroComplete(true);
-    }
-    
-    // On second play and onwards, start letter flashing for sing-along
-    startLetterFlashing();
+  // Handle when song ends (called from onEnded event)
+  const handleAlphabetSongEnd = () => {
+    // Song finished - stop everything
+    stopAlphabetPlay();
   };
 
   const stopAlphabetPlay = () => {
     setIsAlphabetPlaying(false);
     setCurrentAlphabetIndex(-1);
-    setIsAlphabetIntroComplete(false);
-    setAlphabetPlayCount(0);
     
     // Reset refs
     alphabetLoopTriggeredRef.current = false;
@@ -663,6 +698,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
     
     window.speechSynthesis.cancel();
+  };
+  
+  // Reset everything when leaving alphabets section
+  const resetAlphabetState = () => {
+    stopAlphabetPlay();
+    setIsAlphabetIntroComplete(false);
+    setAlphabetPlayCount(0);
   };
 
   // Counting song functionality
@@ -2630,38 +2672,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <audio
                 ref={alphabetAudioRef}
                 src={alphabetSong}
-                loop
                 preload="auto"
-                onTimeUpdate={(e) => {
-                  const audio = e.currentTarget;
-                  const currentTime = audio.currentTime;
-                  const duration = audio.duration;
-                  
-                  if (!duration || !isAlphabetPlaying) return;
-                  
-                  // Detect when song loops back (currentTime drops significantly)
-                  if (lastAlphabetTimeRef.current > 5 && currentTime < 2) {
-                    // Song has looped
-                    if (!alphabetLoopTriggeredRef.current) {
-                      alphabetLoopTriggeredRef.current = true;
-                      
-                      // Mark intro as complete
-                      if (!isAlphabetIntroComplete) {
-                        setIsAlphabetIntroComplete(true);
-                      }
-                      
-                      // Start letter flashing for sing-along mode
-                      startLetterFlashing();
-                      
-                      // Reset trigger after a short delay to allow next loop detection
-                      setTimeout(() => {
-                        alphabetLoopTriggeredRef.current = false;
-                      }, 3000);
-                    }
-                  }
-                  
-                  lastAlphabetTimeRef.current = currentTime;
-                }}
+                onEnded={handleAlphabetSongEnd}
               />
             )}
             {/* Hidden audio element for vowels background music */}
@@ -2715,11 +2727,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                              : "bg-green-500 hover:bg-green-600"
                          } text-white font-bold py-3 px-6 rounded-lg flex flex-col items-center gap-1`}
                        >
-                         <span>{isAlphabetPlaying ? "Stop" : "Start Alphabet Song"}</span>
+                         <span>
+                           {isAlphabetPlaying 
+                             ? "Stop" 
+                             : isAlphabetIntroComplete 
+                               ? "Play ABC Song" 
+                               : "Start ABCs"
+                           }
+                         </span>
                          {isAlphabetPlaying && (
                            <span className="text-xs opacity-80">
-                             {isAlphabetIntroComplete ? "🎤 Sing Along!" : "🎵 Intro Playing..."}
+                             {isAlphabetIntroComplete ? "🎤 Sing Along!" : "🗣️ Voice Reciting..."}
                            </span>
+                         )}
+                         {!isAlphabetPlaying && isAlphabetIntroComplete && (
+                           <span className="text-xs opacity-80">🎵 Ready for Song!</span>
                          )}
                        </Button>
                      )}
@@ -2757,6 +2779,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           vowelsAudioRef.current.currentTime = 0;
                           setIsVowelsMusicPlaying(false);
                         }
+                        // Reset alphabet state when closing
+                        resetAlphabetState();
                       }}
                       className="text-white hover:text-yellow-400 transition-colors"
                     >
