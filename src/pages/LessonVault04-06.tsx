@@ -4505,43 +4505,34 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
       {/* Traffic Lights Dialog */}
       <Dialog open={trafficLightsOpen} onOpenChange={setTrafficLightsOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle>Traffic Lights</DialogTitle>
             <DialogDescription>
-              Learn about traffic light signals and their meanings
+              Click on each light to learn what it means
             </DialogDescription>
           </DialogHeader>
           
-          <div className="flex flex-col items-center gap-6 py-8">
-            <div className="scale-150">
-              <TrafficLightProgress />
-            </div>
-            
-            <div className="space-y-4 w-full">
-              <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
-                <div className="w-6 h-6 rounded-full bg-red-500"></div>
-                <div className="flex-1">
-                  <p className="font-semibold text-sm">Red Light</p>
-                  <p className="text-xs text-muted-foreground">Stop and wait</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg">
-                <div className="w-6 h-6 rounded-full bg-yellow-500"></div>
-                <div className="flex-1">
-                  <p className="font-semibold text-sm">Yellow Light</p>
-                  <p className="text-xs text-muted-foreground">Slow down and prepare to stop</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
-                <div className="w-6 h-6 rounded-full bg-green-500"></div>
-                <div className="flex-1">
-                  <p className="font-semibold text-sm">Green Light</p>
-                  <p className="text-xs text-muted-foreground">Go - it's safe to proceed</p>
-                </div>
-              </div>
+          <div className="flex flex-col items-center gap-4 py-6">
+            <div className="scale-[1.8]">
+              <TrafficLightProgress 
+                mode="traffic" 
+                onLevelChange={(level) => {
+                  // Voice narration for traffic lights
+                  if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const messages: Record<'red' | 'yellow' | 'green', string> = {
+                      red: "Red light means Stop! You must wait and not cross the road.",
+                      yellow: "Yellow light means Get Ready! The light is about to change.",
+                      green: "Green light means Cross! It is safe to walk across the road."
+                    };
+                    const utterance = new SpeechSynthesisUtterance(messages[level]);
+                    utterance.rate = 0.85;
+                    utterance.pitch = 1.1;
+                    window.speechSynthesis.speak(utterance);
+                  }
+                }}
+              />
             </div>
           </div>
         </DialogContent>
