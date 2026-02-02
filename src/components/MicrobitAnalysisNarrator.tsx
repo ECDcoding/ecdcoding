@@ -97,7 +97,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The accelerometer detects when you move, tilt, or shake the micro bit. The compass, also called a magnetometer, tells you which direction is North. Great for making games and navigation projects!",
     color: "from-green-500 to-emerald-600",
     side: 'back',
-    arrowPosition: { x: 25, y: 55, direction: 'right' }
+    arrowPosition: { x: 25, y: 62, direction: 'right' }
   },
   {
     id: "bluetooth",
