@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import roadTransportVehicles from "@/assets/road-transport-vehicles.jpg";
 import railTransportVehicles from "@/assets/rail-transport-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
@@ -8,9 +10,11 @@ import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import electricCarConcept from "@/assets/electric-car-concept.avif";
 import electricCarCharging from "@/assets/electric-car-charging.avif";
 import electricCarChargingProgress from "@/assets/electric-car-charging-progress.jpg";
+import mountainBike from "@/assets/transport/mountain-bike.jpg";
 
 const Transportation = () => {
   const navigate = useNavigate();
+  const [isGravelOpen, setIsGravelOpen] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
@@ -51,9 +55,30 @@ const Transportation = () => {
                     className="w-full h-auto rounded-lg"
                   />
                 </div>
-                <p className="text-gray-700">
+                <p className="text-gray-700 mb-4">
                   Cars, buses, and trucks travel on roads to take us to different places!
                 </p>
+                
+                {/* Gravel Road Transport Dropdown */}
+                <Collapsible open={isGravelOpen} onOpenChange={setIsGravelOpen}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full bg-amber-100 hover:bg-amber-200 p-3 rounded-lg transition-colors">
+                    <span className="font-semibold text-amber-800">🪨 Gravel Road Transport</span>
+                    <ChevronDown className={`h-5 w-5 text-amber-600 transition-transform ${isGravelOpen ? 'rotate-180' : ''}`} />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-3 space-y-3">
+                    <div className="bg-white p-4 rounded-lg border-2 border-amber-300 shadow-md">
+                      <h4 className="text-lg font-bold text-amber-700 mb-2">🚵 Mountain Bike</h4>
+                      <img 
+                        src={mountainBike} 
+                        alt="Mountain bike for gravel road transport" 
+                        className="w-full h-48 object-contain rounded-lg mb-2"
+                      />
+                      <p className="text-sm text-gray-600">
+                        Mountain bikes are perfect for riding on rough gravel roads and trails!
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
               </div>
 
               {/* Rail Transport */}
