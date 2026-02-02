@@ -87,7 +87,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The processor is the brain of the micro bit. It runs all your programs and makes everything work. It also has a temperature sensor built in, so you can measure how warm or cold it is!",
     color: "from-red-500 to-orange-600",
     side: 'back',
-    arrowPosition: { x: 55, y: 40, direction: 'down' }
+    arrowPosition: { x: 38, y: 45, direction: 'down' }
   },
   {
     id: "accelerometer",
