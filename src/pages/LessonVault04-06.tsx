@@ -1060,6 +1060,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             <span className="text-sm text-muted-foreground">ZAR 15.00</span>
                           </div>
                         </DropdownMenuItem>
+                        <div className="my-2 border-t border-gray-200 dark:border-gray-700" />
+                        <DropdownMenuItem
+                          onClick={() => navigate('/data-deletion')}
+                          className="cursor-pointer py-3 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        >
+                          <div className="flex flex-col gap-1">
+                            <span className="font-semibold">🛑 Stop or Delete Account</span>
+                            <span className="text-sm text-muted-foreground">Manage your account settings</span>
+                          </div>
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
