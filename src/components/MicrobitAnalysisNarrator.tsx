@@ -27,7 +27,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "Welcome to the Micro bit analysis! The BBC micro bit is a pocket-sized computer that introduces you to how software and hardware work together. It's perfect for learning coding and electronics!",
     color: "from-purple-500 to-indigo-600",
     side: 'front',
-    arrowPosition: { x: 5, y: 50, direction: 'down' }
+    arrowPosition: { x: 5, y: 15, direction: 'down' }
   },
   {
     id: "leds",
