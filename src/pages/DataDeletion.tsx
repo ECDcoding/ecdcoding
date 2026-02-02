@@ -67,7 +67,7 @@ const DataDeletion = () => {
                 <div className="border-l-4 border-primary pl-4 py-2">
                   <h3 className="font-semibold text-lg mb-2">Method 1: Email Request</h3>
                   <ol className="list-decimal list-inside space-y-2 ml-4">
-                    <li>Send an email to <strong>privacy@ecdcoding.com</strong></li>
+                    <li>Send an email to <strong>info@ecdcoding.co.za</strong></li>
                     <li>Use the subject line: "Data Deletion Request"</li>
                     <li>Include in your email:
                       <ul className="list-disc list-inside ml-6 mt-1">
@@ -155,7 +155,7 @@ const DataDeletion = () => {
             <section>
               <h2 className="text-xl font-semibold mb-3">Contact Information</h2>
               <div className="bg-muted p-4 rounded-lg space-y-2">
-                <p><strong>Data Protection Officer:</strong> privacy@ecdcoding.com</p>
+                <p><strong>Data Protection Officer:</strong> info@ecdcoding.co.za</p>
                 <p><strong>General Support:</strong> <Link to="/contact" className="text-primary underline">Contact Us</Link></p>
                 <p><strong>Privacy Policy:</strong> <Link to="/privacy-policy" className="text-primary underline">View Privacy Policy</Link></p>
               </div>
