@@ -3413,195 +3413,307 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <div className="max-w-6xl mx-auto">
 
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {/* Black T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-black rounded-t-3xl rounded-b-lg border-4 border-gray-800"></div>
+                    {/* Black Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 rounded-t-lg bg-black border-4 border-gray-800 relative shadow-xl">
+                        {/* Door panels */}
+                        <div className="absolute inset-2 flex flex-col gap-2">
+                          <div className="flex-1 border-2 border-gray-700 rounded-sm"></div>
+                          <div className="flex-1 border-2 border-gray-700 rounded-sm"></div>
+                          <div className="flex-1 border-2 border-gray-700 rounded-sm"></div>
+                        </div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-6 bg-yellow-500 rounded-full shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-black">Black</h3>
                       <Button 
                         className="bg-black hover:bg-gray-800 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a black t-shirt. Black is a dark color.");
+                          speakInstruction("This is a black door. Black is a dark color.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Blue T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-blue-500 rounded-t-3xl rounded-b-lg border-4 border-blue-600"></div>
+                    {/* Blue Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 rounded-t-2xl bg-blue-500 border-4 border-blue-700 relative shadow-xl">
+                        {/* Arched window */}
+                        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-20 bg-blue-200/50 rounded-t-full border-2 border-blue-600"></div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 top-2/3 w-3 h-3 bg-yellow-400 rounded-full shadow-md border border-yellow-600"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-blue-600">Blue</h3>
                       <Button 
                         className="bg-blue-500 hover:bg-blue-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a blue t-shirt. Blue is the color of the sky and ocean.");
+                          speakInstruction("This is a blue door. Blue is the color of the sky and ocean.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Green T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-green-500 rounded-t-3xl rounded-b-lg border-4 border-green-600"></div>
+                    {/* Green Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-green-500 border-4 border-green-700 relative shadow-xl">
+                        {/* Double door panels with windows */}
+                        <div className="absolute inset-2 flex gap-1">
+                          <div className="flex-1 border-2 border-green-600 flex flex-col gap-1 p-1">
+                            <div className="flex-1 bg-green-200/40 rounded-sm"></div>
+                            <div className="flex-1 bg-green-200/40 rounded-sm"></div>
+                          </div>
+                          <div className="flex-1 border-2 border-green-600 flex flex-col gap-1 p-1">
+                            <div className="flex-1 bg-green-200/40 rounded-sm"></div>
+                            <div className="flex-1 bg-green-200/40 rounded-sm"></div>
+                          </div>
+                        </div>
+                        {/* Double handles */}
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-1">
+                          <div className="w-2 h-2 bg-yellow-500 rounded-full shadow-md"></div>
+                          <div className="w-2 h-2 bg-yellow-500 rounded-full shadow-md"></div>
+                        </div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-green-600">Green</h3>
                       <Button 
                         className="bg-green-500 hover:bg-green-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a green t-shirt. Green is the color of grass and leaves.");
+                          speakInstruction("This is a green door. Green is the color of grass and leaves.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Yellow T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-yellow-400 rounded-t-3xl rounded-b-lg border-4 border-yellow-500"></div>
+                    {/* Yellow Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 rounded-t-lg bg-yellow-400 border-4 border-yellow-600 relative shadow-xl">
+                        {/* Paneled design */}
+                        <div className="absolute inset-3 grid grid-cols-2 grid-rows-3 gap-1">
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                          <div className="bg-yellow-300/50 border border-yellow-500 rounded-sm"></div>
+                        </div>
+                        {/* Door handle */}
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-8 bg-amber-700 rounded-full shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-yellow-600">Yellow</h3>
                       <Button 
                         className="bg-yellow-400 hover:bg-yellow-500 text-black w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a yellow t-shirt. Yellow is the color of the sun and bananas.");
+                          speakInstruction("This is a yellow door. Yellow is the color of the sun and bananas.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Orange T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-orange-500 rounded-t-3xl rounded-b-lg border-4 border-orange-600"></div>
+                    {/* Orange Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-orange-500 border-4 border-orange-700 relative shadow-xl">
+                        {/* Window with grid */}
+                        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-14 h-16 bg-orange-200/50 border-2 border-orange-600 grid grid-cols-2 grid-rows-2">
+                          <div className="border border-orange-400"></div>
+                          <div className="border border-orange-400"></div>
+                          <div className="border border-orange-400"></div>
+                          <div className="border border-orange-400"></div>
+                        </div>
+                        {/* Lower panel */}
+                        <div className="absolute bottom-4 left-3 right-3 h-12 border-2 border-orange-600 rounded-sm"></div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 top-2/3 w-4 h-2 bg-yellow-400 rounded-sm shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-orange-600">Orange</h3>
                       <Button 
                         className="bg-orange-500 hover:bg-orange-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is an orange t-shirt. Orange is the color of oranges and carrots.");
+                          speakInstruction("This is an orange door. Orange is the color of oranges and carrots.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Purple T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-purple-500 rounded-t-3xl rounded-b-lg border-4 border-purple-600"></div>
+                    {/* Purple Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 rounded-t-full bg-purple-500 border-4 border-purple-700 relative shadow-xl">
+                        {/* Arched window panes */}
+                        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-24 rounded-t-full overflow-hidden grid grid-cols-2 gap-0.5 bg-purple-600">
+                          <div className="bg-purple-200/40 rounded-tl-full"></div>
+                          <div className="bg-purple-200/40 rounded-tr-full"></div>
+                          <div className="bg-purple-200/40"></div>
+                          <div className="bg-purple-200/40"></div>
+                        </div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 bottom-8 w-2 h-5 bg-yellow-500 rounded-full shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-purple-600">Purple</h3>
                       <Button 
                         className="bg-purple-500 hover:bg-purple-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a purple t-shirt. Purple is a mix of red and blue.");
+                          speakInstruction("This is a purple door. Purple is a mix of red and blue.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Gray T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-gray-500 rounded-t-3xl rounded-b-lg border-4 border-gray-600"></div>
+                    {/* Gray Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-gray-400 border-4 border-gray-600 relative shadow-xl">
+                        {/* Glass sliding door style */}
+                        <div className="absolute inset-2 flex gap-0.5">
+                          <div className="flex-1 bg-gray-200/60 border border-gray-500">
+                            <div className="h-full w-1/3 border-r border-gray-400"></div>
+                          </div>
+                          <div className="flex-1 bg-gray-200/60 border border-gray-500">
+                            <div className="h-full w-1/3 ml-auto border-l border-gray-400"></div>
+                          </div>
+                        </div>
+                        {/* Handles */}
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
+                          <div className="w-1 h-8 bg-gray-600 rounded-full shadow"></div>
+                          <div className="w-1 h-8 bg-gray-600 rounded-full shadow"></div>
+                        </div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-600">Gray</h3>
                       <Button 
                         className="bg-gray-500 hover:bg-gray-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a gray t-shirt. Gray is between black and white.");
+                          speakInstruction("This is a gray door. Gray is between black and white.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Brown T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-amber-700 rounded-t-3xl rounded-b-lg border-4 border-amber-800"></div>
+                    {/* Brown Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 rounded-t-full bg-amber-700 border-4 border-amber-900 relative shadow-xl overflow-hidden">
+                        {/* Wooden plank texture */}
+                        <div className="absolute inset-0 flex flex-col">
+                          {[...Array(8)].map((_, i) => (
+                            <div key={i} className="flex-1 border-b border-amber-800/50"></div>
+                          ))}
+                        </div>
+                        {/* Metal arch detail */}
+                        <div className="absolute top-1 left-1 right-1 h-10 border-2 border-amber-500 rounded-t-full"></div>
+                        {/* Door handle */}
+                        <div className="absolute right-4 top-1/2 w-2 h-4 bg-yellow-400 rounded-full shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-amber-700">Brown</h3>
                       <Button 
                         className="bg-amber-700 hover:bg-amber-800 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a brown t-shirt. Brown is the color of chocolate and trees.");
+                          speakInstruction("This is a brown door. Brown is the color of chocolate and trees.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Lime T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-lime-500 rounded-t-3xl rounded-b-lg border-4 border-lime-600"></div>
+                    {/* Lime/Teal Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-teal-500 border-4 border-teal-700 relative shadow-xl">
+                        {/* Modern door with side window */}
+                        <div className="absolute top-3 right-3 w-8 h-24 bg-teal-200/50 border-2 border-teal-600 grid grid-rows-3">
+                          <div className="border-b border-teal-400"></div>
+                          <div className="border-b border-teal-400"></div>
+                          <div></div>
+                        </div>
+                        {/* Main panel */}
+                        <div className="absolute top-3 left-3 w-12 h-32 border-2 border-teal-600 rounded-sm"></div>
+                        {/* Door handle */}
+                        <div className="absolute left-10 top-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-md border border-yellow-500"></div>
                       </div>
-                      <h3 className="text-lg font-bold mb-2 text-lime-600">Lime</h3>
+                      <h3 className="text-lg font-bold mb-2 text-teal-600">Teal</h3>
                       <Button 
-                        className="bg-lime-500 hover:bg-lime-600 text-white w-full text-sm"
+                        className="bg-teal-500 hover:bg-teal-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a lime t-shirt. Lime is a bright green color.");
+                          speakInstruction("This is a teal door. Teal is a blue-green color.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Red T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-red-500 rounded-t-3xl rounded-b-lg border-4 border-red-600"></div>
+                    {/* Red Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-red-500 border-4 border-red-700 relative shadow-xl">
+                        {/* Classic door with window */}
+                        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-12 bg-red-200/40 rounded-t-lg border-2 border-red-600"></div>
+                        {/* Two panels below */}
+                        <div className="absolute bottom-4 left-3 right-3 h-16 flex gap-2">
+                          <div className="flex-1 border-2 border-red-600 rounded-sm"></div>
+                          <div className="flex-1 border-2 border-red-600 rounded-sm"></div>
+                        </div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 top-1/2 flex flex-col items-center gap-0.5">
+                          <div className="w-3 h-3 bg-yellow-400 rounded-full shadow-md"></div>
+                          <div className="w-1 h-3 bg-yellow-500 rounded-full"></div>
+                        </div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-red-600">Red</h3>
                       <Button 
                         className="bg-red-500 hover:bg-red-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a red t-shirt. Red is the color of apples and fire trucks.");
+                          speakInstruction("This is a red door. Red is the color of apples and fire trucks.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* Pink T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-pink-500 rounded-t-3xl rounded-b-lg border-4 border-pink-600"></div>
+                    {/* Pink Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-pink-500 border-4 border-pink-700 relative shadow-xl">
+                        {/* Four panel design */}
+                        <div className="absolute inset-3 grid grid-cols-2 grid-rows-2 gap-2">
+                          <div className="bg-pink-300/40 border-2 border-pink-600 rounded-sm"></div>
+                          <div className="bg-pink-300/40 border-2 border-pink-600 rounded-sm"></div>
+                          <div className="bg-pink-300/40 border-2 border-pink-600 rounded-sm"></div>
+                          <div className="bg-pink-300/40 border-2 border-pink-600 rounded-sm"></div>
+                        </div>
+                        {/* Decorative handle */}
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                          <div className="w-3 h-3 bg-pink-300 rounded-full shadow-md border-2 border-pink-400"></div>
+                        </div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-pink-600">Pink</h3>
                       <Button 
                         className="bg-pink-500 hover:bg-pink-600 text-white w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a pink t-shirt. Pink is a light red color.");
+                          speakInstruction("This is a pink door. Pink is a light red color.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
 
-                    {/* White T-Shirt */}
-                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer">
-                      <div className="w-32 h-40 mx-auto mb-4 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center relative">
-                        <div className="w-24 h-32 bg-white rounded-t-3xl rounded-b-lg border-4 border-gray-300"></div>
+                    {/* White Door */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 text-center btn-effect-10 cursor-pointer hover:scale-105 transition-transform">
+                      <div className="w-28 h-44 mx-auto mb-4 bg-white border-4 border-gray-300 relative shadow-xl">
+                        {/* Clean panel design */}
+                        <div className="absolute inset-2 flex flex-col gap-1">
+                          <div className="flex-1 border-2 border-gray-200 rounded-sm bg-gray-50"></div>
+                          <div className="flex-1 border-2 border-gray-200 rounded-sm bg-gray-50"></div>
+                          <div className="flex-1 border-2 border-gray-200 rounded-sm bg-gray-50"></div>
+                        </div>
+                        {/* Door handle */}
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-6 bg-gray-400 rounded-full shadow-md"></div>
                       </div>
                       <h3 className="text-lg font-bold mb-2 text-gray-700">White</h3>
                       <Button 
                         className="bg-white hover:bg-gray-100 text-black border border-gray-300 w-full text-sm"
                         onClick={() => {
-                          speakInstruction("This is a white t-shirt. White is the lightest color, like snow and clouds.");
+                          speakInstruction("This is a white door. White is the lightest color, like snow and clouds.");
                         }}
                       >
-                        Click here
+                        🚪 Open Door
                       </Button>
                     </div>
                   </div>
