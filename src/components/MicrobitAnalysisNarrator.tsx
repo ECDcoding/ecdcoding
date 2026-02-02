@@ -57,7 +57,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The U S B connector at the top lets you connect the micro bit to your computer. You use this to upload your programs and it also provides power to the micro bit while connected.",
     color: "from-gray-500 to-slate-600",
     side: 'back',
-    arrowPosition: { x: 50, y: 8, direction: 'down' }
+    arrowPosition: { x: 50, y: 15, direction: 'down' }
   },
   {
     id: "microphone",
