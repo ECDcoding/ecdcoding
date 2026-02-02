@@ -604,7 +604,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     setAlphabetPlayCount(prev => prev + 1);
   };
   
-  // Start letter flashing for sing-along mode
+  // Start letter flashing for sing-along mode - immediately synced like a music conductor
   const startLetterFlashing = () => {
     if (alphabetIntervalRef.current) {
       clearInterval(alphabetIntervalRef.current);
@@ -613,27 +613,25 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     let index = 0;
     const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
     
-    // Wait for musical intro before starting to highlight letters
-    setTimeout(() => {
-      // Highlight first letter when singing starts
-      setCurrentAlphabetIndex(0);
-      index++;
-      
-      // Continue highlighting letters in sync with the song
-      alphabetIntervalRef.current = setInterval(() => {
-        if (index < alphabet.length) {
-          setCurrentAlphabetIndex(index);
-          index++;
-        } else {
-          // Stop highlighting until next loop
-          if (alphabetIntervalRef.current) {
-            clearInterval(alphabetIntervalRef.current);
-            alphabetIntervalRef.current = null;
-          }
-          setCurrentAlphabetIndex(-1);
+    // Flash first letter IMMEDIATELY when sing-along starts - like a conductor's first beat
+    setCurrentAlphabetIndex(0);
+    index++;
+    
+    // Continue highlighting letters in precise sync with the song tempo
+    // Each letter flashes exactly on beat like following a conductor's baton
+    alphabetIntervalRef.current = setInterval(() => {
+      if (index < alphabet.length) {
+        setCurrentAlphabetIndex(index);
+        index++;
+      } else {
+        // Stop highlighting until next loop
+        if (alphabetIntervalRef.current) {
+          clearInterval(alphabetIntervalRef.current);
+          alphabetIntervalRef.current = null;
         }
-      }, 1400); // 1.4 seconds per letter - adjusted to sync with song tempo
-    }, 2000); // 2 second delay for musical intro
+        setCurrentAlphabetIndex(-1);
+      }
+    }, 1400); // 1.4 seconds per letter - precise tempo to match song rhythm
   };
   
   // Handle when alphabet song ends (loops)
