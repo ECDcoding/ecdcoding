@@ -34,6 +34,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
+import abcSafetyImage from "@/assets/abc-safety.png";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
 import childDrawingSquare from "@/assets/child-drawing-square.jpg";
@@ -116,6 +117,7 @@ const LessonVault0406 = () => {
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
+  const [abcSafetyOpen, setAbcSafetyOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number>(0);
@@ -1904,19 +1906,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 >
                   🚦 Traffic Lights
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  <div className="flex flex-col gap-1">
-                    <span>🛑 Crossing at a Four-Way Stop</span>
-                    <a 
-                      href="https://pin.it/5DOPuodGE" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-xs text-blue-300 hover:text-blue-200 underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      View Example
-                    </a>
-                  </div>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => setAbcSafetyOpen(true)}
+                >
+                  🔤 Always Be Careful (ABC)
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   🚸 Traffic Road Signs
@@ -4553,7 +4547,52 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         </DialogContent>
       </Dialog>
 
-      {/* Sport Play Field Full Screen Overlay */}
+      {/* ABC Safety Dialog */}
+      <Dialog open={abcSafetyOpen} onOpenChange={setAbcSafetyOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Always Be Careful (ABC)</DialogTitle>
+            <DialogDescription>
+              Safety is as simple as ABC - Always Be Careful!
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex flex-col items-center gap-6 py-4">
+            <img 
+              src={abcSafetyImage} 
+              alt="Safety is as simple as ABC - Always Be Careful" 
+              className="w-full max-w-sm rounded-lg shadow-lg"
+            />
+            
+            <div className="space-y-3 w-full">
+              <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+                <div className="w-10 h-10 rounded-lg bg-red-500 flex items-center justify-center text-white font-bold text-xl">A</div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm text-red-600">Always</p>
+                  <p className="text-xs text-muted-foreground">Stay alert at all times</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+                <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center text-white font-bold text-xl">B</div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm text-blue-600">Be</p>
+                  <p className="text-xs text-muted-foreground">Be aware of your surroundings</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
+                <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold text-xl">C</div>
+                <div className="flex-1">
+                  <p className="font-semibold text-sm text-green-600">Careful</p>
+                  <p className="text-xs text-muted-foreground">Look left, right, then left again before crossing</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {sportPlayOpen && selectedSport && (
         <div className="fixed inset-0 z-[100] bg-background">
           <div className="absolute top-4 left-4 z-50">
