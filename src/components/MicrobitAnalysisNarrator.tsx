@@ -77,7 +77,7 @@ const microbitSections: MicrobitSection[] = [
     narrationText: "The speaker on the back can play sounds, music, and melodies. You can create your own songs or add sound effects to your projects. It's like having a tiny music player!",
     color: "from-violet-500 to-purple-600",
     side: 'back',
-    arrowPosition: { x: 25, y: 75, direction: 'right' }
+    arrowPosition: { x: 40, y: 50, direction: 'right' }
   },
   {
     id: "processor",
