@@ -4514,7 +4514,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </DialogHeader>
           
           <div className="flex flex-col items-center justify-center py-12">
-            <div className="scale-[2.2]">
+            <div className="scale-[1.5]">
               <TrafficLightProgress 
                 mode="traffic" 
                 onLevelChange={(level) => {
