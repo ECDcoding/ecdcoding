@@ -604,14 +604,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     setAlphabetPlayCount(prev => prev + 1);
   };
   
-  // Start letter flashing for sing-along mode - immediately synced like a music conductor
+  // Start letter flashing for sing-along mode - continuously loops like a music conductor
   const startLetterFlashing = () => {
     if (alphabetIntervalRef.current) {
       clearInterval(alphabetIntervalRef.current);
     }
     
     let index = 0;
-    const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
     
     // Flash first letter IMMEDIATELY when sing-along starts - like a conductor's first beat
     setCurrentAlphabetIndex(0);
@@ -619,18 +618,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     
     // Continue highlighting letters in precise sync with the song tempo
     // Each letter flashes exactly on beat like following a conductor's baton
+    // Loops continuously from A-Z throughout the entire song
     alphabetIntervalRef.current = setInterval(() => {
-      if (index < alphabet.length) {
-        setCurrentAlphabetIndex(index);
-        index++;
-      } else {
-        // Stop highlighting until next loop
-        if (alphabetIntervalRef.current) {
-          clearInterval(alphabetIntervalRef.current);
-          alphabetIntervalRef.current = null;
-        }
-        setCurrentAlphabetIndex(-1);
+      if (index >= 26) {
+        // Loop back to A when we reach the end
+        index = 0;
       }
+      setCurrentAlphabetIndex(index);
+      index++;
     }, 1400); // 1.4 seconds per letter - precise tempo to match song rhythm
   };
   
