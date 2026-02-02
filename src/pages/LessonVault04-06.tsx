@@ -1360,20 +1360,25 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Note of the Week
+                  Road Safety
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
-                  <span>👨‍👩‍👧‍👦 Parents</span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => setTrafficLightsOpen(true)}
+                >
+                  🚦 Traffic Lights
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium hover:bg-gray-100">
-                  🎓 Tech Teachers
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => setAbcSafetyOpen(true)}
+                >
+                  🔤 Always Be Careful (ABC)
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100">
-                  🏫 ECD Institutions (CAPS)
+                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                  🚸 Traffic Road Signs
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -1895,25 +1900,20 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Road Safety
+                  Note of the Week
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => setTrafficLightsOpen(true)}
-                >
-                  🚦 Traffic Lights
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem onClick={() => setParentsOpen(true)} className="font-medium hover:bg-gray-100 flex items-center justify-between">
+                  <span>👨‍👩‍👧‍👦 Parents</span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400 ml-2"></span>
                 </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => setAbcSafetyOpen(true)}
-                >
-                  🔤 Always Be Careful (ABC)
+                <DropdownMenuItem className="font-medium hover:bg-gray-100">
+                  🎓 Tech Teachers
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                  🚸 Traffic Road Signs
+                <DropdownMenuItem onClick={() => setCapsOpen(true)} className="font-medium hover:bg-gray-100">
+                  🏫 ECD Institutions (CAPS)
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
