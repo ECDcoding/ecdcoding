@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import catReal from "@/assets/characters/cat-real.png";
 import catBaby from "@/assets/characters/cat-baby.jpg";
 import spiderReal from "@/assets/characters/spider-real.png";
@@ -33,6 +35,27 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [frameRate, setFrameRate] = useState(48);
   const [isMoving, setIsMoving] = useState(false);
+  const [generatedImages, setGeneratedImages] = useState<Record<number, string>>({});
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerateBaby = async (characterId: number, animalName: string, youngName: string) => {
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-baby-animal', {
+        body: { animalName, youngName },
+      });
+      if (error) throw error;
+      if (data?.imageUrl) {
+        setGeneratedImages(prev => ({ ...prev, [characterId]: data.imageUrl }));
+        toast.success(`Generated a baby ${animalName}!`);
+      }
+    } catch (err: any) {
+      toast.error("Couldn't generate image. Please try again.");
+      console.error(err);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const handleSpriteClick = () => {
     setIsMoving(true);
@@ -229,19 +252,49 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
                     muted
                     playsInline
                     className="max-w-[200px] max-h-[250px] object-contain"
-                    style={{
-                      filter: 'drop-shadow(2px 4px 6px black)'
-                    }}
+                    style={{ filter: 'drop-shadow(2px 4px 6px black)' }}
                   />
-                ) : (
+                ) : generatedImages[selected.id] ? (
                   <img 
-                    src={selected.babyImage || selected.spriteImage} 
+                    src={generatedImages[selected.id]} 
+                    alt={`AI generated baby ${selected.name}`}
+                    className="max-w-[200px] max-h-[250px] object-contain"
+                    style={{ filter: 'drop-shadow(2px 4px 6px black)' }}
+                  />
+                ) : selected.babyImage ? (
+                  <img 
+                    src={selected.babyImage} 
                     alt={selected.displayName}
                     className="max-w-[200px] max-h-[250px] object-contain"
-                    style={{
-                      filter: 'drop-shadow(2px 4px 6px black)'
-                    }}
+                    style={{ filter: 'drop-shadow(2px 4px 6px black)' }}
                   />
+                ) : (
+                  <div className="flex flex-col items-center gap-3 p-4">
+                    <p 
+                      className="text-sm text-center text-gray-600"
+                      style={{ fontFamily: 'Minecraft, sans-serif' }}
+                    >
+                      No baby image yet!
+                    </p>
+                    <Button
+                      onClick={() => handleGenerateBaby(selected.id, selected.name, selected.displayName)}
+                      disabled={isGenerating}
+                      className="flex items-center gap-2 bg-[#4c8ee1] hover:bg-[#3a7dd0] text-white"
+                      style={{ fontFamily: 'Minecraft, sans-serif' }}
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4" />
+                          Generate {selected.displayName}
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
