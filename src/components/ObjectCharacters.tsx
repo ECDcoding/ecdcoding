@@ -244,41 +244,6 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
                   />
                 )}
               </div>
-
-              {/* Stats */}
-              <div 
-                className="bg-[#adcbf1] w-full p-2 text-sm"
-                style={{ fontFamily: 'Minecraft, sans-serif' }}
-              >
-                <dl className="grid grid-cols-2">
-                  <dt className="border-b border-[#99b3d3]">Columns:</dt>
-                  <dd className="font-bold text-right border-b border-[#99b3d3]">{selected.columns}</dd>
-                  
-                  <dt className="border-b border-[#99b3d3]">Rows:</dt>
-                  <dd className="font-bold text-right border-b border-[#99b3d3]">{Math.ceil(selected.frames / selected.columns)}</dd>
-                  
-                  <dt className="border-b border-[#99b3d3]">FPS:</dt>
-                  <dd className="font-bold text-right border-b border-[#99b3d3]">
-                    <select
-                      value={frameRate}
-                      onChange={(e) => setFrameRate(Number(e.target.value))}
-                      className="bg-transparent border-0 outline-none font-bold text-[#2949c5]"
-                      style={{ fontFamily: 'Minecraft, sans-serif' }}
-                    >
-                      <option value="12">12</option>
-                      <option value="24">24</option>
-                      <option value="36">36</option>
-                      <option value="48">48</option>
-                      <option value="64">64</option>
-                      <option value="76">76</option>
-                      <option value="100">100</option>
-                    </select>
-                  </dd>
-                  
-                  <dt>Frames:</dt>
-                  <dd className="font-bold text-right">{selected.frames}</dd>
-                </dl>
-              </div>
             </div>
           </div>
         </main>
