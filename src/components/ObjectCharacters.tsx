@@ -22,6 +22,7 @@ import squidReal from "@/assets/characters/squid-real.png";
 import foxReal from "@/assets/characters/fox-real.png";
 import sharkReal from "@/assets/characters/shark-real.png";
 import tadpoleReal from "@/assets/characters/tadpole-real.jpg";
+import frogReal from "@/assets/characters/frog-real.jpg";
 
 interface ObjectCharactersProps {
   onClose: () => void;
@@ -50,7 +51,7 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 9, name: 'Wolf', displayName: 'Pup', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
     { id: 10, name: 'Squid', displayName: 'Baby Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
     { id: 11, name: 'Fox', displayName: 'Kit', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
-    { id: 12, name: 'Tadpole', displayName: 'Tadpole', image: tadpoleReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
+    { id: 12, name: 'Frog', displayName: 'Tadpole', image: frogReal, babyImage: tadpoleReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
   ];
 
   const selected = characters.find(c => c.id === selectedCharacter) || characters[0];
