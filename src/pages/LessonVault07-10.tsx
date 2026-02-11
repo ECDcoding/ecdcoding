@@ -177,28 +177,36 @@ const LessonVault0710 = () => {
   ];
 
   const generateSecret = (word: string, style: 'mixed' | 'numbers' | 'lowercase') => {
-    return word.split('').map((letter, i) => {
+    const chars = word.split('').map((letter, i) => {
       const num = letter.toUpperCase().charCodeAt(0) - 64;
       if (style === 'numbers') return String(num);
       if (style === 'lowercase') return letter.toLowerCase();
-      // mixed: alternate between lowercase letter and number
       return i % 2 === 0 ? letter.toLowerCase() : String(num);
-    }).join('');
+    });
+    // Ensure at least one uppercase letter at a random position
+    if (style !== 'numbers' && chars.length > 0) {
+      const idx = Math.floor(Math.random() * chars.length);
+      chars[idx] = word[idx].toUpperCase();
+    }
+    return chars.join('');
   };
 
   const getAllSecretVariants = (word: string) => {
     if (!word) return [];
     const variants = new Set<string>();
-    // Generate several random mixes
+    // Generate several random mixes, each guaranteed to have at least one uppercase
     for (let v = 0; v < 6; v++) {
-      const secret = word.split('').map(letter => {
+      const chars = word.split('').map(letter => {
         const num = letter.toUpperCase().charCodeAt(0) - 64;
         const rand = Math.random();
         if (rand < 0.33) return letter.toUpperCase();
         if (rand < 0.66) return letter.toLowerCase();
         return String(num);
-      }).join('');
-      variants.add(secret);
+      });
+      // Ensure at least one uppercase at a random position
+      const idx = Math.floor(Math.random() * chars.length);
+      chars[idx] = word[idx].toUpperCase();
+      variants.add(chars.join(''));
     }
     // Add pure number and pure lowercase
     variants.add(word.split('').map(l => String(l.toUpperCase().charCodeAt(0) - 64)).join(''));
