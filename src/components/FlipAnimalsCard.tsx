@@ -99,9 +99,11 @@ const FlipAnimalsCard = ({
           className="flex flex-col items-center justify-center p-2"
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <h3 className={`text-xl font-bold ${currentData.color} mb-2 text-center`} style={{ fontFamily: '"Bungee Shade", cursive' }}>
-            {currentData.title}
-          </h3>
+          {currentSide === 'Domestic Animals' && (
+            <h3 className={`text-xl font-bold ${currentData.color} mb-2 text-center`} style={{ fontFamily: '"Bungee Shade", cursive' }}>
+              {currentData.title}
+            </h3>
+          )}
           <div className="flex-1 flex items-center justify-center">
             <img 
               src={currentData.image} 
