@@ -21,6 +21,7 @@ import wolfReal from "@/assets/characters/wolf-real.png";
 import squidReal from "@/assets/characters/squid-real.png";
 import foxReal from "@/assets/characters/fox-real.png";
 import sharkReal from "@/assets/characters/shark-real.png";
+import tadpoleReal from "@/assets/characters/tadpole-real.jpg";
 
 interface ObjectCharactersProps {
   onClose: () => void;
@@ -43,16 +44,13 @@ export const ObjectCharacters = ({ onClose }: ObjectCharactersProps) => {
     { id: 3, name: 'Cow', displayName: 'Calf', image: cowReal, babyImage: cowBaby, spriteImage: 'https://assets.codepen.io/36869/cow.webp', frames: 60, columns: 5, height: 7152, width: 2980 },
     { id: 4, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/creeper.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
     { id: 5, name: 'Goat', displayName: 'Kid', image: goatReal, babyImage: goatBaby, spriteImage: 'https://assets.codepen.io/36869/enderman.webp', frames: 55, columns: 5, height: 6556, width: 2980 },
-    { id: 6, name: 'Crocodile', displayName: 'Hatchling', image: crocodileReal, spriteImage: 'https://assets.codepen.io/36869/evoker.webp', frames: 99, columns: 5, height: 11920, width: 2980 },
-    { id: 7, name: 'Horse', displayName: 'Foal', image: horseReal, spriteImage: 'https://assets.codepen.io/36869/golem.webp', frames: 72, columns: 5, height: 8940, width: 2980 },
-    { id: 8, name: 'Donkey', displayName: 'Foal', image: donkeyReal, babyImage: donkeyBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/horse.webp', frames: 47, columns: 5, height: 5960, width: 2980 },
-    { id: 9, name: 'Ocelot', displayName: 'Cub', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
-    { id: 10, name: 'Panda', displayName: 'Cub', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
-    { id: 11, name: 'Dog', displayName: 'Puppy', image: dogReal, babyImage: dogBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
-    { id: 12, name: 'Wolf', displayName: 'Pup', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
-    { id: 13, name: 'Squid', displayName: 'Baby Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
-    { id: 14, name: 'Fox', displayName: 'Kit', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
-    { id: 15, name: 'Shark', displayName: 'Pup', image: sharkReal, spriteImage: 'https://assets.codepen.io/36869/villager.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
+    { id: 6, name: 'Ocelot', displayName: 'Cub', image: ocelotReal, spriteImage: 'https://assets.codepen.io/36869/ocelot.webp', frames: 37, columns: 5, height: 4768, width: 2980 },
+    { id: 7, name: 'Panda', displayName: 'Cub', image: pandaReal, spriteImage: 'https://assets.codepen.io/36869/panda.webp', frames: 88, columns: 5, height: 10728, width: 2980 },
+    { id: 8, name: 'Dog', displayName: 'Puppy', image: dogReal, babyImage: dogBaby, babyIsVideo: true, spriteImage: 'https://assets.codepen.io/36869/skeleton.webp', frames: 65, columns: 5, height: 7748, width: 2980 },
+    { id: 9, name: 'Wolf', displayName: 'Pup', image: wolfReal, spriteImage: 'https://assets.codepen.io/36869/wolf.webp', frames: 58, columns: 5, height: 7152, width: 2980 },
+    { id: 10, name: 'Squid', displayName: 'Baby Squid', image: squidReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
+    { id: 11, name: 'Fox', displayName: 'Kit', image: foxReal, spriteImage: 'https://assets.codepen.io/36869/fox.webp', frames: 69, columns: 5, height: 8344, width: 2980 },
+    { id: 12, name: 'Tadpole', displayName: 'Tadpole', image: tadpoleReal, spriteImage: 'https://assets.codepen.io/36869/squid.webp', frames: 104, columns: 5, height: 12516, width: 2980 },
   ];
 
   const selected = characters.find(c => c.id === selectedCharacter) || characters[0];
