@@ -169,10 +169,11 @@ const LessonVault0710 = () => {
   const [cryptogramWord, setCryptogramWord] = useState('');
   const [cryptogramSecretStyle, setCryptogramSecretStyle] = useState<'mixed' | 'numbers' | 'lowercase'>('mixed');
 
-  const hexLetters = 'ABCDEF';
+  const hexLetters = 'ABCDEFGHIJ';
   const cryptogramPresetWords = [
     'DEAF', 'FEED', 'DIG', 'AID', 'BEEF', 'DAD', 'HIDE', 'GIG', 'FADE', 'CAFE',
-    'JEFF', 'JAB', 'ACE', 'BAD', 'FACE', 'DEED', 'BEAD', 'CAGE', 'EDGE', 'FADED'
+    'JEFF', 'JAB', 'ACE', 'BAD', 'FACE', 'DEED', 'BEAD', 'CAGE', 'EDGE', 'BADGE',
+    'JIBE', 'JADE', 'AGHID', 'FIGJAB', 'CHIEF', 'HAJI', 'JIBED', 'DACHIE'
   ];
 
   const generateSecret = (word: string, style: 'mixed' | 'numbers' | 'lowercase') => {
@@ -1441,7 +1442,7 @@ const LessonVault0710 = () => {
               🔑 Cryptogram Secret Generator
             </DialogTitle>
             <DialogDescription>
-              Letters A–F can also be numbers (A=1, B=2...F=6). Mix them to create secret codes!
+              Letters A–J can also be numbers (A=1, B=2...J=10). Mix them to create secret codes!
             </DialogDescription>
           </DialogHeader>
 
@@ -1458,7 +1459,7 @@ const LessonVault0710 = () => {
 
           {/* Word input */}
           <div className="space-y-2">
-            <p className="text-sm font-semibold text-center">Type a word using A–F letters, or pick one:</p>
+            <p className="text-sm font-semibold text-center">Type a word using A–J letters, or pick one:</p>
             <Input
               placeholder="e.g. DAD, CAFE, BEEF"
               value={cryptogramWord}
