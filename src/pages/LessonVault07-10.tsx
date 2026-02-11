@@ -165,6 +165,45 @@ const LessonVault0710 = () => {
   const countingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [codingDialogOpen, setCodingDialogOpen] = useState(false);
   const [wordToCode, setWordToCode] = useState('');
+  const [cryptogramOpen, setCryptogramOpen] = useState(false);
+  const [cryptogramWord, setCryptogramWord] = useState('');
+  const [cryptogramSecretStyle, setCryptogramSecretStyle] = useState<'mixed' | 'numbers' | 'lowercase'>('mixed');
+
+  const hexLetters = 'ABCDEF';
+  const cryptogramPresetWords = [
+    'DEAF', 'FEED', 'DIG', 'AID', 'BEEF', 'DAD', 'HIDE', 'GIG', 'FADE', 'CAFE',
+    'JEFF', 'JAB', 'ACE', 'BAD', 'FACE', 'DEED', 'BEAD', 'CAGE', 'EDGE', 'FADED'
+  ];
+
+  const generateSecret = (word: string, style: 'mixed' | 'numbers' | 'lowercase') => {
+    return word.split('').map((letter, i) => {
+      const num = letter.toUpperCase().charCodeAt(0) - 64;
+      if (style === 'numbers') return String(num);
+      if (style === 'lowercase') return letter.toLowerCase();
+      // mixed: alternate between lowercase letter and number
+      return i % 2 === 0 ? letter.toLowerCase() : String(num);
+    }).join('');
+  };
+
+  const getAllSecretVariants = (word: string) => {
+    if (!word) return [];
+    const variants = new Set<string>();
+    // Generate several random mixes
+    for (let v = 0; v < 6; v++) {
+      const secret = word.split('').map(letter => {
+        const num = letter.toUpperCase().charCodeAt(0) - 64;
+        const rand = Math.random();
+        if (rand < 0.33) return letter.toUpperCase();
+        if (rand < 0.66) return letter.toLowerCase();
+        return String(num);
+      }).join('');
+      variants.add(secret);
+    }
+    // Add pure number and pure lowercase
+    variants.add(word.split('').map(l => String(l.toUpperCase().charCodeAt(0) - 64)).join(''));
+    variants.add(word.toLowerCase());
+    return Array.from(variants).slice(0, 8);
+  };
 
   const openMusicLab = (title: string, url: string) => {
     setMusicLabTitle(title);
@@ -1225,6 +1264,12 @@ const LessonVault0710 = () => {
                     >
                       🔤 Coding in Alphabets
                     </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setCryptogramOpen(true)} 
+                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                    >
+                      🔑 Cryptogram Secrets
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
@@ -1379,6 +1424,113 @@ const LessonVault0710 = () => {
               </div>
             )}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Cryptogram Secrets Dialog */}
+      <Dialog open={cryptogramOpen} onOpenChange={(open) => {
+        setCryptogramOpen(open);
+        if (!open) {
+          setCryptogramWord('');
+          setCryptogramSecretStyle('mixed');
+        }
+      }}>
+        <DialogContent className="max-w-[600px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              🔑 Cryptogram Secret Generator
+            </DialogTitle>
+            <DialogDescription>
+              Letters A–F can also be numbers (A=1, B=2...F=6). Mix them to create secret codes!
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Reference table */}
+          <div className="flex justify-center gap-1 flex-wrap">
+            {hexLetters.split('').map((letter, i) => (
+              <div key={letter} className="flex flex-col items-center bg-muted rounded-lg px-3 py-2">
+                <span className="text-lg font-bold text-primary">{letter}</span>
+                <span className="text-xs text-muted-foreground">{letter.toLowerCase()}</span>
+                <span className="text-sm font-mono font-bold">{i + 1}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Word input */}
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-center">Type a word using A–F letters, or pick one:</p>
+            <Input
+              placeholder="e.g. DAD, CAFE, BEEF"
+              value={cryptogramWord}
+              onChange={(e) => setCryptogramWord(e.target.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 10))}
+              onClick={(e) => e.stopPropagation()}
+              className="text-center font-bold text-lg"
+            />
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              {cryptogramPresetWords.map(word => (
+                <Button
+                  key={word}
+                  variant={cryptogramWord === word ? 'default' : 'outline'}
+                  size="sm"
+                  className="text-xs h-7 px-2"
+                  onClick={() => setCryptogramWord(word)}
+                >
+                  {word}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Secret output */}
+          {cryptogramWord && (
+            <div className="space-y-3 border-t pt-4">
+              {/* Breakdown */}
+              <div className="text-center">
+                <p className="text-sm font-semibold mb-1">Letter Breakdown:</p>
+                <div className="flex justify-center gap-2 flex-wrap">
+                  {cryptogramWord.split('').map((letter, i) => (
+                    <div key={i} className="flex flex-col items-center bg-muted rounded-lg px-3 py-2">
+                      <span className="text-lg font-bold">{letter}</span>
+                      <span className="text-xs text-muted-foreground">= {letter.charCodeAt(0) - 64}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Style picker */}
+              <div className="flex justify-center gap-2">
+                <Button size="sm" variant={cryptogramSecretStyle === 'mixed' ? 'default' : 'outline'} onClick={() => setCryptogramSecretStyle('mixed')}>
+                  Mixed
+                </Button>
+                <Button size="sm" variant={cryptogramSecretStyle === 'numbers' ? 'default' : 'outline'} onClick={() => setCryptogramSecretStyle('numbers')}>
+                  All Numbers
+                </Button>
+                <Button size="sm" variant={cryptogramSecretStyle === 'lowercase' ? 'default' : 'outline'} onClick={() => setCryptogramSecretStyle('lowercase')}>
+                  Lowercase
+                </Button>
+              </div>
+
+              {/* Generated secret */}
+              <div className="text-center bg-accent/30 rounded-xl p-4">
+                <p className="text-xs text-muted-foreground mb-1">Your Secret Code:</p>
+                <p className="text-3xl font-mono font-bold text-primary tracking-widest">
+                  {generateSecret(cryptogramWord, cryptogramSecretStyle)}
+                </p>
+              </div>
+
+              {/* Potential secrets */}
+              <div className="text-center">
+                <p className="text-sm font-semibold mb-2">🔒 Potential Secret Variations:</p>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {getAllSecretVariants(cryptogramWord).map((variant, i) => (
+                    <Badge key={i} variant="secondary" className="font-mono text-sm px-3 py-1">
+                      {variant}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 
