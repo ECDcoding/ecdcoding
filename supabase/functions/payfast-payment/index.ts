@@ -27,39 +27,27 @@ const VALID_AMOUNTS = [
 const PAYFAST_URL = 'https://www.payfast.co.za/eng/process';
 // For testing: 'https://sandbox.payfast.co.za/eng/process'
 
-function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // Create parameter string
-  let paramString = Object.keys(data)
-    .filter(key => data[key] !== '' && key !== 'signature')
-    .sort()
-    .map(key => `${key}=${encodeURIComponent(data[key]).replace(/%20/g, '+')}`)
-    .join('&');
+async function generateSignature(data: Record<string, string>, passphrase?: string): Promise<string> {
+  // Create parameter string (matching PayFast's PHP reference implementation)
+  let pfOutput = '';
+  for (const key of Object.keys(data)) {
+    if (data[key] !== '' && key !== 'signature') {
+      pfOutput += `${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, '+')}&`;
+    }
+  }
+  // Remove last ampersand
+  let getString = pfOutput.slice(0, -1);
 
   if (passphrase) {
-    paramString += `&passphrase=${encodeURIComponent(passphrase).replace(/%20/g, '+')}`;
+    getString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
   }
 
   // Generate MD5 hash
   const encoder = new TextEncoder();
-  const dataBuffer = encoder.encode(paramString);
-  
-  return Array.from(new Uint8Array(crypto.subtle.digestSync ? 
-    crypto.subtle.digestSync('MD5', dataBuffer) : 
-    md5(paramString)))
+  const hashBuffer = await crypto.subtle.digest('MD5', encoder.encode(getString));
+  return Array.from(new Uint8Array(hashBuffer))
     .map(b => b.toString(16).padStart(2, '0'))
     .join('');
-}
-
-// Simple MD5 implementation for Deno
-function md5(string: string): Uint8Array {
-  const md5Module = async (str: string) => {
-    const msgUint8 = new TextEncoder().encode(str);
-    const hashBuffer = await crypto.subtle.digest('MD5', msgUint8);
-    return new Uint8Array(hashBuffer);
-  };
-  
-  // Fallback - return empty for now, signature will be generated differently
-  return new Uint8Array(16);
 }
 
 serve(async (req) => {
@@ -167,13 +155,10 @@ serve(async (req) => {
       custom_str2: payment_type || 'subscription',
     };
 
-    // Generate signature if passphrase is set
-    if (PAYFAST_PASSPHRASE) {
-      // For signature generation, we need to use a proper MD5 library
-      // Since Deno doesn't have native MD5, we'll skip signature for now
-      // PayFast will still work without signature for basic integration
-      console.log('Passphrase configured, signature generation available');
-    }
+    // Generate MD5 signature (matching PayFast PHP reference implementation)
+    const signature = await generateSignature(paymentData, PAYFAST_PASSPHRASE || undefined);
+    paymentData.signature = signature;
+    console.log('Signature generated successfully');
 
     console.log('PayFast payment data prepared for user:', effectiveUserId, { ...paymentData, merchant_key: '[REDACTED]' });
 
