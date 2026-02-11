@@ -163,6 +163,8 @@ const LessonVault0710 = () => {
   const [currentCountingIndex, setCurrentCountingIndex] = useState(0);
   const countingAudioRef = useRef<HTMLAudioElement | null>(null);
   const countingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [codingDialogOpen, setCodingDialogOpen] = useState(false);
+  const [wordToCode, setWordToCode] = useState('');
 
   const openMusicLab = (title: string, url: string) => {
     setMusicLabTitle(title);
@@ -1207,6 +1209,24 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
+                      <span className="flex items-center gap-2">
+                        🔐 Cryptography
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      onClick={() => setCodingDialogOpen(true)} 
+                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                    >
+                      🔤 Coding in Alphabets
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -1274,6 +1294,90 @@ const LessonVault0710 = () => {
               selectedCardForTest={null}
               recordingTime={0}
             />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Coding in Alphabets Dialog */}
+      <Dialog open={codingDialogOpen} onOpenChange={(open) => {
+        setCodingDialogOpen(open);
+        if (!open) {
+          setCurrentAlphabetIndex(0);
+          setWordToCode('');
+        }
+      }}>
+        <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              🔤 Coding in Alphabets
+            </DialogTitle>
+            <DialogDescription>
+              Click on the letter to see the next one!
+            </DialogDescription>
+          </DialogHeader>
+          <div 
+            className="flex flex-col items-center justify-center cursor-pointer select-none py-6"
+            onClick={() => setCurrentAlphabetIndex(prev => (prev + 1) % 26)}
+          >
+            <div className="text-[150px] font-bold text-primary leading-none animate-bounce">
+              {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentAlphabetIndex]}
+            </div>
+            <p className="text-lg text-muted-foreground mt-3">
+              Letter {currentAlphabetIndex + 1} of 26
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Tap to see the next letter
+            </p>
+            
+            {/* Numbered blocks 1-26 in rows of 10 */}
+            <div className="grid grid-cols-10 gap-1 mt-4 w-full max-w-[420px] px-2">
+              {Array.from({ length: 26 }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentAlphabetIndex(i);
+                  }}
+                  className={`w-9 h-9 rounded-md text-xs font-bold transition-all duration-200 ${
+                    currentAlphabetIndex === i
+                      ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Word to Number Code Converter */}
+          <div className="border-t pt-4 mt-2">
+            <p className="text-sm font-semibold text-center mb-2">🔢 Word to Number Code</p>
+            <div className="flex gap-2 px-2">
+              <Input
+                placeholder="Type a word (e.g. MOM, DAD)"
+                value={wordToCode}
+                onChange={(e) => setWordToCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 text-center font-bold"
+                maxLength={10}
+              />
+            </div>
+            {wordToCode && (
+              <div className="mt-3 text-center">
+                <p className="text-xs text-muted-foreground mb-1">
+                  {wordToCode.split('').map((letter, i) => (
+                    <span key={i}>
+                      {letter}={letter.charCodeAt(0) - 64}
+                      {i < wordToCode.length - 1 ? ', ' : ''}
+                    </span>
+                  ))}
+                </p>
+                <p className="text-2xl font-bold text-primary tracking-wider">
+                  {wordToCode.split('').map(letter => letter.charCodeAt(0) - 64).join('')}
+                </p>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
