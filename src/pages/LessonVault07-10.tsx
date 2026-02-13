@@ -1558,6 +1558,91 @@ const LessonVault0710 = () => {
       </Dialog>
 
 
+      {/* Notes to Parents Dialog */}
+      <Dialog open={parentsOpen} onOpenChange={setParentsOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" style={{ backgroundColor: "#313056" }}>
+          <DialogHeader>
+            <DialogTitle className="text-white text-xl text-center flex items-center justify-center gap-2">
+              👨‍👩‍👧‍👦 Notes to Parents
+            </DialogTitle>
+            <DialogDescription className="text-white/70 text-center">
+              Understanding your child's developmental stage helps you support them better.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            {/* Age 8 */}
+            <div className="bg-white/10 rounded-xl p-5 border border-white/10">
+              <h3 className="text-lg font-bold text-yellow-300 mb-3 flex items-center gap-2">
+                🎯 Eight-Year-Olds
+              </h3>
+              <ul className="space-y-2 text-white/90 text-sm leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="text-yellow-300 mt-0.5">•</span>
+                  <span>They are more resilient when they make mistakes.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-yellow-300 mt-0.5">•</span>
+                  <span>Their peers' and teachers' approval is very important to them.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-yellow-300 mt-0.5">•</span>
+                  <span>They may begin comparing themselves to others.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-yellow-300 mt-0.5">•</span>
+                  <span>This is a key age to notice judgments about others and encourage compassionate remarks and thinking.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Age 9 */}
+            <div className="bg-white/10 rounded-xl p-5 border border-white/10">
+              <h3 className="text-lg font-bold text-cyan-300 mb-3 flex items-center gap-2">
+                🌟 Nine-Year-Olds
+              </h3>
+              <ul className="space-y-2 text-white/90 text-sm leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="text-cyan-300 mt-0.5">•</span>
+                  <span>They can become easily frustrated.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-300 mt-0.5">•</span>
+                  <span>They need directions that contain one instruction at a time.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-300 mt-0.5">•</span>
+                  <span>They may worry about peer approval and their own appearance and interests.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-cyan-300 mt-0.5">•</span>
+                  <span>They require practice with perspective taking and empathy.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Age 10 */}
+            <div className="bg-white/10 rounded-xl p-5 border border-white/10">
+              <h3 className="text-lg font-bold text-green-300 mb-3 flex items-center gap-2">
+                💪 Ten-Year-Olds
+              </h3>
+              <ul className="space-y-2 text-white/90 text-sm leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="text-green-300 mt-0.5">•</span>
+                  <span>They are developing a strong sense of right and wrong and fairness.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-300 mt-0.5">•</span>
+                  <span>They tend to be able to work through conflicts with friends more rapidly.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-300 mt-0.5">•</span>
+                  <span>You can build on that sense of fairness by discussing race, gender, and other ways people can be marginalized and what they can do to stand up for others.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Audio elements */}
       <audio ref={alphabetAudioRef} src={alphabetSong} preload="auto" />
