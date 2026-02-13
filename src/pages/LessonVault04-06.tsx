@@ -1610,6 +1610,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
+                {/* Coding Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Coding
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => setCodingDialogOpen(true)}
+                    >
+                      🔤 Coding in Alphabets
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 {/* AI Logic - moved from separate dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -1803,23 +1820,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenu>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                {/* Coding Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Coding
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
-                      onClick={() => setCodingDialogOpen(true)}
-                    >
-                      🔤 Coding in Alphabets
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
