@@ -476,7 +476,6 @@ const LessonVault0406 = () => {
     '⚽': 'Soccer Ball', '🏉': 'Rugby Ball', '🎾': 'Tennis Ball', '🥊': 'Boxing Gloves', '🏏': 'Cricket Bat',
     '🏃': 'Running', '🚴': 'Cycling', '🏊': 'Swimming', '⛹️': 'Basketball Player', '🤸': 'Gymnast',
     'f': 'Facebook', '📷': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok',
-    '📞': 'WhatsApp', '📌': 'Pinterest', 'in': 'LinkedIn',
     '📧': 'Email', '▶': 'YouTube', '🎥': 'Video Camera', '📹': 'Camcorder',
   };
 
@@ -1640,7 +1639,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Emojis
+                      Emojis: Faces | Sport Activities
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
@@ -1720,7 +1719,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          🔗 Basic Icons
+                          🔗 Basic Icons: Facebook | Instagram | X | TikTok
                           <ChevronDown className="h-4 w-4" />
                         </DropdownMenuItem>
                       </DropdownMenuTrigger>
@@ -1739,9 +1738,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               { icon: '📷', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
                               { icon: '𝕏', bg: '#000000', name: 'X' },
                               { icon: '♪', bg: '#000000', name: 'TikTok' },
-                              { icon: '📞', bg: '#25D366', name: 'WhatsApp' },
-                              { icon: '📌', bg: '#E60023', name: 'Pinterest' },
-                              { icon: 'in', bg: '#0A66C2', name: 'LinkedIn' },
                             ].map((item, idx) => (
                               <DropdownMenuItem
                                 key={idx}
