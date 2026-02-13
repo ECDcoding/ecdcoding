@@ -171,9 +171,9 @@ const LessonVault0710 = () => {
 
   const hexLetters = 'ABCDEFGHIJ';
   const cryptogramPresetWords = [
-    'DEAF', 'FEED', 'DIG', 'AID', 'BEEF', 'DAD', 'HIDE', 'GIG', 'FADE', 'CAFE',
-    'JEFF', 'JAB', 'ACE', 'BAD', 'FACE', 'DEED', 'BEAD', 'CAGE', 'EDGE', 'BADGE',
-    'JIBE', 'JADE', 'AGHID', 'FIGJAB', 'CHIEF', 'HAJI', 'JIBED', 'DACHIE'
+    'ACE', 'AGHID', 'AID', 'BAD', 'BADGE', 'BEAD', 'BEEF', 'CAFE', 'CAGE', 'CHIEF',
+    'DACHIE', 'DAD', 'DEAF', 'DEED', 'DIG', 'EDGE', 'FACE', 'FADE', 'FEED', 'FIGJAB',
+    'GIG', 'HAJI', 'HIDE', 'JADE', 'JAB', 'JEFF', 'JIBE', 'JIBED'
   ];
 
   const generateSecret = (word: string, style: 'mixed' | 'numbers' | 'lowercase') => {
