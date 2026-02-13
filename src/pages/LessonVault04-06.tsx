@@ -1753,10 +1753,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </DropdownMenuTrigger>
                           <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 grid grid-cols-4 gap-2 p-3">
                             {[
-                              { icon: 'f', bg: 'transparent', name: 'Facebook' },
-                              { icon: 'instagram', bg: 'transparent', name: 'Instagram' },
-                              { icon: '𝕏', bg: 'transparent', name: 'X' },
-                              { icon: '♪', bg: 'transparent', name: 'TikTok' },
+                              { icon: 'f', bg: '#1877F2', name: 'Facebook' },
+                              { icon: 'instagram', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
+                              { icon: '𝕏', bg: '#000000', name: 'X' },
+                              { icon: '♪', bg: '#000000', name: 'TikTok' },
                               { icon: 'whatsapp', bg: 'transparent', name: 'WhatsApp' },
                             ].map((item, idx) => (
                               <DropdownMenuItem
