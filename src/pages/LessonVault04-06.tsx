@@ -4744,7 +4744,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
             )}
             {selectedEmoji && emojiNameMap[selectedEmoji] && (
-              <p className="text-2xl md:text-4xl font-bold text-foreground">{emojiNameMap[selectedEmoji]}</p>
+              <p className="text-2xl md:text-4xl font-bold text-foreground mt-8">{emojiNameMap[selectedEmoji]}</p>
             )}
             <Button
               onClick={() => speakEmojiName(selectedEmoji)}
