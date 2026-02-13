@@ -468,8 +468,29 @@ const LessonVault0406 = () => {
       });
     }
   };
-  
-  
+
+  // Emoji to spoken name mapping
+  const emojiNameMap: Record<string, string> = {
+    '😀': 'Grinning Face', '☺️': 'Smiling Face', '😍': 'Heart Eyes Face', '😋': 'Yummy Face', '😉': 'Winking Face',
+    '😅': 'Nervous Laugh Face', '😡': 'Angry Face', '😪': 'Sleepy Face', '🙄': 'Eye Roll Face', '😭': 'Crying Face',
+    '⚽': 'Soccer Ball', '🏉': 'Rugby Ball', '🎾': 'Tennis Ball', '🥊': 'Boxing Gloves', '🏏': 'Cricket Bat',
+    '🏃': 'Running', '🚴': 'Cycling', '🏊': 'Swimming', '⛹️': 'Basketball Player', '🤸': 'Gymnast',
+    'f': 'Facebook', '📷': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok',
+    '📞': 'WhatsApp', '📌': 'Pinterest', 'in': 'LinkedIn',
+    '📧': 'Email', '▶': 'YouTube', '🎥': 'Video Camera', '📹': 'Camcorder',
+  };
+
+  const speakEmojiName = (emoji: string | null) => {
+    if (!emoji || 'speechSynthesis' in window === false) return;
+    window.speechSynthesis.cancel();
+    const name = emojiNameMap[emoji] || emoji;
+    const utterance = new SpeechSynthesisUtterance(`This is ${name}`);
+    utterance.rate = 0.85;
+    utterance.pitch = 1.2;
+    window.speechSynthesis.speak(utterance);
+  };
+
+
 const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const vowelsAudioRef = useRef<HTMLAudioElement | null>(null);
   const alphabetIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -4706,15 +4727,32 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Dialog>
 
       {/* Full Screen Emoji Dialog */}
-      <Dialog open={emojiDialogOpen} onOpenChange={setEmojiDialogOpen}>
+      <Dialog open={emojiDialogOpen} onOpenChange={(open) => {
+        setEmojiDialogOpen(open);
+        if (open && selectedEmoji) {
+          setTimeout(() => speakEmojiName(selectedEmoji), 300);
+        } else {
+          window.speechSynthesis.cancel();
+        }
+      }}>
         <DialogContent className="max-w-full w-screen h-screen flex items-center justify-center bg-background/95 backdrop-blur-lg border-none">
           <DialogTitle className="sr-only">Display</DialogTitle>
-          <div className="text-center">
+          <div className="text-center flex flex-col items-center gap-6">
             {selectedEmoji && (selectedEmoji.includes('/') || selectedEmoji.includes('data:')) ? (
-              <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[80vh] object-contain" />
+              <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[70vh] object-contain" />
             ) : (
               <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
             )}
+            {selectedEmoji && emojiNameMap[selectedEmoji] && (
+              <p className="text-2xl md:text-4xl font-bold text-foreground">{emojiNameMap[selectedEmoji]}</p>
+            )}
+            <Button
+              onClick={() => speakEmojiName(selectedEmoji)}
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 py-3"
+            >
+              <Volume2 className="h-5 w-5 mr-2" />
+              Hear Name
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
