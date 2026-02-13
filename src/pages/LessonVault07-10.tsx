@@ -168,7 +168,7 @@ const LessonVault0710 = () => {
   const [cryptogramOpen, setCryptogramOpen] = useState(false);
   const [cryptogramWord, setCryptogramWord] = useState('');
   const [cryptogramSecretStyle, setCryptogramSecretStyle] = useState<'mixed' | 'numbers' | 'lowercase'>('mixed');
-  const [multiplicationOpen, setMultiplicationOpen] = useState(false);
+  
 
   const hexLetters = 'ABCDEFGHIJ';
   const cryptogramPresetWords = [
@@ -913,7 +913,7 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setMultiplicationOpen(true)} className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')} className="font-medium text-white hover:bg-white/20">
                       ✈️ Multiplication Airplanes
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -1557,22 +1557,7 @@ const LessonVault0710 = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Multiplication Airplanes Dialog */}
-      <Dialog open={multiplicationOpen} onOpenChange={setMultiplicationOpen}>
-        <DialogContent className="max-w-4xl w-[95vw] h-[80vh] p-0 overflow-hidden" style={{ backgroundColor: "#252045" }}>
-          <DialogHeader className="p-4 pb-2">
-            <DialogTitle className="text-white text-lg">✈️ Multiplication Airplanes</DialogTitle>
-            <DialogDescription className="text-white/70">Practice your times tables by shooting the correct answers!</DialogDescription>
-          </DialogHeader>
-          <iframe
-            src="https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html"
-            className="w-full flex-1 border-0"
-            style={{ height: 'calc(80vh - 80px)' }}
-            title="Multiplication Airplanes Game"
-            allowFullScreen
-          />
-        </DialogContent>
-      </Dialog>
+
 
       {/* Audio elements */}
       <audio ref={alphabetAudioRef} src={alphabetSong} preload="auto" />
