@@ -34,6 +34,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
+import instagramLogo from "@/assets/instagram-logo.png";
 import abcSafetyImage from "@/assets/abc-safety.png";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
@@ -475,7 +476,7 @@ const LessonVault0406 = () => {
     '😅': 'Nervous Laugh Face', '😡': 'Angry Face', '😪': 'Sleepy Face', '🙄': 'Eye Roll Face', '😭': 'Crying Face',
     '⚽': 'Soccer Ball', '🏉': 'Rugby Ball', '🎾': 'Tennis Ball', '🥊': 'Boxing Gloves', '🏏': 'Cricket Bat',
     '🏃': 'Running', '🚴': 'Cycling', '🏊': 'Swimming', '⛹️': 'Basketball Player', '🤸': 'Gymnast',
-    'f': 'Facebook', '📷': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok',
+    'f': 'Facebook', 'instagram': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok',
     '📧': 'Email', '▶': 'YouTube', '🎥': 'Video Camera', '📹': 'Camcorder',
   };
 
@@ -1639,7 +1640,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Emojis: Faces | Sport Activities
+                      Emojis
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
@@ -1699,7 +1700,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          ⚽ Sport Fields
+                          ⚽ Sport Activities
                           <ChevronDown className="h-4 w-4" />
                         </DropdownMenuItem>
                       </DropdownMenuTrigger>
@@ -1719,7 +1720,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          🔗 Basic Icons: Facebook | Instagram | X | TikTok
+                          🔗 Basic Icons
                           <ChevronDown className="h-4 w-4" />
                         </DropdownMenuItem>
                       </DropdownMenuTrigger>
@@ -1735,7 +1736,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 grid grid-cols-4 gap-2 p-3">
                             {[
                               { icon: 'f', bg: '#1877F2', name: 'Facebook' },
-                              { icon: '📷', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
+                              { icon: 'instagram', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
                               { icon: '𝕏', bg: '#000000', name: 'X' },
                               { icon: '♪', bg: '#000000', name: 'TikTok' },
                             ].map((item, idx) => (
@@ -1749,7 +1750,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                   style={{ background: item.bg }}
                                   title={item.name}
                                 >
-                                  {item.icon}
+                                  {item.icon === 'instagram' ? (
+                                    <img src={instagramLogo} alt="Instagram" className="w-10 h-10 rounded" />
+                                  ) : (
+                                    item.icon
+                                  )}
                                 </div>
                               </DropdownMenuItem>
                             ))}
@@ -4734,7 +4739,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         <DialogContent className="max-w-full w-screen h-screen flex items-center justify-center bg-background/95 backdrop-blur-lg border-none">
           <DialogTitle className="sr-only">Display</DialogTitle>
           <div className="text-center flex flex-col items-center gap-6">
-            {selectedEmoji && (selectedEmoji.includes('/') || selectedEmoji.includes('data:')) ? (
+            {selectedEmoji === 'instagram' ? (
+              <img src={instagramLogo} alt="Instagram" className="max-w-[60vw] max-h-[50vh] object-contain" />
+            ) : selectedEmoji && (selectedEmoji.includes('/') || selectedEmoji.includes('data:')) ? (
               <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[70vh] object-contain" />
             ) : (
               <span className="text-[40vmin] leading-none block">{selectedEmoji}</span>
