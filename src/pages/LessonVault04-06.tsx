@@ -35,6 +35,7 @@ import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
 import instagramLogo from "@/assets/instagram-logo.png";
+import whatsappLogo from "@/assets/whatsapp-logo.jpg";
 import abcSafetyImage from "@/assets/abc-safety.png";
 import kidWritingLogic from "@/assets/kid-writing-logic.jpg";
 import realSquareShape from "@/assets/real-square-shape.jpg";
@@ -476,7 +477,7 @@ const LessonVault0406 = () => {
     '😅': 'Nervous Laugh Face', '😡': 'Angry Face', '😪': 'Sleepy Face', '🙄': 'Eye Roll Face', '😭': 'Crying Face',
     '⚽': 'Soccer Ball', '🏉': 'Rugby Ball', '🎾': 'Tennis Ball', '🥊': 'Boxing Gloves', '🏏': 'Cricket Bat',
     '🏃': 'Running', '🚴': 'Cycling', '🏊': 'Swimming', '⛹️': 'Basketball Player', '🤸': 'Gymnast',
-    'f': 'Facebook', 'instagram': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok',
+    'f': 'Facebook', 'instagram': 'Instagram', '𝕏': 'X, formerly Twitter', '♪': 'TikTok', 'whatsapp': 'WhatsApp',
     '📧': 'Email', '▶': 'YouTube', '🎥': 'Video Camera', '📹': 'Camcorder',
   };
 
@@ -1739,6 +1740,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               { icon: 'instagram', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
                               { icon: '𝕏', bg: '#000000', name: 'X' },
                               { icon: '♪', bg: '#000000', name: 'TikTok' },
+                              { icon: 'whatsapp', bg: '#25D366', name: 'WhatsApp' },
                             ].map((item, idx) => (
                               <DropdownMenuItem
                                 key={idx}
@@ -1752,6 +1754,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                 >
                                   {item.icon === 'instagram' ? (
                                     <img src={instagramLogo} alt="Instagram" className="w-10 h-10 rounded" />
+                                  ) : item.icon === 'whatsapp' ? (
+                                    <img src={whatsappLogo} alt="WhatsApp" className="w-10 h-10 rounded" />
                                   ) : (
                                     item.icon
                                   )}
@@ -4741,6 +4745,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <div className="text-center flex flex-col items-center gap-6">
             {selectedEmoji === 'instagram' ? (
               <img src={instagramLogo} alt="Instagram" className="max-w-[60vw] max-h-[50vh] object-contain" />
+            ) : selectedEmoji === 'whatsapp' ? (
+              <img src={whatsappLogo} alt="WhatsApp" className="max-w-[60vw] max-h-[50vh] object-contain" />
             ) : selectedEmoji && (selectedEmoji.includes('/') || selectedEmoji.includes('data:')) ? (
               <img src={selectedEmoji} alt="Transport" className="max-w-[80vw] max-h-[70vh] object-contain" />
             ) : (
