@@ -1740,7 +1740,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               { icon: 'instagram', bg: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)', name: 'Instagram' },
                               { icon: '𝕏', bg: '#000000', name: 'X' },
                               { icon: '♪', bg: '#000000', name: 'TikTok' },
-                              { icon: 'whatsapp', bg: '#25D366', name: 'WhatsApp' },
+                              { icon: 'whatsapp', bg: 'transparent', name: 'WhatsApp' },
                             ].map((item, idx) => (
                               <DropdownMenuItem
                                 key={idx}
