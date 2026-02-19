@@ -264,14 +264,14 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
       {/* Trigger Button */}
       <Button
         onClick={() => { setIsOpen((o) => !o); setIsMinimized(false); }}
-        className="h-28 w-28 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
+        className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
         size="icon"
       >
         {isOpen ? (
-          <X className="h-10 w-10 text-white" />
+          <X className="h-8 w-8 text-white" />
         ) : (
           <>
-            <Bot className="h-10 w-10 text-white" />
+            <Bot className="h-14 w-14 text-white" />
             <span className="absolute -top-1 -right-1 h-6 w-6 bg-orange-400 rounded-full flex items-center justify-center">
               <span className="text-[10px] font-bold text-white">AI</span>
             </span>
