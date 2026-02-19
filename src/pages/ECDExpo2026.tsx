@@ -69,10 +69,10 @@ const ECDExpo2026Content = () => {
   ];
 
   const sponsorshipTiers = [
-    { name: "Platinum Sponsor", price: "R50,000", benefits: ["Main stage branding", "10 VIP passes", "Exhibition booth", "Keynote slot", "All marketing materials"] },
-    { name: "Gold Sponsor", price: "R30,000", benefits: ["Stage branding", "6 VIP passes", "Exhibition booth", "Panel participation", "Digital marketing"] },
-    { name: "Silver Sponsor", price: "R15,000", benefits: ["Logo placement", "4 passes", "Small booth", "Networking access", "Social media mentions"] },
-    { name: "Bronze Sponsor", price: "R5,000", benefits: ["Logo on materials", "2 passes", "Networking access", "Website listing"] }
+    { name: "Platinum Sponsor", price: "R5,000,000", benefits: ["Main stage branding", "10 VIP passes", "Exhibition booth", "Keynote slot", "All marketing materials"] },
+    { name: "Gold Sponsor", price: "R3,000,000", benefits: ["Stage branding", "6 VIP passes", "Exhibition booth", "Panel participation", "Digital marketing"] },
+    { name: "Silver Sponsor", price: "R1,500,000", benefits: ["Logo placement", "4 passes", "Small booth", "Networking access", "Social media mentions"] },
+    { name: "Bronze Sponsor", price: "R750,000", benefits: ["Logo on materials", "2 passes", "Networking access", "Website listing"] }
   ];
 
   const handleSponsorSubmit = (e: React.FormEvent) => {
@@ -87,12 +87,12 @@ const ECDExpo2026Content = () => {
     }
     // Determine payment amount based on tier
     const tierPrices: Record<string, number> = {
-      "platinum": 50000,
-      "gold": 30000,
-      "silver": 15000,
-      "bronze": 5000
+      "Platinum Sponsor": 5000000,
+      "Gold Sponsor": 3000000,
+      "Silver Sponsor": 1500000,
+      "Bronze Sponsor": 750000
     };
-    const amount = tierPrices[sponsorForm.sponsorshipTier] || 5000;
+    const amount = tierPrices[sponsorForm.sponsorshipTier] || 750000;
     setSponsorPaymentAmount(amount);
     setIsSponsorPaymentDialogOpen(true);
   };
@@ -202,7 +202,13 @@ const ECDExpo2026Content = () => {
           <Button 
             size="lg" 
             className="text-lg px-8"
-            onClick={() => setActiveTab("sponsors")}
+            onClick={() => {
+              setActiveTab("sponsors");
+              setTimeout(() => {
+                const el = document.getElementById("sponsor-application-form");
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 100);
+            }}
           >
             Become a Sponsor
           </Button>
@@ -274,7 +280,13 @@ const ECDExpo2026Content = () => {
                         <Badge variant="secondary">{tier.price}</Badge>
                       </div>
                     ))}
-                    <Button className="w-full mt-4" onClick={() => setActiveTab("sponsors")}>
+                    <Button className="w-full mt-4" onClick={() => {
+                      setActiveTab("sponsors");
+                      setTimeout(() => {
+                        const el = document.getElementById("sponsor-application-form");
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }, 100);
+                    }}>
                       Apply as Sponsor
                     </Button>
                   </CardContent>
@@ -367,7 +379,7 @@ const ECDExpo2026Content = () => {
 
             {/* Sponsors Tab */}
             <TabsContent value="sponsors">
-              <Card>
+              <Card id="sponsor-application-form">
                 <CardHeader>
                   <CardTitle>Sponsor Application Form</CardTitle>
                   <CardDescription>
