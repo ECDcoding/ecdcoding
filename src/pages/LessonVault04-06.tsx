@@ -1231,7 +1231,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           💳 Add Credits
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="center" className="w-64 bg-white dark:bg-gray-800 z-50">
+                      <DropdownMenuContent align="center" className="w-72 bg-white dark:bg-gray-800 z-50">
+                        <div className="px-3 py-2 bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-700">
+                          <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">⚠️ Credit Top-Up — R100.00</p>
+                          <p className="text-xs text-amber-700 dark:text-amber-400 mt-1 leading-tight">
+                            These credits are a once-off top-up, separate from your monthly R100 subscription. They <span className="font-bold">expire at midnight (24h00) on the last day of the current month</span>.
+                          </p>
+                        </div>
                         <DropdownMenuItem
                           onClick={async () => {
                             await purchaseCredits(100, 5.0);
