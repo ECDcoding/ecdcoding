@@ -1,4 +1,11 @@
 import { useState } from "react";
+import vrStudents from "@/assets/expo/vr-students.jpg";
+import boyTv from "@/assets/expo/boy-tv.jpg";
+import kidTechGlasses from "@/assets/expo/kid-tech-glasses.jpg";
+import futuristicVr from "@/assets/expo/futuristic-vr.jpg";
+import girlBooks from "@/assets/expo/girl-books.jpg";
+import africanKidsBlocks from "@/assets/expo/african-kids-blocks.jpg";
+import adorableKid from "@/assets/expo/adorable-kid.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -234,6 +241,41 @@ const ECDExpo2026Content = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Photo Gallery Section */}
+      <section className="py-16 px-6 bg-background">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-4 text-foreground">A Glimpse of the Future</h2>
+          <p className="text-center text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Inspiring the next generation of tech-savvy learners through hands-on experiences, innovation, and play.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {/* Large featured image */}
+            <div className="col-span-2 row-span-2 overflow-hidden rounded-xl">
+              <img src={vrStudents} alt="Young students with VR glasses" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="overflow-hidden rounded-xl aspect-square">
+              <img src={kidTechGlasses} alt="Child with futuristic tech glasses" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="overflow-hidden rounded-xl aspect-square">
+              <img src={futuristicVr} alt="Kids with futuristic VR headsets" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="overflow-hidden rounded-xl aspect-square">
+              <img src={girlBooks} alt="Little girl with glasses and books" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="overflow-hidden rounded-xl aspect-square">
+              <img src={boyTv} alt="Young boy engaging with educational TV" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            {/* Wide bottom image */}
+            <div className="col-span-2 overflow-hidden rounded-xl">
+              <img src={africanKidsBlocks} alt="African children playing with building blocks" className="w-full h-48 md:h-56 object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="col-span-2 overflow-hidden rounded-xl">
+              <img src={adorableKid} alt="Adorable child in a learning environment" className="w-full h-48 md:h-56 object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
           </div>
         </div>
       </section>
