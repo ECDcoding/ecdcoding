@@ -152,9 +152,6 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="text-4xl font-bold text-yellow-600 dark:text-yellow-400">
-                    $10,000.00
-                  </div>
                   <ul className="text-sm text-muted-foreground space-y-2 text-left">
                     <li className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-yellow-500" />
@@ -196,9 +193,6 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
-                    Collaborate
-                  </div>
                   <ul className="text-sm text-muted-foreground space-y-2 text-left">
                     <li className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-blue-500" />
