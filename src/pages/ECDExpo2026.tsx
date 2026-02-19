@@ -16,15 +16,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload } from "lucide-react";
+import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
 import ExpoCopilot from "@/components/ExpoCopilot";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const ECDExpo2026Content = () => {
-  const navigate = useNavigate();
+  const { isAdmin } = useIsAdmin();
   const [activeTab, setActiveTab] = useState("overview");
   const [sponsorForm, setSponsorForm] = useState({
     companyName: "",
@@ -1007,6 +1008,25 @@ const ECDExpo2026Content = () => {
             : undefined
         }
       />
+
+      {/* Footer */}
+      <footer className="py-6 px-6 border-t border-border bg-card/50 mt-8">
+        <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <Copyright className="h-4 w-4" />
+            <span>ECD Coding and Robotics Expo 2026. All rights reserved.</span>
+          </div>
+          {isAdmin && (
+            <Link
+              to="/expo-admin"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
+            >
+              <Shield className="h-4 w-4" />
+              Expo Admin Dashboard
+            </Link>
+          )}
+        </div>
+      </footer>
     </div>
   );
 };
