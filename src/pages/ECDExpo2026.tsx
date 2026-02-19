@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
+import ExpoCopilot from "@/components/ExpoCopilot";
 
 const ECDExpo2026Content = () => {
   const navigate = useNavigate();
@@ -476,8 +477,7 @@ const ECDExpo2026Content = () => {
                           className="text-primary underline hover:text-primary/80"
                         >
                           Partnership Memorandum of Understanding
-                        </button>{" "}
-                        and terms and conditions
+                        </button>
                       </Label>
                     </div>
                     <Button type="submit" className="w-full" size="lg">
@@ -855,6 +855,23 @@ const ECDExpo2026Content = () => {
         userFirstName={sponsorForm.contactPerson.split(' ')[0]}
         userLastName={sponsorForm.contactPerson.split(' ').slice(1).join(' ')}
         onPaymentComplete={handleSponsorPaymentComplete}
+      />
+
+      {/* Expo Copilot — contextually aware of the active tab */}
+      <ExpoCopilot
+        context={
+          activeTab === "overview"
+            ? "Event Overview & Registration Options"
+            : activeTab === "sponsors"
+            ? "Sponsorship Packages & Application"
+            : activeTab === "exhibitors"
+            ? "Exhibitor Booth Booking"
+            : activeTab === "speakers"
+            ? "Keynote Speaker Applications"
+            : activeTab === "delegates"
+            ? "Delegate Registration"
+            : undefined
+        }
       />
     </div>
   );
