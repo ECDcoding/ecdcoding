@@ -66,6 +66,9 @@ const ECDExpo2026Content = () => {
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(0);
   const [selectedPaymentType, setSelectedPaymentType] = useState("");
   const [sponsorPaymentAmount, setSponsorPaymentAmount] = useState(0);
+  const [sponsorPaymentComplete, setSponsorPaymentComplete] = useState(false);
+  const [companyLogo, setCompanyLogo] = useState<File | null>(null);
+  const [companyLogoPreview, setCompanyLogoPreview] = useState<string | null>(null);
 
   const mainFocus = [
     { icon: <GraduationCap className="h-8 w-8" />, title: "Developing Tech Savvy Kids", description: "Building the knowledge base for the future world of work" },
@@ -106,10 +109,37 @@ const ECDExpo2026Content = () => {
   };
 
   const handleSponsorPaymentComplete = () => {
-    toast.success("Payment successful! Your sponsor application has been submitted.");
+    toast.success("Payment successful! Please complete your sponsor application submission below.");
+    setIsSponsorPaymentDialogOpen(false);
+    setSponsorPaymentComplete(true);
+  };
+
+  const handleSponsorFinalSubmit = () => {
+    toast.success("🎉 Sponsor application submitted successfully! Our team will be in touch shortly.");
     setSponsorForm({ companyName: "", contactPerson: "", email: "", phone: "", sponsorshipTier: "", message: "" });
     setAgreeTerms(false);
-    setIsSponsorPaymentDialogOpen(false);
+    setSponsorPaymentComplete(false);
+    setCompanyLogo(null);
+    setCompanyLogoPreview(null);
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please upload an image file (PNG, JPG, SVG, etc.)");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Logo file must be less than 5MB");
+        return;
+      }
+      setCompanyLogo(file);
+      const reader = new FileReader();
+      reader.onload = (ev) => setCompanyLogoPreview(ev.target?.result as string);
+      reader.readAsDataURL(file);
+      toast.success("Logo uploaded successfully!");
+    }
   };
 
   const handleExhibitorSubmit = (e: React.FormEvent) => {
@@ -501,6 +531,45 @@ const ECDExpo2026Content = () => {
                         placeholder="Tell us about your company and sponsorship goals..."
                       />
                     </div>
+
+                    {/* Company Logo Upload */}
+                    <div>
+                      <Label htmlFor="companyLogo">Company Logo</Label>
+                      <p className="text-xs text-muted-foreground mb-2">Upload your company logo (PNG, JPG, SVG — max 5MB). It will be used on event materials and marketing.</p>
+                      <div className="flex items-center gap-4">
+                        <label
+                          htmlFor="companyLogo"
+                          className="flex items-center gap-2 cursor-pointer border-2 border-dashed border-border hover:border-primary/60 rounded-lg px-4 py-3 transition-colors bg-muted/40 hover:bg-primary/5"
+                        >
+                          <Upload className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">
+                            {companyLogo ? companyLogo.name : "Click to upload logo"}
+                          </span>
+                          <input
+                            id="companyLogo"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleLogoUpload}
+                          />
+                        </label>
+                        {companyLogoPreview && (
+                          <div className="relative">
+                            <img
+                              src={companyLogoPreview}
+                              alt="Company logo preview"
+                              className="h-16 w-16 object-contain rounded border border-border bg-white p-1"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => { setCompanyLogo(null); setCompanyLogoPreview(null); }}
+                              className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
+                            >×</button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <div className="flex items-start gap-2">
                       <Checkbox
                         id="terms"
@@ -522,12 +591,35 @@ const ECDExpo2026Content = () => {
                         </button>
                       </Label>
                     </div>
-                    <Button type="submit" className="w-full" size="lg">
-                      Pay with PayFast
-                    </Button>
-                    <p className="text-xs text-muted-foreground text-center mt-2">
-                      Your application will be submitted after successful payment
-                    </p>
+
+                    {!sponsorPaymentComplete ? (
+                      <>
+                        <Button type="submit" className="w-full" size="lg">
+                          Pay with PayFast
+                        </Button>
+                        <p className="text-xs text-muted-foreground text-center mt-2">
+                          Your application will be submitted after successful payment
+                        </p>
+                      </>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 p-3 bg-secondary/30 border border-secondary rounded-lg">
+                          <span className="text-lg">✅</span>
+                          <p className="text-sm font-medium text-foreground">
+                            Payment confirmed! Click below to officially submit your sponsor application.
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          onClick={handleSponsorFinalSubmit}
+                          className="w-full"
+                          size="lg"
+                          variant="default"
+                        >
+                          Submit Sponsor Application
+                        </Button>
+                      </div>
+                    )}
                   </form>
                 </CardContent>
               </Card>
