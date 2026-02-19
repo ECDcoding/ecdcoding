@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.text-to-speech]
 verify_jwt = false
+
+[functions.expo-copilot]
+verify_jwt = false
