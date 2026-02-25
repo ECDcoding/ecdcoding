@@ -22,6 +22,7 @@ import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
 import ExpoCopilot from "@/components/ExpoCopilot";
+import ExpoAccountsList from "@/components/ExpoAccountsList";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const ECDExpo2026Content = () => {
@@ -453,6 +454,7 @@ const ECDExpo2026Content = () => {
 
             {/* Sponsors Tab */}
             <TabsContent value="sponsors">
+              <ExpoAccountsList type="sponsor" />
               <Card id="sponsor-application-form">
                 <CardHeader>
                   <CardTitle>Sponsor Application Form</CardTitle>
@@ -628,6 +630,7 @@ const ECDExpo2026Content = () => {
 
             {/* Exhibitors Tab */}
             <TabsContent value="exhibitors">
+              <ExpoAccountsList type="exhibitor" />
               <Card>
                 <CardHeader>
                   <CardTitle>Exhibitor Booking Form</CardTitle>
@@ -736,6 +739,7 @@ const ECDExpo2026Content = () => {
 
             {/* Speakers Tab */}
             <TabsContent value="speakers">
+              <ExpoAccountsList type="speaker" />
               <Card>
                 <CardHeader>
                   <CardTitle>Keynote Speaker Application</CardTitle>
@@ -846,6 +850,7 @@ const ECDExpo2026Content = () => {
 
             {/* Delegates Tab */}
             <TabsContent value="delegates">
+              <ExpoAccountsList type="delegate" />
               <Card>
                 <CardHeader>
                   <CardTitle>Delegate Registration</CardTitle>

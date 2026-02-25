@@ -273,7 +273,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
           <>
             <Bot className="h-14 w-14 text-white" />
             <span className="absolute -top-1 -right-1 h-6 w-6 bg-orange-400 rounded-full flex items-center justify-center">
-              <span className="text-[10px] font-bold text-white">AI</span>
+              <span className="text-[8px] font-bold text-white">ASK</span>
             </span>
           </>
         )}

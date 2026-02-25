@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ExpoCopilot from "@/components/ExpoCopilot";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -4903,6 +4904,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         </DialogContent>
       </Dialog>
       
+      {/* ASK AI Copilot */}
+      <ExpoCopilot context="My Lesson Vault (Ages 4-6)" />
     </div>
   );
 };
