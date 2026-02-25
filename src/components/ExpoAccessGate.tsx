@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Loader2, CheckCircle, Sparkles, Handshake, DollarSign } from "lucide-react";
+import { Building2, Loader2, CheckCircle, Sparkles, Handshake, DollarSign, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,14 @@ interface ExpoAccessGateProps {
   children: React.ReactNode;
 }
 
-type Step = 'verify' | 'partnership' | 'complete';
+type Step = 'verify' | 'partnership' | 'sponsorAmount' | 'complete';
+
+const SPONSORSHIP_TIERS = [
+  { label: 'Platinum Sponsor', amount: 'R5,000,000', value: 'platinum' },
+  { label: 'Gold Sponsor', amount: 'R3,000,000', value: 'gold' },
+  { label: 'Silver Sponsor', amount: 'R1,500,000', value: 'silver' },
+  { label: 'Bronze Sponsor', amount: 'R750,000', value: 'bronze' },
+];
 
 const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
   const { isAdmin, loading: adminLoading } = useIsAdmin();
@@ -32,6 +39,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
   const [currentStep, setCurrentStep] = useState<Step>('verify');
   const [isFlipping, setIsFlipping] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedTier, setSelectedTier] = useState<string | null>(null);
   const [checkingStorage, setCheckingStorage] = useState(true);
 
   useEffect(() => {
@@ -89,14 +97,34 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
 
   const handlePartnershipSelect = (option: string) => {
     setSelectedOption(option);
+    if (option === 'sponsor') {
+      setCurrentStep('sponsorAmount');
+      return;
+    }
     setIsFlipping(true);
-    
     setTimeout(() => {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
         verified: true,
         email: businessEmail.toLowerCase().trim(),
         company: companyName.trim(),
         partnershipType: option,
+        timestamp: Date.now()
+      }));
+      setCurrentStep('complete');
+      toast.success(`Welcome, ${companyName}! You now have access to the Expo information.`);
+    }, 800);
+  };
+
+  const handleTierSelect = (tierValue: string) => {
+    setSelectedTier(tierValue);
+    setIsFlipping(true);
+    setTimeout(() => {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        verified: true,
+        email: businessEmail.toLowerCase().trim(),
+        company: companyName.trim(),
+        partnershipType: 'sponsor',
+        sponsorshipTier: tierValue,
         timestamp: Date.now()
       }));
       setCurrentStep('complete');
@@ -126,11 +154,12 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
         <div className="max-w-4xl w-full">
           <div className="mb-4">
             <Button variant="ghost" onClick={() => setCurrentStep('verify')} className="text-muted-foreground hover:text-foreground">
-              ← Back to verification
+              <ArrowLeft className="mr-1 h-4 w-4" />
+              Back to verification
             </Button>
           </div>
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Choose Your Partnership</h1>
+           <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Event Sponsorship and Partnership</h1>
             <p className="text-muted-foreground">
               Welcome, <span className="font-semibold">{companyName}</span>! How would you like to be involved?
             </p>
@@ -148,7 +177,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
                     <DollarSign className="h-12 w-12 text-yellow-600" />
                   </div>
                   <CardTitle className="text-2xl text-yellow-700 dark:text-yellow-400">
-                    Sponsor the Event
+                    Sponsorship Benefits
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
@@ -218,6 +247,68 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
                 </CardContent>
               </Card>
             </div>
+          </div>
+
+          <div className="text-center mt-8 p-4 bg-muted/50 rounded-lg">
+            <p className="text-sm text-muted-foreground mb-2 font-medium">Contact Us</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-sm">
+              <a href="mailto:info@ecdcoding.co.za" className="text-primary hover:underline">
+                Email: info@ecdcoding.co.za
+              </a>
+              <span className="hidden sm:inline text-muted-foreground">|</span>
+              <a href="tel:+27730639622" className="text-primary hover:underline">
+                Mobile: +27 73 063 9622
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Sponsorship amount selection step
+  if (currentStep === 'sponsorAmount') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
+        <div className="max-w-2xl w-full">
+          <div className="mb-4">
+            <Button variant="ghost" onClick={() => setCurrentStep('partnership')} className="text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="mr-1 h-4 w-4" />
+              Back to partnership options
+            </Button>
+          </div>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Select Sponsorship Amount</h1>
+            <p className="text-muted-foreground">
+              Choose your preferred sponsorship tier for <span className="font-semibold">{companyName}</span>
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {SPONSORSHIP_TIERS.map((tier) => (
+              <Card
+                key={tier.value}
+                className={`cursor-pointer border-2 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] ${
+                  selectedTier === tier.value 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-primary/20 hover:border-primary/50'
+                }`}
+                onClick={() => handleTierSelect(tier.value)}
+              >
+                <CardContent className="flex items-center justify-between p-6">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-primary/10 rounded-full">
+                      <DollarSign className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-foreground">{tier.label}</h3>
+                      <p className="text-sm text-muted-foreground">ECD Expo 2026</p>
+                    </div>
+                  </div>
+                  <span className="text-xl font-bold text-primary">{tier.amount}</span>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           <div className="text-center mt-8 p-4 bg-muted/50 rounded-lg">
