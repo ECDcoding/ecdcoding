@@ -348,8 +348,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
             <Button
               onClick={() => {
                 setShowFreeClassDialog(false);
-                onOpenChange(false);
-                navigate('/register');
+                setShowRegistrationDialog(true);
               }}
               className="text-sm font-bold bg-lime-500 hover:bg-lime-600 text-white"
             >
