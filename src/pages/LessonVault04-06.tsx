@@ -2572,7 +2572,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 onClick={playNarration}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
               >
-                General Knowledge Base Testing
+                Knowledge Base Testing
               </Button>
               <p className="text-foreground/90">
                 Click Card, Click Mic and Record Presentation
