@@ -35,6 +35,7 @@ import FlipBodyCard from "@/components/FlipBodyCard";
 import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
+import FlipMonthsCard from "@/components/FlipMonthsCard";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
 import instagramLogo from "@/assets/instagram-logo.png";
 import whatsappLogo from "@/assets/whatsapp-logo.jpg";
@@ -421,13 +422,14 @@ const LessonVault0406 = () => {
           <div className="bg-cyan-500 text-white font-bold rounded-lg p-3 text-center">November</div>
           <div className="bg-emerald-500 text-white font-bold rounded-lg p-3 text-center">December</div>
         </div>
-        <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="bg-yellow-400 text-white font-bold rounded-lg p-3 text-center">☀️ Summer</div>
-          <div className="bg-sky-400 text-white font-bold rounded-lg p-3 text-center">❄️ Winter</div>
-          <div className="bg-amber-600 text-white font-bold rounded-lg p-3 text-center">🍂 Autumn</div>
-          <div className="bg-lime-500 text-white font-bold rounded-lg p-3 text-center">🌸 Spring</div>
-        </div>
+      </div>
+    ), borderColor: "border-amber-500" },
+    "Seasons of the Year": { title: "Seasons of the Year", content: (
+      <div className="grid grid-cols-2 gap-3">
+        <div className="bg-yellow-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">☀️ Summer</div>
+        <div className="bg-sky-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">❄️ Winter</div>
+        <div className="bg-amber-600 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🍂 Autumn</div>
+        <div className="bg-lime-500 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🌸 Spring</div>
       </div>
     ), borderColor: "border-amber-500" },
   };
@@ -2693,53 +2695,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </Card>
 
-              {/* Months of the Year Card */}
-              <Card
-                className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Months of the Year")}
-              >
-                <CardContent className="p-0 relative">
-                  <h3 className="text-xl font-bold text-amber-600 mb-6 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-red-500 text-white font-bold rounded-md p-2 text-center text-sm">January</div>
-                      <div className="bg-orange-500 text-white font-bold rounded-md p-2 text-center text-sm">February</div>
-                      <div className="bg-yellow-500 text-white font-bold rounded-md p-2 text-center text-sm">March</div>
-                      <div className="bg-green-500 text-white font-bold rounded-md p-2 text-center text-sm">April</div>
-                      <div className="bg-teal-500 text-white font-bold rounded-md p-2 text-center text-sm">May</div>
-                      <div className="bg-blue-500 text-white font-bold rounded-md p-2 text-center text-sm">June</div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-indigo-500 text-white font-bold rounded-md p-2 text-center text-sm">July</div>
-                      <div className="bg-purple-500 text-white font-bold rounded-md p-2 text-center text-sm">August</div>
-                      <div className="bg-pink-500 text-white font-bold rounded-md p-2 text-center text-sm">September</div>
-                      <div className="bg-rose-500 text-white font-bold rounded-md p-2 text-center text-sm">October</div>
-                      <div className="bg-cyan-500 text-white font-bold rounded-md p-2 text-center text-sm">November</div>
-                      <div className="bg-emerald-500 text-white font-bold rounded-md p-2 text-center text-sm">December</div>
-                    </div>
-                    <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-yellow-400 text-white font-bold rounded-md p-2 text-center text-sm">☀️ Summer</div>
-                      <div className="bg-sky-400 text-white font-bold rounded-md p-2 text-center text-sm">❄️ Winter</div>
-                      <div className="bg-amber-600 text-white font-bold rounded-md p-2 text-center text-sm">🍂 Autumn</div>
-                      <div className="bg-lime-500 text-white font-bold rounded-md p-2 text-center text-sm">🌸 Spring</div>
-                    </div>
-                  </div>
-                  {isRecording && selectedCardForTest === "Months of the Year" && (
-                    <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
-                      {recordingTime}s / 30s
-                    </div>
-                  )}
-                </CardContent>
-                <Button
-                  onClick={createRecordingHandler("Months of the Year")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Months of the Year" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                  </svg>
-                </Button>
-              </Card>
+              {/* Months of the Year Flip Card */}
+              <FlipMonthsCard
+                onCardClick={(cardName) => handleCardClick(cardName)()}
+                onRecordingClick={(cardName) => createRecordingHandler(cardName)}
+                isRecording={isRecording}
+                selectedCardForTest={selectedCardForTest}
+                recordingTime={recordingTime}
+              />
               
               {/* Duplicate cards for infinite loop */}
               <FlipBodyCard
@@ -2842,55 +2805,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </Card>
 
-              {/* Months of the Year Card (duplicate) */}
-              <Card
-                className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Months of the Year")}
-              >
-                <CardContent className="p-0 relative">
-                  <h3 className="text-xl font-bold text-amber-600 mb-6 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
-                  <div className="space-y-2">
-                    
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-red-500 text-white font-bold rounded-md p-2 text-center text-sm">January</div>
-                      <div className="bg-orange-500 text-white font-bold rounded-md p-2 text-center text-sm">February</div>
-                      <div className="bg-yellow-500 text-white font-bold rounded-md p-2 text-center text-sm">March</div>
-                      <div className="bg-green-500 text-white font-bold rounded-md p-2 text-center text-sm">April</div>
-                      <div className="bg-teal-500 text-white font-bold rounded-md p-2 text-center text-sm">May</div>
-                      <div className="bg-blue-500 text-white font-bold rounded-md p-2 text-center text-sm">June</div>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-indigo-500 text-white font-bold rounded-md p-2 text-center text-sm">July</div>
-                      <div className="bg-purple-500 text-white font-bold rounded-md p-2 text-center text-sm">August</div>
-                      <div className="bg-pink-500 text-white font-bold rounded-md p-2 text-center text-sm">September</div>
-                      <div className="bg-rose-500 text-white font-bold rounded-md p-2 text-center text-sm">October</div>
-                      <div className="bg-cyan-500 text-white font-bold rounded-md p-2 text-center text-sm">November</div>
-                      <div className="bg-emerald-500 text-white font-bold rounded-md p-2 text-center text-sm">December</div>
-                    </div>
-                    <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <div className="bg-yellow-400 text-white font-bold rounded-md p-2 text-center text-sm">☀️ Summer</div>
-                      <div className="bg-sky-400 text-white font-bold rounded-md p-2 text-center text-sm">❄️ Winter</div>
-                      <div className="bg-amber-600 text-white font-bold rounded-md p-2 text-center text-sm">🍂 Autumn</div>
-                      <div className="bg-lime-500 text-white font-bold rounded-md p-2 text-center text-sm">🌸 Spring</div>
-                    </div>
-                  </div>
-                  {isRecording && selectedCardForTest === "Months of the Year" && (
-                    <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
-                      {recordingTime}s / 30s
-                    </div>
-                  )}
-                </CardContent>
-                <Button
-                  onClick={createRecordingHandler("Months of the Year")}
-                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Months of the Year" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                  </svg>
-                </Button>
-              </Card>
+              {/* Months of the Year Flip Card (duplicate) */}
+              <FlipMonthsCard
+                onCardClick={(cardName) => handleCardClick(cardName)()}
+                onRecordingClick={(cardName) => createRecordingHandler(cardName)}
+                isRecording={isRecording}
+                selectedCardForTest={selectedCardForTest}
+                recordingTime={recordingTime}
+              />
             </div>
           </div>
         </div>
