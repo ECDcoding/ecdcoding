@@ -9,6 +9,7 @@ const ADMIN_REFILL_CREDITS = 100; // Credits to refill for admin users
 
 export const useCredits = () => {
   const [credits, setCredits] = useState<number>(0);
+  const [topupCredits, setTopupCredits] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { toast } = useToast();
@@ -54,7 +55,7 @@ export const useCredits = () => {
     try {
       const { data, error } = await supabase
         .from("user_credits")
-        .select("credits, last_daily_credit_at")
+        .select("credits, last_daily_credit_at, topup_credits")
         .eq("user_id", user.id)
         .single();
 
@@ -69,6 +70,7 @@ export const useCredits = () => {
         if (credits === 0) {
           setCredits(data.credits);
         }
+        setTopupCredits((data as any).topup_credits || 0);
       } else {
         // Create initial credits record with 100 credits for new users
         const { data: newData, error: insertError } = await supabase
@@ -218,15 +220,17 @@ export const useCredits = () => {
 
       if (purchaseError) throw purchaseError;
 
-      // Update user credits
+      // Update user credits (add to both total and topup tracking)
+      const newTopup = topupCredits + amount;
       const { error: updateError } = await supabase
         .from("user_credits")
-        .update({ credits: credits + amount })
+        .update({ credits: credits + amount, topup_credits: newTopup })
         .eq("user_id", user.id);
 
       if (updateError) throw updateError;
 
       setCredits(credits + amount);
+      setTopupCredits(newTopup);
 
       toast({
         title: "Purchase Successful!",
@@ -251,6 +255,7 @@ export const useCredits = () => {
 
   return {
     credits,
+    topupCredits,
     loading,
     purchaseCredits,
     useCredits,

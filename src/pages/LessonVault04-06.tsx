@@ -85,7 +85,7 @@ const LessonVault0406 = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
-  const { credits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
+  const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
   const { isEarlyAdopter } = useEarlyAdopter();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
@@ -1259,15 +1259,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <span className="text-xs font-semibold text-white">{displayCredits}</span>
                       <span className="text-[10px] text-white/60">100</span>
                     </div>
-                    <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
+                    <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden flex">
+                      {/* Subscription credits segment (green) */}
                       <div 
-                        className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                          displayCredits <= 20 
+                        className={`h-full transition-all duration-1000 ease-out ${
+                          (displayCredits - topupCredits) <= 20 && topupCredits === 0
                             ? 'bg-gradient-to-r from-red-400 to-red-500' 
                             : 'bg-gradient-to-r from-green-400 to-green-500'
                         }`}
-                        style={{ width: `${displayCredits}%` }}
+                        style={{ width: `${Math.min(100, Math.max(0, displayCredits - topupCredits))}%` }}
                       />
+                      {/* Top-up credits segment (cyan/blue) */}
+                      {topupCredits > 0 && (
+                        <div 
+                          className="h-full bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-1000 ease-out"
+                          style={{ width: `${Math.min(100 - Math.max(0, displayCredits - topupCredits), topupCredits)}%` }}
+                          title={`${topupCredits} carried-over top-up credits`}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1288,7 +1297,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <div className="px-3 py-2 bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-700">
                           <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">⚠️ Credit Top-Up — R100.00</p>
                           <p className="text-xs text-amber-700 dark:text-amber-400 mt-1 leading-tight">
-                            These credits are a once-off top-up, separate from your monthly R100 subscription. They <span className="font-bold">expire at midnight (24h00) on the last day of the current month</span>.
+                            These credits are a once-off top-up, separate from your monthly R100 subscription. They will be <span className="font-bold">carried over to the new month</span>.
+                          </p>
+                          <p className="text-xs text-cyan-600 dark:text-cyan-400 mt-1 flex items-center gap-1">
+                            <span className="inline-block w-2 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-400"></span>
+                            Top-up credits appear in <span className="font-semibold">blue</span> on your gauge.
                           </p>
                         </div>
                         <DropdownMenuItem
