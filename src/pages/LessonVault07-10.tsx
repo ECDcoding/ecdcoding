@@ -1231,6 +1231,12 @@ const LessonVault0710 = () => {
                   🧩 Blockly Code Editor
                   <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
                 </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => openCodeEditor('Blockly Games', 'https://github.com/NeilFraser/blockly-games.wiki.git', 'Fun coding games built with Blockly')} 
+                  className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                >
+                  🎮 Blockly Games
+                </DropdownMenuItem>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
