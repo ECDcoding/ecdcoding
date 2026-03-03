@@ -124,6 +124,7 @@ const LessonVault0406 = () => {
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const [abcSafetyOpen, setAbcSafetyOpen] = useState(false);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number>(0);
@@ -272,6 +273,21 @@ const LessonVault0406 = () => {
       setShowReloadDialog(true);
     }
   }, [credits, creditsLoading, user]);
+
+  // Check if user already has an active subscription
+  useEffect(() => {
+    const checkSubscription = async () => {
+      if (!user) return;
+      const { data } = await supabase
+        .from('subscription_payments')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('is_active', true)
+        .maybeSingle();
+      setHasActiveSubscription(!!data);
+    };
+    checkSubscription();
+  }, [user]);
 
   // Buy Credits visibility when credits reach 20 or below
   useEffect(() => {
@@ -5006,12 +5022,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         open={showReloadDialog}
         onOpenChange={setShowReloadDialog}
         amount={100}
-        itemName="Credit Top-Up (100 Credits)"
-        paymentType="credits"
+        itemName={hasActiveSubscription ? "Credit Top-Up (100 Credits)" : "Monthly Subscription (100 Credits)"}
+        paymentType={hasActiveSubscription ? "credits" : "subscription"}
         userEmail={user?.email}
         userFirstName={profile?.first_name}
         userLastName={profile?.last_name}
         onPaymentComplete={() => setShowReloadDialog(false)}
+        isCreditsLow={credits <= 20}
+        defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
       />
     </div>
   );

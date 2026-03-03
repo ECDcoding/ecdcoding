@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CreditCard, Loader2, RefreshCw, CalendarClock } from "lucide-react";
@@ -19,6 +19,7 @@ interface PayFastPaymentDialogProps {
   userId?: string;
   onPaymentComplete?: () => void;
   isCreditsLow?: boolean;
+  defaultOption?: PaymentOption;
 }
 
 export const PayFastPaymentDialog = ({
@@ -33,12 +34,18 @@ export const PayFastPaymentDialog = ({
   userId,
   onPaymentComplete,
   isCreditsLow = false,
+  defaultOption = 'recurring',
 }: PayFastPaymentDialogProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [paymentData, setPaymentData] = useState<Record<string, string> | null>(null);
   const [payfastUrl, setPayfastUrl] = useState<string>('');
-  const [selectedOption, setSelectedOption] = useState<PaymentOption>('top-up');
+  const [selectedOption, setSelectedOption] = useState<PaymentOption>(defaultOption);
+
+  // Sync default when dialog opens
+  useEffect(() => {
+    if (open) setSelectedOption(defaultOption);
+  }, [open, defaultOption]);
 
   const effectiveAmount = selectedOption === 'top-up' ? 100 : 100;
   const effectiveItemName = selectedOption === 'top-up'
