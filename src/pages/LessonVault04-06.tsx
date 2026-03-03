@@ -2692,7 +2692,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 onClick={handleCardClick("Months of the Year")}
               >
                 <CardContent className="p-0 relative">
-                  <h3 className="text-xl font-bold text-amber-600 mb-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
+                  <h3 className="text-xl font-bold text-amber-600 mb-6 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
                   <div className="space-y-2">
                     <div className="grid grid-cols-2 gap-1.5">
                       <div className="bg-red-500 text-white font-bold rounded-md p-2 text-center text-sm">January</div>
@@ -2834,7 +2834,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 onClick={handleCardClick("Months of the Year")}
               >
                 <CardContent className="p-0 relative">
-                  <h3 className="text-xl font-bold text-amber-600 mb-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
+                  <h3 className="text-xl font-bold text-amber-600 mb-6 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
                   <div className="space-y-2">
                     
                     <div className="grid grid-cols-2 gap-1.5">
