@@ -154,7 +154,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-orange-400 rounded-full border border-primary animate-pulse" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold leading-none">ECD Expo AI</p>
+                  <p className="text-sm font-bold leading-none">ECD AI</p>
                   {context && (
                     <p className="text-xs text-primary-foreground/70 mt-0.5">
                       Context: {context}
@@ -190,7 +190,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
                 {messages.length === 0 ? (
                   <div className="space-y-3">
                     <div className="bg-muted rounded-xl p-3 text-sm text-muted-foreground">
-                      <p className="font-medium text-foreground mb-1">👋 Hi! I'm your ECD Expo AI</p>
+                      <p className="font-medium text-foreground mb-1">👋 Hi! I'm your ECD AI</p>
                       <p>I can answer questions about the ECD Coding & Robotics EXPO 2026 — sponsorship, exhibiting, speakers, or delegate registration.</p>
                     </div>
                     <p className="text-xs text-muted-foreground px-1">Try asking:</p>
