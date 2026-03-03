@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CreditCard, Loader2 } from "lucide-react";
+import { CreditCard, Loader2, RefreshCw, CalendarClock } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+
+type PaymentOption = 'top-up' | 'recurring';
 
 interface PayFastPaymentDialogProps {
   open: boolean;
@@ -16,6 +18,7 @@ interface PayFastPaymentDialogProps {
   userLastName?: string;
   userId?: string;
   onPaymentComplete?: () => void;
+  isCreditsLow?: boolean;
 }
 
 export const PayFastPaymentDialog = ({
@@ -28,12 +31,20 @@ export const PayFastPaymentDialog = ({
   userFirstName,
   userLastName,
   userId,
-  onPaymentComplete
+  onPaymentComplete,
+  isCreditsLow = false,
 }: PayFastPaymentDialogProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [paymentData, setPaymentData] = useState<Record<string, string> | null>(null);
   const [payfastUrl, setPayfastUrl] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<PaymentOption>('top-up');
+
+  const effectiveAmount = selectedOption === 'top-up' ? 100 : 100;
+  const effectiveItemName = selectedOption === 'top-up'
+    ? 'Credit Top-Up (100 Credits)'
+    : 'Monthly Subscription (Recurring Credits)';
+  const effectivePaymentType = selectedOption === 'top-up' ? 'credits' : 'subscription';
 
   const initiatePayment = async () => {
     setIsProcessing(true);
@@ -41,36 +52,29 @@ export const PayFastPaymentDialog = ({
     try {
       const { data, error } = await supabase.functions.invoke('payfast-payment', {
         body: {
-          amount,
-          item_name: itemName,
+          amount: effectiveAmount,
+          item_name: effectiveItemName,
           email_address: userEmail,
           name_first: userFirstName,
           name_last: userLastName,
           user_id: userId,
-          payment_type: paymentType,
+          payment_type: effectivePaymentType,
           return_url: `${window.location.origin}/payment-success`,
           cancel_url: `${window.location.origin}/payment-cancelled`,
         }
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       if (data?.success && data?.payment_data) {
         setPayfastUrl(data.payfast_url);
         setPaymentData(data.payment_data);
-        
-        // Submit form after state update
         setTimeout(() => {
-          if (formRef.current) {
-            formRef.current.submit();
-          }
+          if (formRef.current) formRef.current.submit();
         }, 100);
       } else {
         throw new Error('Invalid response from payment service');
       }
-
     } catch (error) {
       console.error('Payment error:', error);
       toast.error('Failed to initiate payment. Please try again.');
@@ -80,23 +84,68 @@ export const PayFastPaymentDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px]">
+      <DialogContent className="sm:max-w-[440px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
-            Buy More Credits with PayFast
+            Get More Credits with PayFast
           </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
+          {/* Payment Option Selector */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => setSelectedOption('top-up')}
+              className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                selectedOption === 'top-up'
+                  ? 'border-primary bg-primary/10 shadow-md'
+                  : 'border-muted hover:border-muted-foreground/30'
+              }`}
+            >
+              <RefreshCw className={`h-6 w-6 ${selectedOption === 'top-up' ? 'text-primary' : 'text-muted-foreground'}`} />
+              <span className="font-semibold text-sm">Top-Up Payment</span>
+              <span className="text-xs text-muted-foreground text-center">Once-off R100.00</span>
+            </button>
+
+            <button
+              onClick={() => setSelectedOption('recurring')}
+              className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                selectedOption === 'recurring'
+                  ? 'border-primary bg-primary/10 shadow-md'
+                  : isCreditsLow
+                    ? 'border-red-500 bg-red-50 dark:bg-red-950/20'
+                    : 'border-muted hover:border-muted-foreground/30'
+              }`}
+            >
+              {isCreditsLow && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                  LOW
+                </span>
+              )}
+              <CalendarClock className={`h-6 w-6 ${
+                isCreditsLow && selectedOption !== 'recurring'
+                  ? 'text-red-500'
+                  : selectedOption === 'recurring' ? 'text-primary' : 'text-muted-foreground'
+              }`} />
+              <span className={`font-semibold text-sm ${
+                isCreditsLow && selectedOption !== 'recurring' ? 'text-red-600 dark:text-red-400' : ''
+              }`}>Recurring Payment</span>
+              <span className="text-xs text-muted-foreground text-center">R100.00/month</span>
+            </button>
+          </div>
+
+          {/* Order Summary */}
           <div className="bg-muted p-4 rounded-lg space-y-2">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Item:</span>
-              <span className="font-medium">{itemName}</span>
+              <span className="font-medium text-sm">
+                {selectedOption === 'top-up' ? 'Top-Up Payment' : 'Recurring Payment'}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Amount:</span>
-              <span className="font-bold text-lg">R{amount.toFixed(2)}</span>
+              <span className="font-bold text-lg">R{effectiveAmount.toFixed(2)}</span>
             </div>
           </div>
 
