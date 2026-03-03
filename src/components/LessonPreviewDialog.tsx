@@ -170,30 +170,44 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
               >
                 <CollapsibleTrigger className="w-full">
                   {lesson.isSpecial ? (
-                    <div className="relative w-full px-4 py-4 bg-gradient-to-r from-primary via-purple-500 to-pink-500 hover:from-primary/90 hover:via-purple-500/90 hover:to-pink-500/90 rounded-lg border-2 border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] overflow-hidden group">
-                      {/* Animated sparkle effects */}
-                      <div className="absolute top-1 left-2 animate-pulse">
-                        <Sparkles className="h-4 w-4 text-yellow-300" />
-                      </div>
-                      <div className="absolute top-1 right-2 animate-pulse delay-150">
-                        <Star className="h-4 w-4 text-yellow-300 fill-yellow-300" />
-                      </div>
-                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 animate-bounce">
-                        <Gift className="h-4 w-4 text-white" />
-                      </div>
-                      
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                      
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="font-bold text-sm text-white drop-shadow-md">
-                          🎁 {lesson.title}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-white/90 mt-1 font-medium">
-                        With an option to reload credits with PayFast
-                      </p>
-                    </div>
+                    <div className="relative w-full px-4 py-5 bg-gradient-to-r from-primary via-purple-500 to-pink-500 hover:from-primary/90 hover:via-purple-500/90 hover:to-pink-500/90 rounded-lg border-2 border-yellow-400/70 transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-[1.04] overflow-hidden group animate-pulse-subtle">
+                       {/* Orbiting stars */}
+                       <div className="absolute top-0 left-1 animate-spin-slow">
+                         <Star className="h-3 w-3 text-yellow-300 fill-yellow-300 drop-shadow-[0_0_6px_rgba(253,224,71,0.8)]" />
+                       </div>
+                       <div className="absolute top-0 right-3 animate-bounce" style={{ animationDelay: '0.3s' }}>
+                         <Star className="h-4 w-4 text-yellow-200 fill-yellow-200 drop-shadow-[0_0_8px_rgba(253,224,71,0.9)]" />
+                       </div>
+                       <div className="absolute bottom-0 left-4 animate-ping" style={{ animationDuration: '2s' }}>
+                         <Sparkles className="h-3 w-3 text-yellow-300" />
+                       </div>
+                       <div className="absolute bottom-1 right-1 animate-bounce" style={{ animationDelay: '0.7s' }}>
+                         <Star className="h-3 w-3 text-white fill-white drop-shadow-[0_0_6px_rgba(255,255,255,0.8)]" />
+                       </div>
+                       <div className="absolute top-1/2 left-0 -translate-y-1/2 animate-ping" style={{ animationDuration: '3s' }}>
+                         <Sparkles className="h-3 w-3 text-pink-200" />
+                       </div>
+                       <div className="absolute top-1/2 right-0 -translate-y-1/2 animate-pulse">
+                         <Sparkles className="h-4 w-4 text-yellow-300 drop-shadow-[0_0_8px_rgba(253,224,71,0.7)]" />
+                       </div>
+                       
+                       {/* Continuous shimmer sweep */}
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+                       
+                       {/* Glowing border pulse */}
+                       <div className="absolute inset-0 rounded-lg border-2 border-yellow-300/50 animate-pulse" />
+                       
+                       <div className="relative z-10 flex items-center justify-center gap-2">
+                         <Gift className="h-5 w-5 text-yellow-200 animate-bounce" />
+                         <span className="font-extrabold text-sm text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                           {lesson.title}
+                         </span>
+                         <Gift className="h-5 w-5 text-yellow-200 animate-bounce" style={{ animationDelay: '0.5s' }} />
+                       </div>
+                       <p className="relative z-10 text-[10px] text-white/90 mt-1 font-medium text-center">
+                         ✨ With an option to reload credits with PayFast ✨
+                       </p>
+                     </div>
                   ) : (
                     <div className="flex items-center justify-between w-full px-4 py-3 bg-muted/50 hover:bg-muted rounded-lg border border-border transition-colors">
                       <span className="font-medium text-sm">{lesson.title}</span>
