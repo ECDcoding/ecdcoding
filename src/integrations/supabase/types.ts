@@ -422,6 +422,7 @@ export type Database = {
           credits: number
           id: string
           last_daily_credit_at: string | null
+          topup_credits: number
           updated_at: string
           user_id: string
         }
@@ -430,6 +431,7 @@ export type Database = {
           credits?: number
           id?: string
           last_daily_credit_at?: string | null
+          topup_credits?: number
           updated_at?: string
           user_id: string
         }
@@ -438,6 +440,7 @@ export type Database = {
           credits?: number
           id?: string
           last_daily_credit_at?: string | null
+          topup_credits?: number
           updated_at?: string
           user_id?: string
         }
