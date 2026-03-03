@@ -29,7 +29,7 @@ interface Lesson {
 
 const lessons: Lesson[] = [
   { id: "numeracy", title: "Numeracy", subItems: ["Counting 1-10", "Basic Addition", "Number Recognition"] },
-  { id: "free-class", title: "Try A Free Class", subItems: ["Transportation", "My Body", "Shapes", "Animals", "ABC Chart"], isSpecial: true },
+  { id: "free-class", title: "30 Day Free Trial", subItems: ["Transportation", "My Body", "Shapes", "Animals", "ABC Chart"], isSpecial: true },
   { id: "literacy", title: "Literacy", subItems: ["ABC Chart", "Letter Sounds", "Simple Words"] },
   { id: "note-of-week", title: "Note of the Week", subItems: ["Weekly Song", "Music Basics"] },
   { id: "life-skills", title: "Life Skills", subItems: ["My Body", "Five Senses", "Daily Routines"] },
@@ -191,7 +191,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
                         </span>
                       </div>
                       <p className="text-[10px] text-white/90 mt-1 font-medium">
-                        Preview 5 exciting lessons FREE!
+                        With an option to reload credits with PayFast
                       </p>
                     </div>
                   ) : (
@@ -232,11 +232,11 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
           <DialogHeader>
             <DialogTitle className="text-center text-2xl font-bold flex items-center justify-center gap-2">
               <Sparkles className="h-6 w-6 text-primary animate-pulse" />
-              Try A Free Class
-              <Sparkles className="h-6 w-6 text-primary animate-pulse" />
+               30 Day Free Trial
+               <Sparkles className="h-6 w-6 text-primary animate-pulse" />
             </DialogTitle>
             <DialogDescription className="text-center text-base">
-              Explore 5 exciting lessons for free! Click any card to start your learning adventure.
+              Enjoy 30 days of free learning! Reload credits anytime with PayFast.
             </DialogDescription>
           </DialogHeader>
           

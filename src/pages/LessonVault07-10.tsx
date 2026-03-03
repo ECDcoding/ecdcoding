@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ExpoCopilot from "@/components/ExpoCopilot";
+import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -70,12 +71,12 @@ import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
 
 const LessonVault0710 = () => {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-07-10');
-  const { credits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits } = useCredits();
+  const { credits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
@@ -1571,6 +1572,19 @@ const LessonVault0710 = () => {
 
       {/* ASK AI Copilot */}
       <ExpoCopilot context="My Lesson Vault (Ages 7-10)" />
+
+      {/* PayFast Reload Credits Dialog */}
+      <PayFastPaymentDialog
+        open={showReloadDialog}
+        onOpenChange={setShowReloadDialog}
+        amount={100}
+        itemName="Credit Top-Up (100 Credits)"
+        paymentType="credits"
+        userEmail={user?.email}
+        userFirstName={profile?.first_name}
+        userLastName={profile?.last_name}
+        onPaymentComplete={() => setShowReloadDialog(false)}
+      />
     </div>
   );
 };
