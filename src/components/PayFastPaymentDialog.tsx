@@ -84,7 +84,7 @@ export const PayFastPaymentDialog = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
-            PayFast Payment
+            Buy More Credits with PayFast
           </DialogTitle>
         </DialogHeader>
         
@@ -101,7 +101,7 @@ export const PayFastPaymentDialog = ({
           </div>
 
           <p className="text-sm text-muted-foreground text-center">
-            You will be redirected to PayFast to complete your secure payment.
+            You will be redirected to the PayFast Gateway to complete your secure payment.
           </p>
 
           <Button
