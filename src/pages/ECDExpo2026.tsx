@@ -341,7 +341,7 @@ const ECDExpo2026Content = () => {
             {/* Overview Tab */}
             <TabsContent value="overview">
               <div className="grid md:grid-cols-2 gap-8">
-                <Card>
+                <Card style={{ backgroundColor: '#2a2d34' }}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Award className="h-5 w-5 text-primary" />
@@ -367,7 +367,7 @@ const ECDExpo2026Content = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card style={{ backgroundColor: '#2a2d34' }}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Building2 className="h-5 w-5 text-primary" />
@@ -395,7 +395,7 @@ const ECDExpo2026Content = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card style={{ backgroundColor: '#2a2d34' }}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Users className="h-5 w-5 text-primary" />
@@ -427,7 +427,7 @@ const ECDExpo2026Content = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card style={{ backgroundColor: '#2a2d34' }}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Mic2 className="h-5 w-5 text-primary" />
