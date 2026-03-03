@@ -266,6 +266,13 @@ const LessonVault0406 = () => {
     return () => clearInterval(creditDeductionInterval);
   }, [creditsLoading, credits, consumeCredits, isUserActive]);
 
+  // Immediately show PayFast reload dialog when credits are exhausted
+  useEffect(() => {
+    if (!creditsLoading && credits <= 0 && user) {
+      setShowReloadDialog(true);
+    }
+  }, [credits, creditsLoading, user]);
+
   // Buy Credits visibility when credits reach 20 or below
   useEffect(() => {
     if (displayCredits > 20) {
