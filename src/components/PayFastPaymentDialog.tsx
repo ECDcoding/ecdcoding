@@ -157,7 +157,7 @@ export const PayFastPaymentDialog = ({
           {/* Info for first-time users */}
           {defaultOption === 'recurring' && (
             <p className="text-xs text-muted-foreground text-center italic">
-              Start with a monthly subscription. Once active, you can also add once-off top-ups anytime.
+              Start with a monthly subscription. Once active, you can also add once-off top-ups anytime you run out of credits.
             </p>
           )}
 
