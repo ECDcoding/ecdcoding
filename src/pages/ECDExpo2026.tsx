@@ -261,7 +261,7 @@ const ECDExpo2026Content = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Main Focus Areas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {mainFocus.map((item, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow border-primary/20">
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow border-primary/20" style={{ backgroundColor: '#2a2d34' }}>
                 <CardHeader>
                   <div className="mx-auto mb-4 p-4 bg-primary/10 rounded-full text-primary">
                     {item.icon}
