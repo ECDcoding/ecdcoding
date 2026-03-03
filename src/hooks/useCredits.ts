@@ -144,6 +144,9 @@ export const useCredits = () => {
   };
 
   // Use credits when interacting with lessons
+  // State for showing PayFast reload dialog
+  const [showReloadDialog, setShowReloadDialog] = useState(false);
+
   const useCredits = async (amount: number = 1) => {
     if (!user) return false;
     if (credits < amount) {
@@ -154,9 +157,11 @@ export const useCredits = () => {
         return true; // Allow the action after refill
       }
       
+      // Show PayFast reload dialog instead of just a toast
+      setShowReloadDialog(true);
       toast({
-        title: "Insufficient Credits",
-        description: "Please add more credits to continue learning.",
+        title: "Credits Exhausted",
+        description: "Reload your credits with PayFast to continue learning.",
         variant: "destructive",
       });
       return false;
@@ -250,5 +255,7 @@ export const useCredits = () => {
     purchaseCredits,
     useCredits,
     refreshCredits: fetchCredits,
+    showReloadDialog,
+    setShowReloadDialog,
   };
 };
