@@ -455,7 +455,7 @@ const ECDExpo2026Content = () => {
             {/* Sponsors Tab */}
             <TabsContent value="sponsors">
               <ExpoAccountsList type="sponsor" />
-              <Card id="sponsor-application-form">
+              <Card id="sponsor-application-form" style={{ backgroundColor: '#2a2d34' }}>
                 <CardHeader>
                   <CardTitle>Sponsor Application Form</CardTitle>
                   <CardDescription>
