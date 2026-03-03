@@ -85,7 +85,7 @@ const ExpoAccountsList = ({ type }: ExpoAccountsListProps) => {
 
   return (
     <>
-      <Card className="mb-6">
+      <Card className="mb-6" style={{ backgroundColor: '#2a2d34' }}>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             {config.icon}
