@@ -106,6 +106,7 @@ const LessonVault0406 = () => {
   const [transportOpen, setTransportOpen] = useState(false);
   const [danceOpen, setDanceOpen] = useState(false);
   const [colorsOpen, setColorsOpen] = useState(false);
+  const [monthsOpen, setMonthsOpen] = useState(false);
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [selectedFullScreenColor, setSelectedFullScreenColor] = useState<string | null>(null);
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
@@ -1410,8 +1411,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                    Alphabets
                  </DropdownMenuItem>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
-                   Colors
-                 </DropdownMenuItem>
+                    Colors
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setMonthsOpen(true)} className="font-medium text-white hover:bg-white/20">
+                    Months of the Year
+                  </DropdownMenuItem>
                </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -3432,6 +3436,43 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Months of the Year Learning Dialog */}
+        {monthsOpen && (
+          <div className="fixed inset-0 bg-white z-[100] overflow-y-auto">
+            <div className="min-h-screen flex flex-col">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-[#395B50] text-white">
+                <h1 className="text-3xl font-bold text-yellow-400" style={{fontFamily: 'Bungee Shade, cursive'}}>
+                  📅 Months of the Year
+                </h1>
+                <Button 
+                  onClick={() => setMonthsOpen(false)}
+                  variant="ghost" 
+                  className="text-white hover:bg-white/20 p-2"
+                >
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+
+              <div className="flex-1 p-6 flex flex-col gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 flex-1">
+                  <div className="bg-red-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">January</div>
+                  <div className="bg-orange-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">February</div>
+                  <div className="bg-yellow-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">March</div>
+                  <div className="bg-green-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">April</div>
+                  <div className="bg-teal-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">May</div>
+                  <div className="bg-blue-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">June</div>
+                  <div className="bg-indigo-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">July</div>
+                  <div className="bg-purple-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">August</div>
+                  <div className="bg-pink-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">September</div>
+                  <div className="bg-rose-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">October</div>
+                  <div className="bg-cyan-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">November</div>
+                  <div className="bg-emerald-500 text-white font-bold rounded-xl p-6 flex items-center justify-center text-2xl sm:text-3xl shadow-lg min-h-[100px]">December</div>
                 </div>
               </div>
             </div>
