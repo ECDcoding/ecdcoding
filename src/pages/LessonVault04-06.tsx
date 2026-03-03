@@ -421,6 +421,13 @@ const LessonVault0406 = () => {
           <div className="bg-cyan-500 text-white font-bold rounded-lg p-3 text-center">November</div>
           <div className="bg-emerald-500 text-white font-bold rounded-lg p-3 text-center">December</div>
         </div>
+        <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-yellow-400 text-white font-bold rounded-lg p-3 text-center">☀️ Summer</div>
+          <div className="bg-sky-400 text-white font-bold rounded-lg p-3 text-center">❄️ Winter</div>
+          <div className="bg-amber-600 text-white font-bold rounded-lg p-3 text-center">🍂 Autumn</div>
+          <div className="bg-lime-500 text-white font-bold rounded-lg p-3 text-center">🌸 Spring</div>
+        </div>
       </div>
     ), borderColor: "border-amber-500" },
   };
@@ -2710,6 +2717,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <div className="bg-cyan-500 text-white font-bold rounded-md p-2 text-center text-sm">November</div>
                       <div className="bg-emerald-500 text-white font-bold rounded-md p-2 text-center text-sm">December</div>
                     </div>
+                    <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <div className="bg-yellow-400 text-white font-bold rounded-md p-2 text-center text-sm">☀️ Summer</div>
+                      <div className="bg-sky-400 text-white font-bold rounded-md p-2 text-center text-sm">❄️ Winter</div>
+                      <div className="bg-amber-600 text-white font-bold rounded-md p-2 text-center text-sm">🍂 Autumn</div>
+                      <div className="bg-lime-500 text-white font-bold rounded-md p-2 text-center text-sm">🌸 Spring</div>
+                    </div>
                   </div>
                   {isRecording && selectedCardForTest === "Months of the Year" && (
                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
@@ -2853,6 +2867,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <div className="bg-rose-500 text-white font-bold rounded-md p-2 text-center text-sm">October</div>
                       <div className="bg-cyan-500 text-white font-bold rounded-md p-2 text-center text-sm">November</div>
                       <div className="bg-emerald-500 text-white font-bold rounded-md p-2 text-center text-sm">December</div>
+                    </div>
+                    <h4 className="text-sm font-bold text-amber-600 mt-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Seasons of the Year</h4>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <div className="bg-yellow-400 text-white font-bold rounded-md p-2 text-center text-sm">☀️ Summer</div>
+                      <div className="bg-sky-400 text-white font-bold rounded-md p-2 text-center text-sm">❄️ Winter</div>
+                      <div className="bg-amber-600 text-white font-bold rounded-md p-2 text-center text-sm">🍂 Autumn</div>
+                      <div className="bg-lime-500 text-white font-bold rounded-md p-2 text-center text-sm">🌸 Spring</div>
                     </div>
                   </div>
                   {isRecording && selectedCardForTest === "Months of the Year" && (
