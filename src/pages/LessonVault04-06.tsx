@@ -2694,7 +2694,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-amber-600 mb-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-gray-500 text-center">January – June</p>
                     <div className="grid grid-cols-2 gap-1.5">
                       <div className="bg-red-500 text-white font-bold rounded-md p-2 text-center text-sm">January</div>
                       <div className="bg-orange-500 text-white font-bold rounded-md p-2 text-center text-sm">February</div>
@@ -2703,7 +2702,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <div className="bg-teal-500 text-white font-bold rounded-md p-2 text-center text-sm">May</div>
                       <div className="bg-blue-500 text-white font-bold rounded-md p-2 text-center text-sm">June</div>
                     </div>
-                    <p className="text-xs font-semibold text-gray-500 text-center mt-2">July – December</p>
                     <div className="grid grid-cols-2 gap-1.5">
                       <div className="bg-indigo-500 text-white font-bold rounded-md p-2 text-center text-sm">July</div>
                       <div className="bg-purple-500 text-white font-bold rounded-md p-2 text-center text-sm">August</div>
@@ -2838,7 +2836,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-amber-600 mb-3 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Months of the Year</h3>
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-gray-500 text-center">January – June</p>
+                    
                     <div className="grid grid-cols-2 gap-1.5">
                       <div className="bg-red-500 text-white font-bold rounded-md p-2 text-center text-sm">January</div>
                       <div className="bg-orange-500 text-white font-bold rounded-md p-2 text-center text-sm">February</div>
@@ -2847,7 +2845,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <div className="bg-teal-500 text-white font-bold rounded-md p-2 text-center text-sm">May</div>
                       <div className="bg-blue-500 text-white font-bold rounded-md p-2 text-center text-sm">June</div>
                     </div>
-                    <p className="text-xs font-semibold text-gray-500 text-center mt-2">July – December</p>
+                    
                     <div className="grid grid-cols-2 gap-1.5">
                       <div className="bg-indigo-500 text-white font-bold rounded-md p-2 text-center text-sm">July</div>
                       <div className="bg-purple-500 text-white font-bold rounded-md p-2 text-center text-sm">August</div>
