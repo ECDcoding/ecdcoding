@@ -320,19 +320,19 @@ const ECDExpo2026Content = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8 h-auto">
               <TabsTrigger value="overview" className="py-3">Overview</TabsTrigger>
-              <TabsTrigger value="sponsors" className="py-3">
+              <TabsTrigger value="sponsors" className="py-3" style={{ backgroundColor: '#2a2d34' }}>
                 <Award className="h-4 w-4 mr-1" />
                 Sponsors
               </TabsTrigger>
-              <TabsTrigger value="exhibitors" className="py-3">
+              <TabsTrigger value="exhibitors" className="py-3" style={{ backgroundColor: '#2a2d34' }}>
                 <Building2 className="h-4 w-4 mr-1" />
                 Exhibitors
               </TabsTrigger>
-              <TabsTrigger value="speakers" className="py-3">
+              <TabsTrigger value="speakers" className="py-3" style={{ backgroundColor: '#2a2d34' }}>
                 <Mic2 className="h-4 w-4 mr-1" />
                 Speakers
               </TabsTrigger>
-              <TabsTrigger value="delegates" className="py-3">
+              <TabsTrigger value="delegates" className="py-3" style={{ backgroundColor: '#2a2d34' }}>
                 <Users className="h-4 w-4 mr-1" />
                 Delegates
               </TabsTrigger>
