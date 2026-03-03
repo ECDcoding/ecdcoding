@@ -563,22 +563,22 @@ const Register = () => {
       {/* Registration Details */}
       <div className="space-y-6">
         <div className="space-y-4">
-          <Label>Registration Status for Learning Environment(s) *</Label>
+          <Label>Motive for Registration *</Label>
           <RadioGroup 
             value={formData.registrationStatus}
             onValueChange={(value) => handleInputChange("registrationStatus", value)}
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="extra" id="extra" />
-              <Label htmlFor="extra">Extra Class for My Kid(s)</Label>
+              <RadioGroupItem value="extra-class" id="extra-class" />
+              <Label htmlFor="extra-class">Adding Extra Class for My Kid(s)</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="home" id="home" />
-              <Label htmlFor="home">Home Schooling</Label>
+              <RadioGroupItem value="tech-savvy" id="tech-savvy" />
+              <Label htmlFor="tech-savvy">Ensuring My Kid(s) Become Tech Savvy</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="ecd" id="ecd" />
-              <Label htmlFor="ecd">ECD Institution</Label>
+              <RadioGroupItem value="assessment" id="assessment" />
+              <Label htmlFor="assessment">Assessing if My Kid is Getting Properly Equipped</Label>
             </div>
           </RadioGroup>
         </div>
