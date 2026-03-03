@@ -161,7 +161,7 @@ export const useCredits = () => {
       setShowReloadDialog(true);
       toast({
         title: "Credits Exhausted",
-        description: "Reload your credits with PayFast to continue learning.",
+        description: "You're on free daily credits. Load more credits with PayFast to continue.",
         variant: "destructive",
       });
       return false;
