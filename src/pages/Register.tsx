@@ -276,16 +276,14 @@ const Register = () => {
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
-  const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(100);
-  const [selectedPaymentType, setSelectedPaymentType] = useState("monthly");
-  const [reloadingCreditsAgreed, setReloadingCreditsAgreed] = useState(false);
-  const [paymentCompleted, setPaymentCompleted] = useState(false);
+  const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
+  const [selectedPaymentType, setSelectedPaymentType] = useState("annual");
   
   // Admin user ID - can register without payment
   const ADMIN_USER_ID = "d1577987-f3c2-4573-aee5-fd83f403f03b";
   
-  // Check if payment is required (parent and ecd/ecd-manager must pay, tech-teacher has different flow)
-  const requiresPayment = registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd';
+  // Check if registration type is tech-teacher (only one that pays during registration)
+  const requiresPayment = registrationType === 'tech-teacher';
   
   // Initial empty form state - used for resetting
   const getInitialFormData = () => ({
@@ -348,8 +346,6 @@ const Register = () => {
   // This ensures no previous user's data persists between registration attempts
   useEffect(() => {
     setFormData(getInitialFormData());
-    setReloadingCreditsAgreed(false);
-    setPaymentCompleted(false);
     setDebitCardDialogOpen(false);
   }, [registrationType]);
 
@@ -971,53 +967,6 @@ const Register = () => {
         </div>
       </div>
       
-      <Separator />
-
-      {/* Payment Information */}
-      <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-4">
-        <h3 className="text-lg font-semibold text-center mb-4">Subscription Plans</h3>
-        <div className="space-y-2 text-center">
-          <p className="text-base font-semibold">
-            Monthly Payment <span className="text-primary">R100.00</span>
-          </p>
-          <p className="text-base font-semibold">
-            Annual Payment <span className="text-primary">R1200.00</span>
-          </p>
-        </div>
-
-        <Separator />
-
-        {/* Add More Credits Section */}
-        <div className="flex items-center justify-center gap-2">
-          <Checkbox 
-            id="reloading-credits-ecd" 
-            checked={reloadingCreditsAgreed}
-            onCheckedChange={(checked) => setReloadingCreditsAgreed(checked === true)}
-          />
-          <Label htmlFor="reloading-credits-ecd" className="text-base font-semibold cursor-pointer">
-            Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
-          </Label>
-        </div>
-      </div>
-
-      {/* PayFast Payment Button */}
-      <div className="space-y-4">
-        <div className="p-4 bg-muted rounded-lg">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">
-                Pay with PayFast
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-background border border-border">
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("credits"); setDebitCardDialogOpen(true); }}>Reloading Credits - R100</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
     </>
   );
 
@@ -1382,49 +1331,6 @@ const Register = () => {
                 </div>
               )}
 
-              {registrationType === 'parent' && (
-                <>
-                  {/* Payment Information */}
-                  <div className="p-6 bg-primary/10 border-2 border-primary rounded-lg space-y-3">
-                    <h3 className="text-lg font-semibold text-center mb-4">Recurring Payment Options</h3>
-                    <div className="space-y-2 text-center">
-                      <p className="text-base font-semibold">
-                        Monthly Payment <span className="text-primary">R100.00</span>
-                      </p>
-                      <p className="text-base font-semibold">
-                        Annual Payment <span className="text-primary">R1200.00</span>
-                      </p>
-                      <div className="flex items-center justify-center gap-2">
-                        <Checkbox 
-                          id="reloading-credits-parent" 
-                          checked={reloadingCreditsAgreed}
-                          onCheckedChange={(checked) => setReloadingCreditsAgreed(checked === true)}
-                        />
-                        <Label htmlFor="reloading-credits-parent" className="text-base font-semibold cursor-pointer">
-                          Reloading Credit (Anytime Request) <span className="text-primary">R100.00</span>
-                        </Label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" className="w-full bg-[#132a13] text-yellow-400 border-[#132a13] hover:bg-[#132a13]/90 hover:text-yellow-300">
-                            Pay with PayFast
-                            <ChevronDown className="ml-2 h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-background border border-border">
-                          <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(100); setSelectedPaymentType("monthly"); setDebitCardDialogOpen(true); }}>Monthly Payment - R100</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => { setSelectedPaymentAmount(1200); setSelectedPaymentType("annual"); setDebitCardDialogOpen(true); }}>Annual Payment - R1200</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </div>
-                </>
-              )}
 
               {/* Terms and Policy Agreement */}
               <div className="flex items-start space-x-3 p-4 border rounded-lg bg-muted/50">
@@ -1549,16 +1455,11 @@ const Register = () => {
               </div>
 
               <div className="flex flex-col items-center gap-2 pt-6">
-                {requiresPayment && !paymentCompleted && (
-                  <p className="text-sm text-muted-foreground">
-                    Please complete payment above before submitting registration. Thank you!
-                  </p>
-                )}
                 <Button 
                   type="submit" 
                   size="lg" 
                   className="w-full max-w-md"
-                  disabled={!formData.agreeToTerms || isSubmitting || (requiresPayment && !paymentCompleted)}
+                  disabled={!formData.agreeToTerms || isSubmitting}
                 >
                   {isSubmitting ? 'Submitting...' : 
                    registrationType === 'tech-teacher' ? 'Submit Application' : 'Submit Registration'}
@@ -1573,7 +1474,7 @@ const Register = () => {
       <DebitCardPaymentDialog 
         open={debitCardDialogOpen} 
         onOpenChange={setDebitCardDialogOpen}
-        onPaymentComplete={() => setPaymentCompleted(true)}
+        onPaymentComplete={() => setDebitCardDialogOpen(false)}
         amount={selectedPaymentAmount}
         paymentType={selectedPaymentType}
       />
