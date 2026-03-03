@@ -95,7 +95,7 @@ export const PayFastPaymentDialog = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
-            Load Credits with PayFast
+            Reload Credits with PayFast
           </DialogTitle>
         </DialogHeader>
         
