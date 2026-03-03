@@ -966,9 +966,6 @@ const ECDExpo2026Content = () => {
             <Badge variant="secondary">09-11 June 2026</Badge>
             <Badge variant="secondary">Nasrec, Soweto</Badge>
           </div>
-          <p className="mt-6 text-sm opacity-80">
-            © 2026 ECD Coding. All rights reserved.
-          </p>
         </div>
       </footer>
 
@@ -1016,10 +1013,11 @@ const ECDExpo2026Content = () => {
 
       {/* Footer */}
       <footer className="py-6 px-6 border-t border-border bg-card/50 mt-8">
-        <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="container mx-auto flex flex-col items-center gap-3">
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <span>Copyright</span>
             <Copyright className="h-4 w-4" />
-            <span>ECD Coding and Robotics Expo 2026. All rights reserved.</span>
+            <span>ECDcoding 2026. All rights reserved.</span>
           </div>
           {isAdmin && (
             <Link
