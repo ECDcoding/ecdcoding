@@ -346,11 +346,14 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
 
           <div className="flex justify-center">
             <Button
-              variant="outline"
-              onClick={() => setShowFreeClassDialog(false)}
-              className="text-sm"
+              onClick={() => {
+                setShowFreeClassDialog(false);
+                onOpenChange(false);
+                navigate('/register');
+              }}
+              className="text-sm font-bold bg-lime-500 hover:bg-lime-600 text-white"
             >
-              ← Back to lessons
+              Register
             </Button>
           </div>
         </DialogContent>
