@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_CREDITS = 100; // New users start with 100 credits
 const DAILY_FREE_CREDITS = 5; // Free credits awarded daily
@@ -11,8 +12,9 @@ export const useCredits = () => {
   const [credits, setCredits] = useState<number>(0);
   const [topupCredits, setTopupCredits] = useState<number>(0);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const checkAndAwardDailyCredits = async (userId: string, currentCredits: number, lastDailyCreditAt: string | null) => {
     const now = new Date();
@@ -149,7 +151,7 @@ export const useCredits = () => {
   // State for showing PayFast reload dialog
   const [showReloadDialog, setShowReloadDialog] = useState(false);
 
-  const useCredits = async (amount: number = 1) => {
+  const useCreditsAction = async (amount: number = 1) => {
     if (!user) return false;
     if (credits < amount) {
       // Check if admin and refill
@@ -159,13 +161,30 @@ export const useCredits = () => {
         return true; // Allow the action after refill
       }
       
-      // Show PayFast reload dialog instead of just a toast
-      setShowReloadDialog(true);
+      // Check if user has topup credits they can fall back on
+      if (topupCredits > 0) {
+        setShowReloadDialog(true);
+        toast({
+          title: "Credits Exhausted",
+          description: "You're on free daily credits. Load more credits with PayFast to continue.",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      // No credits left at all — log the user out
       toast({
-        title: "Credits Exhausted",
-        description: "You're on free daily credits. Load more credits with PayFast to continue.",
+        title: "Session Ended — Credits Exhausted",
+        description: "Your free daily credits are finished. Please reload credits to resume your ECDcoding activities!",
         variant: "destructive",
       });
+      
+      // Sign out and redirect to home after a short delay so toast is visible
+      setTimeout(async () => {
+        await signOut();
+        navigate("/");
+      }, 2500);
+      
       return false;
     }
 
@@ -258,7 +277,7 @@ export const useCredits = () => {
     topupCredits,
     loading,
     purchaseCredits,
-    useCredits,
+    useCredits: useCreditsAction,
     refreshCredits: fetchCredits,
     showReloadDialog,
     setShowReloadDialog,
