@@ -552,6 +552,50 @@ export type Database = {
           user_id: string
         }[]
       }
+      create_user_profile: {
+        Args: {
+          _aspiration?: string
+          _available_hours?: string
+          _country: string
+          _current_programs?: string
+          _experience?: string
+          _first_name: string
+          _hear_about?: string
+          _institution?: string
+          _last_name: string
+          _programming_languages?: string
+          _qualifications?: string
+          _registration_status?: string
+          _registration_type: string
+          _relationship?: string
+          _salary?: string
+          _start_date?: string
+          _state: string
+          _teaching_philosophy?: string
+          _tech_goals?: string
+          _tech_skills?: string
+          _user_id: string
+          _username: string
+        }
+        Returns: undefined
+      }
+      create_user_sensitive_data: {
+        Args: {
+          _age_groups?: string
+          _ecd_email?: string
+          _ecd_phone?: string
+          _facility_name?: string
+          _facility_type?: string
+          _learner_first_name?: string
+          _learner_gender?: string
+          _learner_last_name?: string
+          _number_of_kids?: string
+          _number_of_learners?: string
+          _phone?: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
       get_sensitive_profile_data: {
         Args: never
         Returns: {
