@@ -112,6 +112,12 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
                 variant="outline"
                 className="w-full flex items-center gap-2"
                 onClick={async () => {
+                  // If in an iframe (preview), open in a new tab to avoid ERR_BLOCKED_BY_RESPONSE
+                  const isInIframe = window.self !== window.top;
+                  if (isInIframe) {
+                    window.open(window.location.origin, '_blank');
+                    return;
+                  }
                   await lovable.auth.signInWithOAuth("google", {
                     redirect_uri: window.location.origin,
                   });
