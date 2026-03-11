@@ -13,6 +13,8 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import { lovable } from "@/integrations/lovable/index";
+import { Separator } from "@/components/ui/separator";
 
 interface SignInProps {
   open: boolean;
