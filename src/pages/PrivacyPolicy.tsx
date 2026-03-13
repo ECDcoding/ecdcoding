@@ -213,8 +213,8 @@ const PrivacyPolicy = () => {
               <h2 className="text-xl font-semibold mb-3">12. Contact Us</h2>
               <p className="mb-2">If you have questions about this Privacy Policy or our data practices, please contact us:</p>
               <ul className="list-none space-y-2 ml-4">
-                <li><strong>Email:</strong> privacy@ecdcoding.com</li>
-                <li><strong>Website:</strong> <Link to="/contact" className="text-primary underline">Contact Us</Link></li>
+                <li><strong>Email:</strong> <a href="mailto:info@ecdcoding.co.za" className="text-primary underline">info@ecdcoding.co.za</a></li>
+                <li><strong>Website:</strong> <a href="https://www.ecdcoding.co.za" target="_blank" rel="noopener noreferrer" className="text-primary underline">www.ecdcoding.co.za</a></li>
               </ul>
             </section>
           </CardContent>
