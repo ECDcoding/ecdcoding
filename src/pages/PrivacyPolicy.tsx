@@ -85,6 +85,11 @@ const PrivacyPolicy = () => {
 
             <section>
               <h2 className="text-xl font-semibold mb-3">3. How We Use Your Information</h2>
+              <p className="mb-3">
+                We will use your data to provide you with the services you requested, such as access to educational content, 
+                learning progress tracking, email notifications, and program updates. We will not sell your data to third parties, 
+                but we may share it with our partners who help us provide our services (e.g., payment processors, hosting providers).
+              </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>To provide and maintain our educational services</li>
                 <li>To process registrations and payments</li>
@@ -94,6 +99,21 @@ const PrivacyPolicy = () => {
                 <li>To ensure child safety and comply with legal obligations</li>
                 <li>To send educational content and program updates</li>
               </ul>
+
+              <h3 className="text-lg font-medium mb-2 mt-4">How We Use Google User Data</h3>
+              <p className="mb-2">
+                If you sign in with Google, we use the data received from your Google account strictly for the following purposes:
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><strong>Account authentication:</strong> To verify your identity and securely sign you in</li>
+                <li><strong>Profile personalisation:</strong> To display your name and profile picture within the platform</li>
+                <li><strong>Communication:</strong> To send you service-related notifications, such as account updates and educational content alerts</li>
+              </ul>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We do not use Google user data for advertising, profiling, or any purpose unrelated to providing and improving 
+                ECDcoding's educational services. We do not sell Google user data to third parties. Data may only be shared with 
+                service providers who assist in operating our platform, subject to confidentiality obligations.
+              </p>
             </section>
 
             <section>
