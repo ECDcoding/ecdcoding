@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import Chatbot from "@/components/Chatbot";
-import { Copyright, ChevronDown, Calendar, Mail, Phone } from "lucide-react";
+import { Copyright, ChevronDown, Calendar, Mail, Phone, Home } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
   DropdownMenu,
