@@ -29,6 +29,12 @@ const PrivacyPolicy = () => {
 
             <section>
               <h2 className="text-xl font-semibold mb-3">2. Information We Collect</h2>
+              <p className="mb-3">
+                The data we collect about you is what you have provided to us, including your name, email address, cell phone number, 
+                location, and other registration details. We may collect, or process on behalf of our customers, the following categories 
+                of personal data when you use or interact with our products and services.
+              </p>
+
               <h3 className="text-lg font-medium mb-2">Personal Information</h3>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Name, email address, phone number</li>
@@ -36,6 +42,31 @@ const PrivacyPolicy = () => {
                 <li>Educational and professional information (for teachers and ECD managers)</li>
                 <li>Payment information (processed securely through third-party providers)</li>
               </ul>
+
+              <h3 className="text-lg font-medium mb-2 mt-4">Information from Google Sign-In</h3>
+              <p className="mb-2">
+                If you choose to sign in using Google, we receive limited profile information from your Google account. 
+                Our use of Google user data is limited to the following:
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><strong>Email address:</strong> Used to create and identify your account</li>
+                <li><strong>Display name:</strong> Used to personalise your experience on the platform</li>
+                <li><strong>Profile picture:</strong> Displayed on your user profile (if available)</li>
+              </ul>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We do not request access to your Google contacts, calendar, drive, or any other Google services. 
+                We do not sell, share, or transfer your Google user data to any third parties, except as necessary to provide 
+                and improve our services, or as required by law. Our use and transfer of information received from Google APIs 
+                adheres to the{" "}
+                <a 
+                  href="https://developers.google.com/terms/api-services-user-data-policy" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-primary underline"
+                >
+                  Google API Services User Data Policy
+                </a>, including the Limited Use requirements.
+              </p>
 
               <h3 className="text-lg font-medium mb-2 mt-4">Child Information</h3>
               <ul className="list-disc list-inside space-y-2 ml-4">
