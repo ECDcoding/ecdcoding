@@ -94,6 +94,9 @@ const Index = () => {
               </div>
             </PopoverContent>
           </Popover>
+          <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Home className="h-5 w-5" />
+          </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
               <img src={adminIcon} alt="Admin" className="h-6 w-6" />
