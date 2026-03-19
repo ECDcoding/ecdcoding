@@ -96,7 +96,7 @@ const Index = () => {
           </Popover>
           <Link to="/privacy-policy" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Privacy Policy">
             <Shield className="h-5 w-5" />
-            <span className="text-sm text-white">Privacy Policy</span>
+            <span className="text-sm text-muted-foreground">Privacy Policy</span>
           </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
