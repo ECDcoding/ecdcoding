@@ -48,7 +48,7 @@ const Index = () => {
             <span className="text-sm">|</span>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-sm font-semibold hover:text-foreground transition-colors cursor-pointer">
-                <Calendar className="mr-1 h-4 w-4" /> <span>Events</span> <ChevronDown className="ml-1 h-3 w-3" />
+                <Calendar className="mr-1 h-4 w-4 text-lime-400" /> <span>Events</span> <ChevronDown className="ml-1 h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
                 <DropdownMenuItem asChild>
@@ -94,8 +94,9 @@ const Index = () => {
               </div>
             </PopoverContent>
           </Popover>
-          <Link to="/privacy-policy" className="text-lime-400 hover:text-lime-300 transition-colors" title="Privacy Policy">
+          <Link to="/privacy-policy" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Privacy Policy">
             <Shield className="h-5 w-5" />
+            <span className="text-sm">Privacy Policy</span>
           </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
