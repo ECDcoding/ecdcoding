@@ -42,7 +42,7 @@ const Index = () => {
           <div className="flex items-center gap-4 text-muted-foreground">
             <div className="flex items-center space-x-2">
               <span className="text-sm">Copyright</span>
-              <Copyright className="h-4 w-4" />
+              <Copyright className="h-4 w-4 text-lime-400" />
               <span className="text-sm">ECDcoding 2026</span>
             </div>
             <span className="text-sm">|</span>
@@ -96,7 +96,7 @@ const Index = () => {
           </Popover>
           <Link to="/privacy-policy" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Privacy Policy">
             <Shield className="h-5 w-5" />
-            <span className="text-sm">Privacy Policy</span>
+            <span className="text-sm text-white">Privacy Policy</span>
           </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
