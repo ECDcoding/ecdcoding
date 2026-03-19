@@ -42,7 +42,7 @@ const Index = () => {
           <div className="flex items-center gap-4 text-muted-foreground">
             <div className="flex items-center space-x-2">
               <span className="text-sm">Copyright</span>
-              <Copyright className="h-4 w-4" />
+              <Copyright className="h-4 w-4 text-lime-400" />
               <span className="text-sm">ECDcoding 2026</span>
             </div>
             <span className="text-sm">|</span>
