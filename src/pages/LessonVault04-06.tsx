@@ -461,6 +461,10 @@ const LessonVault0406 = () => {
         <div className="bg-lime-500 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🌸 Spring</div>
       </div>
     ), borderColor: "border-amber-500" },
+    "Numbers 1-10": { image: numbers1to10, title: "Numbers 1 – 10", borderColor: "border-blue-500" },
+    "Numbers 11-20": { image: numbers11to20, title: "Numbers 11 – 20", borderColor: "border-green-500" },
+    "Numbers 21-30": { image: numbers21to30, title: "Numbers 21 – 30", borderColor: "border-yellow-500" },
+    "Numbers 31-40": { image: numbers31to40, title: "Numbers 31 – 40", borderColor: "border-pink-500" },
   };
 
   // Helper function to handle card click for stopping carousel and opening full-screen view
