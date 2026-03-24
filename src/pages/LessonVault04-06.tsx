@@ -36,6 +36,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
+import NumbersCarousel from "@/components/NumbersCarousel";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
 import instagramLogo from "@/assets/instagram-logo.png";
 import whatsappLogo from "@/assets/whatsapp-logo.jpg";
