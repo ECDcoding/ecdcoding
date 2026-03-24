@@ -36,6 +36,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
+import NumbersCarousel from "@/components/NumbersCarousel";
 import domesticAnimalsCartoon from "@/assets/domestic-animals-cartoon.png";
 import instagramLogo from "@/assets/instagram-logo.png";
 import whatsappLogo from "@/assets/whatsapp-logo.jpg";
@@ -2560,6 +2561,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
           </div>
         )}
+
+        {/* Numbers Carousel */}
+        <NumbersCarousel />
 
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
