@@ -2562,6 +2562,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         )}
 
+        {/* Numbers Carousel */}
+        <NumbersCarousel />
+
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
           <div className="text-center mb-8">
