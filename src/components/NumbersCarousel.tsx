@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
@@ -22,8 +23,11 @@ const numberWords = [
   "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine", "forty",
 ];
 
+type LessonPeriod = "day" | "week" | "month";
+
 const NumbersCarousel = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [lessonPeriod, setLessonPeriod] = useState<LessonPeriod>("day");
 
   const goNext = () => setCurrentPage((p) => Math.min(p + 1, pages.length - 1));
   const goPrev = () => setCurrentPage((p) => Math.max(p - 1, 0));
@@ -42,12 +46,24 @@ const NumbersCarousel = () => {
 
   return (
     <div className="mt-12 p-6 rounded-2xl" style={{ backgroundColor: "#395B50" }}>
-      <h2
-        className="text-3xl font-bold text-lime-400 text-center mb-6"
-        style={{ fontFamily: '"Bungee Shade", cursive' }}
-      >
-        🔢 Numbers Carousel
-      </h2>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <h2
+          className="text-2xl sm:text-3xl font-bold text-lime-400 text-center"
+          style={{ fontFamily: '"Bungee Shade", cursive' }}
+        >
+          📋 Card Lesson of the
+        </h2>
+        <Select value={lessonPeriod} onValueChange={(val) => setLessonPeriod(val as LessonPeriod)}>
+          <SelectTrigger className="w-[140px] bg-lime-400 text-gray-900 font-bold border-none rounded-xl text-lg">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="day">Day</SelectItem>
+            <SelectItem value="week">Week</SelectItem>
+            <SelectItem value="month">Month</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       <div className="relative max-w-4xl mx-auto">
         {/* Navigation */}
