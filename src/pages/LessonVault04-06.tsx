@@ -141,6 +141,7 @@ const LessonVault0406 = () => {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
+  const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
   const [testResults, setTestResults] = useState<{
     subject: string;
     audioUrl: string;
@@ -483,6 +484,7 @@ const LessonVault0406 = () => {
       }
       setCarouselPaused(true);
       setSelectedCardForTest(cardName);
+      setFocusedLessonCard(cardName);
       
       // Open full-screen view with card data
       const cardData = carouselCardData[cardName];
@@ -2570,8 +2572,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         )}
 
-        {/* Numbers Carousel */}
-        <NumbersCarousel />
+        {/* Card Lesson of the Day/Week/Month */}
+        <NumbersCarousel focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
 
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
