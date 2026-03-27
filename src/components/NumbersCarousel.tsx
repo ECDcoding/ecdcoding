@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
@@ -22,8 +23,11 @@ const numberWords = [
   "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine", "forty",
 ];
 
+type LessonPeriod = "day" | "week" | "month";
+
 const NumbersCarousel = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [lessonPeriod, setLessonPeriod] = useState<LessonPeriod>("day");
 
   const goNext = () => setCurrentPage((p) => Math.min(p + 1, pages.length - 1));
   const goPrev = () => setCurrentPage((p) => Math.max(p - 1, 0));
