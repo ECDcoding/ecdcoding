@@ -2573,7 +2573,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         )}
 
         {/* Card Lesson of the Day/Week/Month */}
-        <NumbersCarousel focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
+        <CardLessonFocus focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
 
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
