@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Volume2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
@@ -25,7 +25,18 @@ const numberWords = [
 
 type LessonPeriod = "day" | "week" | "month";
 
-const NumbersCarousel = () => {
+const periodLabels: Record<LessonPeriod, string> = {
+  day: "Today's",
+  week: "This Week's",
+  month: "This Month's",
+};
+
+interface NumbersCarouselProps {
+  focusedCard?: string | null;
+  carouselCardData?: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }>;
+}
+
+const NumbersCarousel = ({ focusedCard, carouselCardData }: NumbersCarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [lessonPeriod, setLessonPeriod] = useState<LessonPeriod>("day");
 
@@ -43,6 +54,7 @@ const NumbersCarousel = () => {
   };
 
   const page = pages[currentPage];
+  const focusedCardData = focusedCard && carouselCardData ? carouselCardData[focusedCard] : null;
 
   return (
     <div className="mt-12 p-6 rounded-2xl" style={{ backgroundColor: "#395B50" }}>
@@ -64,6 +76,30 @@ const NumbersCarousel = () => {
           </SelectContent>
         </Select>
       </div>
+
+      {/* Focused Card Banner */}
+      {focusedCard && focusedCardData && (
+        <div className="mb-6 max-w-4xl mx-auto">
+          <div className="bg-lime-400/20 border-2 border-lime-400 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4">
+            <Star className="h-8 w-8 text-yellow-400 fill-yellow-400 flex-shrink-0" />
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-lime-300 text-sm font-semibold uppercase tracking-wide">
+                {periodLabels[lessonPeriod]} Focus Card
+              </p>
+              <h3 className="text-white text-xl font-bold">
+                {focusedCardData.title || focusedCard}
+              </h3>
+            </div>
+            {focusedCardData.image && (
+              <img
+                src={focusedCardData.image}
+                alt={focusedCardData.title || focusedCard}
+                className="w-24 h-24 object-cover rounded-lg border-2 border-white/30"
+              />
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="relative max-w-4xl mx-auto">
         {/* Navigation */}
