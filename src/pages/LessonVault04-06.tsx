@@ -36,7 +36,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
-import NumbersCarousel from "@/components/NumbersCarousel";
+import CardLessonFocus from "@/components/NumbersCarousel";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
@@ -2573,7 +2573,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         )}
 
         {/* Card Lesson of the Day/Week/Month */}
-        <NumbersCarousel focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
+        <CardLessonFocus focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
 
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
