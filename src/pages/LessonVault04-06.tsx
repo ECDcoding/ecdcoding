@@ -36,7 +36,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
-import NumbersCarousel from "@/components/NumbersCarousel";
+import CardLessonFocus from "@/components/NumbersCarousel";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
