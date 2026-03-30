@@ -2600,6 +2600,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <button
               onClick={() => {
                 if (carouselRef.current) {
+                  carouselRef.current.style.animationPlayState = 'paused';
+                  setCarouselPaused(true);
                   carouselRef.current.scrollBy({ left: -400, behavior: 'smooth' });
                 }
               }}
@@ -2612,6 +2614,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             <button
               onClick={() => {
                 if (carouselRef.current) {
+                  carouselRef.current.style.animationPlayState = 'paused';
+                  setCarouselPaused(true);
                   carouselRef.current.scrollBy({ left: 400, behavior: 'smooth' });
                 }
               }}
