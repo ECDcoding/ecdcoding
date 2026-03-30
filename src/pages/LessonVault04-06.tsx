@@ -36,6 +36,7 @@ import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
 import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
+import FlipNumbersCard from "@/components/FlipNumbersCard";
 import CardLessonFocus from "@/components/NumbersCarousel";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
@@ -2786,39 +2787,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 recordingTime={recordingTime}
               />
 
-              {/* Numbers Cards */}
-              {[
-                { name: "Numbers 1-10", image: numbers1to10, range: "1 – 10", border: "border-blue-500", accent: "text-blue-500" },
-                { name: "Numbers 11-20", image: numbers11to20, range: "11 – 20", border: "border-green-500", accent: "text-green-500" },
-                { name: "Numbers 21-30", image: numbers21to30, range: "21 – 30", border: "border-yellow-500", accent: "text-yellow-500" },
-                { name: "Numbers 31-40", image: numbers31to40, range: "31 – 40", border: "border-pink-500", accent: "text-pink-500" },
-              ].map((card) => (
-                <Card
-                  key={card.name}
-                  className={`bg-white p-4 w-80 border-4 border-dashed ${card.border} shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer`}
-                  onClick={handleCardClick(card.name)}
-                >
-                  <CardContent className="p-0 relative">
-                    <h3 className={`text-xl font-bold ${card.accent} mb-2 text-center`} style={{ fontFamily: '"Bungee Shade", cursive' }}>
-                      Numbers {card.range}
-                    </h3>
-                    <img src={card.image} alt={`Numbers ${card.range}`} className="w-full h-auto rounded-lg" />
-                    {isRecording && selectedCardForTest === card.name && (
-                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
-                        {recordingTime}s / 30s
-                      </div>
-                    )}
-                  </CardContent>
-                  <Button
-                    onClick={createRecordingHandler(card.name)}
-                    className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === card.name ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                    </svg>
-                  </Button>
-                </Card>
-              ))}
+              {/* Numbers Flip Card */}
+              <FlipNumbersCard
+                onCardClick={(cardName) => handleCardClick(cardName)()}
+                onRecordingClick={createRecordingHandler}
+                isRecording={isRecording}
+                selectedCardForTest={selectedCardForTest}
+                recordingTime={recordingTime}
+              />
 
               {/* Duplicate cards for infinite loop */}
               <FlipBodyCard
@@ -2930,15 +2906,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 recordingTime={recordingTime}
               />
 
-              {/* Numbers Cards (duplicate) */}
-              {[
-                { name: "Numbers 1-10", image: numbers1to10, range: "1 – 10", border: "border-blue-500", accent: "text-blue-500" },
-                { name: "Numbers 11-20", image: numbers11to20, range: "11 – 20", border: "border-green-500", accent: "text-green-500" },
-                { name: "Numbers 21-30", image: numbers21to30, range: "21 – 30", border: "border-yellow-500", accent: "text-yellow-500" },
-                { name: "Numbers 31-40", image: numbers31to40, range: "31 – 40", border: "border-pink-500", accent: "text-pink-500" },
-              ].map((card) => (
-                <Card
-                  key={`dup-${card.name}`}
+              {/* Numbers Flip Card (duplicate) */}
+              <FlipNumbersCard
+                onCardClick={(cardName) => handleCardClick(cardName)()}
+                onRecordingClick={createRecordingHandler}
+                isRecording={isRecording}
+                selectedCardForTest={selectedCardForTest}
+                recordingTime={recordingTime}
+              />
                   className={`bg-white p-4 w-80 border-4 border-dashed ${card.border} shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer`}
                   onClick={handleCardClick(card.name)}
                 >
