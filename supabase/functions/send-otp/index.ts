@@ -1,9 +1,34 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const allowedOrigins = [
+  'https://ecdcoding.lovable.app',
+  'https://id-preview--9ad76001-6b51-460f-a9da-27a8c4599f5e.lovable.app',
+  'http://localhost:5173',
+];
+
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || '';
+  return {
+    'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : allowedOrigins[0],
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
+
+// Simple in-memory rate limiter (per instance)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX = 3; // max 3 OTP requests per phone per minute
+
+function isRateLimited(key: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
 
 // Generate a 6-digit OTP
 function generateOTP(): string {
@@ -11,6 +36,8 @@ function generateOTP(): string {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -28,6 +55,14 @@ Deno.serve(async (req) => {
 
     // Normalize phone number (remove spaces, ensure + prefix)
     const normalizedPhone = phoneNumber.replace(/\s+/g, '').replace(/^0/, '+27');
+
+    // Rate limit by phone number
+    if (isRateLimited(`otp:${normalizedPhone}`)) {
+      return new Response(
+        JSON.stringify({ error: 'Too many requests. Please wait before requesting another code.' }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     console.log(`Sending OTP to ${normalizedPhone}`);
 
@@ -91,7 +126,6 @@ Deno.serve(async (req) => {
     const authToken = Deno.env.get('TWILIO_AUTH_TOKEN')!;
     const twilioPhone = Deno.env.get('TWILIO_PHONE_NUMBER')!;
 
-    // Helpful masked logs for debugging (never log secrets)
     console.log(
       `Twilio send attempt: accountSid=****${accountSid.slice(-4)}, from=${twilioPhone}, to=${normalizedPhone}`
     );
@@ -117,8 +151,6 @@ Deno.serve(async (req) => {
       const twilioErrorText = await twilioResponse.text();
       console.error('Twilio error:', twilioErrorText);
 
-      // Twilio trial limitation: can only send to verified recipient numbers.
-      // Return a 400 so the UI can show a clean message instead of a blank-screen 500.
       if (twilioErrorText.includes('"code":21608')) {
         return new Response(
           JSON.stringify({
@@ -148,6 +180,7 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
+    const corsHeaders = getCorsHeaders(req);
     console.error('Error in send-otp:', error);
     return new Response(
       JSON.stringify({ error: error.message || 'Failed to send OTP' }),
