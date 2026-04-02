@@ -3080,7 +3080,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           return (
                             <div 
                               key={letter}
-                              className={`w-full aspect-square text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold flex items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white ${
+                              className={`w-full aspect-square font-bold flex flex-col items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer text-white ${
                                 isCurrentlyPlaying ? 'animate-pulse ring-4 ring-yellow-400 ring-opacity-75 scale-110' : ''
                               }`}
                               style={{
@@ -3093,9 +3093,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               onClick={() => !isAlphabetPlaying && speakVowel(letter, true)}
                               onMouseEnter={() => !isAlphabetPlaying && speakVowel(letter, true)}
                               onMouseLeave={() => !isAlphabetPlaying && window.speechSynthesis.cancel()}
-                              title={`Letter ${letter} - Click to hear pronunciation`}
+                              title={`Letter ${letter}${letter.toLowerCase()} - Click to hear pronunciation`}
                             >
-                              {letter}
+                              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none">{letter}</span>
+                              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none opacity-80">{letter.toLowerCase()}</span>
                             </div>
                           );
                         });
