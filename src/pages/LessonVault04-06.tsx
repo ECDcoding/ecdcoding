@@ -3096,7 +3096,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               title={`Letter ${letter}${letter.toLowerCase()} - Click to hear pronunciation`}
                             >
                               <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none">{letter}</span>
-                              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none opacity-80">{letter.toLowerCase()}</span>
+                              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none opacity-80 mt-2">{letter.toLowerCase()}</span>
                             </div>
                           );
                         });
