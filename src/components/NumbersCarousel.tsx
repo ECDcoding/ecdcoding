@@ -27,7 +27,7 @@ const CardLessonFocus = ({ focusedCard, carouselCardData }: CardLessonFocusProps
           className="text-2xl sm:text-3xl font-bold text-lime-400 text-center"
           style={{ fontFamily: '"Bungee Shade", cursive' }}
         >
-          📋 Card Lesson of the
+          📋 Lesson of the
         </h2>
         <Select value={lessonPeriod} onValueChange={(val) => setLessonPeriod(val as LessonPeriod)}>
           <SelectTrigger className="w-[140px] bg-lime-400 text-gray-900 font-bold border-none rounded-xl text-lg">
