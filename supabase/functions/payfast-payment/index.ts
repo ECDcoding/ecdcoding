@@ -1,11 +1,35 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const allowedOrigins = [
+  'https://ecdcoding.lovable.app',
+  'https://id-preview--9ad76001-6b51-460f-a9da-27a8c4599f5e.lovable.app',
+  'http://localhost:5173',
+];
+
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || '';
+  return {
+    'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : allowedOrigins[0],
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
+
+// Rate limiter: max 5 payment initiations per user per 5 minutes
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 300_000;
+const RATE_LIMIT_MAX = 5;
+
+function isRateLimited(key: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
 
 const PAYFAST_MERCHANT_ID = Deno.env.get('PAYFAST_MERCHANT_ID');
 const PAYFAST_MERCHANT_KEY = Deno.env.get('PAYFAST_MERCHANT_KEY');
@@ -24,26 +48,21 @@ const VALID_AMOUNTS = [
   50000,  // Platinum Sponsor
 ];
 
-// Use sandbox for testing, production for live
 const PAYFAST_URL = 'https://www.payfast.co.za/eng/process';
-// For testing: 'https://sandbox.payfast.co.za/eng/process'
 
 async function generateSignature(data: Record<string, string>, passphrase?: string): Promise<string> {
-  // Create parameter string (matching PayFast's PHP reference implementation)
   let pfOutput = '';
   for (const key of Object.keys(data)) {
     if (data[key] !== '' && key !== 'signature') {
       pfOutput += `${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, '+')}&`;
     }
   }
-  // Remove last ampersand
   let getString = pfOutput.slice(0, -1);
 
   if (passphrase) {
     getString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
   }
 
-  // Generate MD5 hash
   const encoder = new TextEncoder();
   const hashBuffer = await crypto.subtle.digest('MD5', encoder.encode(getString));
   return Array.from(new Uint8Array(hashBuffer))
@@ -51,8 +70,9 @@ async function generateSignature(data: Record<string, string>, passphrase?: stri
     .join('');
 }
 
-serve(async (req) => {
-  // Handle CORS preflight requests
+Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -61,7 +81,6 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
     
-    // Parse the request body first
     const { 
       amount, 
       item_name, 
@@ -82,21 +101,18 @@ serve(async (req) => {
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.replace('Bearer ', '');
       
-      // Create Supabase client to verify the user
       const supabase = createClient(supabaseUrl, supabaseAnonKey, {
         global: {
           headers: { Authorization: `Bearer ${token}` }
         }
       });
 
-      // Try to get the authenticated user
       const { data: { user }, error: userError } = await supabase.auth.getUser();
       
       if (!userError && user) {
         authenticatedUserId = user.id;
         console.log('Authenticated user:', user.id, user.email);
         
-        // SECURITY: For authenticated users, verify the requesting user matches the user_id in the payload
         if (user_id && user_id !== 'guest' && user_id !== user.id) {
           console.error('User ID mismatch: authenticated user', user.id, 'but payload has', user_id);
           return new Response(
@@ -107,7 +123,6 @@ serve(async (req) => {
       }
     }
     
-    // For guest payments (expo registrations), require email address
     if (!authenticatedUserId && !email_address) {
       console.error('Guest payment requires email address');
       return new Response(
@@ -116,7 +131,16 @@ serve(async (req) => {
       );
     }
 
-    // SECURITY: Validate amount against expected pricing tiers
+    // Rate limit by user or email
+    const rateLimitKey = authenticatedUserId || email_address || 'unknown';
+    if (isRateLimited(`pay:${rateLimitKey}`)) {
+      return new Response(
+        JSON.stringify({ error: 'Too many payment requests. Please wait before trying again.' }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Validate amount
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount) || !VALID_AMOUNTS.includes(parsedAmount)) {
       console.error('Invalid payment amount:', amount, 'Valid amounts:', VALID_AMOUNTS);
@@ -126,7 +150,6 @@ serve(async (req) => {
       );
     }
     
-    // Use authenticated user ID if available, otherwise use 'guest' with email for tracking
     const effectiveUserId = authenticatedUserId || `guest_${email_address}`;
 
     console.log('PayFast payment request received:', { amount: parsedAmount, item_name, email_address, payment_type, user_id: effectiveUserId });
@@ -139,7 +162,6 @@ serve(async (req) => {
       );
     }
 
-    // Build PayFast payment data
     const paymentData: Record<string, string> = {
       merchant_id: PAYFAST_MERCHANT_ID,
       merchant_key: PAYFAST_MERCHANT_KEY,
@@ -156,7 +178,6 @@ serve(async (req) => {
       custom_str2: payment_type || 'subscription',
     };
 
-    // Generate MD5 signature (matching PayFast PHP reference implementation)
     const signature = await generateSignature(paymentData, PAYFAST_PASSPHRASE || undefined);
     paymentData.signature = signature;
     console.log('Signature generated successfully');
@@ -173,6 +194,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
+    const corsHeaders = getCorsHeaders(req);
     console.error('Error in payfast-payment function:', error);
     return new Response(
       JSON.stringify({ error: error.message }),

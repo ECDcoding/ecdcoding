@@ -278,10 +278,7 @@ const Register = () => {
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
   const [selectedPaymentType, setSelectedPaymentType] = useState("annual");
-  
-  // Admin user ID - can register without payment
-  const ADMIN_USER_ID = "d1577987-f3c2-4573-aee5-fd83f403f03b";
-  
+   
   // Check if registration type is tech-teacher (only one that pays during registration)
   const requiresPayment = registrationType === 'tech-teacher';
   
