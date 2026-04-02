@@ -3095,7 +3095,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               onMouseLeave={() => !isAlphabetPlaying && window.speechSynthesis.cancel()}
                               title={`Letter ${letter}${letter.toLowerCase()} - Click to hear pronunciation`}
                             >
-                              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none">{letter}</span>
+                              <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none font-bold">{letter}</span>
                               <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none mt-2 text-primary">{letter.toLowerCase()}</span>
                             </div>
                           );
