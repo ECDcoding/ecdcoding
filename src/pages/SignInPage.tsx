@@ -149,7 +149,6 @@ const SignInPage = () => {
               </svg>
               Sign in with Google
             </Button>
-            </Button>
             
             {showForgotPassword && (
               <div className="mt-4 p-4 border rounded-lg bg-muted/50">
