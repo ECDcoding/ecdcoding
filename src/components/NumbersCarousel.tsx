@@ -55,7 +55,7 @@ const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange
           <button
             type="button"
             onClick={() => onCardClick?.(focusedCard)}
-            className="w-full bg-lime-400/20 border-2 border-lime-400 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all duration-200 hover:bg-lime-400/30 hover:border-lime-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(163,230,53,0.5)] focus:outline-none focus:ring-4 focus:ring-lime-300/60 text-left animate-[pulse_3.5s_ease-in-out_infinite]"
+            className="w-full bg-lime-400/20 border-2 border-lime-400 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all duration-200 hover:bg-lime-400/30 hover:border-lime-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(163,230,53,0.5)] focus:outline-none focus:ring-4 focus:ring-lime-300/60 text-left animate-[pulse_1.5s_ease-in-out_infinite]"
             title="Click to launch this lesson"
           >
             <Star className="h-8 w-8 text-yellow-400 fill-yellow-400 flex-shrink-0" />
