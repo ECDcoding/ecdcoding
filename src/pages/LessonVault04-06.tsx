@@ -89,6 +89,10 @@ import stopSign from "@/assets/stop-sign.png";
 const LessonVault0406 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const lessonPeriodParam = searchParams.get("period") as "day" | "week" | "month" | null;
+  const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
+  const showLessonFocusBanner = lessonPeriodParam !== null;
   const { toast } = useToast();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
