@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
@@ -89,6 +89,10 @@ import stopSign from "@/assets/stop-sign.png";
 const LessonVault0406 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const lessonPeriodParam = searchParams.get("period") as "day" | "week" | "month" | null;
+  const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
+  const showLessonFocusBanner = lessonPeriodParam !== null;
   const { toast } = useToast();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
@@ -209,6 +213,16 @@ const LessonVault0406 = () => {
       setDisplayCredits(Math.min(credits, 100));
     }
   }, [credits, creditsLoading]);
+
+  // Auto-scroll to Verbal Testing Space when 'Lesson of the Day/Week/Month' dropdown navigates here
+  useEffect(() => {
+    if (showLessonFocusBanner && verbalTestingRef.current) {
+      const t = setTimeout(() => {
+        verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
+      return () => clearTimeout(t);
+    }
+  }, [showLessonFocusBanner, lessonPeriod]);
 
   // Alert user when credits reach 20 or below
   useEffect(() => {
@@ -1371,6 +1385,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {/* Lesson of the Day/Week/Month — opens focus banner above Verbal Testing carousel */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Lesson of the Day
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=day")}
+                >
+                  Day
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=week")}
+                >
+                  Week
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=month")}
+                >
+                  Month
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
@@ -2573,11 +2616,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         )}
 
-        {/* Card Lesson of the Day/Week/Month */}
-        <CardLessonFocus focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
-
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
+          {/* Lesson of the Day/Week/Month focus banner — only when navigated from dropdown */}
+          {showLessonFocusBanner && (
+            <div className="mb-8">
+              <CardLessonFocus
+                focusedCard={focusedLessonCard}
+                carouselCardData={carouselCardData}
+                period={lessonPeriod}
+                onPeriodChange={(p) => {
+                  const next = new URLSearchParams(searchParams);
+                  next.set("period", p);
+                  setSearchParams(next, { replace: true });
+                }}
+              />
+            </div>
+          )}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
               Verbal Testing Space
