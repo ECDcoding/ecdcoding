@@ -25,6 +25,7 @@ import FacialRecognition from "./pages/FacialRecognition";
 import AdminDashboard from "./pages/AdminDashboard";
 import ECDExpo2026 from "./pages/ECDExpo2026";
 import ExpoAdminDashboard from "./pages/ExpoAdminDashboard";
+import TechFranchise from "./pages/TechFranchise";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
           <Route path="/expo-admin" element={<ProtectedRoute><ExpoAdminDashboard /></ProtectedRoute>} />
+          <Route path="/tech-franchise" element={<TechFranchise />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
