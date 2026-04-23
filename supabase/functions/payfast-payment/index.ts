@@ -46,6 +46,8 @@ const VALID_AMOUNTS = [
   15000,  // Silver Sponsor
   30000,  // Gold Sponsor
   50000,  // Platinum Sponsor
+  75000,  // Tech Franchise (package only)
+  100000, // Tech Franchise (package + installation)
 ];
 
 const PAYFAST_URL = 'https://www.payfast.co.za/eng/process';
