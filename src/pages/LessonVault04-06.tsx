@@ -1385,6 +1385,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         {/* Lessons Banner */}
         <div className="mt-12 p-6 rounded-lg bg-transparent">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {/* Lesson of the Day/Week/Month — opens focus banner above Verbal Testing carousel */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Lesson of the Day
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=day")}
+                >
+                  Day
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=week")}
+                >
+                  Week
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=month")}
+                >
+                  Month
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-foreground border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
