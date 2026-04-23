@@ -214,6 +214,16 @@ const LessonVault0406 = () => {
     }
   }, [credits, creditsLoading]);
 
+  // Auto-scroll to Verbal Testing Space when 'Lesson of the Day/Week/Month' dropdown navigates here
+  useEffect(() => {
+    if (showLessonFocusBanner && verbalTestingRef.current) {
+      const t = setTimeout(() => {
+        verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
+      return () => clearTimeout(t);
+    }
+  }, [showLessonFocusBanner, lessonPeriod]);
+
   // Alert user when credits reach 20 or below
   useEffect(() => {
     if (displayCredits <= 20 && displayCredits > 0 && !lowCreditsNotified) {
