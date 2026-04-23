@@ -2577,11 +2577,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         )}
 
-        {/* Card Lesson of the Day/Week/Month */}
-        <CardLessonFocus focusedCard={focusedLessonCard} carouselCardData={carouselCardData} />
-
         {/* Tailormade Testing Platform */}
         <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
+          {/* Lesson of the Day/Week/Month focus banner — only when navigated from dropdown */}
+          {showLessonFocusBanner && (
+            <div className="mb-8">
+              <CardLessonFocus
+                focusedCard={focusedLessonCard}
+                carouselCardData={carouselCardData}
+                period={lessonPeriod}
+                onPeriodChange={(p) => {
+                  const next = new URLSearchParams(searchParams);
+                  next.set("period", p);
+                  setSearchParams(next, { replace: true });
+                }}
+              />
+            </div>
+          )}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
               Verbal Testing Space
