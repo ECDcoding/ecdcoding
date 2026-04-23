@@ -2630,6 +2630,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   next.set("period", p);
                   setSearchParams(next, { replace: true });
                 }}
+                onCardClick={(cardName) => handleCardClick(cardName)()}
               />
             </div>
           )}
