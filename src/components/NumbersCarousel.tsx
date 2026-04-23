@@ -13,10 +13,17 @@ const periodLabels: Record<LessonPeriod, string> = {
 interface CardLessonFocusProps {
   focusedCard?: string | null;
   carouselCardData?: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }>;
+  period?: LessonPeriod;
+  onPeriodChange?: (period: LessonPeriod) => void;
 }
 
-const CardLessonFocus = ({ focusedCard, carouselCardData }: CardLessonFocusProps) => {
-  const [lessonPeriod, setLessonPeriod] = useState<LessonPeriod>("day");
+const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange }: CardLessonFocusProps) => {
+  const [internalPeriod, setInternalPeriod] = useState<LessonPeriod>("day");
+  const lessonPeriod = period ?? internalPeriod;
+  const setLessonPeriod = (val: LessonPeriod) => {
+    if (onPeriodChange) onPeriodChange(val);
+    else setInternalPeriod(val);
+  };
 
   const focusedCardData = focusedCard && carouselCardData ? carouselCardData[focusedCard] : null;
 
