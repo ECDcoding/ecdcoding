@@ -61,6 +61,11 @@ const Index = () => {
                     Tech Teacher Mentorship Program 2026
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/tech-franchise" className="cursor-pointer">
+                    ECDcoding Tech Franchise
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
