@@ -15,9 +15,10 @@ interface CardLessonFocusProps {
   carouselCardData?: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }>;
   period?: LessonPeriod;
   onPeriodChange?: (period: LessonPeriod) => void;
+  onCardClick?: (cardName: string) => void;
 }
 
-const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange }: CardLessonFocusProps) => {
+const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange, onCardClick }: CardLessonFocusProps) => {
   const [internalPeriod, setInternalPeriod] = useState<LessonPeriod>("day");
   const lessonPeriod = period ?? internalPeriod;
   const setLessonPeriod = (val: LessonPeriod) => {
@@ -51,11 +52,16 @@ const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange
       {/* Focused Card Banner */}
       {focusedCard && focusedCardData ? (
         <div className="max-w-4xl mx-auto">
-          <div className="bg-lime-400/20 border-2 border-lime-400 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4">
+          <button
+            type="button"
+            onClick={() => onCardClick?.(focusedCard)}
+            className="w-full bg-lime-400/20 border-2 border-lime-400 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all duration-200 hover:bg-lime-400/30 hover:border-lime-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(163,230,53,0.5)] focus:outline-none focus:ring-4 focus:ring-lime-300/60 text-left animate-pulse"
+            title="Click to launch this lesson"
+          >
             <Star className="h-8 w-8 text-yellow-400 fill-yellow-400 flex-shrink-0" />
             <div className="flex-1 text-center sm:text-left">
               <p className="text-lime-300 text-sm font-semibold uppercase tracking-wide">
-                {periodLabels[lessonPeriod]} Focus Card
+                {periodLabels[lessonPeriod]} Focus Card · Click to launch
               </p>
               <h3 className="text-white text-xl font-bold">
                 {focusedCardData.title || focusedCard}
@@ -68,7 +74,7 @@ const CardLessonFocus = ({ focusedCard, carouselCardData, period, onPeriodChange
                 className="w-24 h-24 object-cover rounded-lg border-2 border-white/30"
               />
             )}
-          </div>
+          </button>
         </div>
       ) : (
         <p className="text-white/60 text-center text-lg">
