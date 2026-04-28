@@ -23,7 +23,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) navigate("/lesson-vault-04-06");
   }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +33,7 @@ const SignInPage = () => {
     try {
       const { data, error } = await signIn(email, password);
       if (data && !error) {
-        navigate("/");
+        navigate("/lesson-vault-04-06");
       } else if (error) {
         setShowForgotPassword(true);
       }
@@ -61,11 +61,11 @@ const SignInPage = () => {
   const handleGoogle = async () => {
     const isInIframe = window.self !== window.top;
     if (isInIframe) {
-      window.open(window.location.origin, "_blank");
+      window.open(`${window.location.origin}/sign-in`, "_blank");
       return;
     }
     await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/lesson-vault-04-06`,
     });
   };
 
