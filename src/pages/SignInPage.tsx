@@ -70,9 +70,9 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-secondary text-foreground flex flex-col">
+    <div className="min-h-screen w-full bg-[#0b2910] text-foreground flex flex-col">
       {/* Hero / brand panel */}
-      <div className="relative bg-gradient-to-br from-primary/20 via-secondary to-secondary px-6 pt-12 pb-10 sm:pt-16 sm:pb-14">
+      <div className="relative bg-gradient-to-br from-primary/20 via-[#0b2910] to-[#0b2910] px-6 pt-12 pb-10 sm:pt-16 sm:pb-14">
         <div className="mx-auto w-full max-w-md">
           <div className="flex items-center gap-2 mb-8">
             <div className="h-10 w-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
