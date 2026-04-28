@@ -38,14 +38,17 @@ const App = () => (
       <CookieConsent />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/contact" element={<ContactUs />} />
+          {/* Public routes */}
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+
+          {/* Protected routes */}
+          <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+          <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
           <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
           <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
           <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
@@ -54,11 +57,11 @@ const App = () => (
           <Route path="/fruit-item-recognition" element={<ProtectedRoute><FruitItemRecognition /></ProtectedRoute>} />
           <Route path="/facial-recognition" element={<ProtectedRoute><FacialRecognition /></ProtectedRoute>} />
           <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
-          <Route path="/payment" element={<PaymentForm />} />
+          <Route path="/payment" element={<ProtectedRoute><PaymentForm /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
+          <Route path="/ecd-expo-2026" element={<ProtectedRoute><ECDExpo2026 /></ProtectedRoute>} />
           <Route path="/expo-admin" element={<ProtectedRoute><ExpoAdminDashboard /></ProtectedRoute>} />
-          <Route path="/tech-franchise" element={<TechFranchise />} />
+          <Route path="/tech-franchise" element={<ProtectedRoute><TechFranchise /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
