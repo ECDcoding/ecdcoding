@@ -46,13 +46,22 @@ const Header = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         {user ? (
-          <Button 
-            variant="outline" 
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            onClick={signOut}
-          >
-            Sign out
-          </Button>
+          <>
+            <Button
+              asChild
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            >
+              <Link to="/lesson-vault-04-06">My Lesson Vault</Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              onClick={signOut}
+            >
+              Sign out
+            </Button>
+          </>
         ) : (
           <Button 
             variant="outline" 
