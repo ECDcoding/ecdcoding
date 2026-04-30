@@ -363,11 +363,15 @@ const Register = () => {
       );
       
       if (data && !error) {
-        navigate('/', { 
-          state: { 
-            message: 'Registration successful! Please check your email to verify your account.' 
-          }
-        });
+        if (registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd') {
+          navigate('/lesson-vault-04-06', { replace: true });
+        } else {
+          navigate('/', {
+            state: {
+              message: 'Registration successful! Please check your email to verify your account.'
+            }
+          });
+        }
       }
     } catch (error) {
       console.error('Registration error:', error);
