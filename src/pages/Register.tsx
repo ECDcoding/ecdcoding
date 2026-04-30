@@ -272,7 +272,9 @@ const countries = [
 const Register = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const registrationType = searchParams.get('type') || 'parent';
+  const typeParam = searchParams.get('type');
+  const registrationType = typeParam || 'parent';
+  const showChooser = !typeParam;
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
