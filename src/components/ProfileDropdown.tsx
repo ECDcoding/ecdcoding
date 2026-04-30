@@ -298,16 +298,23 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
+    // Open the cropper instead of uploading immediately.
+    setCropFile(file);
+    setCropOpen(true);
+    // Reset input so selecting the same file again still triggers change.
+    event.target.value = "";
+  };
 
+  const uploadCroppedAvatar = async (blob: Blob) => {
+    if (!user) return;
     setUploading(true);
 
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/avatar.${fileExt}`;
+      const fileName = `${user.id}/avatar.jpg`;
 
       const { error: uploadError } = await supabase.storage
         .from('profile-pictures')
-        .upload(fileName, file, { upsert: true });
+        .upload(fileName, blob, { upsert: true, contentType: 'image/jpeg' });
 
       if (uploadError) throw uploadError;
 
@@ -317,7 +324,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
 
       const { error: updateError } = await supabase
         .from('profiles')
-        .update({ profile_image_url: data.publicUrl })
+        .update({ profile_image_url: `${data.publicUrl}?t=${Date.now()}` })
         .eq('user_id', user.id);
 
       if (updateError) throw updateError;
@@ -326,8 +333,10 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         title: "Success",
         description: "Profile picture updated successfully!",
       });
-      
-      // Reload the page to see the updated profile picture
+
+      setCropOpen(false);
+      setCropFile(null);
+      // Reload to refresh avatars across the app.
       window.location.reload();
     } catch (error) {
       console.error('Error uploading file:', error);
