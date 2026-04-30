@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { ArrowLeft, FileText, ChevronDown, CalendarIcon } from "lucide-react";
+import { ArrowLeft, FileText, ChevronDown, CalendarIcon, Gift, Sparkles, Zap } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
@@ -280,6 +280,11 @@ const Register = () => {
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
   const [selectedPaymentType, setSelectedPaymentType] = useState("annual");
+  const [promoOpen, setPromoOpen] = useState(showChooser);
+
+  useEffect(() => {
+    if (showChooser) setPromoOpen(true);
+  }, [showChooser]);
    
   // Check if registration type is tech-teacher (only one that pays during registration)
   const requiresPayment = registrationType === 'tech-teacher';
@@ -1291,6 +1296,46 @@ const Register = () => {
   if (showChooser) {
     return (
       <div className="min-h-screen bg-background p-4 flex items-center justify-center">
+        <Dialog open={promoOpen} onOpenChange={setPromoOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-2xl flex items-center justify-center gap-2">
+                <Sparkles className="h-6 w-6 text-lime-500" />
+                Welcome to ECDcoding!
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="rounded-lg border-2 border-lime-400 bg-lime-50 p-4">
+                <div className="flex items-center gap-3">
+                  <Gift className="h-8 w-8 text-lime-600 shrink-0" />
+                  <div>
+                    <p className="font-bold text-lime-900">30 Day Free Trial</p>
+                    <p className="text-sm text-lime-800">
+                      Get full access to the My Lesson Vault — free for 30 days, no payment required.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-lg border-2 border-blue-400 bg-blue-50 p-4">
+                <div className="flex items-center gap-3">
+                  <Zap className="h-8 w-8 text-blue-600 shrink-0" />
+                  <div>
+                    <p className="font-bold text-blue-900">Reload Credits Anytime</p>
+                    <p className="text-sm text-blue-800">
+                      Top up credits via PayFast (R100) to keep learning beyond your daily free credits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-center text-sm text-muted-foreground pt-2">
+                Continue to register as a Parent / Guardian or ECD Manager.
+              </p>
+              <Button className="w-full" onClick={() => setPromoOpen(false)}>
+                Continue to Registration
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
         <Card className="border-2 border-foreground max-w-lg w-full">
           <CardHeader className="text-center">
             <div className="mb-6">
