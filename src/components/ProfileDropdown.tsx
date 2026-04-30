@@ -1161,6 +1161,14 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
         </DialogContent>
       </Dialog>
 
+      {/* Profile picture cropper */}
+      <ImageCropDialog
+        open={cropOpen}
+        file={cropFile}
+        onCancel={() => { setCropOpen(false); setCropFile(null); }}
+        onCropped={(blob) => uploadCroppedAvatar(blob)}
+      />
+
       {/* Uploaded Media Gallery */}
       {uploadedMedia.length > 0 && (
         <Dialog open={uploadedMedia.length > 0}>
