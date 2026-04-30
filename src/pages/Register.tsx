@@ -272,7 +272,9 @@ const countries = [
 const Register = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const registrationType = searchParams.get('type') || 'parent';
+  const typeParam = searchParams.get('type');
+  const registrationType = typeParam || 'parent';
+  const showChooser = !typeParam;
   const { signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
@@ -361,11 +363,15 @@ const Register = () => {
       );
       
       if (data && !error) {
-        navigate('/', { 
-          state: { 
-            message: 'Registration successful! Please check your email to verify your account.' 
-          }
-        });
+        if (registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd') {
+          navigate('/lesson-vault-04-06', { replace: true });
+        } else {
+          navigate('/', {
+            state: {
+              message: 'Registration successful! Please check your email to verify your account.'
+            }
+          });
+        }
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -1281,6 +1287,48 @@ const Register = () => {
         return renderParentForm();
     }
   };
+
+  if (showChooser) {
+    return (
+      <div className="min-h-screen bg-background p-4 flex items-center justify-center">
+        <Card className="border-2 border-foreground max-w-lg w-full">
+          <CardHeader className="text-center">
+            <div className="mb-6">
+              <img
+                src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png"
+                alt="ECDcoding Logo"
+                className="mx-auto h-24 w-auto"
+              />
+            </div>
+            <CardTitle className="text-2xl">Get Started — Register</CardTitle>
+            <p className="text-muted-foreground mt-2">Choose how you'd like to register to access your 04 - 07 My Lesson Vault.</p>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button
+              type="button"
+              className="w-full h-14 text-base"
+              onClick={() => navigate('/register?type=parent')}
+            >
+              Parent / Guardian
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full h-14 text-base"
+              onClick={() => navigate('/register?type=ecd-manager')}
+            >
+              ECD Manager
+            </Button>
+            <div className="text-center pt-2">
+              <Link to="/" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" /> Back to Home
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background p-4">
