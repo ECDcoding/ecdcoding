@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import ImageCropDialog from "@/components/ImageCropDialog";
 
 interface ProfileDropdownProps {
   profileImage?: string | null;
@@ -25,6 +26,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const [voice2FAOpen, setVoice2FAOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [cropFile, setCropFile] = useState<File | null>(null);
+  const [cropOpen, setCropOpen] = useState(false);
   const [mediaUploadOpen, setMediaUploadOpen] = useState(false);
   const [mediaType, setMediaType] = useState<'picture' | 'video'>('picture');
   const [mediaFile, setMediaFile] = useState<File | null>(null);
