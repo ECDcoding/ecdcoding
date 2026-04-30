@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { ArrowLeft, FileText, ChevronDown, CalendarIcon } from "lucide-react";
+import { ArrowLeft, FileText, ChevronDown, CalendarIcon, Gift, Sparkles, Zap } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
@@ -280,6 +280,11 @@ const Register = () => {
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
   const [selectedPaymentType, setSelectedPaymentType] = useState("annual");
+  const [promoOpen, setPromoOpen] = useState(showChooser);
+
+  useEffect(() => {
+    if (showChooser) setPromoOpen(true);
+  }, [showChooser]);
    
   // Check if registration type is tech-teacher (only one that pays during registration)
   const requiresPayment = registrationType === 'tech-teacher';
