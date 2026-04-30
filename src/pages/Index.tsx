@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
@@ -18,6 +18,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import emailIcon from "@/assets/email-icon.png";
 import adminIcon from "@/assets/admin-icon.png";
 
@@ -25,6 +27,33 @@ import adminIcon from "@/assets/admin-icon.png";
 const Index = () => {
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
   const { isAdmin } = useIsAdmin();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Post-OAuth routing: send signed-in users to the right place.
+  // - New users (no profile) -> /register chooser
+  // - Existing users -> 04-07 vault
+  useEffect(() => {
+    if (loading || !user) return;
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("registration_type")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (cancelled) return;
+      if (error) return;
+      if (!data) {
+        navigate("/register", { replace: true });
+      } else {
+        navigate("/lesson-vault-04-06", { replace: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user, loading, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
