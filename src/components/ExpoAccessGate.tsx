@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,7 +31,6 @@ const SPONSORSHIP_TIERS = [
 ];
 
 const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
-  const { isAdmin, loading: adminLoading } = useIsAdmin();
   const [businessEmail, setBusinessEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -132,7 +130,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
     }, 800);
   };
 
-  if (adminLoading || checkingStorage) {
+  if (checkingStorage) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10">
         <div className="text-center">
@@ -143,7 +141,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
     );
   }
 
-  if (isAdmin || currentStep === 'complete') {
+  if (currentStep === 'complete') {
     return <>{children}</>;
   }
 
