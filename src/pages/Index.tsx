@@ -57,11 +57,6 @@ const Index = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/register?type=tech-teacher" className="cursor-pointer">
-                    Tech Teacher Mentorship Program 2026
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
                   <Link to="/tech-franchise" className="cursor-pointer">
                     ECDcoding Tech Franchise
                   </Link>
