@@ -780,6 +780,7 @@ const Register = () => {
             onChange={(e) => handleInputChange("email", e.target.value)}
             className="text-black bg-green-50"
             required
+            readOnly={!!user}
           />
         </div>
 
@@ -865,7 +866,7 @@ const Register = () => {
               required
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          {!user && <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="password-ecd">Create Password *</Label>
               <Input
@@ -894,7 +895,7 @@ const Register = () => {
                 <p className="text-xs text-red-600">Passwords do not match</p>
               )}
             </div>
-          </div>
+          </div>}
         </div>
       </div>
 
