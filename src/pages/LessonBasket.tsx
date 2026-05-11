@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Sparkles, BookOpen, Loader2 } from "lucide-react";
+import { Sparkles, BookOpen, Loader2, Star, AlertCircle } from "lucide-react";
 
 type LessonOption = { id: string; title: string; category: string };
 
@@ -58,6 +58,8 @@ const LessonBasket = () => {
   const [duration, setDuration] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [everSelected, setEverSelected] = useState<string[]>([]);
+  const [triedLessons, setTriedLessons] = useState<string[]>([]);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/sign-in");
@@ -68,12 +70,14 @@ const LessonBasket = () => {
       if (!user) return;
       const { data } = await supabase
         .from("lesson_baskets")
-        .select("lessons, duration_days")
+        .select("lessons, duration_days, ever_selected, tried_lessons")
         .eq("user_id", user.id)
         .maybeSingle();
       if (data) {
         setSelected(data.lessons || []);
         setDuration(data.duration_days || 30);
+        setEverSelected((data as any).ever_selected || []);
+        setTriedLessons((data as any).tried_lessons || []);
       }
       setLoading(false);
     };
@@ -100,6 +104,7 @@ const LessonBasket = () => {
     setSaving(true);
     const startsAt = new Date();
     const expiresAt = new Date(startsAt.getTime() + duration * 24 * 60 * 60 * 1000);
+    const mergedEver = Array.from(new Set([...everSelected, ...selected]));
     const { error } = await supabase.from("lesson_baskets").upsert(
       {
         user_id: user.id,
@@ -107,6 +112,8 @@ const LessonBasket = () => {
         duration_days: duration,
         starts_at: startsAt.toISOString(),
         expires_at: expiresAt.toISOString(),
+        ever_selected: mergedEver,
+        last_shown_at: new Date().toISOString(),
       },
       { onConflict: "user_id" }
     );
@@ -142,8 +149,10 @@ const LessonBasket = () => {
             <Sparkles className="h-6 w-6 text-primary" />
           </div>
           <p className="text-muted-foreground">
-            Pick {MIN_PICK}–{MAX_PICK} lessons that match your child's interests. They'll form
-            your personalised mini-app for the duration you choose.
+            Pick {MIN_PICK}–{MAX_PICK} lessons for your day, week or month. Look out for the{" "}
+            <span className="text-lime-600 font-semibold">New</span> and{" "}
+            <span className="text-amber-600 font-semibold">Not tried</span> tags — they show
+            what's fresh and what you haven't explored yet.
           </p>
           <Badge variant="secondary" className="mt-3 text-base">
             {selected.length} / {MAX_PICK} selected
@@ -185,6 +194,8 @@ const LessonBasket = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
                     const isSel = selected.includes(l.id);
+                    const isNew = !everSelected.includes(l.id);
+                    const notTried = !isNew && !triedLessons.includes(l.id);
                     return (
                       <Label
                         key={l.id}
@@ -198,7 +209,17 @@ const LessonBasket = () => {
                           checked={isSel}
                           onCheckedChange={() => toggle(l.id)}
                         />
-                        <span className="text-sm font-medium">{l.title}</span>
+                        <span className="text-sm font-medium flex-1">{l.title}</span>
+                        {isNew && (
+                          <Badge className="bg-lime-500 hover:bg-lime-600 text-white gap-1">
+                            <Star className="h-3 w-3" /> New
+                          </Badge>
+                        )}
+                        {notTried && (
+                          <Badge variant="outline" className="gap-1 border-amber-500 text-amber-600">
+                            <AlertCircle className="h-3 w-3" /> Not tried
+                          </Badge>
+                        )}
                       </Label>
                     );
                   })}
