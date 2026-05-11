@@ -176,8 +176,6 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
       }
     } else if (value === "logout") {
       onLogout();
-    } else if (value === "learner-progress-report") {
-      navigate("/learner-progress-report");
     }
   };
 
@@ -629,10 +627,6 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
             <SelectItem value="settings" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
               <Settings className="h-4 w-4" />
               Settings
-            </SelectItem>
-            <SelectItem value="learner-progress-report" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Learner Progress Report
             </SelectItem>
             <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
               <LogOut className="h-4 w-4 mr-2" />
