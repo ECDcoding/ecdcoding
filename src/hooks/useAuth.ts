@@ -224,5 +224,6 @@ export const useAuth = () => {
     signInWithOAuth,
     signOut,
     resetPassword,
+    completeProfile,
   };
 };
