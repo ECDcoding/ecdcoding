@@ -17,6 +17,7 @@ import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsa
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
 import { PromoCodeBanner } from "@/components/PromoCodeBanner";
@@ -90,6 +91,18 @@ const LessonVault0406 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isAdmin } = useIsAdmin();
+
+  // Show the Lesson Basket picker once per browser session for non-admin users
+  useEffect(() => {
+    if (!user || isAdmin) return;
+    const key = `basket-shown-${user.id}`;
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, "1");
+      navigate("/lesson-basket", { replace: true });
+    }
+  }, [user, isAdmin, navigate]);
+
   const lessonPeriodParam = searchParams.get("period") as "day" | "week" | "month" | null;
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
   const showLessonFocusBanner = lessonPeriodParam !== null;
