@@ -93,15 +93,8 @@ const LessonVault0406 = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
 
-  // Show the Lesson Basket picker once per browser session for non-admin users
-  useEffect(() => {
-    if (!user || adminLoading || isAdmin) return;
-    const key = `basket-shown-${user.id}`;
-    if (!sessionStorage.getItem(key)) {
-      sessionStorage.setItem(key, "1");
-      navigate("/lesson-basket", { replace: true });
-    }
-  }, [user, isAdmin, adminLoading, navigate]);
+  // Learner Progress Report is now accessed from the profile dropdown
+  // (no automatic redirect on entering the lesson vault).
 
   const lessonPeriodParam = searchParams.get("period") as "day" | "week" | "month" | null;
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
