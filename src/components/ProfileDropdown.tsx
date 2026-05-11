@@ -1239,6 +1239,18 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           </DialogHeader>
           
           <div className="space-y-4">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start gap-2"
+              onClick={() => {
+                setShowProgressDialog(false);
+                navigate("/learner-progress-report");
+              }}
+            >
+              <FileText className="h-4 w-4" />
+              Open full Learner Progress Report
+            </Button>
             <div>
               <Label className="text-sm font-semibold">Current Progress Report</Label>
               <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">

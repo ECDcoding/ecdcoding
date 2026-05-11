@@ -4140,6 +4140,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </DialogHeader>
           
           <div className="space-y-6">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start gap-2"
+              onClick={() => {
+                setShowProgressDialog(false);
+                navigate("/learner-progress-report");
+              }}
+            >
+              <FileText className="h-4 w-4" />
+              Open full Learner Progress Report
+            </Button>
             {/* Traffic Light Understanding Checklist */}
             <div className="border border-border rounded-lg p-4 bg-card">
               <Label className="text-sm font-semibold mb-3 block">Child's Understanding Level</Label>
