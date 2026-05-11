@@ -215,6 +215,71 @@ export const useAuth = () => {
     }
   };
 
+  const completeProfile = async (userData: any) => {
+    if (!user) {
+      return { error: new Error('Not authenticated') };
+    }
+    try {
+      const { error: profileError } = await supabase.rpc('create_user_profile', {
+        _user_id: user.id,
+        _first_name: userData.firstName,
+        _last_name: userData.lastName,
+        _username: userData.username,
+        _state: userData.state,
+        _country: userData.country,
+        _registration_type: userData.registrationType,
+        ...(userData.registrationType === 'parent' && {
+          _institution: userData.institution || null,
+          _registration_status: userData.registrationStatus || null,
+          _hear_about: userData.hearAbout || null,
+          _aspiration: userData.aspiration || null,
+          _relationship: userData.relationship || null,
+        }),
+        ...(userData.registrationType === 'ecd-manager' && {
+          _current_programs: userData.currentPrograms || null,
+          _tech_goals: userData.techGoals || null,
+        }),
+        ...(userData.registrationType === 'tech-teacher' && {
+          _qualifications: userData.qualifications || null,
+          _experience: userData.experience || null,
+          _tech_skills: userData.techSkills || null,
+          _programming_languages: userData.programmingLanguages || null,
+          _teaching_philosophy: userData.teachingPhilosophy || null,
+          _available_hours: userData.availableHours || null,
+          _salary: userData.salary || null,
+          _start_date: userData.startDate || null,
+        }),
+      });
+      if (profileError) throw profileError;
+
+      const phone = userData.phone1 ? `${userData.phone1}-${userData.phone2}-${userData.phone3}` : null;
+      const sensitiveParams: any = { _user_id: user.id, _phone: phone };
+      if (userData.registrationType === 'parent') {
+        sensitiveParams._number_of_kids = userData.numberOfKids || null;
+        sensitiveParams._learner_first_name = userData.learnerFirstName || null;
+        sensitiveParams._learner_last_name = userData.learnerLastName || null;
+        sensitiveParams._learner_gender = userData.learnerGender || null;
+        sensitiveParams._ecd_phone = userData.ecdPhone1 ? `${userData.ecdPhone1}-${userData.ecdPhone2}-${userData.ecdPhone3}` : null;
+        sensitiveParams._ecd_email = userData.ecdEmail || null;
+      } else if (userData.registrationType === 'ecd-manager') {
+        sensitiveParams._facility_name = userData.facilityName || null;
+        sensitiveParams._facility_type = userData.facilityType || null;
+        sensitiveParams._number_of_learners = userData.numberOfLearners || null;
+        sensitiveParams._age_groups = userData.ageGroups || null;
+        sensitiveParams._ecd_phone = userData.ecdPhone1 ? `${userData.ecdPhone1}-${userData.ecdPhone2}-${userData.ecdPhone3}` : null;
+        sensitiveParams._ecd_email = userData.ecdEmail || null;
+      }
+      const { error: sensitiveError } = await supabase.rpc('create_user_sensitive_data', sensitiveParams);
+      if (sensitiveError) throw sensitiveError;
+
+      toast({ title: 'Welcome!', description: 'Your profile is set up. Enjoy your free trial.' });
+      return { error: null };
+    } catch (error: any) {
+      toast({ title: 'Profile setup failed', description: error.message, variant: 'destructive' });
+      return { error };
+    }
+  };
+
   return {
     user,
     session,
