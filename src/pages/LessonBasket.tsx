@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Sparkles, BookOpen, Loader2 } from "lucide-react";
+import { Sparkles, BookOpen, Loader2, Star, AlertCircle } from "lucide-react";
 
 type LessonOption = { id: string; title: string; category: string };
 
@@ -58,6 +58,8 @@ const LessonBasket = () => {
   const [duration, setDuration] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [everSelected, setEverSelected] = useState<string[]>([]);
+  const [triedLessons, setTriedLessons] = useState<string[]>([]);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/sign-in");
@@ -68,12 +70,14 @@ const LessonBasket = () => {
       if (!user) return;
       const { data } = await supabase
         .from("lesson_baskets")
-        .select("lessons, duration_days")
+        .select("lessons, duration_days, ever_selected, tried_lessons")
         .eq("user_id", user.id)
         .maybeSingle();
       if (data) {
         setSelected(data.lessons || []);
         setDuration(data.duration_days || 30);
+        setEverSelected((data as any).ever_selected || []);
+        setTriedLessons((data as any).tried_lessons || []);
       }
       setLoading(false);
     };
@@ -100,6 +104,7 @@ const LessonBasket = () => {
     setSaving(true);
     const startsAt = new Date();
     const expiresAt = new Date(startsAt.getTime() + duration * 24 * 60 * 60 * 1000);
+    const mergedEver = Array.from(new Set([...everSelected, ...selected]));
     const { error } = await supabase.from("lesson_baskets").upsert(
       {
         user_id: user.id,
@@ -107,6 +112,8 @@ const LessonBasket = () => {
         duration_days: duration,
         starts_at: startsAt.toISOString(),
         expires_at: expiresAt.toISOString(),
+        ever_selected: mergedEver,
+        last_shown_at: new Date().toISOString(),
       },
       { onConflict: "user_id" }
     );
