@@ -129,30 +129,39 @@ export type Database = {
         Row: {
           created_at: string
           duration_days: number
+          ever_selected: string[]
           expires_at: string
           id: string
+          last_shown_at: string | null
           lessons: string[]
           starts_at: string
+          tried_lessons: string[]
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
           duration_days?: number
+          ever_selected?: string[]
           expires_at?: string
           id?: string
+          last_shown_at?: string | null
           lessons?: string[]
           starts_at?: string
+          tried_lessons?: string[]
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
           duration_days?: number
+          ever_selected?: string[]
           expires_at?: string
           id?: string
+          last_shown_at?: string | null
           lessons?: string[]
           starts_at?: string
+          tried_lessons?: string[]
           updated_at?: string
           user_id?: string
         }
