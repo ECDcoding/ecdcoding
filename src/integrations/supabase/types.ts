@@ -125,6 +125,39 @@ export type Database = {
         }
         Relationships: []
       }
+      lesson_baskets: {
+        Row: {
+          created_at: string
+          duration_days: number
+          expires_at: string
+          id: string
+          lessons: string[]
+          starts_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          duration_days?: number
+          expires_at?: string
+          id?: string
+          lessons?: string[]
+          starts_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          duration_days?: number
+          expires_at?: string
+          id?: string
+          lessons?: string[]
+          starts_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       phone_trials: {
         Row: {
           created_at: string

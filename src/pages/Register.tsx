@@ -415,7 +415,7 @@ const Register = () => {
 
       if (success) {
         if (registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd') {
-          navigate('/lesson-vault-04-06', { replace: true });
+          navigate('/lesson-basket', { replace: true });
         } else {
           navigate('/', {
             state: {
