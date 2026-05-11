@@ -374,11 +374,31 @@ const Register = () => {
     setDebitCardDialogOpen(false);
   }, [registrationType]);
 
+  const validatePassword = (pwd: string) => {
+    const hasMinLength = pwd.length >= 7;
+    const hasNumber = /\d/.test(pwd);
+    const hasSpecial = /[_!$#]/.test(pwd);
+    return { valid: hasMinLength && hasNumber && hasSpecial, hasMinLength, hasNumber, hasSpecial };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
+      // For email/password sign-ups, enforce password rules
+      if (!user) {
+        const { valid } = validatePassword(formData.password);
+        if (!valid) {
+          setIsSubmitting(false);
+          return;
+        }
+        if (formData.password !== formData.confirmPassword) {
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       let success = false;
       if (user) {
         // Already authenticated (e.g. via Google) — just create the profile records
@@ -570,10 +590,20 @@ const Register = () => {
                 type="password"
                 value={formData.password || ''}
                 onChange={(e) => handleInputChange("password", e.target.value)}
-                placeholder="One capital letter, a number, and a punctuation"
+                placeholder="Min 7 chars, number & special char"
                 required
               />
-              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+              <div className="text-xs space-y-0.5">
+                <p className={validatePassword(formData.password).hasMinLength ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasMinLength ? "✓" : "○"} At least 7 characters
+                </p>
+                <p className={validatePassword(formData.password).hasNumber ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasNumber ? "✓" : "○"} Contains a number
+                </p>
+                <p className={validatePassword(formData.password).hasSpecial ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasSpecial ? "✓" : "○"} Contains _, !, $, or #
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password *</Label>
@@ -874,11 +904,21 @@ const Register = () => {
                 type="password"
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
-                placeholder="One capital letter, a number, and a punctuation"
+                placeholder="Min 7 chars, number & special char"
                 className="text-black bg-green-50"
                 required
               />
-              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+              <div className="text-xs space-y-0.5">
+                <p className={validatePassword(formData.password).hasMinLength ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasMinLength ? "✓" : "○"} At least 7 characters
+                </p>
+                <p className={validatePassword(formData.password).hasNumber ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasNumber ? "✓" : "○"} Contains a number
+                </p>
+                <p className={validatePassword(formData.password).hasSpecial ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasSpecial ? "✓" : "○"} Contains _, !, $, or #
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword-ecd">Confirm Password *</Label>
@@ -1138,11 +1178,21 @@ const Register = () => {
                 type="password"
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
-                placeholder="One capital letter, a number, and a punctuation"
+                placeholder="Min 7 chars, number & special char"
                 className="text-black bg-green-50"
                 required
               />
-              <p className="text-xs text-gray-600">Must contain: 1 capital letter, 1 number, 1 punctuation mark</p>
+              <div className="text-xs space-y-0.5">
+                <p className={validatePassword(formData.password).hasMinLength ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasMinLength ? "✓" : "○"} At least 7 characters
+                </p>
+                <p className={validatePassword(formData.password).hasNumber ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasNumber ? "✓" : "○"} Contains a number
+                </p>
+                <p className={validatePassword(formData.password).hasSpecial ? "text-green-600" : "text-gray-600"}>
+                  {validatePassword(formData.password).hasSpecial ? "✓" : "○"} Contains _, !, $, or #
+                </p>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword-tech">Confirm Password *</Label>
