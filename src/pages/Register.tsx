@@ -16,6 +16,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { ArrowLeft, FileText, ChevronDown, CalendarIcon, Gift, Sparkles, Zap } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { countryCodes } from "@/lib/countryCodes";
 import { cn } from "@/lib/utils";
@@ -275,7 +276,8 @@ const Register = () => {
   const typeParam = searchParams.get('type');
   const registrationType = typeParam || 'parent';
   const showChooser = !typeParam;
-  const { signUp } = useAuth();
+  const { signUp, completeProfile, user } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
@@ -285,6 +287,25 @@ const Register = () => {
   useEffect(() => {
     if (showChooser) setPromoOpen(true);
   }, [showChooser]);
+
+  // If a Google-authed user already has a profile, send them straight into the app.
+  useEffect(() => {
+    if (!profileLoading && user && profile?.registration_type) {
+      navigate('/lesson-vault-04-06', { replace: true });
+    }
+  }, [user, profile, profileLoading, navigate]);
+
+  // Pre-fill email from authenticated session (Google sign-in)
+  useEffect(() => {
+    if (user?.email) {
+      setFormData(prev => ({
+        ...prev,
+        email: prev.email || user.email || '',
+        firstName: prev.firstName || (user.user_metadata?.given_name ?? user.user_metadata?.full_name?.split(' ')?.[0] ?? ''),
+        lastName: prev.lastName || (user.user_metadata?.family_name ?? user.user_metadata?.full_name?.split(' ')?.slice(1).join(' ') ?? ''),
+      }));
+    }
+  }, [user]);
    
   // Check if registration type is tech-teacher (only one that pays during registration)
   const requiresPayment = registrationType === 'tech-teacher';
@@ -358,16 +379,21 @@ const Register = () => {
     setIsSubmitting(true);
     
     try {
-      const { data, error } = await signUp(
-        formData.email,
-        formData.password,
-        {
-          ...formData,
-          registrationType,
-        }
-      );
-      
-      if (data && !error) {
+      let success = false;
+      if (user) {
+        // Already authenticated (e.g. via Google) — just create the profile records
+        const { error } = await completeProfile({ ...formData, registrationType });
+        success = !error;
+      } else {
+        const { data, error } = await signUp(
+          formData.email,
+          formData.password,
+          { ...formData, registrationType }
+        );
+        success = !!data && !error;
+      }
+
+      if (success) {
         if (registrationType === 'parent' || registrationType === 'ecd-manager' || registrationType === 'ecd') {
           navigate('/lesson-vault-04-06', { replace: true });
         } else {
