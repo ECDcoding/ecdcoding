@@ -192,6 +192,8 @@ const LessonBasket = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
                     const isSel = selected.includes(l.id);
+                    const isNew = !everSelected.includes(l.id);
+                    const notTried = !isNew && !triedLessons.includes(l.id);
                     return (
                       <Label
                         key={l.id}
@@ -205,7 +207,17 @@ const LessonBasket = () => {
                           checked={isSel}
                           onCheckedChange={() => toggle(l.id)}
                         />
-                        <span className="text-sm font-medium">{l.title}</span>
+                        <span className="text-sm font-medium flex-1">{l.title}</span>
+                        {isNew && (
+                          <Badge className="bg-lime-500 hover:bg-lime-600 text-white gap-1">
+                            <Star className="h-3 w-3" /> New
+                          </Badge>
+                        )}
+                        {notTried && (
+                          <Badge variant="outline" className="gap-1 border-amber-500 text-amber-600">
+                            <AlertCircle className="h-3 w-3" /> Not tried
+                          </Badge>
+                        )}
                       </Label>
                     );
                   })}
