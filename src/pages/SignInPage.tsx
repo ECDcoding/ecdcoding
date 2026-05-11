@@ -65,7 +65,7 @@ const SignInPage = () => {
       return;
     }
     await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/`,
+      redirect_uri: `${window.location.origin}/register`,
     });
   };
 
