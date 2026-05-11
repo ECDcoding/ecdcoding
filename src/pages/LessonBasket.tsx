@@ -149,8 +149,10 @@ const LessonBasket = () => {
             <Sparkles className="h-6 w-6 text-primary" />
           </div>
           <p className="text-muted-foreground">
-            Pick {MIN_PICK}–{MAX_PICK} lessons that match your child's interests. They'll form
-            your personalised mini-app for the duration you choose.
+            Pick {MIN_PICK}–{MAX_PICK} lessons for your day, week or month. Look out for the{" "}
+            <span className="text-lime-600 font-semibold">New</span> and{" "}
+            <span className="text-amber-600 font-semibold">Not tried</span> tags — they show
+            what's fresh and what you haven't explored yet.
           </p>
           <Badge variant="secondary" className="mt-3 text-base">
             {selected.length} / {MAX_PICK} selected
