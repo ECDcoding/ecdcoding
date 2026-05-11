@@ -374,11 +374,31 @@ const Register = () => {
     setDebitCardDialogOpen(false);
   }, [registrationType]);
 
+  const validatePassword = (pwd: string) => {
+    const hasMinLength = pwd.length >= 7;
+    const hasNumber = /\d/.test(pwd);
+    const hasSpecial = /[_!$#]/.test(pwd);
+    return { valid: hasMinLength && hasNumber && hasSpecial, hasMinLength, hasNumber, hasSpecial };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
+      // For email/password sign-ups, enforce password rules
+      if (!user) {
+        const { valid } = validatePassword(formData.password);
+        if (!valid) {
+          setIsSubmitting(false);
+          return;
+        }
+        if (formData.password !== formData.confirmPassword) {
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       let success = false;
       if (user) {
         // Already authenticated (e.g. via Google) — just create the profile records
