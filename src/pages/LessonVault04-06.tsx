@@ -91,17 +91,17 @@ const LessonVault0406 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { isAdmin } = useIsAdmin();
+  const { isAdmin, loading: adminLoading } = useIsAdmin();
 
   // Show the Lesson Basket picker once per browser session for non-admin users
   useEffect(() => {
-    if (!user || isAdmin) return;
+    if (!user || adminLoading || isAdmin) return;
     const key = `basket-shown-${user.id}`;
     if (!sessionStorage.getItem(key)) {
       sessionStorage.setItem(key, "1");
       navigate("/lesson-basket", { replace: true });
     }
-  }, [user, isAdmin, navigate]);
+  }, [user, isAdmin, adminLoading, navigate]);
 
   const lessonPeriodParam = searchParams.get("period") as "day" | "week" | "month" | null;
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
