@@ -18,7 +18,13 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       return;
     }
     // Authenticated but onboarding not completed (e.g. fresh Google sign-in)
-    if (!loading && user && !profileLoading && !profile?.registration_type) {
+    if (
+      !loading &&
+      user &&
+      !profileLoading &&
+      !profile?.registration_type &&
+      user.email !== "childhoodpersonalitytalks@gmail.com"
+    ) {
       navigate("/register", { replace: true });
     }
   }, [user, loading, profile, profileLoading, navigate]);
