@@ -1,4 +1,4 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -176,8 +176,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
       }
     } else if (value === "logout") {
       onLogout();
-    } else if (value === "lesson-basket") {
-      navigate("/lesson-basket");
+    } else if (value === "learner-progress-report") {
+      navigate("/learner-progress-report");
     }
   };
 
@@ -630,9 +630,9 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
               <Settings className="h-4 w-4" />
               Settings
             </SelectItem>
-            <SelectItem value="lesson-basket" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              My Lesson Basket
+            <SelectItem value="learner-progress-report" className="text-profile-text hover:bg-white/20 flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Learner Progress Report
             </SelectItem>
             <SelectItem value="logout" className="text-profile-text hover:bg-white/20">
               <LogOut className="h-4 w-4 mr-2" />
