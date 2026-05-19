@@ -1463,6 +1463,10 @@ const LessonVault0710 = () => {
         setCryptogramOpen(open);
         if (!open) {
           setCryptogramWord('');
+        }
+      }}>
+        {/* placeholder anchor — original content preserved below */}
+      </Dialog>
           setCryptogramSecretStyle('mixed');
         }
       }}>
