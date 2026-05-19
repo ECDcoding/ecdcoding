@@ -1383,6 +1383,42 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             <span className="text-sm text-muted-foreground">Manage your account settings</span>
                           </div>
                         </DropdownMenuItem>
+                        {isAdmin && (
+                          <>
+                            <div className="my-2 border-t border-gray-200 dark:border-gray-700" />
+                            <DropdownMenuItem
+                              onSelect={(e) => {
+                                e.preventDefault();
+                                const current = localStorage.getItem("simulate_trial_user") === "true";
+                                const next = !current;
+                                if (next) {
+                                  localStorage.setItem("simulate_trial_user", "true");
+                                } else {
+                                  localStorage.removeItem("simulate_trial_user");
+                                }
+                                toast({
+                                  title: next ? "Simulating Trial User" : "Admin Mode Restored",
+                                  description: next
+                                    ? "Credits will now drain normally. Reload the page to apply."
+                                    : "Admin auto-refill re-enabled. Reload the page to apply.",
+                                });
+                                setTimeout(() => window.location.reload(), 1200);
+                              }}
+                              className="cursor-pointer py-3 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                            >
+                              <div className="flex flex-col gap-1">
+                                <span className="font-semibold">
+                                  {typeof window !== "undefined" && localStorage.getItem("simulate_trial_user") === "true"
+                                    ? "🛠️ Disable Trial Simulation"
+                                    : "🧪 Simulate Trial User"}
+                                </span>
+                                <span className="text-sm text-muted-foreground">
+                                  Admin-only: turn off auto-refill so credits drain like a real user
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          </>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
