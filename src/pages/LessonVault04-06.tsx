@@ -185,6 +185,8 @@ const LessonVault0406 = () => {
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
   const [codingDialogOpen, setCodingDialogOpen] = useState(false);
+  const [codingNumbersOpen, setCodingNumbersOpen] = useState(false);
+  const [currentNumberLetterIndex, setCurrentNumberLetterIndex] = useState(0);
   const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
   const [gaugeAnimated, setGaugeAnimated] = useState(true); // Already animated/filled
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -1774,6 +1776,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       onClick={() => setCodingDialogOpen(true)}
                     >
                       🔤 Coding in Alphabets
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => setCodingNumbersOpen(true)}
+                    >
+                      🔢 Coding in Numbers
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -5004,6 +5012,83 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </p>
                 <p className="text-2xl font-bold text-primary tracking-wider">
                   {wordToCode.split('').map(letter => letter.charCodeAt(0) - 64).join('')}
+                </p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Coding in Numbers Dialog (opposite of Alphabets) */}
+      <Dialog open={codingNumbersOpen} onOpenChange={(open) => {
+        setCodingNumbersOpen(open);
+        if (!open) setCurrentNumberLetterIndex(0);
+      }}>
+        <DialogContent className="max-w-[550px] max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              🔢 Coding in Numbers
+            </DialogTitle>
+            <DialogDescription>
+              Click a letter below to see its number at the top!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col items-center justify-center py-6">
+            <div className="text-[150px] font-bold text-primary leading-none animate-bounce">
+              {currentNumberLetterIndex + 1}
+            </div>
+            <p className="text-lg text-muted-foreground mt-3">
+              {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[currentNumberLetterIndex]} = {currentNumberLetterIndex + 1}
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Tap a letter to see its code
+            </p>
+
+            {/* Letter blocks A-Z in rows of 10 */}
+            <div className="grid grid-cols-10 gap-1 mt-4 w-full max-w-[420px] px-2">
+              {Array.from({ length: 26 }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentNumberLetterIndex(i);
+                  }}
+                  className={`w-9 h-9 rounded-md text-xs font-bold transition-all duration-200 ${
+                    currentNumberLetterIndex === i
+                      ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-2 ring-primary/50'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[i]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Number to Word Converter */}
+          <div className="border-t pt-4 mt-2">
+            <p className="text-sm font-semibold text-center mb-2">🔤 Number Code to Word</p>
+            <div className="flex gap-2 px-2">
+              <Input
+                placeholder="Type numbers 1-26 separated by spaces (e.g. 13 15 13)"
+                value={wordToCode}
+                onChange={(e) => setWordToCode(e.target.value.replace(/[^0-9 ]/g, ''))}
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 text-center font-bold"
+                maxLength={40}
+              />
+            </div>
+            {wordToCode && (
+              <div className="mt-3 text-center">
+                <p className="text-2xl font-bold text-primary tracking-wider">
+                  {wordToCode
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .map((n) => {
+                      const num = parseInt(n, 10);
+                      return num >= 1 && num <= 26 ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num - 1] : '?';
+                    })
+                    .join('')}
                 </p>
               </div>
             )}
