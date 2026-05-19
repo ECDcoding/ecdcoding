@@ -1226,7 +1226,7 @@ const LessonVault0710 = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-white border-cyan-400/40 hover:bg-cyan-500/30 font-bold justify-start text-left flex items-center gap-2">
                   <Cpu className="h-4 w-4 text-cyan-400" />
-                  Coding Skills
+                  Tech Skills
                   <ChevronDown className="h-4 w-4" />
                   <Badge className="ml-1 bg-cyan-500 text-white text-[10px] px-1.5">NEW</Badge>
                 </Button>
