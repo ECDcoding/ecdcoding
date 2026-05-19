@@ -108,6 +108,12 @@ export const useCredits = () => {
   // Check if user is admin
   const checkIsAdmin = async (): Promise<boolean> => {
     if (!user) return false;
+    // Allow admin to simulate a regular trial user (disables auto-refill)
+    try {
+      if (typeof window !== "undefined" && localStorage.getItem("simulate_trial_user") === "true") {
+        return false;
+      }
+    } catch {}
     try {
       const { data, error } = await supabase
         .from("user_roles")
