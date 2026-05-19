@@ -14,7 +14,8 @@ import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
+import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -110,6 +111,7 @@ const LessonVault0406 = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pictureActive, setPictureActive] = useState<boolean>(false);
   const [countingOpen, setCountingOpen] = useState(false);
+  const [fixOrderOpen, setFixOrderOpen] = useState(false);
   const [selectedCountingRange, setSelectedCountingRange] = useState<string | null>(null);
   const [parentsOpen, setParentsOpen] = useState(false);
   const [isAutoCounting, setIsAutoCounting] = useState(false);
@@ -1504,9 +1506,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                  <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                    Vowels
                  </DropdownMenuItem>
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Alphabets
-                 </DropdownMenuItem>
+                 <DropdownMenuSub>
+                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                     Alphabets
+                   </DropdownMenuSubTrigger>
+                   <DropdownMenuPortal>
+                     <DropdownMenuSubContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                       <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                         A, B, C…
+                       </DropdownMenuItem>
+                       <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
+                         Fix the Order
+                       </DropdownMenuItem>
+                     </DropdownMenuSubContent>
+                   </DropdownMenuPortal>
+                 </DropdownMenuSub>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
                     Colors
                   </DropdownMenuItem>
@@ -5165,6 +5179,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       
       {/* ASK AI Copilot */}
       <ExpoCopilot context="My Lesson Vault (Ages 4-6)" />
+
+      <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 
       {/* PayFast Reload Credits Dialog */}
       <PayFastPaymentDialog
