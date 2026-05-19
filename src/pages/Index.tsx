@@ -29,10 +29,10 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
       <Header />
-      <div className="flex-1 flex flex-col items-center justify-center px-4">
+      <main className="flex-1 flex flex-col items-center justify-center px-4">
         <Hero />
         <CallToAction />
-      </div>
+      </main>
       <Chatbot onVoiceModeChange={setIsVoiceModeActive} />
       
       {/* Footer */}
