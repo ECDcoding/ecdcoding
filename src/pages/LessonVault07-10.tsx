@@ -27,6 +27,7 @@ import MusicLabWrapper from "@/components/MusicLabWrapper";
 import FlipBodyCard from "@/components/FlipBodyCard";
 import BlocklyEditor from "@/components/BlocklyEditor";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
+import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -172,6 +173,7 @@ const LessonVault0710 = () => {
   const [cryptogramOpen, setCryptogramOpen] = useState(false);
   const [cryptogramWord, setCryptogramWord] = useState('');
   const [cryptogramSecretStyle, setCryptogramSecretStyle] = useState<'mixed' | 'numbers' | 'lowercase'>('mixed');
+  const [fixOrderOpen, setFixOrderOpen] = useState(false);
   
 
   const hexLetters = 'ABCDEFGHIJ';
@@ -933,9 +935,19 @@ const LessonVault0710 = () => {
                  <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                    Vowels
                  </DropdownMenuItem>
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Alphabets
-                 </DropdownMenuItem>
+                 <DropdownMenuSub>
+                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
+                     Alphabets
+                   </DropdownMenuSubTrigger>
+                   <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                       A, B, C…
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Fix the Order
+                     </DropdownMenuItem>
+                   </DropdownMenuSubContent>
+                 </DropdownMenuSub>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
                    Colors
                  </DropdownMenuItem>
