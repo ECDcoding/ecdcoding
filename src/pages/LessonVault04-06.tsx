@@ -111,6 +111,7 @@ const LessonVault0406 = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pictureActive, setPictureActive] = useState<boolean>(false);
   const [countingOpen, setCountingOpen] = useState(false);
+  const [fixOrderOpen, setFixOrderOpen] = useState(false);
   const [selectedCountingRange, setSelectedCountingRange] = useState<string | null>(null);
   const [parentsOpen, setParentsOpen] = useState(false);
   const [isAutoCounting, setIsAutoCounting] = useState(false);
