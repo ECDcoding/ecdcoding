@@ -1458,6 +1458,9 @@ const LessonVault0710 = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Fix the Alphabet Order Puzzle */}
+      <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
+
       {/* Cryptogram Secrets Dialog */}
       <Dialog open={cryptogramOpen} onOpenChange={(open) => {
         setCryptogramOpen(open);
