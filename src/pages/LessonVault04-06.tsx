@@ -1506,9 +1506,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                  <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
                    Vowels
                  </DropdownMenuItem>
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Alphabets
-                 </DropdownMenuItem>
+                 <DropdownMenuSub>
+                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                     Alphabets
+                   </DropdownMenuSubTrigger>
+                   <DropdownMenuPortal>
+                     <DropdownMenuSubContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                       <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                         A, B, C…
+                       </DropdownMenuItem>
+                       <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
+                         Fix the Order
+                       </DropdownMenuItem>
+                     </DropdownMenuSubContent>
+                   </DropdownMenuPortal>
+                 </DropdownMenuSub>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
                     Colors
                   </DropdownMenuItem>
