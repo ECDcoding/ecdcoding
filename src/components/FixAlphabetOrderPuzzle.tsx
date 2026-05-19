@@ -32,32 +32,67 @@ const speak = (text: string) => {
   window.speechSynthesis.speak(u);
 };
 
-const buildShuffledOrientations = (): Orientation[] => {
-  // Make ~60% of letters wrong, the rest already correct.
-  return ALPHABET.map(() => {
-    const r = Math.random();
-    if (r < 0.4) return 0;
-    const choices: Orientation[] = [1, 2, 3];
-    return choices[Math.floor(Math.random() * choices.length)];
-  });
+// Three distinct shuffle patterns so kids get varied practice.
+type PatternId = 0 | 1 | 2;
+const PATTERN_LABELS: Record<PatternId, string> = {
+  0: "Pattern 1 of 3 · Random Flips",
+  1: "Pattern 2 of 3 · Every Other Letter Upside Down",
+  2: "Pattern 3 of 3 · Mirrored Groups of Five",
+};
+const PATTERN_HINTS: Record<PatternId, string> = {
+  0: "Some letters are flipped or rotated. Tap each one to fix it.",
+  1: "Every second letter is upside down. Tap the upside-down ones to fix them.",
+  2: "Letters are mirrored in groups of five. Tap each mirrored letter to fix it.",
+};
+
+const buildShuffledOrientations = (pattern: PatternId): Orientation[] => {
+  switch (pattern) {
+    case 1:
+      // Every odd-indexed letter is rotated 180°.
+      return ALPHABET.map((_, i) => (i % 2 === 1 ? 1 : 0) as Orientation);
+    case 2:
+      // Within each group of 5 letters, mirror the middle three.
+      return ALPHABET.map((_, i) => {
+        const posInGroup = i % 5;
+        return (posInGroup >= 1 && posInGroup <= 3 ? 2 : 0) as Orientation;
+      });
+    case 0:
+    default:
+      // ~60% of letters wrong with mixed orientations.
+      return ALPHABET.map(() => {
+        const r = Math.random();
+        if (r < 0.4) return 0;
+        const choices: Orientation[] = [1, 2, 3];
+        return choices[Math.floor(Math.random() * choices.length)];
+      });
+  }
 };
 
 const FixAlphabetOrderPuzzle = ({ isOpen, onClose }: FixAlphabetOrderPuzzleProps) => {
-  const [orientations, setOrientations] = useState<Orientation[]>(() => buildShuffledOrientations());
+  const [pattern, setPattern] = useState<PatternId>(0);
+  const [orientations, setOrientations] = useState<Orientation[]>(() => buildShuffledOrientations(0));
 
-  const reset = () => {
-    setOrientations(buildShuffledOrientations());
-    speak("Fix the alphabets. Tap each letter to turn it the right way up.");
+  const loadPattern = (p: PatternId, announce = true) => {
+    setPattern(p);
+    setOrientations(buildShuffledOrientations(p));
+    if (announce) {
+      setTimeout(() => speak(`${PATTERN_LABELS[p]}. ${PATTERN_HINTS[p]}`), 150);
+    }
+  };
+
+  const nextPattern = () => {
+    const p = ((pattern + 1) % 3) as PatternId;
+    loadPattern(p);
   };
 
   useEffect(() => {
     if (isOpen) {
-      setOrientations(buildShuffledOrientations());
-      // Small delay so the dialog is mounted before speaking.
-      setTimeout(() => speak("Fix the alphabets. Tap a letter to rotate it until it looks correct."), 250);
+      loadPattern(0, false);
+      setTimeout(() => speak("Fix the alphabets. There are three different patterns to practise. Tap a letter to rotate it until it looks correct."), 250);
     } else {
       window.speechSynthesis?.cancel();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const handleTap = (index: number) => {
@@ -78,9 +113,12 @@ const FixAlphabetOrderPuzzle = ({ isOpen, onClose }: FixAlphabetOrderPuzzleProps
 
   useEffect(() => {
     if (solved && isOpen) {
-      speak("Well done! You fixed the whole alphabet!");
+      const isLast = pattern === 2;
+      speak(isLast
+        ? "Well done! You fixed all three patterns of the alphabet!"
+        : "Great job! Tap Next Pattern to try a new shuffle.");
     }
-  }, [solved, isOpen]);
+  }, [solved, isOpen, pattern]);
 
   return (
     <Dialog open={isOpen} onOpenChange={(o) => { if (!o) onClose(); }}>
@@ -91,9 +129,26 @@ const FixAlphabetOrderPuzzle = ({ isOpen, onClose }: FixAlphabetOrderPuzzleProps
             Fix the Alphabet Order
           </DialogTitle>
           <DialogDescription className="text-white/80">
-            Tap each letter to rotate it until every letter looks the right way up — A, B, C, D…
+            Tap each letter to rotate it until it looks the right way up. There are <strong>3 different patterns</strong> to practise.
           </DialogDescription>
         </DialogHeader>
+
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+          <div className="text-sm font-semibold text-yellow-200">{PATTERN_LABELS[pattern]}</div>
+          <div className="flex gap-1">
+            {([0, 1, 2] as PatternId[]).map((p) => (
+              <button
+                key={p}
+                onClick={() => loadPattern(p)}
+                className={`h-2.5 w-8 rounded-full transition-all ${
+                  p === pattern ? "bg-yellow-300" : "bg-white/20 hover:bg-white/40"
+                }`}
+                aria-label={`Load pattern ${p + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="text-xs text-cyan-100/80 mb-2">{PATTERN_HINTS[pattern]}</div>
 
         <div className="flex items-center justify-between mb-2">
           <div className="text-sm text-cyan-200">
@@ -104,9 +159,13 @@ const FixAlphabetOrderPuzzle = ({ isOpen, onClose }: FixAlphabetOrderPuzzleProps
               onClick={() => speak("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z")}>
               <Volume2 className="h-4 w-4 mr-1" /> Hear A–Z
             </Button>
+            <Button size="sm" variant="outline" className="border-yellow-400/40 text-yellow-200 hover:bg-yellow-400/10"
+              onClick={nextPattern}>
+              <Sparkles className="h-4 w-4 mr-1" /> Next Pattern
+            </Button>
             <Button size="sm" variant="outline" className="border-orange-400/30 text-orange-200 hover:bg-orange-400/10"
-              onClick={reset}>
-              <RotateCcw className="h-4 w-4 mr-1" /> Shuffle
+              onClick={() => loadPattern(pattern)}>
+              <RotateCcw className="h-4 w-4 mr-1" /> Reset
             </Button>
           </div>
         </div>
