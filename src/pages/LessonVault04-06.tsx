@@ -185,6 +185,8 @@ const LessonVault0406 = () => {
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
   const [codingDialogOpen, setCodingDialogOpen] = useState(false);
+  const [codingNumbersOpen, setCodingNumbersOpen] = useState(false);
+  const [currentNumberLetterIndex, setCurrentNumberLetterIndex] = useState(0);
   const [displayCredits, setDisplayCredits] = useState(100); // Start filled with 100 credits
   const [gaugeAnimated, setGaugeAnimated] = useState(true); // Already animated/filled
   const [lowCreditsNotified, setLowCreditsNotified] = useState(false);
@@ -1774,6 +1776,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       onClick={() => setCodingDialogOpen(true)}
                     >
                       🔤 Coding in Alphabets
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => setCodingNumbersOpen(true)}
+                    >
+                      🔢 Coding in Numbers
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
