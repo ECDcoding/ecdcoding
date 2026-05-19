@@ -1,0 +1,12 @@
+# ECDcoding
+
+> ECDcoding empowers tech-savvy kids in South Africa with CAPS-aligned coding, robotics and early-childhood lessons for ages 4–12.
+
+## Pages
+
+- [Home](/): Overview of ECDcoding and entry points to age-grouped lesson vaults.
+- [Register](/register): Sign up as a Parent, ECD Manager or Tech Teacher.
+- [Sign in](/sign-in): Existing user sign-in.
+- [ECD Coding & Robotics Expo 2026](/ecd-expo-2026): Event page for the June 2026 expo at Nasrec, Soweto — sponsors, exhibitors, speakers and delegates.
+- [Privacy Policy](/privacy-policy): How user data is handled.
+- [Data Deletion](/data-deletion): How to request account and data removal.
