@@ -1754,10 +1754,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </DropdownMenuTrigger>
                       <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                         <DropdownMenuItem onClick={() => {
-                          setSelectedSport("soccer");
+                          setSelectedSport("cricket");
                           setSportPlayOpen(true);
                         }} className="font-medium text-white hover:bg-white/20">
-                          Soccer
+                          Cricket
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("netball");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Netball
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
                           setSelectedSport("rugby");
@@ -1766,22 +1772,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           Rugby
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
-                          setSelectedSport("cricket");
+                          setSelectedSport("soccer");
                           setSportPlayOpen(true);
                         }} className="font-medium text-white hover:bg-white/20">
-                          Cricket
+                          Soccer
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
                           setSelectedSport("tennis");
                           setSportPlayOpen(true);
                         }} className="font-medium text-white hover:bg-white/20">
                           Tennis
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("netball");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Netball
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
