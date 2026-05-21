@@ -1608,6 +1608,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      ✂️ Craft
+                    </DropdownMenuItem>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -1616,6 +1619,19 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenuItem>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                              🎬 Drama
+                              <ChevronDown className="h-4 w-4" />
+                            </DropdownMenuItem>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                              🎭 Monologue
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -1714,26 +1730,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </DropdownMenu>
                           </DropdownMenuContent>
                         </DropdownMenu>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                              🎬 Drama
-                              <ChevronDown className="h-4 w-4" />
-                            </DropdownMenuItem>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                              🎭 Monologue
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
                       </DropdownMenuContent>
                     </DropdownMenu>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                       🎨 Visual Art
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      ✂️ Craft
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
