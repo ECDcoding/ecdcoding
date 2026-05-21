@@ -898,6 +898,12 @@ const LessonVault0710 = () => {
                 >
                   ➗ Division
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➖ Minus
+                </DropdownMenuItem>
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
                     ✖️ Multiplication
@@ -917,12 +923,6 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➖ Minus
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
