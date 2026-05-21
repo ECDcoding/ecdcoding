@@ -1448,15 +1448,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => navigate("/lesson-vault-04-06?period=week")}
-                >
-                  Week
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
                   onClick={() => navigate("/lesson-vault-04-06?period=month")}
                 >
                   Month
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => navigate("/lesson-vault-04-06?period=week")}
+                >
+                  Week
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
