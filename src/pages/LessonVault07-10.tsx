@@ -28,6 +28,7 @@ import FlipBodyCard from "@/components/FlipBodyCard";
 import BlocklyEditor from "@/components/BlocklyEditor";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
+import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -80,6 +81,8 @@ const LessonVault0710 = () => {
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
+  const [numeracyOp, setNumeracyOp] = useState<NumeracyOp | null>(null);
+  const [numeracyOpen, setNumeracyOpen] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -732,7 +735,7 @@ const LessonVault0710 = () => {
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
-            <h1 className="text-2xl font-bold mb-1">My Lesson Vault (Ages 08-12)</h1>
+            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -883,19 +886,43 @@ const LessonVault0710 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      ✖️ Multiplication
-                      <ChevronDown className="h-4 w-4" />
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➕ Addition
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➗ Division
+                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                    ✖️ Multiplication
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem
+                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      🧮 Multiplication Practice
                     </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')} className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem
+                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
                       ✈️ Multiplication Airplanes
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➖ Minus
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -1660,6 +1687,11 @@ const LessonVault0710 = () => {
         onPaymentComplete={() => setShowReloadDialog(false)}
         isCreditsLow={credits <= 20}
         defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
+      />
+      <NumeracyPracticeDialog
+        open={numeracyOpen}
+        onOpenChange={setNumeracyOpen}
+        operation={numeracyOp}
       />
     </div>
   );
