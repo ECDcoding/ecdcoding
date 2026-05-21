@@ -1314,16 +1314,16 @@ const LessonVault0710 = () => {
                       🔬 Micro:bit Analysis (with Voice)
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')} 
-                      className="font-medium text-white hover:bg-purple-500/20"
-                    >
-                      💡 Micro:bit Editor
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
                       onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')} 
                       className="font-medium text-white hover:bg-purple-500/20"
                     >
                       🏫 Micro:bit Classroom
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')} 
+                      className="font-medium text-white hover:bg-purple-500/20"
+                    >
+                      💡 Micro:bit Editor
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
