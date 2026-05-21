@@ -1577,15 +1577,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
                 <DropdownMenuItem 
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => setTrafficLightsOpen(true)}
-                >
-                  🚦 Traffic Lights
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
                   onClick={() => setAbcSafetyOpen(true)}
                 >
                   🔤 Always Be Careful (ABC)
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                  onClick={() => setTrafficLightsOpen(true)}
+                >
+                  🚦 Traffic Lights
                 </DropdownMenuItem>
                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
                   🚸 Traffic Road Signs
