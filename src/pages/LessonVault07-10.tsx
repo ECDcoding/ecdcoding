@@ -936,19 +936,19 @@ const LessonVault0710 = () => {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                        Emoji AI
+                        AI
                         <ChevronDown className="h-4 w-4" />
                       </DropdownMenuItem>
-                   </DropdownMenuTrigger>
+                    </DropdownMenuTrigger>
                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
                        <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
                          Facial Recognition
                        </DropdownMenuItem>
-                       <DropdownMenuItem onClick={() => navigate('/fruit-item-recognition')} className="font-medium text-white hover:bg-white/20">
-                         Fruit Item Recognition
+                       <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
+                         Object Identification
                        </DropdownMenuItem>
                      </DropdownMenuContent>
-                  </DropdownMenu>
+                   </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
