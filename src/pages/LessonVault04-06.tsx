@@ -1787,6 +1787,26 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenu>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                {/* Sport Activities - relocated from Emojis */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      ⚽ Sport Activities
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    {['⚽', '🏉', '🎾', '🥊', '🏏', '🏃', '🚴', '🏊', '⛹️', '🤸'].map((emoji, idx) => (
+                      <DropdownMenuItem
+                        key={idx}
+                        className="text-4xl cursor-pointer hover:bg-white/20 py-2"
+                        onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
+                      >
+                        {emoji}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
             {/* Tech Dropdown */}
@@ -1798,31 +1818,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50 w-64">
-                {/* AI Logic - moved from separate dropdown */}
+                {/* AI */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      AI Logic
+                      AI
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          AI
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                        <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
-                          Facial Recognition
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate('/fruit-item-recognition')} className="font-medium text-white hover:bg-white/20">
-                          Object Identification
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
+                      Facial Recognition
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/fruit-item-recognition')} className="font-medium text-white hover:bg-white/20">
+                      Object Identification
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 {/* Coding Dropdown */}
@@ -1992,26 +2002,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             ))}
                           </DropdownMenuContent>
                         </DropdownMenu>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    {/* Sport Fields Dropdown */}
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          ⚽ Sport Activities
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
-                        {['⚽', '🏉', '🎾', '🥊', '🏏', '🏃', '🚴', '🏊', '⛹️', '🤸'].map((emoji, idx) => (
-                          <DropdownMenuItem
-                            key={idx}
-                            className="text-4xl cursor-pointer hover:bg-white/20 py-2"
-                            onClick={() => { setSelectedEmoji(emoji); setEmojiDialogOpen(true); }}
-                          >
-                            {emoji}
-                          </DropdownMenuItem>
-                        ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </DropdownMenuContent>
