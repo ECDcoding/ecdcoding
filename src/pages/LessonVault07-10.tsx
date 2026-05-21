@@ -1253,6 +1253,42 @@ const LessonVault0710 = () => {
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
                       <span className="flex items-center gap-2">
+                        💻 Coding
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      onClick={() => setCodingDialogOpen(true)} 
+                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                    >
+                      🔤 Coding in Alphabets
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
+                      <span className="flex items-center gap-2">
+                        🔐 Cryptography
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      onClick={() => setCryptogramOpen(true)} 
+                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                    >
+                      🔑 Creating Crypto Secrets
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
+                      <span className="flex items-center gap-2">
                         🔌 Micro:bit
                       </span>
                       <ChevronDown className="h-4 w-4" />
@@ -1277,42 +1313,6 @@ const LessonVault0710 = () => {
                     >
                       🏫 Micro:bit Classroom
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        💻 Coding
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      onClick={() => setCodingDialogOpen(true)} 
-                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🔤 Coding in Alphabets
-                    </DropdownMenuItem>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
-                          <span className="flex items-center gap-2">
-                            🔐 Cryptography
-                          </span>
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
-                        <DropdownMenuItem 
-                          onClick={() => setCryptogramOpen(true)} 
-                          className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                        >
-                          🔑 Creating Crypto Secrets
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
