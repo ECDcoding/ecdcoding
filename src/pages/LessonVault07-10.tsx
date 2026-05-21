@@ -1283,7 +1283,7 @@ const LessonVault0710 = () => {
                   <DropdownMenuTrigger asChild>
                     <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
                       <span className="flex items-center gap-2">
-                        🔐 Cryptography
+                        💻 Coding
                       </span>
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuItem>
@@ -1295,12 +1295,24 @@ const LessonVault0710 = () => {
                     >
                       🔤 Coding in Alphabets
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => setCryptogramOpen(true)} 
-                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🔑 Cryptogram Secrets
-                    </DropdownMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
+                          <span className="flex items-center gap-2">
+                            🔐 Cryptography
+                          </span>
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                        <DropdownMenuItem 
+                          onClick={() => setCryptogramOpen(true)} 
+                          className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                        >
+                          🔑 Creating Crypto Secrets
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
