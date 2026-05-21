@@ -28,6 +28,7 @@ import FlipBodyCard from "@/components/FlipBodyCard";
 import BlocklyEditor from "@/components/BlocklyEditor";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
+import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
@@ -732,7 +733,7 @@ const LessonVault0710 = () => {
             <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
               <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
             </Link>
-            <h1 className="text-2xl font-bold mb-1">My Lesson Vault (Ages 08-12)</h1>
+            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
