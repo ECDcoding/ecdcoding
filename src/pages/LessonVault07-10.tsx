@@ -881,53 +881,6 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Numeracy
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➕ Addition
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➗ Division
-                </DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
-                    ✖️ Multiplication
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem
-                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
-                      className="font-medium text-white hover:bg-white/20"
-                    >
-                      🧮 Multiplication Practice
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
-                      className="font-medium text-white hover:bg-white/20"
-                    >
-                      ✈️ Multiplication Airplanes
-                    </DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➖ Minus
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Basic Logic
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -938,14 +891,202 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Life Skills
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Arts
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      ✂️ Craft
+                    </DropdownMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          🎭 Performing Arts
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                              🎬 Drama
+                              <ChevronDown className="h-4 w-4" />
+                            </DropdownMenuItem>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                              🎭 Monologue
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                              🎵 Music Training
+                              <ChevronDown className="h-4 w-4" />
+                            </DropdownMenuItem>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Kandinsky (Art + Music)', 'https://musiclab.chromeexperiments.com/Kandinsky/')}>
+                              🎨 Kandinsky (Art + Music)
+                            </DropdownMenuItem>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🎹 Piano
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Arpeggios', 'https://musiclab.chromeexperiments.com/Arpeggios/')}>
+                                  🎶 Arpeggios
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Chords', 'https://musiclab.chromeexperiments.com/Chords/')}>
+                                  🎵 Chords
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Piano Roll', 'https://musiclab.chromeexperiments.com/Piano-Roll/')}>
+                                  🎼 Piano Roll
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Shared Piano', 'https://musiclab.chromeexperiments.com/Shared-Piano/')}>
+                                  🎹 Shared Piano
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🥁 Rhythm
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Melody Maker', 'https://musiclab.chromeexperiments.com/Melody-Maker/')}>
+                                  🎵 Melody Maker
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Rhythm Maker', 'https://musiclab.chromeexperiments.com/Rhythm/')}>
+                                  🥁 Rhythm Maker
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Song Maker', 'https://musiclab.chromeexperiments.com/Song-Maker/')}>
+                                  🎧 Song Maker
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🔊 Sound Science
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Harmonics', 'https://musiclab.chromeexperiments.com/Harmonics/')}>
+                                  🎼 Harmonics
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Oscillators', 'https://musiclab.chromeexperiments.com/Oscillators/')}>
+                                  📈 Oscillators
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Sound Waves', 'https://musiclab.chromeexperiments.com/Sound-Waves/')}>
+                                  🌊 Sound Waves
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Strings', 'https://musiclab.chromeexperiments.com/Strings/')}>
+                              🎻 Strings
+                            </DropdownMenuItem>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🎤 Voice
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Spectrogram', 'https://musiclab.chromeexperiments.com/Spectrogram/')}>
+                                  📊 Spectrogram
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Voice Spinner', 'https://musiclab.chromeexperiments.com/Voice-Spinner/')}>
+                                  🌀 Voice Spinner
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
+                      🎨 Visual Art
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      Sport
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                          Play Fields Info
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("cricket");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Cricket
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("netball");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Netball
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("rugby");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Rugby
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("soccer");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Soccer
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                          setSelectedSport("tennis");
+                          setSportPlayOpen(true);
+                        }} className="font-medium text-white hover:bg-white/20">
+                          Tennis
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Literacy
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
                <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Vowels
-                 </DropdownMenuItem>
                  <DropdownMenuSub>
                    <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
                      Alphabets
@@ -961,6 +1102,9 @@ const LessonVault0710 = () => {
                  </DropdownMenuSub>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
                    Colors
+                 </DropdownMenuItem>
+                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                   Vowels
                  </DropdownMenuItem>
                </DropdownMenuContent>
             </DropdownMenu>
@@ -1000,192 +1144,48 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Life Skills
+                  Numeracy
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Arts
-                      <ChevronDown className="h-4 w-4" />
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➕ Addition
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➗ Division
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➖ Minus
+                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                    ✖️ Multiplication
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem
+                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      ✈️ Multiplication Airplanes
                     </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          🎭 Performing Arts
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                              🎵 Music Training
-                              <ChevronDown className="h-4 w-4" />
-                            </DropdownMenuItem>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                                  🎹 Piano
-                                  <ChevronDown className="h-4 w-4" />
-                                </DropdownMenuItem>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Shared Piano', 'https://musiclab.chromeexperiments.com/Shared-Piano/')}>
-                                  🎹 Shared Piano
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Piano Roll', 'https://musiclab.chromeexperiments.com/Piano-Roll/')}>
-                                  🎼 Piano Roll
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Arpeggios', 'https://musiclab.chromeexperiments.com/Arpeggios/')}>
-                                  🎶 Arpeggios
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Chords', 'https://musiclab.chromeexperiments.com/Chords/')}>
-                                  🎵 Chords
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Strings', 'https://musiclab.chromeexperiments.com/Strings/')}>
-                              🎻 Strings
-                            </DropdownMenuItem>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                                  🥁 Rhythm
-                                  <ChevronDown className="h-4 w-4" />
-                                </DropdownMenuItem>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Rhythm Maker', 'https://musiclab.chromeexperiments.com/Rhythm/')}>
-                                  🥁 Rhythm Maker
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Song Maker', 'https://musiclab.chromeexperiments.com/Song-Maker/')}>
-                                  🎧 Song Maker
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Melody Maker', 'https://musiclab.chromeexperiments.com/Melody-Maker/')}>
-                                  🎵 Melody Maker
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                                  🎤 Voice
-                                  <ChevronDown className="h-4 w-4" />
-                                </DropdownMenuItem>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Voice Spinner', 'https://musiclab.chromeexperiments.com/Voice-Spinner/')}>
-                                  🌀 Voice Spinner
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Spectrogram', 'https://musiclab.chromeexperiments.com/Spectrogram/')}>
-                                  📊 Spectrogram
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                                  🔊 Sound Science
-                                  <ChevronDown className="h-4 w-4" />
-                                </DropdownMenuItem>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Sound Waves', 'https://musiclab.chromeexperiments.com/Sound-Waves/')}>
-                                  🌊 Sound Waves
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Harmonics', 'https://musiclab.chromeexperiments.com/Harmonics/')}>
-                                  🎼 Harmonics
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Oscillators', 'https://musiclab.chromeexperiments.com/Oscillators/')}>
-                                  📈 Oscillators
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Kandinsky (Art + Music)', 'https://musiclab.chromeexperiments.com/Kandinsky/')}>
-                              🎨 Kandinsky (Art + Music)
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                              🎬 Drama
-                              <ChevronDown className="h-4 w-4" />
-                            </DropdownMenuItem>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                              🎭 Monologue
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      🎨 Visual Art
+                    <DropdownMenuItem
+                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      🧮 Multiplication Practice
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20">
-                      ✂️ Craft
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Sport
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          Play Fields Info
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("soccer");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Soccer
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("rugby");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Rugby
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("cricket");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Cricket
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("tennis");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Tennis
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => {
-                          setSelectedSport("netball");
-                          setSportPlayOpen(true);
-                        }} className="font-medium text-white hover:bg-white/20">
-                          Netball
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -1207,11 +1207,11 @@ const LessonVault0710 = () => {
                     <DropdownMenuItem onClick={() => setSelectedAnimalType("domestic")} className="font-medium text-white hover:bg-white/20">
                       Domestic Animals
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedAnimalType("wild")} className="font-medium text-white hover:bg-white/20">
-                      Wild Animals
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
                       The Young and Old
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedAnimalType("wild")} className="font-medium text-white hover:bg-white/20">
+                      Wild Animals
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -1223,11 +1223,11 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      My Body
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setFiveSensesOpen(true)} className="font-medium text-white hover:bg-white/20">
                       Five Senses
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
+                      My Body
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
