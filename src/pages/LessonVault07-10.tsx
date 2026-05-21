@@ -904,16 +904,16 @@ const LessonVault0710 = () => {
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
                     <DropdownMenuItem
-                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
-                      className="font-medium text-white hover:bg-white/20"
-                    >
-                      🧮 Multiplication Practice
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
                       onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
                       className="font-medium text-white hover:bg-white/20"
                     >
                       ✈️ Multiplication Airplanes
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      🧮 Multiplication Practice
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
