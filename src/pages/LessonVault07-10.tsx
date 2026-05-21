@@ -1029,6 +1029,9 @@ const LessonVault0710 = () => {
                             </DropdownMenuItem>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Kandinsky (Art + Music)', 'https://musiclab.chromeexperiments.com/Kandinsky/')}>
+                              🎨 Kandinsky (Art + Music)
+                            </DropdownMenuItem>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -1051,9 +1054,6 @@ const LessonVault0710 = () => {
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Strings', 'https://musiclab.chromeexperiments.com/Strings/')}>
-                              🎻 Strings
-                            </DropdownMenuItem>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -1076,22 +1076,6 @@ const LessonVault0710 = () => {
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                                  🎤 Voice
-                                  <ChevronDown className="h-4 w-4" />
-                                </DropdownMenuItem>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Spectrogram', 'https://musiclab.chromeexperiments.com/Spectrogram/')}>
-                                  📊 Spectrogram
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Voice Spinner', 'https://musiclab.chromeexperiments.com/Voice-Spinner/')}>
-                                  🌀 Voice Spinner
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
                                   🔊 Sound Science
                                   <ChevronDown className="h-4 w-4" />
                                 </DropdownMenuItem>
@@ -1108,9 +1092,25 @@ const LessonVault0710 = () => {
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
-                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Kandinsky (Art + Music)', 'https://musiclab.chromeexperiments.com/Kandinsky/')}>
-                              🎨 Kandinsky (Art + Music)
+                            <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Strings', 'https://musiclab.chromeexperiments.com/Strings/')}>
+                              🎻 Strings
                             </DropdownMenuItem>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                                  🎤 Voice
+                                  <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuItem>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Spectrogram', 'https://musiclab.chromeexperiments.com/Spectrogram/')}>
+                                  📊 Spectrogram
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="font-medium text-white hover:bg-white/20" onClick={() => openMusicLab('Voice Spinner', 'https://musiclab.chromeexperiments.com/Voice-Spinner/')}>
+                                  🌀 Voice Spinner
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </DropdownMenuContent>
                         </DropdownMenu>
                         <DropdownMenu>
