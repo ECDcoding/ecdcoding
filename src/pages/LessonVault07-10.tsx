@@ -886,19 +886,43 @@ const LessonVault0710 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      ✖️ Multiplication
-                      <ChevronDown className="h-4 w-4" />
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➕ Addition
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➗ Division
+                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                    ✖️ Multiplication
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem
+                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      🧮 Multiplication Practice
                     </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')} className="font-medium text-white hover:bg-white/20">
+                    <DropdownMenuItem
+                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
                       ✈️ Multiplication Airplanes
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➖ Minus
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
