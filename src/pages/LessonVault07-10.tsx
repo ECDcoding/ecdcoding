@@ -81,6 +81,8 @@ const LessonVault0710 = () => {
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
   const [isBuyCreditsVisible, setIsBuyCreditsVisible] = useState(false);
+  const [numeracyOp, setNumeracyOp] = useState<NumeracyOp | null>(null);
+  const [numeracyOpen, setNumeracyOpen] = useState(false);
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<string | null>(null);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
