@@ -943,9 +943,6 @@ const LessonVault0710 = () => {
                 </Button>
               </DropdownMenuTrigger>
                <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Vowels
-                 </DropdownMenuItem>
                  <DropdownMenuSub>
                    <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
                      Alphabets
@@ -961,6 +958,9 @@ const LessonVault0710 = () => {
                  </DropdownMenuSub>
                  <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
                    Colors
+                 </DropdownMenuItem>
+                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                   Vowels
                  </DropdownMenuItem>
                </DropdownMenuContent>
             </DropdownMenu>
