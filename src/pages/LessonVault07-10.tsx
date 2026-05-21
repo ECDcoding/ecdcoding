@@ -881,120 +881,11 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Numeracy
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➕ Addition
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➗ Division
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
-                  className="font-medium text-white hover:bg-white/20"
-                >
-                  ➖ Minus
-                </DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
-                    ✖️ Multiplication
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem
-                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
-                      className="font-medium text-white hover:bg-white/20"
-                    >
-                      ✈️ Multiplication Airplanes
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
-                      className="font-medium text-white hover:bg-white/20"
-                    >
-                      🧮 Multiplication Practice
-                    </DropdownMenuItem>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Basic Logic
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Literacy
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                 <DropdownMenuSub>
-                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
-                     Alphabets
-                   </DropdownMenuSubTrigger>
-                   <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                       A, B, C…
-                     </DropdownMenuItem>
-                     <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
-                       Fix the Order
-                     </DropdownMenuItem>
-                   </DropdownMenuSubContent>
-                 </DropdownMenuSub>
-                 <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
-                   Colors
-                 </DropdownMenuItem>
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Vowels
-                 </DropdownMenuItem>
-               </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Notes to
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
-                    👨‍👩‍👧‍👦 Parents
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
-                        🧠 Child Behavior
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                        <DropdownMenuItem onClick={() => { setSelectedAge("8"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
-                          🎯 08 Year Old's
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => { setSelectedAge("9"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
-                          🌟 Nine Year Old's
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => { setSelectedAge("10"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
-                          💪 Ten Year Old's
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuSub>
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -1186,6 +1077,115 @@ const LessonVault0710 = () => {
                     </DropdownMenu>
                   </DropdownMenuContent>
                 </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Literacy
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                 <DropdownMenuSub>
+                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
+                     Alphabets
+                   </DropdownMenuSubTrigger>
+                   <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                       A, B, C…
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
+                       Fix the Order
+                     </DropdownMenuItem>
+                   </DropdownMenuSubContent>
+                 </DropdownMenuSub>
+                 <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
+                   Colors
+                 </DropdownMenuItem>
+                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
+                   Vowels
+                 </DropdownMenuItem>
+               </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Notes to
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
+                    👨‍👩‍👧‍👦 Parents
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
+                        🧠 Child Behavior
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                        <DropdownMenuItem onClick={() => { setSelectedAge("8"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
+                          🎯 08 Year Old's
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => { setSelectedAge("9"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
+                          🌟 Nine Year Old's
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => { setSelectedAge("10"); setParentsOpen(true); }} className="font-medium text-white hover:bg-white/20">
+                          💪 Ten Year Old's
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuSub>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
+                  Numeracy
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("addition"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➕ Addition
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("division"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➗ Division
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => { setNumeracyOp("subtraction"); setNumeracyOpen(true); }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  ➖ Minus
+                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 focus:bg-white/20 data-[state=open]:bg-white/20">
+                    ✖️ Multiplication
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem
+                      onClick={() => window.open('https://www.free-training-tutorial.com/times-tables/multiplication-airplanes.html', '_blank')}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      ✈️ Multiplication Airplanes
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => { setNumeracyOp("multiplication"); setNumeracyOpen(true); }}
+                      className="font-medium text-white hover:bg-white/20"
+                    >
+                      🧮 Multiplication Practice
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
