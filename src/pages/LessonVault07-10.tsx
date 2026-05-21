@@ -1207,11 +1207,11 @@ const LessonVault0710 = () => {
                     <DropdownMenuItem onClick={() => setSelectedAnimalType("domestic")} className="font-medium text-white hover:bg-white/20">
                       Domestic Animals
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedAnimalType("wild")} className="font-medium text-white hover:bg-white/20">
-                      Wild Animals
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
                       The Young and Old
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedAnimalType("wild")} className="font-medium text-white hover:bg-white/20">
+                      Wild Animals
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -1223,11 +1223,11 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      My Body
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setFiveSensesOpen(true)} className="font-medium text-white hover:bg-white/20">
                       Five Senses
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
+                      My Body
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
