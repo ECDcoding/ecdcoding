@@ -1688,6 +1688,11 @@ const LessonVault0710 = () => {
         isCreditsLow={credits <= 20}
         defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
       />
+      <NumeracyPracticeDialog
+        open={numeracyOpen}
+        onOpenChange={setNumeracyOpen}
+        operation={numeracyOp}
+      />
     </div>
   );
 };
