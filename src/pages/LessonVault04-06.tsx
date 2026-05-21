@@ -670,7 +670,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
-  const vowels = ["A", "E", "I", "O", "U"];
+  const vowels = ["a", "e", "i", "o", "u"];
   
   const speakVowel = (vowel: string, isAlphabet = false) => {
     if ('speechSynthesis' in window) {
@@ -680,11 +680,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       
       // Different pitch for each vowel to create distinct tones
       const vowelTones: Record<string, number> = {
-        "A": 0.8, // Lower tone
-        "E": 1.0, // Mid-low tone  
-        "I": 1.4, // Higher tone
-        "O": 0.9, // Low-mid tone
-        "U": 0.7  // Lowest tone
+        "a": 0.8, // Lower tone
+        "e": 1.0, // Mid-low tone  
+        "i": 1.4, // Higher tone
+        "o": 0.9, // Low-mid tone
+        "u": 0.7  // Lowest tone
       };
       
       utterance.pitch = isAlphabet ? 1.2 : (vowelTones[vowel] || 1.0);
@@ -3168,7 +3168,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto px-4">
                    {(() => {
                       if (selectedCountingRange === "vowels") {
-                        const vowelsArray = ['A', 'E', 'I', 'O', 'U'];
+                        const vowelsArray = ['a', 'e', 'i', 'o', 'u'];
                         return vowelsArray.map((vowel, index) => {
                           const isCurrentlyFlashing = isVowelsPlaying && index === currentVowelIndex;
                           return (
