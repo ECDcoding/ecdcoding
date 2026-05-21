@@ -1242,23 +1242,35 @@ const LessonVault0710 = () => {
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      onClick={() => {
-                        setCodeEditorTitle('Blockly Code Editor');
-                        setCodeEditorDescription('Build your first program using blocks (no internet needed).');
-                        setCodeEditorOpen(true);
-                      }} 
-                      className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🧩 Blockly Code Editor
-                      <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')} 
-                      className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🎮 Blockly Games
-                    </DropdownMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <DropdownMenuItem className="font-medium text-white hover:bg-cyan-500/20 flex items-center justify-between cursor-pointer">
+                          <span className="flex items-center gap-2">
+                            🧱 Blockly
+                          </span>
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
+                        <DropdownMenuItem 
+                          onClick={() => {
+                            setCodeEditorTitle('Blockly Code Editor');
+                            setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                            setCodeEditorOpen(true);
+                          }} 
+                          className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                        >
+                          🧩 Blockly Code Editor
+                          <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')} 
+                          className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                        >
+                          🎮 Blockly Games
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                     <DropdownMenuItem 
                       onClick={() => setCodingDialogOpen(true)} 
                       className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
