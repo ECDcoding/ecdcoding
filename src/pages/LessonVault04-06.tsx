@@ -2161,15 +2161,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                      onClick={() => setSelectedAnimalType("wild")}
-                    >
-                      Wild Animals
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
                       onClick={() => setObjectCharactersOpen(true)}
                     >
                       The Young and Old
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setSelectedAnimalType("wild")}
+                    >
+                      Wild Animals
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -2181,6 +2181,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                      onClick={() => setFiveSensesOpen(true)}
+                    >
+                      Five Senses
+                    </DropdownMenuItem>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
@@ -2192,29 +2198,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem 
                           className="font-medium text-white hover:bg-white/20 cursor-pointer"
                           onClick={() => {
-                            setSelectedBodyType('girl');
-                            setHumanBeingOpen(true);
-                          }}
-                        >
-                          Girl's Body
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                          onClick={() => {
                             setSelectedBodyType('boy');
                             setHumanBeingOpen(true);
                           }}
                         >
                           Boy's Body
                         </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          className="font-medium text-white hover:bg-white/20 cursor-pointer"
+                          onClick={() => {
+                            setSelectedBodyType('girl');
+                            setHumanBeingOpen(true);
+                          }}
+                        >
+                          Girl's Body
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                    <DropdownMenuItem 
-                      className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                      onClick={() => setFiveSensesOpen(true)}
-                    >
-                      Five Senses
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
@@ -2227,17 +2227,17 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                     <DropdownMenuItem 
                       className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
-                      onClick={() => window.location.href = '/domestic-ecology'}
-                    >
-                      <BookOpen className="h-4 w-4" />
-                      Domestic Ecology
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                       onClick={() => navigate('/biology-nature')}
                     >
                       <Microscope className="h-4 w-4" />
                       Biology & Nature
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="font-medium text-white hover:bg-white/20 flex items-center gap-2 cursor-pointer"
+                      onClick={() => window.location.href = '/domestic-ecology'}
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      Domestic Ecology
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
