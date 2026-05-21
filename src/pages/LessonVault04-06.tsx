@@ -1810,7 +1810,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                          Emoji AI
+                          AI
                           <ChevronDown className="h-4 w-4" />
                         </DropdownMenuItem>
                       </DropdownMenuTrigger>
@@ -1819,7 +1819,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           Facial Recognition
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate('/fruit-item-recognition')} className="font-medium text-white hover:bg-white/20">
-                          Fruit Item Recognition
+                          Object Identification
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
