@@ -256,6 +256,25 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
         </DialogContent>
       </Dialog>
 
+      {/* 30 Day Free Trial Splash (auto-dismisses after 3s) */}
+      <Dialog open={showTrialSplash} onOpenChange={(o) => !o && setShowTrialSplash(false)}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-primary via-purple-500 to-pink-500 border-0">
+          <DialogHeader>
+            <DialogTitle className="text-center text-3xl font-extrabold text-white drop-shadow-lg flex items-center justify-center gap-3">
+              <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
+              30 Day Free Trial
+              <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
+            </DialogTitle>
+            <DialogDescription className="text-center text-white/90 text-base mt-2">
+              ✨ Loading your free lessons... ✨
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center py-6">
+            <Sparkles className="h-12 w-12 text-yellow-200 animate-pulse" />
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Free Class Carousel Dialog */}
       <Dialog open={showFreeClassDialog} onOpenChange={setShowFreeClassDialog}>
         <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
