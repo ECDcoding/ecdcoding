@@ -2868,7 +2868,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               
               <Card 
                 className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
-                onClick={handleCardClick("Busy Bee")}
+                onClick={handleCardClick("Basic Logic Thinking")}
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
