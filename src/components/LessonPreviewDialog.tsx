@@ -68,6 +68,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [showFreeClassDialog, setShowFreeClassDialog] = useState(false);
   const [showSignInPromptDialog, setShowSignInPromptDialog] = useState(false);
+  const [showTrialSplash, setShowTrialSplash] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [pendingFreeClassCard, setPendingFreeClassCard] = useState<FreeClassCard | null>(null);
   const [openLessons, setOpenLessons] = useState<string[]>([]);
@@ -75,6 +76,21 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
+
+  // When user clicks Kids Aged 04-07, show the "30 Day Free Trial" splash for 3s,
+  // then auto-launch the slide show carousel.
+  useEffect(() => {
+    if (open && ageGroup === "04-07") {
+      setShowTrialSplash(true);
+      const timer = setTimeout(() => {
+        setShowTrialSplash(false);
+        setShowFreeClassDialog(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else if (!open) {
+      setShowTrialSplash(false);
+    }
+  }, [open, ageGroup]);
 
   const handleFreeClassCardClick = (card: FreeClassCard) => {
     if (user) {
@@ -151,7 +167,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
 
   return (
     <>
-      <Dialog open={open && !showRegistrationDialog && !showFreeClassDialog && !showSignInPromptDialog} onOpenChange={onOpenChange}>
+      <Dialog open={open && ageGroup !== "04-07" && !showRegistrationDialog && !showFreeClassDialog && !showSignInPromptDialog && !showTrialSplash} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-center text-xl">
@@ -236,6 +252,25 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
                 )}
               </Collapsible>
             ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* 30 Day Free Trial Splash (auto-dismisses after 3s) */}
+      <Dialog open={showTrialSplash} onOpenChange={(o) => !o && setShowTrialSplash(false)}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-primary via-purple-500 to-pink-500 border-0">
+          <DialogHeader>
+            <DialogTitle className="text-center text-3xl font-extrabold text-white drop-shadow-lg flex items-center justify-center gap-3">
+              <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
+              30 Day Free Trial
+              <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
+            </DialogTitle>
+            <DialogDescription className="text-center text-white/90 text-base mt-2">
+              ✨ Loading your free lessons... ✨
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center py-6">
+            <Sparkles className="h-12 w-12 text-yellow-200 animate-pulse" />
           </div>
         </DialogContent>
       </Dialog>
