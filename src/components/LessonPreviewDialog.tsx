@@ -167,7 +167,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
 
   return (
     <>
-      <Dialog open={open && !showRegistrationDialog && !showFreeClassDialog && !showSignInPromptDialog} onOpenChange={onOpenChange}>
+      <Dialog open={open && ageGroup !== "04-07" && !showRegistrationDialog && !showFreeClassDialog && !showSignInPromptDialog && !showTrialSplash} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-center text-xl">
