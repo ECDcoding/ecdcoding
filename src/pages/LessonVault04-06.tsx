@@ -86,6 +86,7 @@ import armyTankIcon from "@/assets/transport/army-tank.png";
 import boyBodyPartsDiagram from "@/assets/boy-body-parts-diagram.jpg";
 import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
+import basicLogicThinking from "@/assets/basic-logic-thinking.jpg";
 import stopSign from "@/assets/stop-sign.png";
 
 const LessonVault0406 = () => {
