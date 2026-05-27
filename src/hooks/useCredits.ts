@@ -19,11 +19,18 @@ export const useCredits = () => {
   const checkAndAwardDailyCredits = async (userId: string, currentCredits: number, lastDailyCreditAt: string | null) => {
     const now = new Date();
     const lastAward = lastDailyCreditAt ? new Date(lastDailyCreditAt) : null;
-    
+
+    // Only award daily credits if the user has used up their previous credits.
+    // This prevents compounding of daily free credits while the user is offline
+    // or simply hasn't used the previously awarded credits yet.
+    if (currentCredits > 0) {
+      return currentCredits;
+    }
+
     // Check if more than 24 hours have passed since last daily credit
-    const shouldAwardDailyCredits = !lastAward || 
+    const shouldAwardDailyCredits = !lastAward ||
       (now.getTime() - lastAward.getTime()) >= 24 * 60 * 60 * 1000;
-    
+
     if (shouldAwardDailyCredits) {
       const newCredits = currentCredits + DAILY_FREE_CREDITS;
       
