@@ -68,6 +68,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
   const [showFreeClassDialog, setShowFreeClassDialog] = useState(false);
   const [showSignInPromptDialog, setShowSignInPromptDialog] = useState(false);
+  const [showTrialSplash, setShowTrialSplash] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [pendingFreeClassCard, setPendingFreeClassCard] = useState<FreeClassCard | null>(null);
   const [openLessons, setOpenLessons] = useState<string[]>([]);
@@ -75,6 +76,21 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const targetRoute = ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10";
+
+  // When user clicks Kids Aged 04-07, show the "30 Day Free Trial" splash for 3s,
+  // then auto-launch the slide show carousel.
+  useEffect(() => {
+    if (open && ageGroup === "04-07") {
+      setShowTrialSplash(true);
+      const timer = setTimeout(() => {
+        setShowTrialSplash(false);
+        setShowFreeClassDialog(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else if (!open) {
+      setShowTrialSplash(false);
+    }
+  }, [open, ageGroup]);
 
   const handleFreeClassCardClick = (card: FreeClassCard) => {
     if (user) {
