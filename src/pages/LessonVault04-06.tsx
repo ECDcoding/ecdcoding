@@ -2872,7 +2872,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
-                  <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg" />
+                  <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
                   {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
@@ -3038,7 +3038,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
-                  <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg" />
+                  <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
                   {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
                      <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
