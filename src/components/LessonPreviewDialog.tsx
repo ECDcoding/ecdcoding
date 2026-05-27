@@ -19,6 +19,7 @@ import girlBodyMyBody from "@/assets/girl-body-my-body.jpg";
 import shapesBasicColor from "@/assets/shapes-basic-color.png";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
+import basicLogicThinking from "@/assets/basic-logic-thinking.jpg";
 
 interface Lesson {
   id: string;
@@ -54,6 +55,7 @@ const freeClassCards: FreeClassCard[] = [
   { id: "shapes", title: "Shapes", image: shapesBasicColor, color: "from-green-500 to-emerald-400", description: "Explore circles, squares and more!", route: "/lesson-vault-04-06#shapes" },
   { id: "animals", title: "Animals", image: wildAnimalsChart, color: "from-orange-500 to-amber-400", description: "Meet wild and domestic animals!", route: "/biology-nature" },
   { id: "abc-chart", title: "ABC Chart", image: alphabetChart, color: "from-purple-500 to-violet-400", description: "Learn the alphabet with fun!", route: "/lesson-vault-04-06#abc-chart" },
+  { id: "basic-logic", title: "Basic Logic Thinking", image: basicLogicThinking, color: "from-yellow-500 to-amber-400", description: "Spark curiosity and problem-solving skills!", route: "/lesson-vault-04-06#basic-logic" },
 ];
 
 interface LessonPreviewDialogProps {
