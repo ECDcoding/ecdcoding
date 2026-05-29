@@ -682,50 +682,6 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label>Phone Number (Whatsapp) *</Label>
-          <div className="flex gap-2">
-            <Select value={formData.phoneCountryCode} onValueChange={(value) => handleInputChange("phoneCountryCode", value)}>
-              <SelectTrigger className="w-32 text-black bg-green-50">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {countryCodes.map((country) => (
-                  <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              className="w-20 text-black bg-green-50"
-              placeholder="###"
-              maxLength={3}
-              value={formData.phone1}
-              onChange={(e) => handleInputChange("phone1", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-20 text-black bg-green-50"
-              placeholder="###"
-              maxLength={3}
-              value={formData.phone2}
-              onChange={(e) => handleInputChange("phone2", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-24 text-black bg-green-50"
-              placeholder="####"
-              maxLength={4}
-              value={formData.phone3}
-              onChange={(e) => handleInputChange("phone3", e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="state">Province / State / Region *</Label>
           <Input
             id="state"
@@ -860,30 +816,6 @@ const Register = () => {
             placeholder="e.g., 3-6 years"
             className="text-black bg-green-50"
             required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="currentPrograms">Current Educational Programs</Label>
-          <Textarea
-            id="currentPrograms"
-            rows={4}
-            value={formData.currentPrograms}
-            onChange={(e) => handleInputChange("currentPrograms", e.target.value)}
-            placeholder="Describe your current educational programs..."
-            className="text-black bg-green-50"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="techGoals">Technology Education Goals</Label>
-          <Textarea
-            id="techGoals"
-            rows={4}
-            value={formData.techGoals}
-            onChange={(e) => handleInputChange("techGoals", e.target.value)}
-            placeholder="What are your goals for introducing technology education?"
-            className="text-black bg-green-50"
           />
         </div>
 
