@@ -361,6 +361,10 @@ const Register = () => {
     salary: "",
     startDate: "",
     
+    // Motivation
+    otherMotivation: false,
+    otherMotivationReason: "",
+    
     // Terms agreement
     agreeToTerms: false,
   });
@@ -528,16 +532,6 @@ const Register = () => {
 
         {/* Username and Password Creation */}
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="username">Create Username *</Label>
-            <Input
-              id="username"
-              value={formData.username || ''}
-              onChange={(e) => handleInputChange("username", e.target.value)}
-              placeholder="Enter desired username"
-              required
-            />
-          </div>
           {!user && <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="password">Create Password *</Label>
@@ -579,56 +573,6 @@ const Register = () => {
         </div>
       </div>
 
-      <Separator />
-
-      {/* Registration Details */}
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
-            <Select
-              value={formData.hearAbout}
-              onValueChange={(value) => handleInputChange("hearAbout", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select duration" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="12-months">12 Months</SelectItem>
-                <SelectItem value="24-months">24 Months</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Starting Date *</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !formData.startDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {formData.startDate ? format(new Date(formData.startDate), "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={formData.startDate ? new Date(formData.startDate) : undefined}
-                  onSelect={(date) => handleInputChange("startDate", date?.toISOString() || "")}
-                  disabled={(date) => date < new Date()}
-                  initialFocus
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-        </div>
-      </div>
 
     </>
   );
@@ -764,60 +708,9 @@ const Register = () => {
 
       <Separator />
 
-      {/* Facility Information */}
+      {/* Motivation for Tech Lessons */}
       <div className="space-y-6">
-        <h3 className="text-lg font-semibold">ECD Facility Information</h3>
-        
-        <div className="space-y-2">
-          <Label htmlFor="facilityName">Facility Name *</Label>
-          <Input
-            id="facilityName"
-            value={formData.facilityName}
-            onChange={(e) => handleInputChange("facilityName", e.target.value)}
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="facilityType">Facility Type *</Label>
-          <Select onValueChange={(value) => handleInputChange("facilityType", value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select facility type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="daycare">Daycare Center</SelectItem>
-              <SelectItem value="preschool">Preschool</SelectItem>
-              <SelectItem value="nursery">Nursery School</SelectItem>
-              <SelectItem value="creche">Crèche</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="numberOfLearners">Number of Learners *</Label>
-          <Input
-            id="numberOfLearners"
-            type="number"
-            value={formData.numberOfLearners}
-            onChange={(e) => handleInputChange("numberOfLearners", e.target.value)}
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="ageGroups">Age Groups Served *</Label>
-          <Input
-            id="ageGroups"
-            value={formData.ageGroups}
-            onChange={(e) => handleInputChange("ageGroups", e.target.value)}
-            placeholder="e.g., 3-6 years"
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
+        <h3 className="text-lg font-semibold">Motivation for Tech Lessons</h3>
 
         <div className="space-y-4">
           <Label>Motivation for Participation *</Label>
@@ -835,9 +728,28 @@ const Register = () => {
               <Label htmlFor="adaptation">Adaptation</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <input type="checkbox" id="other-motivation" className="rounded border-border" />
+              <input
+                type="checkbox"
+                id="other-motivation"
+                className="rounded border-border"
+                checked={formData.otherMotivation}
+                onChange={(e) => handleInputChange("otherMotivation", e.target.checked)}
+              />
               <Label htmlFor="other-motivation">Other</Label>
             </div>
+            {formData.otherMotivation && (
+              <div className="space-y-2 pt-1 pl-6">
+                <Label htmlFor="other-motivation-reason">Please specify your reason *</Label>
+                <Input
+                  id="other-motivation-reason"
+                  value={formData.otherMotivationReason}
+                  onChange={(e) => handleInputChange("otherMotivationReason", e.target.value)}
+                  placeholder="Enter your reason"
+                  className="text-black bg-green-50"
+                  required
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
