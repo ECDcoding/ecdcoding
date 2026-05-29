@@ -708,60 +708,9 @@ const Register = () => {
 
       <Separator />
 
-      {/* Facility Information */}
+      {/* Motivation for Tech Lessons */}
       <div className="space-y-6">
-        <h3 className="text-lg font-semibold">ECD Facility Information</h3>
-        
-        <div className="space-y-2">
-          <Label htmlFor="facilityName">Facility Name *</Label>
-          <Input
-            id="facilityName"
-            value={formData.facilityName}
-            onChange={(e) => handleInputChange("facilityName", e.target.value)}
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="facilityType">Facility Type *</Label>
-          <Select onValueChange={(value) => handleInputChange("facilityType", value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select facility type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="daycare">Daycare Center</SelectItem>
-              <SelectItem value="preschool">Preschool</SelectItem>
-              <SelectItem value="nursery">Nursery School</SelectItem>
-              <SelectItem value="creche">Crèche</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="numberOfLearners">Number of Learners *</Label>
-          <Input
-            id="numberOfLearners"
-            type="number"
-            value={formData.numberOfLearners}
-            onChange={(e) => handleInputChange("numberOfLearners", e.target.value)}
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="ageGroups">Age Groups Served *</Label>
-          <Input
-            id="ageGroups"
-            value={formData.ageGroups}
-            onChange={(e) => handleInputChange("ageGroups", e.target.value)}
-            placeholder="e.g., 3-6 years"
-            className="text-black bg-green-50"
-            required
-          />
-        </div>
+        <h3 className="text-lg font-semibold">Motivation for Tech Lessons</h3>
 
         <div className="space-y-4">
           <Label>Motivation for Participation *</Label>
@@ -779,9 +728,28 @@ const Register = () => {
               <Label htmlFor="adaptation">Adaptation</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <input type="checkbox" id="other-motivation" className="rounded border-border" />
+              <input
+                type="checkbox"
+                id="other-motivation"
+                className="rounded border-border"
+                checked={formData.otherMotivation}
+                onChange={(e) => handleInputChange("otherMotivation", e.target.checked)}
+              />
               <Label htmlFor="other-motivation">Other</Label>
             </div>
+            {formData.otherMotivation && (
+              <div className="space-y-2 pt-1 pl-6">
+                <Label htmlFor="other-motivation-reason">Please specify your reason *</Label>
+                <Input
+                  id="other-motivation-reason"
+                  value={formData.otherMotivationReason}
+                  onChange={(e) => handleInputChange("otherMotivationReason", e.target.value)}
+                  placeholder="Enter your reason"
+                  className="text-black bg-green-50"
+                  required
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
