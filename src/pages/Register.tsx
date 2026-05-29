@@ -573,56 +573,6 @@ const Register = () => {
         </div>
       </div>
 
-      <Separator />
-
-      {/* Registration Details */}
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
-            <Select
-              value={formData.hearAbout}
-              onValueChange={(value) => handleInputChange("hearAbout", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select duration" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="12-months">12 Months</SelectItem>
-                <SelectItem value="24-months">24 Months</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Starting Date *</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !formData.startDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {formData.startDate ? format(new Date(formData.startDate), "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={formData.startDate ? new Date(formData.startDate) : undefined}
-                  onSelect={(date) => handleInputChange("startDate", date?.toISOString() || "")}
-                  disabled={(date) => date < new Date()}
-                  initialFocus
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-        </div>
-      </div>
 
     </>
   );
