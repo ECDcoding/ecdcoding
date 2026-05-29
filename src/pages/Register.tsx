@@ -357,6 +357,10 @@ const Register = () => {
     programmingLanguages: "",
     teachingPhilosophy: "",
     availability: "",
+    availableHours: "",
+    salary: "",
+    startDate: "",
+    
     // Motivation
     otherMotivation: false,
     otherMotivationReason: "",
