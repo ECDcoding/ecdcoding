@@ -514,50 +514,6 @@ const Register = () => {
         </div>
 
         <div className="space-y-2">
-          <Label>Phone Number (Whatsapp) *</Label>
-          <div className="flex gap-2">
-            <Select value={formData.phoneCountryCode} onValueChange={(value) => handleInputChange("phoneCountryCode", value)}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {countryCodes.map((country) => (
-                  <SelectItem key={country.code} value={country.dialCode}>
-                    {country.dialCode}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              className="w-20"
-              placeholder="###"
-              maxLength={3}
-              value={formData.phone1}
-              onChange={(e) => handleInputChange("phone1", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-20"
-              placeholder="###"
-              maxLength={3}
-              value={formData.phone2}
-              onChange={(e) => handleInputChange("phone2", e.target.value)}
-              required
-            />
-            <span className="flex items-center">-</span>
-            <Input
-              className="w-24"
-              placeholder="####"
-              maxLength={4}
-              value={formData.phone3}
-              onChange={(e) => handleInputChange("phone3", e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="email">Email *</Label>
           <Input
             id="email"
@@ -627,27 +583,6 @@ const Register = () => {
 
       {/* Registration Details */}
       <div className="space-y-6">
-        <div className="space-y-4">
-          <Label>Motive for Registration *</Label>
-          <RadioGroup 
-            value={formData.registrationStatus}
-            onValueChange={(value) => handleInputChange("registrationStatus", value)}
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="extra-class" id="extra-class" />
-              <Label htmlFor="extra-class">Adding Extra Class for My Kid(s)</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="tech-savvy" id="tech-savvy" />
-              <Label htmlFor="tech-savvy">Ensuring My Kid(s) Become Tech Savvy</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="assessment" id="assessment" />
-              <Label htmlFor="assessment">Assessing if My Kid is Getting Properly Equipped</Label>
-            </div>
-          </RadioGroup>
-        </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="hearAbout">Learning Duration Envisaged *</Label>
@@ -695,74 +630,6 @@ const Register = () => {
         </div>
       </div>
 
-      <Separator />
-
-      {/* Learner Information */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-semibold">Learner Information</h3>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="learnerFirstName">First Name *</Label>
-            <Input
-              id="learnerFirstName"
-              value={formData.learnerFirstName}
-              onChange={(e) => handleInputChange("learnerFirstName", e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="learnerLastName">Last Name *</Label>
-            <Input
-              id="learnerLastName"
-              value={formData.learnerLastName}
-              onChange={(e) => handleInputChange("learnerLastName", e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="learnerAge">Ages *</Label>
-            <Select onValueChange={(value) => handleInputChange("learnerAge", value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select age group" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="04-07">04 - 07</SelectItem>
-                <SelectItem value="08-12">08 - 12</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="learnerGender">Gender *</Label>
-            <Select onValueChange={(value) => handleInputChange("learnerGender", value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select gender" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="relationship">Relationship *</Label>
-          <Select value={formData.relationship} onValueChange={(value) => handleInputChange("relationship", value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select relationship" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="parent">Parent</SelectItem>
-              <SelectItem value="guardian">Guardian</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
     </>
   );
 
