@@ -190,7 +190,7 @@ const LearnerProgressReport = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <FileText className="h-6 w-6 text-primary" />
-            <h1 className="text-3xl font-bold">Learner Progress Report</h1>
+            <h1 className="text-3xl font-bold">Learner FLC Progress Report</h1>
             <Sparkles className="h-6 w-6 text-primary" />
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
