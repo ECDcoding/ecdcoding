@@ -1263,7 +1263,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity bg-white/20 text-white border-white/30"
                       onClick={() => setShowProgressDialog(true)}
                     >
-                      {u.registration_type?.replace('-', ' ').replace('parent', 'feedback') || u.first_name || u.username}
+                      FLC Report
                     </Badge>
                   ))}
                 </div>
@@ -4245,7 +4245,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               }}
             >
               <FileText className="h-4 w-4" />
-              Open full Learner Progress Report
+              Open Full FLC Report
             </Button>
             {/* Traffic Light Understanding Checklist */}
             <div className="border border-border rounded-lg p-4 bg-card">
