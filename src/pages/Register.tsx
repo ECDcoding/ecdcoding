@@ -532,16 +532,6 @@ const Register = () => {
 
         {/* Username and Password Creation */}
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="username">Create Username *</Label>
-            <Input
-              id="username"
-              value={formData.username || ''}
-              onChange={(e) => handleInputChange("username", e.target.value)}
-              placeholder="Enter desired username"
-              required
-            />
-          </div>
           {!user && <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="password">Create Password *</Label>
