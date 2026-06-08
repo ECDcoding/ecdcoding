@@ -585,7 +585,7 @@ const Register = () => {
       {/* ECD Manager Registration Form Header */}
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold text-primary">ECD Manager Registration Form</h2>
-        <p className="text-sm text-muted-foreground mt-1">ECD Centers | Pre-Schools | Creches | Primary Schools and Other</p>
+        
       </div>
 
       {/* Personal Information */}
