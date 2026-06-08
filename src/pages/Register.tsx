@@ -522,6 +522,7 @@ const Register = () => {
           <Input
             id="email"
             type="email"
+            placeholder="example@gmail.com"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
             required
@@ -617,6 +618,7 @@ const Register = () => {
           <Input
             id="email"
             type="email"
+            placeholder="example@gmail.com"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
             className="text-black bg-green-50"
@@ -791,6 +793,7 @@ const Register = () => {
           <Input
             id="email"
             type="email"
+            placeholder="example@gmail.com"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
             className="text-black bg-green-50"
