@@ -274,8 +274,10 @@ const Register = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const typeParam = searchParams.get('type');
-  const registrationType = typeParam || 'parent';
-  const showChooser = !typeParam;
+  // Tech Teacher Mentorship form has been removed — fall back to chooser.
+  const validType = typeParam === 'parent' || typeParam === 'ecd-manager' || typeParam === 'ecd';
+  const registrationType = validType ? (typeParam as string) : 'parent';
+  const showChooser = !validType;
   const { signUp, completeProfile, user } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -583,7 +585,7 @@ const Register = () => {
       {/* ECD Manager Registration Form Header */}
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold text-primary">ECD Manager Registration Form</h2>
-        <p className="text-sm text-muted-foreground mt-1">ECD Centers | Pre-Schools | Creches | Primary Schools and Other</p>
+        
       </div>
 
       {/* Personal Information */}
