@@ -239,9 +239,6 @@ const SignInPage = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/register?type=ecd-manager" className="cursor-pointer">ECD Manager</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/register?type=tech-teacher" className="cursor-pointer">Tech Teacher</Link>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
