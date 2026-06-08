@@ -38,11 +38,6 @@ const Header = () => {
                 ECD Manager
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to="/register?type=tech-teacher" className="cursor-pointer">
-                Tech Teacher Mentorship
-              </Link>
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         {user ? (
