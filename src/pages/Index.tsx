@@ -61,6 +61,11 @@ const Index = () => {
                     ECDcoding Tech Franchise
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/robotics-design-craft-event" className="cursor-pointer">
+                    Simple Robotics & Design Craft Event
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
