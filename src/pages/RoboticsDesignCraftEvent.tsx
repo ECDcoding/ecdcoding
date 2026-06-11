@@ -66,6 +66,13 @@ const RoboticsDesignCraftEvent = () => {
         </Link>
 
         <div className="text-center mb-10">
+          <div className="flex justify-center mb-3">
+            <img
+              src="/favicon.png"
+              alt="ECDCoding Logo"
+              className="h-14 w-14 md:h-18 md:w-18 object-contain"
+            />
+          </div>
           <Badge className="mb-4 bg-lime-500/10 text-lime-600 border-lime-500/30">
             <Calendar className="mr-1 h-3 w-3" /> One-Day Event
           </Badge>
