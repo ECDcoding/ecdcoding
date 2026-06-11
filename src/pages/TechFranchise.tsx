@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
-import franchiseImage from "@/assets/franchise-package.jpg";
 
 type PackageOption = "package_only" | "package_install";
 
@@ -118,8 +117,8 @@ const TechFranchise = () => {
                 </Badge>
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-lime-400/30">
-              <img src={franchiseImage} alt="ECDcoding Tech Franchise package" className="w-full h-full object-cover" />
+            <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-lime-400/30 bg-white flex items-center justify-center">
+              <img src="/favicon.png" alt="ECDcoding Logo" className="w-full h-full object-contain p-4" />
             </div>
           </div>
         </div>
