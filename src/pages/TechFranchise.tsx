@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
-import franchiseImage from "@/assets/franchise-package.jpg";
 
 type PackageOption = "package_only" | "package_install";
 
