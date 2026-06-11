@@ -7,6 +7,7 @@ import girlBooks from "@/assets/expo/girl-books.jpg";
 import africanKidsBlocks from "@/assets/expo/african-kids-blocks.jpg";
 import adorableKid from "@/assets/expo/adorable-kid.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import ecdLogo from "@/assets/ecdcoding-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
