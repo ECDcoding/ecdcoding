@@ -221,7 +221,7 @@ const ECDExpo2026Content = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-center mb-4">
             <img
-              src="/favicon.png"
+              src={ecdLogo.url}
               alt="ECDCoding Logo"
               className="h-16 w-16 md:h-20 md:w-20 object-contain"
             />
