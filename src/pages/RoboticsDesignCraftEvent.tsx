@@ -79,35 +79,35 @@ const RoboticsDesignCraftEvent = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4 mb-10">
-          <Card>
+          <Card style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
             <CardHeader>
               <Home className="h-6 w-6 text-lime-500 mb-2" />
-              <CardTitle className="text-lg">At Home</CardTitle>
-              <CardDescription>A fun birthday or weekend activity for kids and friends.</CardDescription>
+              <CardTitle className="text-lg text-white">At Home</CardTitle>
+              <CardDescription className="text-gray-300">A fun birthday or weekend activity for kids and friends.</CardDescription>
             </CardHeader>
           </Card>
-          <Card>
+          <Card style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
             <CardHeader>
               <Building2 className="h-6 w-6 text-lime-500 mb-2" />
-              <CardTitle className="text-lg">ECD Center</CardTitle>
-              <CardDescription>Enrichment day for your learners with guided robotics & crafts.</CardDescription>
+              <CardTitle className="text-lg text-white">ECD Center</CardTitle>
+              <CardDescription className="text-gray-300">Enrichment day for your learners with guided robotics & crafts.</CardDescription>
             </CardHeader>
           </Card>
-          <Card>
+          <Card style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
             <CardHeader>
               <School className="h-6 w-6 text-lime-500 mb-2" />
-              <CardTitle className="text-lg">School Holiday</CardTitle>
-              <CardDescription>Keep kids engaged during holidays with tech and creativity.</CardDescription>
+              <CardTitle className="text-lg text-white">School Holiday</CardTitle>
+              <CardDescription className="text-gray-300">Keep kids engaged during holidays with tech and creativity.</CardDescription>
             </CardHeader>
           </Card>
         </div>
 
-        <Card className="mb-8">
+        <Card className="mb-8" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-lime-500" /> What's Included</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-white"><Sparkles className="h-5 w-5 text-lime-500" /> What's Included</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
+            <ul className="grid md:grid-cols-2 gap-2 text-sm text-gray-300">
               <li className="flex items-start gap-2"><Wrench className="h-4 w-4 text-lime-500 mt-0.5" /> Simple robotics build & play stations</li>
               <li className="flex items-start gap-2"><Wrench className="h-4 w-4 text-lime-500 mt-0.5" /> Design craft kits (paper, recyclables, sensors)</li>
               <li className="flex items-start gap-2"><Clock className="h-4 w-4 text-lime-500 mt-0.5" /> Full one-day facilitated programme</li>
@@ -118,10 +118,10 @@ const RoboticsDesignCraftEvent = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardHeader>
-            <CardTitle>Book In Advance</CardTitle>
-            <CardDescription>Submit your details and we will confirm availability for your preferred date.</CardDescription>
+            <CardTitle className="text-white">Book In Advance</CardTitle>
+            <CardDescription className="text-gray-300">Submit your details and we will confirm availability for your preferred date.</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
