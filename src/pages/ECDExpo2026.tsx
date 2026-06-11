@@ -218,6 +218,13 @@ const ECDExpo2026Content = () => {
       <section className="relative py-20 px-6 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 -z-10" />
         <div className="container mx-auto max-w-4xl">
+          <div className="flex justify-center mb-4">
+            <img
+              src="/favicon.png"
+              alt="ECDCoding Logo"
+              className="h-16 w-16 md:h-20 md:w-20 object-contain"
+            />
+          </div>
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             ECD Coding & Robotics
             <span className="block text-primary">EXPO 2026</span>
