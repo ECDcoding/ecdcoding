@@ -208,7 +208,7 @@ const ECDExpo2026Content = () => {
             <span>Back to Home</span>
           </Link>
           <div className="hidden md:flex items-center gap-4">
-            <Badge variant="secondary" className="text-sm">09-11 June 2026</Badge>
+            <Badge variant="secondary" className="text-sm">09 October 2026</Badge>
             <Badge variant="secondary" className="text-sm">Nasrec, Soweto</Badge>
           </div>
         </div>
@@ -232,7 +232,7 @@ const ECDExpo2026Content = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full shadow-sm">
               <Calendar className="h-5 w-5 text-primary" />
-              <span className="text-foreground font-medium">09-11 June 2026</span>
+              <span className="text-foreground font-medium">09 October 2026</span>
             </div>
             <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full shadow-sm">
               <MapPin className="h-5 w-5 text-primary" />
@@ -963,7 +963,7 @@ const ECDExpo2026Content = () => {
           <h3 className="text-2xl font-bold mb-2">ECD Coding & Robotics Expo 2026</h3>
           <p className="mb-4">Empowering Tech Savvy Kids for the Future World of Work</p>
           <div className="flex justify-center gap-4 flex-wrap">
-            <Badge variant="secondary">09-11 June 2026</Badge>
+            <Badge variant="secondary">09 October 2026</Badge>
             <Badge variant="secondary">Nasrec, Soweto</Badge>
           </div>
         </div>

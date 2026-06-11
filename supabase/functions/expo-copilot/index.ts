@@ -10,7 +10,7 @@ const EXPO_SYSTEM_PROMPT = `You are the ECD Expo 2026 Copilot — a friendly, kn
 Event Details:
 - Name: ECD Coding & Robotics EXPO 2026
 - Theme: Empowering Tech Savvy Kids for the Future World of Work
-- Dates: 09–11 June 2026
+- Dates: 09 October 2026
 - Venue: Nasrec, Soweto, South Africa
 
 Sponsorship Packages:
