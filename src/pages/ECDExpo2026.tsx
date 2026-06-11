@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, Users, Rocket, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright } from "lucide-react";
+import { Calendar, MapPin, Users, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
@@ -218,10 +218,6 @@ const ECDExpo2026Content = () => {
       <section className="relative py-20 px-6 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 -z-10" />
         <div className="container mx-auto max-w-4xl">
-          <Badge className="mb-4 text-lg px-4 py-2 bg-secondary text-secondary-foreground">
-            <Rocket className="inline h-4 w-4 mr-2" />
-            Coming June 2026
-          </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             ECD Coding & Robotics
             <span className="block text-primary">EXPO 2026</span>
