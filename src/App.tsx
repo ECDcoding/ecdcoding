@@ -26,6 +26,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ECDExpo2026 from "./pages/ECDExpo2026";
 import ExpoAdminDashboard from "./pages/ExpoAdminDashboard";
 import TechFranchise from "./pages/TechFranchise";
+import RoboticsDesignCraftEvent from "./pages/RoboticsDesignCraftEvent";
 import LearnerProgressReport from "./pages/LearnerProgressReport";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -65,6 +66,7 @@ const App = () => (
           <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
           <Route path="/expo-admin" element={<ProtectedRoute><ExpoAdminDashboard /></ProtectedRoute>} />
           <Route path="/tech-franchise" element={<ProtectedRoute><TechFranchise /></ProtectedRoute>} />
+          <Route path="/robotics-design-craft-event" element={<RoboticsDesignCraftEvent />} />
           <Route path="/learner-progress-report" element={<ProtectedRoute><LearnerProgressReport /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
