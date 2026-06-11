@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, Calendar, Home, School, Building2, Wrench, Sparkles, Clock, MapPin, Users } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import ecdLogo from "@/assets/ecdcoding-logo.png.asset.json";
 
 type Venue = "at_home" | "ecd_center" | "school_holiday";
 
@@ -68,7 +69,7 @@ const RoboticsDesignCraftEvent = () => {
         <div className="text-center mb-10">
           <div className="flex justify-center mb-3">
             <img
-              src="/favicon.png"
+              src={ecdLogo.url}
               alt="ECDCoding Logo"
               className="h-14 w-14 md:h-18 md:w-18 object-contain"
             />

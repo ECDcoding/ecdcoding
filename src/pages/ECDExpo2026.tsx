@@ -7,6 +7,7 @@ import girlBooks from "@/assets/expo/girl-books.jpg";
 import africanKidsBlocks from "@/assets/expo/african-kids-blocks.jpg";
 import adorableKid from "@/assets/expo/adorable-kid.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import ecdLogo from "@/assets/ecdcoding-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -220,7 +221,7 @@ const ECDExpo2026Content = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-center mb-4">
             <img
-              src="/favicon.png"
+              src={ecdLogo.url}
               alt="ECDCoding Logo"
               className="h-16 w-16 md:h-20 md:w-20 object-contain"
             />
