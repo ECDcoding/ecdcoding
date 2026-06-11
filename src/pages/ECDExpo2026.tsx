@@ -220,7 +220,7 @@ const ECDExpo2026Content = () => {
         <div className="container mx-auto max-w-4xl">
           <Badge className="mb-4 text-lg px-4 py-2 bg-secondary text-secondary-foreground">
             <Rocket className="inline h-4 w-4 mr-2" />
-            Coming June 2026
+            09 October 2026
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             ECD Coding & Robotics
