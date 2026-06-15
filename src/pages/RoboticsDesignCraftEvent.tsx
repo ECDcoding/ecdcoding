@@ -44,8 +44,8 @@ const RoboticsDesignCraftEvent = () => {
           name: form.fullName,
           email: form.email,
           phone: form.phone,
-          subject: "Robotics & Design Craft Event Booking",
-          message: `Venue: ${venue}\nPreferred Date: ${form.preferredDate}\nCity: ${form.city}, ${form.province}\nLearners: ${form.learnerCount} (ages ${form.ageRange})\n\nNotes: ${form.notes}`,
+          subject: "Recycle My Robot - Booking Request",
+          message: `New Recycle My Robot booking request\n\nVenue: ${venue}\nPreferred Date: ${form.preferredDate}\nCity: ${form.city}, ${form.province}\nLearners: ${form.learnerCount} (ages ${form.ageRange})\n\nNotes: ${form.notes}`,
         },
       });
       if (error) throw error;
@@ -78,11 +78,12 @@ const RoboticsDesignCraftEvent = () => {
             <Calendar className="mr-1 h-3 w-3" /> One-Day Event
           </Badge>
           <h1 className="text-3xl md:text-5xl font-bold mb-3">
-            Simple Robotics & Design Craft Event
+            Recycle My Robot
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A hands-on, one-day experience for young learners — perfect for At Home parties,
-            ECD Centers, or School Holiday programmes. Book your date in advance.
+            A hands-on, one-day experience where young learners build simple robots from
+            recycled materials — perfect for At Home parties, ECD Centers, or School Holiday
+            programmes. Book your date in advance.
           </p>
         </div>
 
