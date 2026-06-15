@@ -63,7 +63,7 @@ const Index = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/robotics-design-craft-event" className="cursor-pointer">
-                    Recycle My Robot
+                    Book Your 'Recycle My Robot' Event
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
