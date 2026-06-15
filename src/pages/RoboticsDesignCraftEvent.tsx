@@ -81,9 +81,9 @@ const RoboticsDesignCraftEvent = () => {
             Recycle My Robot
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A hands-on, one-day experience where young learners build simple robots from
-            recycled materials — perfect for At Home parties, ECD Centers, or School Holiday
-            programmes. Book your date in advance.
+          A hands-on, one-day experience where young learners build simple robots from
+          recycled materials — perfect for At Home invites, ECD Centers, or School Holiday
+          programmes. Book your date in advance.
           </p>
         </div>
 
