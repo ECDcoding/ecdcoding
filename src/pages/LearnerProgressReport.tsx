@@ -194,9 +194,9 @@ const LearnerProgressReport = () => {
             <Sparkles className="h-6 w-6 text-primary" />
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Tick the lessons <span className="font-semibold">{learnerName}</span> has covered, set
-            the reporting period, add notes, then share the report with anyone — parent, teacher,
-            school or sponsor.
+            This is Burner_ Boy Mabaso's Foundational Learning Competencies section; 1. Tick any
+            of the lessons that he has already covered, 2. Set the reporting period, 3. Share the
+            report with whomever - parents, teacher, or sponsor.
           </p>
           <Badge variant="secondary" className="mt-3 text-base">
             {selected.length} lessons covered
