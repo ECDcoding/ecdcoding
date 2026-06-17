@@ -203,9 +203,9 @@ const LearnerProgressReport = () => {
           </Badge>
         </div>
 
-        <Card className="mb-6">
+        <Card className="mb-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardContent className="p-6">
-            <Label className="text-base font-semibold mb-3 block">Reporting period</Label>
+            <Label className="text-base font-semibold mb-3 block text-white">Reporting period</Label>
             <RadioGroup
               value={String(duration)}
               onValueChange={(v) => setDuration(Number(v))}
@@ -215,11 +215,12 @@ const LearnerProgressReport = () => {
                 <Label
                   key={d.days}
                   htmlFor={`d-${d.days}`}
-                  className={`flex items-center justify-center gap-2 border rounded-lg p-3 cursor-pointer transition ${
-                    duration === d.days ? "border-primary bg-primary/10" : "border-border"
+                  className={`flex items-center justify-center gap-2 border rounded-lg p-3 cursor-pointer transition text-white ${
+                    duration === d.days ? "border-lime-500 bg-lime-500/10" : "border-white/10"
                   }`}
+                  style={{ backgroundColor: '#2a2d34' }}
                 >
-                  <RadioGroupItem id={`d-${d.days}`} value={String(d.days)} />
+                  <RadioGroupItem id={`d-${d.days}`} value={String(d.days)} className="border-white/30 text-lime-500" />
                   {d.label}
                 </Label>
               ))}
