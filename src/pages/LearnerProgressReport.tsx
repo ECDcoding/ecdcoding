@@ -242,14 +242,16 @@ const LearnerProgressReport = () => {
                       <Label
                         key={l.id}
                         htmlFor={l.id}
-                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
-                          isSel ? "border-primary bg-primary/10" : "border-border hover:bg-muted/50"
+                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition text-white ${
+                          isSel ? "border-lime-500" : "border-white/10"
                         }`}
+                        style={{ backgroundColor: '#2a2d34' }}
                       >
                         <Checkbox
                           id={l.id}
                           checked={isSel}
                           onCheckedChange={() => toggle(l.id)}
+                          className="border-white/30 data-[state=checked]:bg-lime-500 data-[state=checked]:border-lime-500"
                         />
                         <span className="text-sm font-medium flex-1">{l.title}</span>
                       </Label>
