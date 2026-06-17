@@ -181,7 +181,7 @@ const LearnerProgressReport = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 py-8 px-4">
+    <div className="min-h-screen bg-[#1a1c21] py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="mb-4">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back
