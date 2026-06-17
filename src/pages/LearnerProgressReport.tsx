@@ -183,7 +183,7 @@ const LearnerProgressReport = () => {
   return (
     <div className="min-h-screen bg-[#1a1c21] py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="mb-4">
+        <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="mb-4 text-white hover:text-white hover:bg-white/10">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back
         </Button>
 
