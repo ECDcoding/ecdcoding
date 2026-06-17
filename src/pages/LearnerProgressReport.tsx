@@ -189,16 +189,16 @@ const LearnerProgressReport = () => {
 
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
-            <FileText className="h-6 w-6 text-primary" />
-            <h1 className="text-3xl font-bold">Learner FLC Progress Report</h1>
-            <Sparkles className="h-6 w-6 text-primary" />
+            <FileText className="h-6 w-6 text-lime-500" />
+            <h1 className="text-3xl font-bold text-white">Learner FLC Progress Report</h1>
+            <Sparkles className="h-6 w-6 text-lime-500" />
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto">
             This is Burner_ Boy Mabaso's Foundational Learning Competencies section; 1. Tick any
             of the lessons that he has already covered, 2. Set the reporting period, 3. Share the
             report with whomever - parents, teacher, or sponsor.
           </p>
-          <Badge variant="secondary" className="mt-3 text-base">
+          <Badge className="mt-3 text-base bg-[#2a2d34] text-white border-white/10">
             {selected.length} lessons covered
           </Badge>
         </div>
@@ -290,13 +290,16 @@ const LearnerProgressReport = () => {
             {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Save Report
           </Button>
-          <Button size="lg" variant="outline" onClick={handleShare} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handleShare} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Share2 className="h-4 w-4 mr-2" /> Share
           </Button>
-          <Button size="lg" variant="outline" onClick={handleCopy} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handleCopy} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Copy className="h-4 w-4 mr-2" /> Copy
           </Button>
-          <Button size="lg" variant="outline" onClick={handlePrint} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handlePrint} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Printer className="h-4 w-4 mr-2" /> Print / PDF
           </Button>
         </div>
