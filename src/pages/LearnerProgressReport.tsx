@@ -230,11 +230,11 @@ const LearnerProgressReport = () => {
 
         <div className="space-y-6">
           {Object.entries(grouped).map(([category, items]) => (
-            <Card key={category}>
+            <Card key={category} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="h-5 w-5 text-primary" />
-                  <h2 className="text-lg font-semibold">{category}</h2>
+                  <BookOpen className="h-5 w-5 text-lime-500" />
+                  <h2 className="text-lg font-semibold text-white">{category}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
@@ -264,9 +264,9 @@ const LearnerProgressReport = () => {
           ))}
         </div>
 
-        <Card className="mt-6">
+        <Card className="mt-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardContent className="p-6">
-            <Label htmlFor="report-notes" className="text-base font-semibold mb-3 block">
+            <Label htmlFor="report-notes" className="text-base font-semibold mb-3 block text-white">
               Notes for the recipient (optional)
             </Label>
             <Textarea
@@ -275,6 +275,7 @@ const LearnerProgressReport = () => {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Strengths, areas to improve, attendance, milestones…"
               rows={4}
+              className="bg-[#1e2025] border-white/10 text-white placeholder:text-gray-400"
             />
           </CardContent>
         </Card>
