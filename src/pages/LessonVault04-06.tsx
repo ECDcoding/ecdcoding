@@ -1260,7 +1260,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {onlineUsers.map((u) => (
                     <Badge 
                       key={u.user_id}
-                      className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity bg-white/20 text-white border-white/30"
+                      className="text-xs capitalize cursor-pointer hover:opacity-80 transition-opacity text-white border-white/30"
+                      style={{ backgroundColor: '#2a2d34' }}
                       onClick={() => setShowProgressDialog(true)}
                     >
                       FLC Report
@@ -4239,6 +4240,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               variant="outline"
               size="sm"
               className="w-full justify-start gap-2"
+              style={{ backgroundColor: '#2a2d34', color: 'white', borderColor: 'rgba(255,255,255,0.1)' }}
               onClick={() => {
                 setShowProgressDialog(false);
                 navigate("/learner-progress-report");
