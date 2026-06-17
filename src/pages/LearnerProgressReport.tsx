@@ -181,31 +181,31 @@ const LearnerProgressReport = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 py-8 px-4">
+    <div className="min-h-screen bg-[#1a1c21] py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="mb-4">
+        <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="mb-4 text-white hover:text-white hover:bg-white/10">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back
         </Button>
 
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
-            <FileText className="h-6 w-6 text-primary" />
-            <h1 className="text-3xl font-bold">Learner FLC Progress Report</h1>
-            <Sparkles className="h-6 w-6 text-primary" />
+            <FileText className="h-6 w-6 text-lime-500" />
+            <h1 className="text-3xl font-bold text-white">Learner FLC Progress Report</h1>
+            <Sparkles className="h-6 w-6 text-lime-500" />
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto">
             This is Burner_ Boy Mabaso's Foundational Learning Competencies section; 1. Tick any
             of the lessons that he has already covered, 2. Set the reporting period, 3. Share the
             report with whomever - parents, teacher, or sponsor.
           </p>
-          <Badge variant="secondary" className="mt-3 text-base">
+          <Badge className="mt-3 text-base bg-[#2a2d34] text-white border-white/10">
             {selected.length} lessons covered
           </Badge>
         </div>
 
-        <Card className="mb-6">
+        <Card className="mb-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardContent className="p-6">
-            <Label className="text-base font-semibold mb-3 block">Reporting period</Label>
+            <Label className="text-base font-semibold mb-3 block text-white">Reporting period</Label>
             <RadioGroup
               value={String(duration)}
               onValueChange={(v) => setDuration(Number(v))}
@@ -215,11 +215,12 @@ const LearnerProgressReport = () => {
                 <Label
                   key={d.days}
                   htmlFor={`d-${d.days}`}
-                  className={`flex items-center justify-center gap-2 border rounded-lg p-3 cursor-pointer transition ${
-                    duration === d.days ? "border-primary bg-primary/10" : "border-border"
+                  className={`flex items-center justify-center gap-2 border rounded-lg p-3 cursor-pointer transition text-white ${
+                    duration === d.days ? "border-lime-500 bg-lime-500/10" : "border-white/10"
                   }`}
+                  style={{ backgroundColor: '#2a2d34' }}
                 >
-                  <RadioGroupItem id={`d-${d.days}`} value={String(d.days)} />
+                  <RadioGroupItem id={`d-${d.days}`} value={String(d.days)} className="border-white/30 text-lime-500" />
                   {d.label}
                 </Label>
               ))}
@@ -229,11 +230,11 @@ const LearnerProgressReport = () => {
 
         <div className="space-y-6">
           {Object.entries(grouped).map(([category, items]) => (
-            <Card key={category}>
+            <Card key={category} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="h-5 w-5 text-primary" />
-                  <h2 className="text-lg font-semibold">{category}</h2>
+                  <BookOpen className="h-5 w-5 text-lime-500" />
+                  <h2 className="text-lg font-semibold text-white">{category}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
@@ -242,14 +243,16 @@ const LearnerProgressReport = () => {
                       <Label
                         key={l.id}
                         htmlFor={l.id}
-                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
-                          isSel ? "border-primary bg-primary/10" : "border-border hover:bg-muted/50"
+                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition text-white ${
+                          isSel ? "border-lime-500" : "border-white/10"
                         }`}
+                        style={{ backgroundColor: '#2a2d34' }}
                       >
                         <Checkbox
                           id={l.id}
                           checked={isSel}
                           onCheckedChange={() => toggle(l.id)}
+                          className="border-white/30 data-[state=checked]:bg-lime-500 data-[state=checked]:border-lime-500"
                         />
                         <span className="text-sm font-medium flex-1">{l.title}</span>
                       </Label>
@@ -261,9 +264,9 @@ const LearnerProgressReport = () => {
           ))}
         </div>
 
-        <Card className="mt-6">
+        <Card className="mt-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardContent className="p-6">
-            <Label htmlFor="report-notes" className="text-base font-semibold mb-3 block">
+            <Label htmlFor="report-notes" className="text-base font-semibold mb-3 block text-white">
               Notes for the recipient (optional)
             </Label>
             <Textarea
@@ -272,6 +275,7 @@ const LearnerProgressReport = () => {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Strengths, areas to improve, attendance, milestones…"
               rows={4}
+              className="bg-[#1e2025] border-white/10 text-white placeholder:text-gray-400"
             />
           </CardContent>
         </Card>
@@ -286,13 +290,16 @@ const LearnerProgressReport = () => {
             {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Save Report
           </Button>
-          <Button size="lg" variant="outline" onClick={handleShare} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handleShare} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Share2 className="h-4 w-4 mr-2" /> Share
           </Button>
-          <Button size="lg" variant="outline" onClick={handleCopy} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handleCopy} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Copy className="h-4 w-4 mr-2" /> Copy
           </Button>
-          <Button size="lg" variant="outline" onClick={handlePrint} disabled={selected.length < MIN_PICK}>
+          <Button size="lg" variant="outline" onClick={handlePrint} disabled={selected.length < MIN_PICK}
+            className="bg-[#2a2d34] text-white border-white/10 hover:bg-[#363a42] hover:text-white">
             <Printer className="h-4 w-4 mr-2" /> Print / PDF
           </Button>
         </div>
