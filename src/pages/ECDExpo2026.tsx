@@ -24,11 +24,13 @@ import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
 import ExpoCopilot from "@/components/ExpoCopilot";
 import ExpoAccountsList from "@/components/ExpoAccountsList";
+import BusinessProposalDialog from "@/components/BusinessProposalDialog";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const ECDExpo2026Content = () => {
   const { isAdmin } = useIsAdmin();
   const [activeTab, setActiveTab] = useState("overview");
+  const [proposalOpen, setProposalOpen] = useState(false);
   const [sponsorForm, setSponsorForm] = useState({
     companyName: "",
     contactPerson: "",
@@ -255,6 +257,15 @@ const ECDExpo2026Content = () => {
             }}
           >
             Become a Sponsor
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="text-lg px-8 mt-3 border-white/20 text-white hover:bg-white/10"
+            style={{ backgroundColor: '#2a2d34' }}
+            onClick={() => setProposalOpen(true)}
+          >
+            Business Proposal
           </Button>
         </div>
       </section>
@@ -1034,6 +1045,7 @@ const ECDExpo2026Content = () => {
           )}
         </div>
       </footer>
+      <BusinessProposalDialog open={proposalOpen} onOpenChange={setProposalOpen} />
     </div>
   );
 };
