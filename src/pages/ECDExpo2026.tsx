@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, Users, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright } from "lucide-react";
+import { Calendar, MapPin, Users, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
@@ -261,10 +261,11 @@ const ECDExpo2026Content = () => {
           <Button
             size="lg"
             variant="outline"
-            className="text-lg px-8 mt-3 border-white/20 text-white hover:bg-white/10"
+            className="text-lg px-8 mt-3 border-white/20 text-white hover:bg-white/10 gap-2"
             style={{ backgroundColor: '#2a2d34' }}
             onClick={() => setProposalOpen(true)}
           >
+            <Eye className="h-5 w-5" />
             Business Proposal
           </Button>
         </div>
