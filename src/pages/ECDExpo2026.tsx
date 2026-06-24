@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin, Users, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright } from "lucide-react";
+import { Calendar, MapPin, Users, Code, Bot, Plane, Award, Building2, Mic2, GraduationCap, Heart, ArrowLeft, Globe, Video, Upload, Shield, Copyright, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
