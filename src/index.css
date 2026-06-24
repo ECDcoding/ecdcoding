@@ -206,3 +206,81 @@ All colors MUST be HSL.
     color: hsl(60 100% 50%) !important;
   }
 }
+/* Business Proposal — render the docx like a real document page */
+.business-proposal-page {
+  width: 100%;
+  max-width: 8.5in;
+  background: #ffffff;
+  color: #1f2328;
+  padding: 1in 1in;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  font-family: "Calibri", "Segoe UI", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+.business-proposal-page h1,
+.business-proposal-page h2,
+.business-proposal-page h3,
+.business-proposal-page h4 {
+  font-family: "Calibri", "Segoe UI", Arial, sans-serif;
+  color: #1a365d;
+  margin: 1.2em 0 0.4em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.business-proposal-page h1 { font-size: 22pt; }
+.business-proposal-page h2 { font-size: 16pt; }
+.business-proposal-page h3 { font-size: 13pt; }
+.business-proposal-page h1.doc-title {
+  text-align: center;
+  font-size: 26pt;
+  color: #0b3d2e;
+  border-bottom: 2px solid #c9d5cf;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.6em;
+}
+.business-proposal-page h2.doc-subtitle {
+  text-align: center;
+  font-style: italic;
+  color: #4a5568;
+  font-weight: 500;
+  margin-top: 0;
+}
+.business-proposal-page p { margin: 0 0 0.7em; }
+.business-proposal-page strong { color: #111; }
+.business-proposal-page ul,
+.business-proposal-page ol { margin: 0.4em 0 0.9em 1.5em; }
+.business-proposal-page li { margin-bottom: 0.25em; }
+.business-proposal-page blockquote {
+  border-left: 4px solid #cbd5e0;
+  margin: 0.8em 0;
+  padding: 0.2em 1em;
+  color: #4a5568;
+  background: #f7fafc;
+}
+.business-proposal-page table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+}
+.business-proposal-page th,
+.business-proposal-page td {
+  border: 1px solid #cbd5e0;
+  padding: 6px 10px;
+  vertical-align: top;
+}
+.business-proposal-page th {
+  background: #edf2f7;
+  font-weight: 700;
+}
+.business-proposal-page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.6em auto;
+}
+.business-proposal-page a {
+  color: #2b6cb0;
+  text-decoration: underline;
+}

@@ -62,14 +62,14 @@ const BusinessProposalDialog = ({ open, onOpenChange }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-4xl max-h-[90vh] overflow-hidden bg-[#1a1c21] text-white border-white/10"
+        className="max-w-5xl max-h-[92vh] overflow-hidden bg-[#1a1c21] text-white border-white/10 p-4"
         onContextMenu={(e) => e.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle className="text-white">Business Proposal — ECD Coding & Robotics Expo 2026</DialogTitle>
         </DialogHeader>
         <div
-          className="relative overflow-y-auto max-h-[75vh] p-6 rounded-md bg-[#2a2d34] select-none"
+          className="relative overflow-y-auto max-h-[78vh] rounded-md bg-[#2a2d34] select-none py-6 px-2 sm:px-6"
           style={{
             userSelect: "none",
             WebkitUserSelect: "none",
@@ -97,12 +97,14 @@ const BusinessProposalDialog = ({ open, onOpenChange }: Props) => {
           )}
           {error && <div className="text-red-400 py-4">Failed to load: {error}</div>}
           {!loading && !error && (
-            <article
-              className="prose prose-invert max-w-none business-proposal-content"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
+            <div className="flex justify-center">
+              <article
+                className="business-proposal-page"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            </div>
           )}
-          <p className="mt-6 text-xs text-gray-400 italic">
+          <p className="mt-6 text-xs text-gray-400 italic text-center">
             This document is under construction and protected — copying, downloading and printing are disabled.
           </p>
         </div>
