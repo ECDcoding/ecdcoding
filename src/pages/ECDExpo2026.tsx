@@ -1045,6 +1045,7 @@ const ECDExpo2026Content = () => {
           )}
         </div>
       </footer>
+      <BusinessProposalDialog open={proposalOpen} onOpenChange={setProposalOpen} />
     </div>
   );
 };
