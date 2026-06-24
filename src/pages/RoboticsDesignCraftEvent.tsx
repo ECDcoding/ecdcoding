@@ -11,6 +11,9 @@ import { ArrowLeft, Calendar, Home, School, Building2, Wrench, Sparkles, Clock, 
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import ecdLogo from "@/assets/ecdcoding-logo.png.asset.json";
+import recycleRobot1 from "@/assets/recycle-robot-1.jpg.asset.json";
+import recycleRobot2 from "@/assets/recycle-robot-2.jpg.asset.json";
+import recycleRobot3 from "@/assets/recycle-robot-3.jpg.asset.json";
 
 type Venue = "at_home" | "ecd_center" | "school_holiday";
 
@@ -107,6 +110,18 @@ const RoboticsDesignCraftEvent = () => {
               <CardDescription className="text-gray-300">Keep kids engaged during holidays with tech and creativity.</CardDescription>
             </CardHeader>
           </Card>
+        </div>
+
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-center mb-4">Robots Built From Recycled Materials</h2>
+          <p className="text-center text-muted-foreground mb-6 max-w-2xl mx-auto">A glimpse of what young learners create — plastic bottles, bottle caps, and everyday recyclables transformed into one-of-a-kind robots.</p>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[recycleRobot1, recycleRobot2, recycleRobot3].map((img, i) => (
+              <div key={i} className="overflow-hidden rounded-lg border" style={{ borderColor: 'rgba(255,255,255,0.1)', backgroundColor: '#2a2d34' }}>
+                <img src={img.url} alt={`Recycled robot creation ${i + 1}`} className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+              </div>
+            ))}
+          </div>
         </div>
 
         <Card className="mb-8" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
