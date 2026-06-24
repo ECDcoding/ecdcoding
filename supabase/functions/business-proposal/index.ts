@@ -35,7 +35,23 @@ Deno.serve(async (req) => {
       });
     }
     const buf = await res.arrayBuffer();
-    const result = await mammoth.convertToHtml({ buffer: new Uint8Array(buf) });
+    const result = await mammoth.convertToHtml(
+      { buffer: new Uint8Array(buf) },
+      {
+        styleMap: [
+          "p[style-name='Title'] => h1.doc-title:fresh",
+          "p[style-name='Subtitle'] => h2.doc-subtitle:fresh",
+          "p[style-name='Heading 1'] => h1:fresh",
+          "p[style-name='Heading 2'] => h2:fresh",
+          "p[style-name='Heading 3'] => h3:fresh",
+          "p[style-name='Heading 4'] => h4:fresh",
+          "p[style-name='Quote'] => blockquote:fresh",
+          "r[style-name='Strong'] => strong",
+          "r[style-name='Emphasis'] => em",
+        ],
+        includeDefaultStyleMap: true,
+      },
+    );
 
     return new Response(JSON.stringify({ html: result.value }), {
       status: 200,
