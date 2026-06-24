@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.expo-copilot]
 verify_jwt = false
+
+[functions.business-proposal]
+verify_jwt = false
