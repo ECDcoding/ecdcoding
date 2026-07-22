@@ -218,7 +218,12 @@ const LessonVault0406 = () => {
 
   // Strip leading @mentions from community post text so old posts render cleanly
   const stripLeadingMentions = (text: string): string => {
-    return text.replace(/^(\s*@[\w\s]+\s+)+/, '').trim();
+    const parts = text.trim().split(/\s+/);
+    let i = 0;
+    while (i < parts.length && parts[i].startsWith('@')) {
+      i++;
+    }
+    return parts.slice(i).join(' ').trim();
   };
 
   // Helper function to get robot status based on highest score for a subject
