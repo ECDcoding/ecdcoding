@@ -61,7 +61,7 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
     try {
       const { data, error } = await supabase
         .from("institution_communities")
-        .select("*, community_members(role), profiles!institution_communities_created_by_fkey(username, first_name, last_name)")
+        .select("*, community_members(role)")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -73,9 +73,7 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
         created_by: c.created_by,
         created_at: c.created_at,
         role: c.community_members?.[0]?.role || "member",
-        creator_name: c.profiles?.first_name
-          ? `${c.profiles.first_name} ${c.profiles.last_name || ""}`.trim()
-          : c.profiles?.username || "Unknown",
+        creator_name: c.created_by === userId ? "You" : "Member",
       }));
 
       setCommunities(formatted);
