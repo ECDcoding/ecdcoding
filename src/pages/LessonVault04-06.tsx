@@ -147,6 +147,7 @@ const LessonVault0406 = () => {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const institutionCommunityRef = useRef<{ openCreate: () => void }>(null);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
   const [sportPlayOpen, setSportPlayOpen] = useState(false);
