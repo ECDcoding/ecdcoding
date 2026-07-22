@@ -5232,11 +5232,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
                       {allFeedback.length > 0 && (
                         <div className="space-y-2">
-                          {allFeedback.map((feedback) => (
+                          {[...allFeedback]
+                            .sort((a, b) => {
+                              const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              return bT - aT;
+                            })
+                            .map((feedback) => {
+                            const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
+                            const reactions = postReactions[feedback.id] || [];
+                            const comments = postComments[feedback.id] || [];
+                            const emojis = ['👍','❤️','😂','🎉','👏','🙌'];
+                            return (
                             <div
                               key={feedback.id}
                               className={`p-3 rounded-lg ${
-                                feedback.user_id === profile?.user_id
+                                iAmTagged
+                                  ? 'bg-amber-500/10 border border-amber-500/40'
+                                  : feedback.user_id === profile?.user_id
                                   ? 'bg-primary/5 border border-primary/20'
                                   : 'bg-background border border-border'
                               }`}
@@ -5256,12 +5269,75 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     {feedback.user_id === profile?.user_id && (
                                       <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
                                     )}
+                                    {iAmTagged && (
+                                      <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
+                                    )}
                                   </div>
                                   <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+
+                                  {/* Reactions */}
+                                  <div className="flex flex-wrap gap-1 mt-2">
+                                    {emojis.map((e) => {
+                                      const count = reactions.filter((r) => r.emoji === e).length;
+                                      const mine = reactions.some((r) => r.emoji === e && r.user_id === profile?.user_id);
+                                      return (
+                                        <button
+                                          key={e}
+                                          type="button"
+                                          onClick={() => toggleReaction(feedback.id, e)}
+                                          className={`text-xs px-2 py-0.5 rounded-full border transition ${
+                                            mine
+                                              ? 'bg-primary/20 border-primary'
+                                              : 'bg-background hover:bg-muted border-border'
+                                          }`}
+                                        >
+                                          <span>{e}</span>
+                                          {count > 0 && <span className="ml-1 text-[10px]">{count}</span>}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* Comments */}
+                                  {comments.length > 0 && (
+                                    <div className="mt-2 space-y-1 border-t border-border/60 pt-2">
+                                      {comments.map((c) => (
+                                        <div key={c.id} className="text-[11px]">
+                                          <span className="font-semibold">{c.username}: </span>
+                                          <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  <div className="flex gap-1 mt-2">
+                                    <Input
+                                      value={commentDrafts[feedback.id] || ''}
+                                      onChange={(e) =>
+                                        setCommentDrafts((d) => ({ ...d, [feedback.id]: e.target.value }))
+                                      }
+                                      placeholder="Write a comment..."
+                                      className="h-7 text-xs"
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          addComment(feedback.id);
+                                        }
+                                      }}
+                                    />
+                                    <Button
+                                      size="sm"
+                                      className="h-7 px-2 text-xs"
+                                      onClick={() => addComment(feedback.id)}
+                                      disabled={!(commentDrafts[feedback.id] || '').trim()}
+                                    >
+                                      Post
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       )}
                     </div>
