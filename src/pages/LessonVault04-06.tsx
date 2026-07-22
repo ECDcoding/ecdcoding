@@ -5247,10 +5247,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             <span className="text-[10px] text-muted-foreground">{sentMessages.length} message{sentMessages.length === 1 ? '' : 's'}</span>
                           </div>
                           <div className="max-h-[200px] overflow-y-auto space-y-2">
-                            {sentMessages.length === 0 ? (
+                            {sentMessages.length === 0 && communityUsers.length === 0 ? (
                               <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
                             ) : (
-                              sentMessages.map((m) => (
+                              <>
+                              {sentMessages.map((m) => (
                                 <div key={m.id} className="p-2 rounded border bg-background">
                                   <div className="flex items-center gap-2 min-w-0">
                                     <Avatar className="h-7 w-7 border">
@@ -5267,7 +5268,34 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                   </div>
                                   <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
                                 </div>
-                              ))
+                              ))}
+                              {communityUsers
+                                .filter((u) => !sentMessages.some((m) => m.recipient_id === u.user_id))
+                                .map((u) => (
+                                  <div key={`ru-${u.user_id}`} className="p-2 rounded border bg-background/60 flex items-center gap-2">
+                                    <Avatar className="h-7 w-7 border">
+                                      <AvatarFallback className="bg-muted text-muted-foreground text-[10px] font-semibold">
+                                        {u.display_name?.[0]?.toUpperCase() || 'U'}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="min-w-0 flex-1">
+                                      <p className="text-xs font-medium truncate">To: {u.display_name}</p>
+                                      <p className="text-[10px] text-muted-foreground italic">No messages sent yet</p>
+                                    </div>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="h-7 text-[11px]"
+                                      onClick={() => {
+                                        setSelectedRecipients(new Set([u.user_id]));
+                                        toast({ title: 'Recipient selected', description: `Type your message to ${u.display_name} below.` });
+                                      }}
+                                    >
+                                      Send
+                                    </Button>
+                                  </div>
+                                ))}
+                              </>
                             )}
                           </div>
                         </div>
