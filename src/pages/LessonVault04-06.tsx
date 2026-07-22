@@ -788,16 +788,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     try {
       const [{ data: reactions }, { data: comments }] = await Promise.all([
         supabase.from('feedback_reactions' as any).select('id, feedback_id, user_id, emoji'),
-        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at').order('created_at', { ascending: true }),
+        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at, parent_comment_id').order('created_at', { ascending: true }),
       ]);
       const rMap: Record<string, Array<{ id: string; user_id: string; emoji: string }>> = {};
       (reactions || []).forEach((r: any) => {
         (rMap[r.feedback_id] ||= []).push({ id: r.id, user_id: r.user_id, emoji: r.emoji });
       });
       setPostReactions(rMap);
-      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>> = {};
+      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string; parent_comment_id: string | null }>> = {};
       (comments || []).forEach((c: any) => {
-        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at });
+        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at, parent_comment_id: c.parent_comment_id ?? null });
       });
       setPostComments(cMap);
     } catch (e) {
