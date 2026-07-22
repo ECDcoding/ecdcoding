@@ -4885,6 +4885,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             {profile && (
               <div className="border border-border rounded-lg p-4 bg-card">
                 <InstitutionCommunity
+                  ref={institutionCommunityRef}
                   userId={profile.user_id}
                   registrationType={profile.registration_type}
                   profile={{
