@@ -1448,12 +1448,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
     try {
       if (showCommunityFeed) {
-        // Compose note with @tags prepended (if any)
+        // Keep the note body separate from tagged user metadata
         const taggedUsers = communityUsers.filter((u) => selectedRecipients.has(u.user_id));
-        const mentions = taggedUsers
-          .map((u) => `@${(u.display_name || u.username || 'user').replace(/\s+/g, '_')}`)
-          .join(' ');
-        const noteBody = mentions ? `${mentions} ${responseText.trim()}` : responseText.trim();
+        const noteBody = responseText.trim();
 
         // Post to community feedback
         const { error } = await supabase
