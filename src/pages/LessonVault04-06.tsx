@@ -634,6 +634,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           },
           () => fetchAllFeedback()
         )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'feedback_reactions' },
+          () => fetchReactionsAndComments()
+        )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'feedback_comments' },
+          () => fetchReactionsAndComments()
+        )
         .subscribe();
       
       return () => {
