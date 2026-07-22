@@ -225,6 +225,7 @@ export type Database = {
           created_at: string
           feedback_id: string
           id: string
+          parent_comment_id: string | null
           updated_at: string
           user_id: string
           username: string
@@ -234,6 +235,7 @@ export type Database = {
           created_at?: string
           feedback_id: string
           id?: string
+          parent_comment_id?: string | null
           updated_at?: string
           user_id: string
           username: string
@@ -243,6 +245,7 @@ export type Database = {
           created_at?: string
           feedback_id?: string
           id?: string
+          parent_comment_id?: string | null
           updated_at?: string
           user_id?: string
           username?: string
@@ -253,6 +256,13 @@ export type Database = {
             columns: ["feedback_id"]
             isOneToOne: false
             referencedRelation: "user_feedback"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "feedback_comments_parent_comment_id_fkey"
+            columns: ["parent_comment_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_comments"
             referencedColumns: ["id"]
           },
         ]

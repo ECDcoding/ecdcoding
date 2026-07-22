@@ -144,8 +144,10 @@ const LessonVault0406 = () => {
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
   const [postReactions, setPostReactions] = useState<Record<string, Array<{ id: string; user_id: string; emoji: string }>>>({});
-  const [postComments, setPostComments] = useState<Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>>>({});
+  const [postComments, setPostComments] = useState<Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string; parent_comment_id: string | null }>>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
+  const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
+  const [replyOpen, setReplyOpen] = useState<Record<string, boolean>>({});
   const [communityUsers, setCommunityUsers] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
   const [myCommunityId, setMyCommunityId] = useState<string | null>(null);
   const [addedMemberIds, setAddedMemberIds] = useState<Set<string>>(new Set());
@@ -786,16 +788,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     try {
       const [{ data: reactions }, { data: comments }] = await Promise.all([
         supabase.from('feedback_reactions' as any).select('id, feedback_id, user_id, emoji'),
-        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at').order('created_at', { ascending: true }),
+        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at, parent_comment_id').order('created_at', { ascending: true }),
       ]);
       const rMap: Record<string, Array<{ id: string; user_id: string; emoji: string }>> = {};
       (reactions || []).forEach((r: any) => {
         (rMap[r.feedback_id] ||= []).push({ id: r.id, user_id: r.user_id, emoji: r.emoji });
       });
       setPostReactions(rMap);
-      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>> = {};
+      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string; parent_comment_id: string | null }>> = {};
       (comments || []).forEach((c: any) => {
-        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at });
+        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at, parent_comment_id: c.parent_comment_id ?? null });
       });
       setPostComments(cMap);
     } catch (e) {
@@ -840,6 +842,27 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       fetchReactionsAndComments();
     } catch (e: any) {
       toast({ title: 'Comment failed', description: e.message || 'Try again', variant: 'destructive' });
+    }
+  };
+
+  const addReply = async (feedbackId: string, parentCommentId: string) => {
+    if (!profile?.user_id) return;
+    const text = (replyDrafts[parentCommentId] || '').trim();
+    if (!text) return;
+    try {
+      const { error } = await supabase.from('feedback_comments' as any).insert({
+        feedback_id: feedbackId,
+        user_id: profile.user_id,
+        username: profile.username || profile.first_name || 'Member',
+        comment_text: text,
+        parent_comment_id: parentCommentId,
+      });
+      if (error) throw error;
+      setReplyDrafts((d) => ({ ...d, [parentCommentId]: '' }));
+      setReplyOpen((o) => ({ ...o, [parentCommentId]: false }));
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Reply failed', description: e.message || 'Try again', variant: 'destructive' });
     }
   };
 
@@ -5228,16 +5251,77 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                   </div>
 
                                   {/* Comments */}
-                                  {comments.length > 0 && (
-                                    <div className="mt-2 space-y-1 border-t border-border/60 pt-2">
-                                      {comments.map((c) => (
-                                        <div key={c.id} className="text-[11px]">
-                                          <span className="font-semibold">{c.username}: </span>
-                                          <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
+                                  {comments.length > 0 && (() => {
+                                    const topLevel = comments.filter((c) => !c.parent_comment_id);
+                                    const repliesByParent: Record<string, typeof comments> = {};
+                                    comments.filter((c) => c.parent_comment_id).forEach((c) => {
+                                      (repliesByParent[c.parent_comment_id as string] ||= []).push(c);
+                                    });
+                                    const canReply = (feedback.tagged_user_ids?.includes(profile?.user_id || '')) || feedback.user_id === profile?.user_id;
+                                    return (
+                                      <div className="mt-2 space-y-2 border-t border-border/60 pt-2">
+                                        {topLevel.map((c) => {
+                                          const replies = repliesByParent[c.id] || [];
+                                          const isOpen = !!replyOpen[c.id];
+                                          return (
+                                            <div key={c.id} className="text-[11px]">
+                                              <div>
+                                                <span className="font-semibold">{c.username}: </span>
+                                                <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
+                                              </div>
+                                              {(replies.length > 0 || canReply) && (
+                                                <div className="ml-4 mt-1 border-l-2 border-border/60 pl-2 space-y-1">
+                                                  {replies.map((r) => (
+                                                    <div key={r.id} className="text-[11px]">
+                                                      <span className="font-semibold text-primary">↳ {r.username}: </span>
+                                                      <span className="whitespace-pre-wrap break-words">{r.comment_text}</span>
+                                                    </div>
+                                                  ))}
+                                                  {canReply && (
+                                                    <div>
+                                                      {!isOpen ? (
+                                                        <button
+                                                          type="button"
+                                                          className="text-[10px] text-primary hover:underline"
+                                                          onClick={() => setReplyOpen((o) => ({ ...o, [c.id]: true }))}
+                                                        >
+                                                          Reply
+                                                        </button>
+                                                      ) : (
+                                                        <div className="flex gap-1 mt-1">
+                                                          <Input
+                                                            value={replyDrafts[c.id] || ''}
+                                                            onChange={(e) => setReplyDrafts((d) => ({ ...d, [c.id]: e.target.value }))}
+                                                            placeholder={`Reply to ${c.username}...`}
+                                                            className="h-6 text-[11px]"
+                                                            autoFocus
+                                                            onKeyDown={(e) => {
+                                                              if (e.key === 'Enter') {
+                                                                e.preventDefault();
+                                                                addReply(feedback.id, c.id);
+                                                              }
+                                                            }}
+                                                          />
+                                                          <Button
+                                                            size="sm"
+                                                            className="h-6 px-2 text-[10px]"
+                                                            onClick={() => addReply(feedback.id, c.id)}
+                                                            disabled={!(replyDrafts[c.id] || '').trim()}
+                                                          >
+                                                            Send
+                                                          </Button>
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              )}
+                                            </div>
+                                          );
+                                        })}
+                                      </div>
+                                    );
+                                  })()}
                                   <div className="flex gap-1 mt-2">
                                     <Input
                                       value={commentDrafts[feedback.id] || ''}

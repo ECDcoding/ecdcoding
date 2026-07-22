@@ -1,0 +1,2 @@
+ALTER TABLE public.feedback_comments ADD COLUMN IF NOT EXISTS parent_comment_id UUID REFERENCES public.feedback_comments(id) ON DELETE CASCADE;
+CREATE INDEX IF NOT EXISTS feedback_comments_parent_idx ON public.feedback_comments(parent_comment_id);
