@@ -771,6 +771,67 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  const fetchReactionsAndComments = async () => {
+    try {
+      const [{ data: reactions }, { data: comments }] = await Promise.all([
+        supabase.from('feedback_reactions' as any).select('id, feedback_id, user_id, emoji'),
+        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at').order('created_at', { ascending: true }),
+      ]);
+      const rMap: Record<string, Array<{ id: string; user_id: string; emoji: string }>> = {};
+      (reactions || []).forEach((r: any) => {
+        (rMap[r.feedback_id] ||= []).push({ id: r.id, user_id: r.user_id, emoji: r.emoji });
+      });
+      setPostReactions(rMap);
+      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>> = {};
+      (comments || []).forEach((c: any) => {
+        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at });
+      });
+      setPostComments(cMap);
+    } catch (e) {
+      console.error('Failed to load reactions/comments:', e);
+    }
+  };
+
+  const toggleReaction = async (feedbackId: string, emoji: string) => {
+    if (!profile?.user_id) return;
+    const existing = (postReactions[feedbackId] || []).find(
+      (r) => r.emoji === emoji && r.user_id === profile.user_id
+    );
+    try {
+      if (existing) {
+        await supabase.from('feedback_reactions' as any).delete().eq('id', existing.id);
+      } else {
+        await supabase.from('feedback_reactions' as any).insert({
+          feedback_id: feedbackId,
+          user_id: profile.user_id,
+          emoji,
+        });
+      }
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Reaction failed', description: e.message || 'Try again', variant: 'destructive' });
+    }
+  };
+
+  const addComment = async (feedbackId: string) => {
+    if (!profile?.user_id) return;
+    const text = (commentDrafts[feedbackId] || '').trim();
+    if (!text) return;
+    try {
+      const { error } = await supabase.from('feedback_comments' as any).insert({
+        feedback_id: feedbackId,
+        user_id: profile.user_id,
+        username: profile.username || profile.first_name || 'Member',
+        comment_text: text,
+      });
+      if (error) throw error;
+      setCommentDrafts((d) => ({ ...d, [feedbackId]: '' }));
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Comment failed', description: e.message || 'Try again', variant: 'destructive' });
+    }
+  };
+
   // Load inbox (direct messages received by current user) and subscribe to new ones
   const fetchInbox = async () => {
     if (!profile?.user_id) return;
