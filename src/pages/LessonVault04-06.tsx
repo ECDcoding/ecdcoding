@@ -5416,68 +5416,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </Button>
                         </div>
 
-                        {/* Recent posts appear here as proof */}
-                        {allFeedback.length > 0 && (
-                          <div className="border-t pt-2 space-y-2 max-h-[240px] overflow-y-auto">
-                            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
-                              Recent posts
-                            </p>
-                            {[...allFeedback]
-                              .sort((a, b) => {
-                                const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                                const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                                return bT - aT;
-                              })
-                              .slice(0, 5)
-                              .map((feedback) => {
-                                const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
-                                return (
-                                  <div
-                                    key={`proof-${feedback.id}`}
-                                    className={`p-2 rounded border text-xs ${
-                                      iAmTagged
-                                        ? 'bg-amber-500/10 border-amber-500/40'
-                                        : feedback.user_id === profile?.user_id
-                                        ? 'bg-primary/5 border-primary/20'
-                                        : 'bg-background border-border'
-                                    }`}
-                                  >
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <span className="font-semibold">{feedback.username}</span>
-                                      <span className="text-[10px] text-muted-foreground">
-                                        {new Date(feedback.created_at).toLocaleString()}
-                                      </span>
-                                      {feedback.user_id === profile?.user_id && (
-                                        <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
-                                      )}
-                                      {iAmTagged && (
-                                        <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">
-                                          Tagged you
-                                        </Badge>
-                                      )}
-                                    </div>
-                                    <p className="text-base whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
-                                    {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
-                                      <div className="mt-1.5 flex flex-wrap items-center gap-1">
-                                        <span className="text-[10px] text-muted-foreground">Tagged:</span>
-                                        {feedback.tagged_user_ids
-                                          .map((id) => communityUsers.find((u) => u.user_id === id))
-                                          .filter(Boolean)
-                                          .map((u) => (
-                                            <span
-                                              key={u!.user_id}
-                                              className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
-                                            >
-                                              @{u!.display_name}
-                                            </span>
-                                          ))}
-                                      </div>
-                                    )}
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        )}
                         <div className="max-h-[160px] overflow-y-auto space-y-1 border-t pt-2">
                           {communityUsers.length === 0 ? (
                             <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
