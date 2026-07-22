@@ -4784,12 +4784,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <div className="border rounded-lg overflow-hidden">
                   <div className="flex items-center justify-between p-3 border-b bg-background">
                     <h4 className="text-sm font-semibold">Community</h4>
-                    {profile?.registration_type === 'ecd-manager' ? (
+                    {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
                       <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
                         <Plus className="h-3 w-3 mr-1" /> Create Community
                       </Button>
                     ) : (
-                      <p className="text-xs text-muted-foreground">Ask your ECD Manager to create a community.</p>
+                      <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
                     )}
                   </div>
                   {/* Community Feedback Feed */}
