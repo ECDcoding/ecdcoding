@@ -1372,20 +1372,42 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
     try {
       if (showCommunityFeed) {
+        // Compose note with @tags prepended (if any)
+        const taggedUsers = communityUsers.filter((u) => selectedRecipients.has(u.user_id));
+        const mentions = taggedUsers
+          .map((u) => `@${(u.display_name || u.username || 'user').replace(/\s+/g, '_')}`)
+          .join(' ');
+        const noteBody = mentions ? `${mentions} ${responseText.trim()}` : responseText.trim();
+
         // Post to community feedback
         const { error } = await supabase
           .from('user_feedback')
           .insert({
             user_id: profile?.user_id,
             username: profile?.username || profile?.first_name || 'Anonymous',
-            feedback_text: responseText.trim()
+            feedback_text: noteBody,
           });
 
         if (error) throw error;
 
+        // Also notify tagged users via direct message
+        if (taggedUsers.length > 0 && profile?.user_id) {
+          const senderName = profile?.username || profile?.first_name || 'A member';
+          const dmRows = taggedUsers.map((u) => ({
+            sender_id: profile.user_id,
+            recipient_id: u.user_id,
+            message: `${senderName} tagged you in a community note: ${responseText.trim()}`,
+          }));
+          await supabase.from('direct_messages').insert(dmRows);
+        }
+
+        setSelectedRecipients(new Set());
+
         toast({
           title: "Success",
-          description: "Your feedback has been shared with the community!",
+          description: taggedUsers.length
+            ? `Note posted and ${taggedUsers.length} user${taggedUsers.length === 1 ? '' : 's'} tagged.`
+            : "Your note has been shared with the community!",
         });
       } else {
         // Send private response to ECD team
