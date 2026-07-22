@@ -474,4 +474,6 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
       )}
     </div>
   );
-};
+});
+
+InstitutionCommunity.displayName = "InstitutionCommunity";
