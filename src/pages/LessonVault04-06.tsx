@@ -5159,19 +5159,41 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button size="sm" variant="outline">
-                            <MessageSquare className="h-3 w-3 mr-1" /> Feedback
+                          <Button size="sm" variant="outline" className={selectedFeedbackType ? "border-primary bg-primary/10" : ""}>
+                            <MessageSquare className="h-3 w-3 mr-1" />
+                            {selectedFeedbackType ? `Feedback: ${selectedFeedbackType}` : 'Feedback'}
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => institutionCommunityRef.current?.openCreate()}>
-                            Lesson Issues
+                        <DropdownMenuContent align="end" className="min-w-[220px]">
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedFeedbackType('Lesson Issues');
+                              institutionCommunityRef.current?.openCreate();
+                            }}
+                            className={selectedFeedbackType === 'Lesson Issues' ? "bg-primary/10 font-semibold" : ""}
+                          >
+                            <span className="flex-1">Lesson Issues</span>
+                            {selectedFeedbackType === 'Lesson Issues' && <Check className="h-4 w-4 ml-2 text-primary" />}
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
-                            FLC Report
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedFeedbackType('FLC Report');
+                              navigate("/learner-progress-report");
+                            }}
+                            className={selectedFeedbackType === 'FLC Report' ? "bg-primary/10 font-semibold" : ""}
+                          >
+                            <span className="flex-1">FLC Report</span>
+                            {selectedFeedbackType === 'FLC Report' && <Check className="h-4 w-4 ml-2 text-primary" />}
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => institutionCommunityRef.current?.openCreate()}>
-                            General
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedFeedbackType('General');
+                              institutionCommunityRef.current?.openCreate();
+                            }}
+                            className={selectedFeedbackType === 'General' ? "bg-primary/10 font-semibold" : ""}
+                          >
+                            <span className="flex-1">General</span>
+                            {selectedFeedbackType === 'General' && <Check className="h-4 w-4 ml-2 text-primary" />}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
