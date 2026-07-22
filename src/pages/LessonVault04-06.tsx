@@ -150,6 +150,7 @@ const LessonVault0406 = () => {
   const [broadcastMessage, setBroadcastMessage] = useState("");
   const [sendingBroadcast, setSendingBroadcast] = useState(false);
   const [inboxMessages, setInboxMessages] = useState<Array<{ id: string; sender_id: string; message: string; created_at: string; read_at: string | null; sender_name?: string }>>([]);
+  const [sentBroadcasts, setSentBroadcasts] = useState<Array<{ key: string; message: string; created_at: string; recipients: Array<{ user_id: string; name: string }> }>>([]);
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyingToUserId, setReplyingToUserId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
