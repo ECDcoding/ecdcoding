@@ -766,6 +766,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       
       if (error) throw error;
       setAllFeedback(data || []);
+      fetchReactionsAndComments();
     } catch (error) {
       console.error('Error fetching feedback:', error);
     }
