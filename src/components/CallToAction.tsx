@@ -15,13 +15,15 @@ import { Construction } from "lucide-react";
 
 const CallToAction = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { isAdmin } = useIsAdmin();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<"04-07" | "08-12" | null>(null);
   const [underDevOpen, setUnderDevOpen] = useState(false);
 
   const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
+    // Wait for auth to resolve to avoid flashing the trial splash for signed-in users
+    if (authLoading) return;
     if (ageGroup === "08-12" && !isAdmin) {
       setUnderDevOpen(true);
       return;
