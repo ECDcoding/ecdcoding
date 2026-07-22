@@ -793,12 +793,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   useEffect(() => {
     if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
     fetchInbox();
+    fetchSent();
     const channel = supabase
       .channel('inbox-dm')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `recipient_id=eq.${profile.user_id}` },
         () => fetchInbox()
+      )
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `sender_id=eq.${profile.user_id}` },
+        () => fetchSent()
       )
       .subscribe();
     return () => {
