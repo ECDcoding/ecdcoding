@@ -5125,7 +5125,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   className="text-xs"
                 >
                   <Users className="h-3 w-3 mr-1" />
-                  {showCommunityFeed ? 'Hide' : 'Show'} Community
+                  {showCommunityFeed ? 'Hide Community Feedback' : 'Community Feedback'}
                 </Button>
               </div>
               
