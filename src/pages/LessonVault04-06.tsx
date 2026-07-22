@@ -845,6 +845,27 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  const addReply = async (feedbackId: string, parentCommentId: string) => {
+    if (!profile?.user_id) return;
+    const text = (replyDrafts[parentCommentId] || '').trim();
+    if (!text) return;
+    try {
+      const { error } = await supabase.from('feedback_comments' as any).insert({
+        feedback_id: feedbackId,
+        user_id: profile.user_id,
+        username: profile.username || profile.first_name || 'Member',
+        comment_text: text,
+        parent_comment_id: parentCommentId,
+      });
+      if (error) throw error;
+      setReplyDrafts((d) => ({ ...d, [parentCommentId]: '' }));
+      setReplyOpen((o) => ({ ...o, [parentCommentId]: false }));
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Reply failed', description: e.message || 'Try again', variant: 'destructive' });
+    }
+  };
+
   // Load inbox (direct messages received by current user) and subscribe to new ones
   const fetchInbox = async () => {
     if (!profile?.user_id) return;
