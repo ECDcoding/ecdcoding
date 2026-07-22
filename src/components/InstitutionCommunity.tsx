@@ -417,6 +417,34 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
         </div>
 
         <div className="border rounded-lg overflow-hidden">
+          {/* Members list */}
+          <div className="p-3 border-b bg-background">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                <Users className="h-3.5 w-3.5" /> Members
+              </p>
+              <span className="text-[10px] text-muted-foreground">{members.length} member{members.length === 1 ? "" : "s"}</span>
+            </div>
+            {members.length === 0 ? (
+              <p className="text-xs text-muted-foreground text-center py-2">No members yet.</p>
+            ) : (
+              <div className="flex flex-wrap gap-2 max-h-[120px] overflow-y-auto">
+                {members.map((m) => (
+                  <div key={m.user_id} className="flex items-center gap-1.5 px-2 py-1 rounded-full border bg-muted/40">
+                    <Avatar className="h-5 w-5 border">
+                      <AvatarFallback className="bg-primary/10 text-primary text-[9px] font-semibold">
+                        {m.display_name?.[0]?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-[11px] font-medium">
+                      {m.user_id === userId ? "You" : m.display_name}
+                    </span>
+                    {m.role === "admin" && <Crown className="h-3 w-3 text-primary" />}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="max-h-[300px] overflow-y-auto p-3 space-y-3 bg-muted/30">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
