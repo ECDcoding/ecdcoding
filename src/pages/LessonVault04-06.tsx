@@ -5246,7 +5246,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                         </Badge>
                                       )}
                                     </div>
-                                    <p className="text-sm whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
+                                    <p className="text-base whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
                                     {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
                                       <div className="mt-1.5 flex flex-wrap items-center gap-1">
                                         <span className="text-[10px] text-muted-foreground">Tagged:</span>
@@ -5346,7 +5346,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
                                     )}
                                   </div>
-                                  <p className="text-base whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
+                                  <p className="text-lg whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
                                   {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
                                     <div className="mt-1.5 flex flex-wrap items-center gap-1">
                                       <span className="text-[10px] text-muted-foreground">Tagged:</span>
