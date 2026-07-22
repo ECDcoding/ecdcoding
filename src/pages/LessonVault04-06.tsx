@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -142,6 +142,10 @@ const LessonVault0406 = () => {
     user_id: string;
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
+  const [communityUsers, setCommunityUsers] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
+  const [myCommunityId, setMyCommunityId] = useState<string | null>(null);
+  const [addedMemberIds, setAddedMemberIds] = useState<Set<string>>(new Set());
+  const [addingMemberId, setAddingMemberId] = useState<string | null>(null);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const [abcSafetyOpen, setAbcSafetyOpen] = useState(false);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
@@ -624,6 +628,61 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       };
     }
   }, [showCommunityFeed, showProgressDialog]);
+
+  // Load registered users + my admin community for quick-add in the community section
+  useEffect(() => {
+    if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
+    (async () => {
+      try {
+        const { data: users } = await supabase.rpc('search_app_users', { search_text: '', limit_count: 50 });
+        setCommunityUsers((users || []) as any);
+
+        const { data: myCommunities } = await supabase
+          .from('community_members')
+          .select('community_id, role')
+          .eq('user_id', profile.user_id)
+          .eq('role', 'admin')
+          .limit(1);
+        const communityId = myCommunities?.[0]?.community_id || null;
+        setMyCommunityId(communityId);
+
+        if (communityId) {
+          const { data: members } = await supabase
+            .from('community_members')
+            .select('user_id')
+            .eq('community_id', communityId);
+          setAddedMemberIds(new Set((members || []).map((m: any) => m.user_id)));
+        } else {
+          setAddedMemberIds(new Set());
+        }
+      } catch (e) {
+        console.error('Failed to load users for community add:', e);
+      }
+    })();
+  }, [showCommunityFeed, showProgressDialog, profile?.user_id]);
+
+  const handleQuickAddMember = async (targetUserId: string) => {
+    if (!myCommunityId) {
+      institutionCommunityRef.current?.openCreate();
+      toast({ title: 'Create a community first', description: 'Create your community, then add members.' });
+      return;
+    }
+    setAddingMemberId(targetUserId);
+    try {
+      const { error } = await supabase.from('community_members').insert({
+        community_id: myCommunityId,
+        user_id: targetUserId,
+        role: 'member',
+      });
+      if (error) throw error;
+      setAddedMemberIds((prev) => new Set(prev).add(targetUserId));
+      toast({ title: 'Added', description: 'Member added to your community.' });
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message || 'Failed to add member', variant: 'destructive' });
+    } finally {
+      setAddingMemberId(null);
+    }
+  };
 
   const fetchAllFeedback = async () => {
     try {
@@ -4795,10 +4854,54 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
                     {allFeedback.length === 0 ? (
-                      <div className="flex flex-col items-center justify-center py-8 text-center">
-                        <Users className="h-12 w-12 text-muted-foreground mb-3" />
-                        <p className="text-muted-foreground text-sm font-medium">No community feedback yet</p>
-                        <p className="text-xs text-muted-foreground mt-1">Be the first to share!</p>
+                      <div className="space-y-3">
+                        <div className="flex flex-col items-center justify-center py-4 text-center">
+                          <Users className="h-10 w-10 text-muted-foreground mb-2" />
+                          <p className="text-muted-foreground text-sm font-medium">No community feedback yet</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {myCommunityId ? 'Add members below to get the conversation going.' : 'Create your community, then add members below.'}
+                          </p>
+                        </div>
+                        <div className="border-t pt-3">
+                          <p className="text-xs font-semibold mb-2 text-muted-foreground uppercase tracking-wide">Registered users</p>
+                          <div className="max-h-[220px] overflow-y-auto space-y-1">
+                            {communityUsers.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
+                            ) : (
+                              communityUsers.map((u) => {
+                                const already = addedMemberIds.has(u.user_id);
+                                return (
+                                  <div key={u.user_id} className="flex items-center gap-2 p-2 rounded bg-background border">
+                                    <Avatar className="h-8 w-8 border">
+                                      <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                        {u.display_name?.[0]?.toUpperCase() || 'U'}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-xs font-medium truncate">{u.display_name}</p>
+                                      <p className="text-[10px] text-muted-foreground truncate">
+                                        {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
+                                      </p>
+                                    </div>
+                                    {already ? (
+                                      <Badge variant="outline" className="text-[10px] gap-1"><Check className="h-3 w-3" /> Added</Badge>
+                                    ) : (
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => handleQuickAddMember(u.user_id)}
+                                        disabled={addingMemberId === u.user_id}
+                                      >
+                                        <UserPlus className="h-3 w-3 mr-1" />
+                                        {addingMemberId === u.user_id ? 'Adding...' : 'Add'}
+                                      </Button>
+                                    )}
+                                  </div>
+                                );
+                              })
+                            )}
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       allFeedback.map((feedback) => (
