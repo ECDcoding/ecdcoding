@@ -5164,7 +5164,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem onClick={() => institutionCommunityRef.current?.openCreate()}>
-                            Lesson
+                            Lesson Issues
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
                             FLC Report
