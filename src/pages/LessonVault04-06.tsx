@@ -1448,12 +1448,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
     try {
       if (showCommunityFeed) {
-        // Compose note with @tags prepended (if any)
+        // Keep the note body separate from tagged user metadata
         const taggedUsers = communityUsers.filter((u) => selectedRecipients.has(u.user_id));
-        const mentions = taggedUsers
-          .map((u) => `@${(u.display_name || u.username || 'user').replace(/\s+/g, '_')}`)
-          .join(' ');
-        const noteBody = mentions ? `${mentions} ${responseText.trim()}` : responseText.trim();
+        const noteBody = responseText.trim();
 
         // Post to community feedback
         const { error } = await supabase
@@ -5240,6 +5237,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       )}
                                     </div>
                                     <p className="whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                                    {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
+                                      <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                                        <span className="text-[10px] text-muted-foreground">Tagged:</span>
+                                        {feedback.tagged_user_ids
+                                          .map((id) => communityUsers.find((u) => u.user_id === id))
+                                          .filter(Boolean)
+                                          .map((u) => (
+                                            <span
+                                              key={u!.user_id}
+                                              className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
+                                            >
+                                              @{u!.display_name}
+                                            </span>
+                                          ))}
+                                      </div>
+                                    )}
                                   </div>
                                 );
                               })}
@@ -5324,6 +5337,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     )}
                                   </div>
                                   <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                                  {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
+                                    <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                                      <span className="text-[10px] text-muted-foreground">Tagged:</span>
+                                      {feedback.tagged_user_ids
+                                        .map((id) => communityUsers.find((u) => u.user_id === id))
+                                        .filter(Boolean)
+                                        .map((u) => (
+                                          <span
+                                            key={u!.user_id}
+                                            className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
+                                          >
+                                            @{u!.display_name}
+                                          </span>
+                                        ))}
+                                    </div>
+                                  )}
 
                                   {/* Reactions */}
                                   <div className="flex flex-wrap gap-1 mt-2">
