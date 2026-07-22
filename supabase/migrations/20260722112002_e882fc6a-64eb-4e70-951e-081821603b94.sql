@@ -1,0 +1,1 @@
+DELETE FROM public.user_feedback WHERE id = '508ff7ac-2cb9-4f5f-9b95-d180af756dc5';
