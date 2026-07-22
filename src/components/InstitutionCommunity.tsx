@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown, Search, UserPlus, Check } from "lucide-react";
+import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown, Search, UserPlus, Check, MessageSquarePlus } from "lucide-react";
 
 export interface InstitutionCommunityHandle {
   openCreate: () => void;
@@ -466,6 +466,17 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
           </p>
         </div>
         {canCreateCommunity && (
+          communities.some((c) => c.role === "admin") ? (
+            <Button
+              size="sm"
+              onClick={() => {
+                const adminCommunity = communities.find((c) => c.role === "admin");
+                if (adminCommunity) openCommunity(adminCommunity);
+              }}
+            >
+              <MessageSquarePlus className="h-4 w-4 mr-1" /> New Message
+            </Button>
+          ) : (
           <Dialog open={createOpen} onOpenChange={setCreateOpen}>
             <DialogTrigger asChild>
               <Button size="sm">
@@ -506,6 +517,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
               </div>
             </DialogContent>
           </Dialog>
+          )
         )}
       </div>
 
