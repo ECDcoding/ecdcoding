@@ -216,6 +216,16 @@ const LessonVault0406 = () => {
     setMusicLabOpen(true);
   };
 
+  // Strip leading @mentions from community post text so old posts render cleanly
+  const stripLeadingMentions = (text: string): string => {
+    const parts = text.trim().split(/\s+/);
+    let i = 0;
+    while (i < parts.length && parts[i].startsWith('@')) {
+      i++;
+    }
+    return parts.slice(i).join(' ').trim();
+  };
+
   // Helper function to get robot status based on highest score for a subject
   const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean): { status: 'red' | 'yellow' | 'green', label: string } => {
     const filteredResults = testResults.filter(subjectFilter);
@@ -5236,7 +5246,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                         </Badge>
                                       )}
                                     </div>
-                                    <p className="whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                                    <p className="whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
                                     {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
                                       <div className="mt-1.5 flex flex-wrap items-center gap-1">
                                         <span className="text-[10px] text-muted-foreground">Tagged:</span>
@@ -5336,7 +5346,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
                                     )}
                                   </div>
-                                  <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                                  <p className="text-xs whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
                                   {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
                                     <div className="mt-1.5 flex flex-wrap items-center gap-1">
                                       <span className="text-[10px] text-muted-foreground">Tagged:</span>
