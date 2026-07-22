@@ -5177,13 +5177,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
-                              setSelectedFeedbackType('FLC Report');
-                              navigate("/learner-progress-report");
+                              setSelectedFeedbackType('FLC Progress');
+                              institutionCommunityRef.current?.openCreate();
                             }}
-                            className={selectedFeedbackType === 'FLC Report' ? "bg-primary/10 font-semibold" : ""}
+                            className={selectedFeedbackType === 'FLC Progress' ? "bg-primary/10 font-semibold" : ""}
                           >
-                            <span className="flex-1">FLC Report</span>
-                            {selectedFeedbackType === 'FLC Report' && <Check className="h-4 w-4 ml-2 text-primary" />}
+                            <span className="flex-1">FLC Progress</span>
+                            {selectedFeedbackType === 'FLC Progress' && <Check className="h-4 w-4 ml-2 text-primary" />}
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
