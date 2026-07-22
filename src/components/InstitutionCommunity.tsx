@@ -86,11 +86,24 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
     try {
       const { data, error } = await supabase
         .from("community_messages")
-        .select("*, profiles(username, first_name, last_name)")
+        .select("*")
         .eq("community_id", communityId)
         .order("created_at", { ascending: true });
 
       if (error) throw error;
+
+      const userIds = [...new Set((data || []).map((m: any) => m.user_id))];
+      const { data: profilesData } = await supabase
+        .from("profiles")
+        .select("user_id, username, first_name, last_name")
+        .in("user_id", userIds);
+
+      const profileMap = new Map(
+        (profilesData || []).map((p: any) => [
+          p.user_id,
+          p.username || `${p.first_name || ""} ${p.last_name || ""}`.trim() || "Anonymous",
+        ])
+      );
 
       const formatted: CommunityMessage[] = (data || []).map((m: any) => ({
         id: m.id,
@@ -98,7 +111,7 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
         user_id: m.user_id,
         message: m.message,
         created_at: m.created_at,
-        username: m.profiles?.username || `${m.profiles?.first_name || ""} ${m.profiles?.last_name || ""}`.trim() || "Anonymous",
+        username: profileMap.get(m.user_id) || "Anonymous",
       }));
 
       setMessages(formatted);
