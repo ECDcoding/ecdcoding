@@ -216,6 +216,11 @@ const LessonVault0406 = () => {
     setMusicLabOpen(true);
   };
 
+  // Strip leading @mentions from community post text so old posts render cleanly
+  const stripLeadingMentions = (text: string): string => {
+    return text.replace(/^(\s*@[\w\s]+\s+)+/, '').trim();
+  };
+
   // Helper function to get robot status based on highest score for a subject
   const getRobotStatus = (subjectFilter: (r: typeof testResults[0]) => boolean): { status: 'red' | 'yellow' | 'green', label: string } => {
     const filteredResults = testResults.filter(subjectFilter);
