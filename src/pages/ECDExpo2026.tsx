@@ -25,6 +25,7 @@ import ExpoAccessGate from "@/components/ExpoAccessGate";
 import ExpoCopilot from "@/components/ExpoCopilot";
 import ExpoAccountsList from "@/components/ExpoAccountsList";
 import BusinessProposalDialog from "@/components/BusinessProposalDialog";
+import ImageCropDialog from "@/components/ImageCropDialog";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const ECDExpo2026Content = () => {
@@ -74,6 +75,7 @@ const ECDExpo2026Content = () => {
   const [sponsorPaymentComplete, setSponsorPaymentComplete] = useState(false);
   const [companyLogo, setCompanyLogo] = useState<File | null>(null);
   const [companyLogoPreview, setCompanyLogoPreview] = useState<string | null>(null);
+  const [cropFile, setCropFile] = useState<File | null>(null);
 
   const mainFocus = [
     { icon: <GraduationCap className="h-8 w-8" />, title: "Developing Tech Savvy Kids", description: "Building the knowledge base for the future world of work" },
@@ -139,12 +141,21 @@ const ECDExpo2026Content = () => {
         toast.error("Logo file must be less than 5MB");
         return;
       }
-      setCompanyLogo(file);
-      const reader = new FileReader();
-      reader.onload = (ev) => setCompanyLogoPreview(ev.target?.result as string);
-      reader.readAsDataURL(file);
-      toast.success("Logo uploaded successfully!");
+      // Open crop dialog so sponsors can align/zoom before saving.
+      setCropFile(file);
+      // allow re-selecting the same file later
+      e.target.value = "";
     }
+  };
+
+  const handleCropped = (blob: Blob) => {
+    const cropped = new File([blob], cropFile?.name?.replace(/\.[^.]+$/, "") + "-cropped.jpg" || "logo-cropped.jpg", { type: "image/jpeg" });
+    setCompanyLogo(cropped);
+    const reader = new FileReader();
+    reader.onload = (ev) => setCompanyLogoPreview(ev.target?.result as string);
+    reader.readAsDataURL(cropped);
+    setCropFile(null);
+    toast.success("Logo cropped and saved!");
   };
 
   const handleExhibitorSubmit = (e: React.FormEvent) => {
@@ -585,6 +596,16 @@ const ECDExpo2026Content = () => {
                               className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
                             >×</button>
                           </div>
+                        )}
+                        {companyLogo && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCropFile(companyLogo)}
+                          >
+                            Crop & Align
+                          </Button>
                         )}
                       </div>
                     </div>
@@ -1047,6 +1068,12 @@ const ECDExpo2026Content = () => {
         </div>
       </footer>
       <BusinessProposalDialog open={proposalOpen} onOpenChange={setProposalOpen} />
+      <ImageCropDialog
+        open={!!cropFile}
+        file={cropFile}
+        onCancel={() => setCropFile(null)}
+        onCropped={handleCropped}
+      />
     </div>
   );
 };
