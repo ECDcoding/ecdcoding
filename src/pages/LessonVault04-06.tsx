@@ -742,6 +742,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   };
 
   const fetchAllFeedback = async () => {
+    // (inbox helpers defined below)
     try {
       const { data, error } = await supabase
         .from('user_feedback')
@@ -754,6 +755,80 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       console.error('Error fetching feedback:', error);
     }
   };
+
+  // Load inbox (direct messages received by current user) and subscribe to new ones
+  const fetchInbox = async () => {
+    if (!profile?.user_id) return;
+    try {
+      const { data, error } = await supabase
+        .from('direct_messages' as any)
+        .select('id, sender_id, message, created_at, read_at')
+        .eq('recipient_id', profile.user_id)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      const rows = (data || []) as any[];
+      const senderIds = Array.from(new Set(rows.map((r) => r.sender_id)));
+      let nameMap: Record<string, string> = {};
+      if (senderIds.length > 0) {
+        const { data: profs } = await supabase
+          .from('profiles')
+          .select('user_id, first_name, last_name, username')
+          .in('user_id', senderIds);
+        (profs || []).forEach((p: any) => {
+          nameMap[p.user_id] =
+            [p.first_name, p.last_name].filter(Boolean).join(' ') || p.username || 'Member';
+        });
+      }
+      setInboxMessages(rows.map((r) => ({ ...r, sender_name: nameMap[r.sender_id] || 'Member' })));
+    } catch (e) {
+      console.error('Failed to load inbox:', e);
+    }
+  };
+
+  useEffect(() => {
+    if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
+    fetchInbox();
+    const channel = supabase
+      .channel('inbox-dm')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `recipient_id=eq.${profile.user_id}` },
+        () => fetchInbox()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCommunityFeed, showProgressDialog, profile?.user_id]);
+
+  const handleSendReply = async () => {
+    if (!profile?.user_id || !replyingToUserId) return;
+    const text = replyText.trim();
+    if (!text) {
+      toast({ title: 'Empty reply', description: 'Type something before sending.', variant: 'destructive' });
+      return;
+    }
+    setSendingReply(true);
+    try {
+      const { error } = await supabase.from('direct_messages' as any).insert({
+        sender_id: profile.user_id,
+        recipient_id: replyingToUserId,
+        message: text,
+      });
+      if (error) throw error;
+      toast({ title: 'Reply sent' });
+      setReplyText('');
+      setReplyingToId(null);
+      setReplyingToUserId(null);
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message || 'Failed to send reply', variant: 'destructive' });
+    } finally {
+      setSendingReply(false);
+    }
+  };
+
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
   const [wordToCode, setWordToCode] = useState('');
   const [isCountingPlaying, setIsCountingPlaying] = useState(false);
