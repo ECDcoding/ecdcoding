@@ -5157,7 +5157,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <h4 className="text-sm font-semibold">Community</h4>
                     {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
                       <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
-                        <Plus className="h-3 w-3 mr-1" /> Create Community
+                        <Plus className="h-3 w-3 mr-1" /> Lesson Communications
                       </Button>
                     ) : (
                       <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
