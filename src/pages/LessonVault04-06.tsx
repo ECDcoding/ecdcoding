@@ -154,6 +154,7 @@ const LessonVault0406 = () => {
   const [newMessageRecipients, setNewMessageRecipients] = useState<Set<string>>(new Set());
   const [sendingNewMessage, setSendingNewMessage] = useState(false);
   const [inboxMessages, setInboxMessages] = useState<Array<{ id: string; sender_id: string; message: string; created_at: string; read_at: string | null; sender_name?: string }>>([]);
+  const [sentMessages, setSentMessages] = useState<Array<{ id: string; recipient_id: string; message: string; created_at: string; recipient_name?: string }>>([]);
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyingToUserId, setReplyingToUserId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
@@ -789,15 +790,51 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  // Load sent messages (direct messages the current user has sent)
+  const fetchSent = async () => {
+    if (!profile?.user_id) return;
+    try {
+      const { data, error } = await supabase
+        .from('direct_messages' as any)
+        .select('id, recipient_id, message, created_at')
+        .eq('sender_id', profile.user_id)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      const rows = (data || []) as any[];
+      const recipientIds = Array.from(new Set(rows.map((r) => r.recipient_id)));
+      let nameMap: Record<string, string> = {};
+      if (recipientIds.length > 0) {
+        const { data: profs } = await supabase
+          .from('profiles')
+          .select('user_id, first_name, last_name, username')
+          .in('user_id', recipientIds);
+        (profs || []).forEach((p: any) => {
+          nameMap[p.user_id] =
+            [p.first_name, p.last_name].filter(Boolean).join(' ') || p.username || 'Member';
+        });
+      }
+      setSentMessages(rows.map((r) => ({ ...r, recipient_name: nameMap[r.recipient_id] || 'Member' })));
+    } catch (e) {
+      console.error('Failed to load sent messages:', e);
+    }
+  };
+
   useEffect(() => {
     if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
     fetchInbox();
+    fetchSent();
     const channel = supabase
       .channel('inbox-dm')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `recipient_id=eq.${profile.user_id}` },
         () => fetchInbox()
+      )
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `sender_id=eq.${profile.user_id}` },
+        () => fetchSent()
       )
       .subscribe();
     return () => {
@@ -5196,6 +5233,39 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       </div>
                                     </div>
                                   )}
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        {/* Sent: messages the current user has sent to others */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Send className="h-3.5 w-3.5" /> Sent
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{sentMessages.length} message{sentMessages.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[200px] overflow-y-auto space-y-2">
+                            {sentMessages.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
+                            ) : (
+                              sentMessages.map((m) => (
+                                <div key={m.id} className="p-2 rounded border bg-background">
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    <Avatar className="h-7 w-7 border">
+                                      <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
+                                        {m.recipient_name?.[0]?.toUpperCase() || 'U'}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="min-w-0">
+                                      <p className="text-xs font-medium truncate">To: {m.recipient_name}</p>
+                                      <p className="text-[10px] text-muted-foreground">
+                                        {new Date(m.created_at).toLocaleString()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
                                 </div>
                               ))
                             )}
