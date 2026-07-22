@@ -4980,9 +4980,19 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <div className="flex items-center justify-between p-3 border-b bg-background">
                     <h4 className="text-sm font-semibold">Messages</h4>
                     {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
-                      <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
-                        <Plus className="h-3 w-3 mr-1" /> Create Community
-                      </Button>
+                      myCommunityId ? (
+                        <Button size="sm" onClick={() => {
+                          setNewMessageRecipients(new Set());
+                          setNewMessageText("");
+                          setNewMessageOpen(true);
+                        }}>
+                          <Send className="h-3 w-3 mr-1" /> New Message
+                        </Button>
+                      ) : (
+                        <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
+                          <Plus className="h-3 w-3 mr-1" /> Create Community
+                        </Button>
+                      )
                     ) : (
                       <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
                     )}
