@@ -141,7 +141,10 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
         },
         (payload) => {
           const newMsg = payload.new as any;
-          if (newMsg.user_id === userId) return;
+          if (newMsg.user_id === userId) {
+            fetchMessages(selectedCommunity.id);
+            return;
+          }
           setMessages((prev) => [
             ...prev,
             {
@@ -150,7 +153,7 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
               user_id: newMsg.user_id,
               message: newMsg.message,
               created_at: newMsg.created_at,
-              username: newMsg.username || "Anonymous",
+              username: "Anonymous",
             },
           ]);
         }
