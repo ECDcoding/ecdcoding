@@ -39,6 +39,7 @@ const App = () => (
       <Sonner />
       <CookieConsent />
       <BrowserRouter>
+        <AuthProfileCompleter />
         <Routes>
           {/* Public routes */}
           <Route path="/sign-in" element={<SignInPage />} />
