@@ -588,7 +588,9 @@ const ECDExpo2026Content = () => {
                             <img
                               src={companyLogoPreview}
                               alt="Company logo preview"
-                              className="h-16 w-16 object-contain rounded border border-border bg-white p-1"
+                              onClick={() => companyLogo && setCropFile(companyLogo)}
+                              title="Click to crop & align"
+                              className="h-16 w-16 object-contain rounded border border-border bg-white p-1 cursor-pointer hover:ring-2 hover:ring-primary transition"
                             />
                             <button
                               type="button"
