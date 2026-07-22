@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
-import Register from "./pages/Register";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 import LessonVault0406 from "./pages/LessonVault04-06";
@@ -42,7 +41,6 @@ const App = () => (
         <Routes>
           {/* Public routes */}
           <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
