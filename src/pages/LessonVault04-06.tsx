@@ -5056,6 +5056,103 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
                     <div className="space-y-3">
+                      {/* Post a note with tags */}
+                      <div className="p-3 rounded-lg border bg-background space-y-2">
+                        <div className="flex items-start gap-2">
+                          <Avatar className="h-8 w-8 border-2 border-primary">
+                            <AvatarImage src={profile?.profile_image_url || ''} />
+                            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
+                              {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                            </AvatarFallback>
+                          </Avatar>
+                          <Textarea
+                            placeholder="Post a note to the community..."
+                            value={responseText}
+                            onChange={(e) => setResponseText(e.target.value)}
+                            className="min-h-[60px] resize-none text-sm"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSendResponse();
+                              }
+                            }}
+                          />
+                        </div>
+                        {selectedRecipients.size > 0 && (
+                          <div className="flex flex-wrap gap-1">
+                            {communityUsers
+                              .filter((u) => selectedRecipients.has(u.user_id))
+                              .map((u) => (
+                                <span
+                                  key={u.user_id}
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]"
+                                >
+                                  @{u.display_name}
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleRecipient(u.user_id)}
+                                    className="hover:text-destructive"
+                                    aria-label={`Remove ${u.display_name}`}
+                                  >
+                                    <X className="h-3 w-3" />
+                                  </button>
+                                </span>
+                              ))}
+                          </div>
+                        )}
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Tag users</p>
+                            {communityUsers.length > 0 && (
+                              <button
+                                type="button"
+                                onClick={toggleSelectAllRecipients}
+                                className="text-[10px] font-medium text-primary hover:underline"
+                              >
+                                {selectedRecipients.size === communityUsers.length ? 'Clear all' : 'Tag all'}
+                              </button>
+                            )}
+                          </div>
+                          <Button size="sm" onClick={handleSendResponse} disabled={!responseText.trim()}>
+                            <Share2 className="h-3 w-3 mr-1" />
+                            Post
+                          </Button>
+                        </div>
+                        <div className="max-h-[160px] overflow-y-auto space-y-1 border-t pt-2">
+                          {communityUsers.length === 0 ? (
+                            <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
+                          ) : (
+                            communityUsers.map((u) => {
+                              const checked = selectedRecipients.has(u.user_id);
+                              return (
+                                <label
+                                  key={u.user_id}
+                                  className={`flex items-center gap-2 p-2 rounded border cursor-pointer transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'bg-background hover:bg-muted/50'}`}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={checked}
+                                    onChange={() => toggleRecipient(u.user_id)}
+                                    className="h-4 w-4 accent-primary"
+                                  />
+                                  <Avatar className="h-8 w-8 border">
+                                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                      {u.display_name?.[0]?.toUpperCase() || 'U'}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-medium truncate">{u.display_name}</p>
+                                    <p className="text-[10px] text-muted-foreground truncate">
+                                      {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
+                                    </p>
+                                  </div>
+                                </label>
+                              );
+                            })
+                          )}
+                        </div>
+                      </div>
+
                       {allFeedback.length > 0 && (
                         <div className="space-y-2">
                           {allFeedback.map((feedback) => (
@@ -5090,243 +5187,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           ))}
                         </div>
                       )}
-                        {/* Inbox: messages received from other users, with reply */}
-                        <div className="border-t pt-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
-                              <Inbox className="h-3.5 w-3.5" /> Inbox
-                            </p>
-                            <span className="text-[10px] text-muted-foreground">{inboxMessages.length} message{inboxMessages.length === 1 ? '' : 's'}</span>
-                          </div>
-                          <div className="max-h-[200px] overflow-y-auto space-y-2">
-                            {inboxMessages.length === 0 ? (
-                              <p className="text-xs text-muted-foreground text-center py-3">No messages yet.</p>
-                            ) : (
-                              inboxMessages.map((m) => (
-                                <div key={m.id} className="p-2 rounded border bg-background">
-                                  <div className="flex items-start justify-between gap-2">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                      <Avatar className="h-7 w-7 border">
-                                        <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
-                                          {m.sender_name?.[0]?.toUpperCase() || 'U'}
-                                        </AvatarFallback>
-                                      </Avatar>
-                                      <div className="min-w-0">
-                                        <p className="text-xs font-medium truncate">{m.sender_name}</p>
-                                        <p className="text-[10px] text-muted-foreground">
-                                          {new Date(m.created_at).toLocaleString()}
-                                        </p>
-                                      </div>
-                                    </div>
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        if (replyingToId === m.id) {
-                                          setReplyingToId(null);
-                                          setReplyingToUserId(null);
-                                          setReplyText('');
-                                        } else {
-                                          setReplyingToId(m.id);
-                                          setReplyingToUserId(m.sender_id);
-                                          setReplyText('');
-                                        }
-                                      }}
-                                      title="Reply"
-                                      className="p-1.5 rounded hover:bg-muted text-primary"
-                                    >
-                                      <Reply className="h-4 w-4" />
-                                    </button>
-                                  </div>
-                                  <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
-                                  {replyingToId === m.id && (
-                                    <div className="mt-2 space-y-2">
-                                      <Textarea
-                                        placeholder={`Reply to ${m.sender_name}...`}
-                                        value={replyText}
-                                        onChange={(e) => setReplyText(e.target.value)}
-                                        className="min-h-[50px] resize-none text-sm"
-                                        autoFocus
-                                      />
-                                      <div className="flex justify-end gap-2">
-                                        <Button
-                                          size="sm"
-                                          variant="outline"
-                                          onClick={() => {
-                                            setReplyingToId(null);
-                                            setReplyingToUserId(null);
-                                            setReplyText('');
-                                          }}
-                                        >
-                                          Cancel
-                                        </Button>
-                                        <Button
-                                          size="sm"
-                                          onClick={handleSendReply}
-                                          disabled={sendingReply || !replyText.trim()}
-                                        >
-                                          <Send className="h-3 w-3 mr-1" /> Send reply
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        {/* Sent: broadcasts the current user sent, with recipients list */}
-                        <div className="border-t pt-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
-                              <Send className="h-3.5 w-3.5" /> Sent
-                            </p>
-                            <span className="text-[10px] text-muted-foreground">{sentBroadcasts.length} broadcast{sentBroadcasts.length === 1 ? '' : 's'}</span>
-                          </div>
-                          <div className="max-h-[220px] overflow-y-auto space-y-2">
-                            {sentBroadcasts.length === 0 ? (
-                              <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
-                            ) : (
-                              sentBroadcasts.map((b) => (
-                                <div key={b.key} className="p-2 rounded border bg-background">
-                                  <div className="flex items-center justify-between gap-2 mb-1">
-                                    <p className="text-[10px] text-muted-foreground">
-                                      {new Date(b.created_at).toLocaleString()}
-                                    </p>
-                                    <span className="text-[10px] text-muted-foreground">
-                                      Sent to {b.recipients.length} {b.recipients.length === 1 ? 'user' : 'users'}
-                                    </span>
-                                  </div>
-                                  <p className="text-xs whitespace-pre-wrap break-words mb-2">{b.message}</p>
-                                  <div className="flex flex-wrap gap-1">
-                                    {b.recipients.map((r) => (
-                                      <span
-                                        key={r.user_id}
-                                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]"
-                                      >
-                                        <Avatar className="h-4 w-4 border">
-                                          <AvatarFallback className="bg-primary/20 text-primary text-[8px] font-semibold">
-                                            {r.name?.[0]?.toUpperCase() || 'U'}
-                                          </AvatarFallback>
-                                        </Avatar>
-                                        {r.name}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        {/* Post to Community */}
-                        <div className="border-t pt-3 pb-3 bg-background">
-                          <div className="flex items-start gap-2">
-                            <Avatar className="h-8 w-8 border-2 border-primary">
-                              <AvatarImage src={profile?.profile_image_url || ''} />
-                              <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
-                                {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                              </AvatarFallback>
-                            </Avatar>
-                            <Textarea
-                              placeholder="Share with the community..."
-                              value={responseText}
-                              onChange={(e) => setResponseText(e.target.value)}
-                              className="min-h-[60px] resize-none text-sm"
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey) {
-                                  e.preventDefault();
-                                  handleSendResponse();
-                                }
-                              }}
-                            />
-                          </div>
-                          <div className="flex justify-end mt-2">
-                            <Button size="sm" onClick={handleSendResponse} disabled={!responseText.trim()}>
-                              <Share2 className="h-3 w-3 mr-1" />
-                              Post
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="border-t pt-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
-                            {communityUsers.length > 0 && (
-                              <button
-                                type="button"
-                                onClick={toggleSelectAllRecipients}
-                                className="text-[10px] font-medium text-primary hover:underline"
-                              >
-                                {selectedRecipients.size === communityUsers.length ? 'Clear all' : 'Select all'}
-                              </button>
-                            )}
-                          </div>
-                          <div className="max-h-[180px] overflow-y-auto space-y-1">
-                            {communityUsers.length === 0 ? (
-                              <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
-                            ) : (
-                              communityUsers.map((u) => {
-                                const checked = selectedRecipients.has(u.user_id);
-                                return (
-                                  <label
-                                    key={u.user_id}
-                                    className={`flex items-center gap-2 p-2 rounded border cursor-pointer transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'bg-background hover:bg-muted/50'}`}
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      checked={checked}
-                                      onChange={() => toggleRecipient(u.user_id)}
-                                      className="h-4 w-4 accent-primary"
-                                    />
-                                    <Avatar className="h-8 w-8 border">
-                                      <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                        {u.display_name?.[0]?.toUpperCase() || 'U'}
-                                      </AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-xs font-medium truncate">{u.display_name}</p>
-                                      <p className="text-[10px] text-muted-foreground truncate">
-                                        {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
-                                      </p>
-                                    </div>
-                                  </label>
-                                );
-                              })
-                            )}
-                          </div>
-                          <div className="mt-3 space-y-2">
-                            <Textarea
-                              placeholder="Type a message to send to selected users or everyone..."
-                              value={broadcastMessage}
-                              onChange={(e) => setBroadcastMessage(e.target.value)}
-                              className="min-h-[60px] resize-none text-sm"
-                            />
-                            <div className="flex items-center justify-between gap-2">
-                              <p className="text-[10px] text-muted-foreground">
-                                {selectedRecipients.size > 0
-                                  ? `${selectedRecipients.size} selected`
-                                  : 'No users selected'}
-                              </p>
-                              <div className="flex gap-2">
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => handleSendBroadcast(false)}
-                                  disabled={sendingBroadcast || selectedRecipients.size === 0 || !broadcastMessage.trim()}
-                                >
-                                  <Send className="h-3 w-3 mr-1" />
-                                  Send to selected
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  onClick={() => handleSendBroadcast(true)}
-                                  disabled={sendingBroadcast || communityUsers.length === 0 || !broadcastMessage.trim()}
-                                >
-                                  <MessageSquare className="h-3 w-3 mr-1" />
-                                  Message all
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                     </div>
                   </div>
                 </div>
