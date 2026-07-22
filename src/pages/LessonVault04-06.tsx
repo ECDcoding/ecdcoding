@@ -5143,6 +5143,132 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
                     <div className="space-y-3">
+                      {allFeedback.length > 0 && (
+                        <div className="space-y-2">
+                          {[...allFeedback]
+                            .sort((a, b) => {
+                              const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              return bT - aT;
+                            })
+                            .map((feedback) => {
+                            const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
+                            const reactions = postReactions[feedback.id] || [];
+                            const comments = postComments[feedback.id] || [];
+                            const emojis = ['👍','❤️','😂','🎉','👏','🙌'];
+                            return (
+                            <div
+                              key={feedback.id}
+                              className={`p-3 rounded-lg ${
+                                iAmTagged
+                                  ? 'bg-amber-500/10 border border-amber-500/40'
+                                  : feedback.user_id === profile?.user_id
+                                  ? 'bg-primary/5 border border-primary/20'
+                                  : 'bg-background border border-border'
+                              }`}
+                            >
+                              <div className="flex items-start gap-2">
+                                <Avatar className="h-8 w-8 border">
+                                  <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                    {feedback.username[0].toUpperCase()}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-semibold text-xs">{feedback.username}</span>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      {new Date(feedback.created_at).toLocaleDateString()}
+                                    </span>
+                                    {feedback.user_id === profile?.user_id && (
+                                      <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
+                                    )}
+                                    {iAmTagged && (
+                                      <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-lg whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
+                                  {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
+                                    <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                                      <span className="text-[10px] text-muted-foreground">Tagged:</span>
+                                      {feedback.tagged_user_ids
+                                        .map((id) => communityUsers.find((u) => u.user_id === id))
+                                        .filter(Boolean)
+                                        .map((u) => (
+                                          <span
+                                            key={u!.user_id}
+                                            className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
+                                          >
+                                            @{u!.display_name}
+                                          </span>
+                                        ))}
+                                    </div>
+                                  )}
+
+                                  {/* Reactions */}
+                                  <div className="flex flex-wrap gap-1 mt-2">
+                                    {emojis.map((e) => {
+                                      const count = reactions.filter((r) => r.emoji === e).length;
+                                      const mine = reactions.some((r) => r.emoji === e && r.user_id === profile?.user_id);
+                                      return (
+                                        <button
+                                          key={e}
+                                          type="button"
+                                          onClick={() => toggleReaction(feedback.id, e)}
+                                          className={`text-xs px-2 py-0.5 rounded-full border transition ${
+                                            mine
+                                              ? 'bg-primary/20 border-primary'
+                                              : 'bg-background hover:bg-muted border-border'
+                                          }`}
+                                        >
+                                          <span>{e}</span>
+                                          {count > 0 && <span className="ml-1 text-[10px]">{count}</span>}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* Comments */}
+                                  {comments.length > 0 && (
+                                    <div className="mt-2 space-y-1 border-t border-border/60 pt-2">
+                                      {comments.map((c) => (
+                                        <div key={c.id} className="text-[11px]">
+                                          <span className="font-semibold">{c.username}: </span>
+                                          <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  <div className="flex gap-1 mt-2">
+                                    <Input
+                                      value={commentDrafts[feedback.id] || ''}
+                                      onChange={(e) =>
+                                        setCommentDrafts((d) => ({ ...d, [feedback.id]: e.target.value }))
+                                      }
+                                      placeholder="Write a comment..."
+                                      className="h-7 text-xs"
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          addComment(feedback.id);
+                                        }
+                                      }}
+                                    />
+                                    <Button
+                                      size="sm"
+                                      className="h-7 px-2 text-xs"
+                                      onClick={() => addComment(feedback.id)}
+                                      disabled={!(commentDrafts[feedback.id] || '').trim()}
+                                    >
+                                      Post
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            );
+                          })}
+                        </div>
+                      )}
                       {/* Post a note with tags */}
                       <div className="p-3 rounded-lg border bg-background space-y-2">
                         <div className="flex items-start gap-2">
@@ -5303,132 +5429,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </div>
                       </div>
 
-                      {allFeedback.length > 0 && (
-                        <div className="space-y-2">
-                          {[...allFeedback]
-                            .sort((a, b) => {
-                              const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                              const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                              return bT - aT;
-                            })
-                            .map((feedback) => {
-                            const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
-                            const reactions = postReactions[feedback.id] || [];
-                            const comments = postComments[feedback.id] || [];
-                            const emojis = ['👍','❤️','😂','🎉','👏','🙌'];
-                            return (
-                            <div
-                              key={feedback.id}
-                              className={`p-3 rounded-lg ${
-                                iAmTagged
-                                  ? 'bg-amber-500/10 border border-amber-500/40'
-                                  : feedback.user_id === profile?.user_id
-                                  ? 'bg-primary/5 border border-primary/20'
-                                  : 'bg-background border border-border'
-                              }`}
-                            >
-                              <div className="flex items-start gap-2">
-                                <Avatar className="h-8 w-8 border">
-                                  <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                    {feedback.username[0].toUpperCase()}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-xs">{feedback.username}</span>
-                                    <span className="text-[10px] text-muted-foreground">
-                                      {new Date(feedback.created_at).toLocaleDateString()}
-                                    </span>
-                                    {feedback.user_id === profile?.user_id && (
-                                      <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
-                                    )}
-                                    {iAmTagged && (
-                                      <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
-                                    )}
-                                  </div>
-                                  <p className="text-lg whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
-                                  {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
-                                    <div className="mt-1.5 flex flex-wrap items-center gap-1">
-                                      <span className="text-[10px] text-muted-foreground">Tagged:</span>
-                                      {feedback.tagged_user_ids
-                                        .map((id) => communityUsers.find((u) => u.user_id === id))
-                                        .filter(Boolean)
-                                        .map((u) => (
-                                          <span
-                                            key={u!.user_id}
-                                            className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
-                                          >
-                                            @{u!.display_name}
-                                          </span>
-                                        ))}
-                                    </div>
-                                  )}
-
-                                  {/* Reactions */}
-                                  <div className="flex flex-wrap gap-1 mt-2">
-                                    {emojis.map((e) => {
-                                      const count = reactions.filter((r) => r.emoji === e).length;
-                                      const mine = reactions.some((r) => r.emoji === e && r.user_id === profile?.user_id);
-                                      return (
-                                        <button
-                                          key={e}
-                                          type="button"
-                                          onClick={() => toggleReaction(feedback.id, e)}
-                                          className={`text-xs px-2 py-0.5 rounded-full border transition ${
-                                            mine
-                                              ? 'bg-primary/20 border-primary'
-                                              : 'bg-background hover:bg-muted border-border'
-                                          }`}
-                                        >
-                                          <span>{e}</span>
-                                          {count > 0 && <span className="ml-1 text-[10px]">{count}</span>}
-                                        </button>
-                                      );
-                                    })}
-                                  </div>
-
-                                  {/* Comments */}
-                                  {comments.length > 0 && (
-                                    <div className="mt-2 space-y-1 border-t border-border/60 pt-2">
-                                      {comments.map((c) => (
-                                        <div key={c.id} className="text-[11px]">
-                                          <span className="font-semibold">{c.username}: </span>
-                                          <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                  <div className="flex gap-1 mt-2">
-                                    <Input
-                                      value={commentDrafts[feedback.id] || ''}
-                                      onChange={(e) =>
-                                        setCommentDrafts((d) => ({ ...d, [feedback.id]: e.target.value }))
-                                      }
-                                      placeholder="Write a comment..."
-                                      className="h-7 text-xs"
-                                      onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                          e.preventDefault();
-                                          addComment(feedback.id);
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      size="sm"
-                                      className="h-7 px-2 text-xs"
-                                      onClick={() => addComment(feedback.id)}
-                                      disabled={!(commentDrafts[feedback.id] || '').trim()}
-                                    >
-                                      Post
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            );
-                          })}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
