@@ -4945,7 +4945,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   className="text-xs"
                 >
                   <Users className="h-3 w-3 mr-1" />
-                  {showCommunityFeed ? 'Hide' : 'Show'} Community
+                  {showCommunityFeed ? 'Hide Messages' : 'Message Users'}
                 </Button>
               </div>
               
@@ -4968,13 +4968,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     }`}>
                       {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
                     </span>
-                    <p className="text-xs text-muted-foreground text-center">Click to view community feedback</p>
+                    <p className="text-xs text-muted-foreground text-center">Click to message users</p>
                   </div>
                 </div>
               ) : (
                 <div className="border rounded-lg overflow-hidden">
                   <div className="flex items-center justify-between p-3 border-b bg-background">
-                    <h4 className="text-sm font-semibold">Community</h4>
+                    <h4 className="text-sm font-semibold">Messages</h4>
                     {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
                       <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
                         <Plus className="h-3 w-3 mr-1" /> Create Community
