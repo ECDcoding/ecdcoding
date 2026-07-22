@@ -757,6 +757,15 @@ export type Database = {
         Returns: boolean
       }
       redeem_promo_code: { Args: { promo_code_text: string }; Returns: Json }
+      search_app_users: {
+        Args: { limit_count?: number; search_text?: string }
+        Returns: {
+          display_name: string
+          registration_type: string
+          user_id: string
+          username: string
+        }[]
+      }
       validate_promo_code: { Args: { code_text: string }; Returns: Json }
     }
     Enums: {
