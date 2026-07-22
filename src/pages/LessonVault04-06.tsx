@@ -5126,6 +5126,49 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             )}
                           </div>
                         </div>
+                        {/* Sent: broadcasts the current user sent, with recipients list */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Send className="h-3.5 w-3.5" /> Sent
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{sentBroadcasts.length} broadcast{sentBroadcasts.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[220px] overflow-y-auto space-y-2">
+                            {sentBroadcasts.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
+                            ) : (
+                              sentBroadcasts.map((b) => (
+                                <div key={b.key} className="p-2 rounded border bg-background">
+                                  <div className="flex items-center justify-between gap-2 mb-1">
+                                    <p className="text-[10px] text-muted-foreground">
+                                      {new Date(b.created_at).toLocaleString()}
+                                    </p>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      Sent to {b.recipients.length} {b.recipients.length === 1 ? 'user' : 'users'}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs whitespace-pre-wrap break-words mb-2">{b.message}</p>
+                                  <div className="flex flex-wrap gap-1">
+                                    {b.recipients.map((r) => (
+                                      <span
+                                        key={r.user_id}
+                                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]"
+                                      >
+                                        <Avatar className="h-4 w-4 border">
+                                          <AvatarFallback className="bg-primary/20 text-primary text-[8px] font-semibold">
+                                            {r.name?.[0]?.toUpperCase() || 'U'}
+                                          </AvatarFallback>
+                                        </Avatar>
+                                        {r.name}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
