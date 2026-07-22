@@ -4915,15 +4915,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           </p>
                         </div>
                         <div className="border-t pt-3">
-                          <p className="text-xs font-semibold mb-2 text-muted-foreground uppercase tracking-wide">Registered users</p>
-                          <div className="max-h-[220px] overflow-y-auto space-y-1">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
+                            {communityUsers.length > 0 && (
+                              <button
+                                type="button"
+                                onClick={toggleSelectAllRecipients}
+                                className="text-[10px] font-medium text-primary hover:underline"
+                              >
+                                {selectedRecipients.size === communityUsers.length ? 'Clear all' : 'Select all'}
+                              </button>
+                            )}
+                          </div>
+                          <div className="max-h-[180px] overflow-y-auto space-y-1">
                             {communityUsers.length === 0 ? (
                               <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
                             ) : (
                               communityUsers.map((u) => {
-                                const already = addedMemberIds.has(u.user_id);
+                                const checked = selectedRecipients.has(u.user_id);
                                 return (
-                                  <div key={u.user_id} className="flex items-center gap-2 p-2 rounded bg-background border">
+                                  <label
+                                    key={u.user_id}
+                                    className={`flex items-center gap-2 p-2 rounded border cursor-pointer transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'bg-background hover:bg-muted/50'}`}
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={checked}
+                                      onChange={() => toggleRecipient(u.user_id)}
+                                      className="h-4 w-4 accent-primary"
+                                    />
                                     <Avatar className="h-8 w-8 border">
                                       <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
                                         {u.display_name?.[0]?.toUpperCase() || 'U'}
@@ -4935,23 +4955,44 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                         {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
                                       </p>
                                     </div>
-                                    {already ? (
-                                      <Badge variant="outline" className="text-[10px] gap-1"><Check className="h-3 w-3" /> Added</Badge>
-                                    ) : (
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => handleQuickAddMember(u.user_id)}
-                                        disabled={addingMemberId === u.user_id}
-                                      >
-                                        <UserPlus className="h-3 w-3 mr-1" />
-                                        {addingMemberId === u.user_id ? 'Adding...' : 'Add'}
-                                      </Button>
-                                    )}
-                                  </div>
+                                  </label>
                                 );
                               })
                             )}
+                          </div>
+                          <div className="mt-3 space-y-2">
+                            <Textarea
+                              placeholder="Type a message to send to selected users or everyone..."
+                              value={broadcastMessage}
+                              onChange={(e) => setBroadcastMessage(e.target.value)}
+                              className="min-h-[60px] resize-none text-sm"
+                            />
+                            <div className="flex items-center justify-between gap-2">
+                              <p className="text-[10px] text-muted-foreground">
+                                {selectedRecipients.size > 0
+                                  ? `${selectedRecipients.size} selected`
+                                  : 'No users selected'}
+                              </p>
+                              <div className="flex gap-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleSendBroadcast(false)}
+                                  disabled={sendingBroadcast || selectedRecipients.size === 0 || !broadcastMessage.trim()}
+                                >
+                                  <Send className="h-3 w-3 mr-1" />
+                                  Send to selected
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  onClick={() => handleSendBroadcast(true)}
+                                  disabled={sendingBroadcast || communityUsers.length === 0 || !broadcastMessage.trim()}
+                                >
+                                  <MessageSquare className="h-3 w-3 mr-1" />
+                                  Message all
+                                </Button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
