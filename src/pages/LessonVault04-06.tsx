@@ -4870,6 +4870,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
             )}
 
+            {/* Institution Community Section */}
+            {profile && (
+              <div className="border border-border rounded-lg p-4 bg-card">
+                <InstitutionCommunity
+                  userId={profile.user_id}
+                  registrationType={profile.registration_type}
+                  profile={{
+                    first_name: profile.first_name,
+                    last_name: profile.last_name,
+                    username: profile.username,
+                    institution: profile.institution,
+                  }}
+                />
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
               <Button
