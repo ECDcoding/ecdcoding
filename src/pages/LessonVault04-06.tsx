@@ -154,6 +154,7 @@ const LessonVault0406 = () => {
   const [newMessageRecipients, setNewMessageRecipients] = useState<Set<string>>(new Set());
   const [sendingNewMessage, setSendingNewMessage] = useState(false);
   const [inboxMessages, setInboxMessages] = useState<Array<{ id: string; sender_id: string; message: string; created_at: string; read_at: string | null; sender_name?: string }>>([]);
+  const [sentMessages, setSentMessages] = useState<Array<{ id: string; recipient_id: string; message: string; created_at: string; recipient_name?: string }>>([]);
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyingToUserId, setReplyingToUserId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
