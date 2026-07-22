@@ -14,6 +14,73 @@ export type Database = {
   }
   public: {
     Tables: {
+      community_members: {
+        Row: {
+          community_id: string
+          id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          community_id: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          community_id?: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_members_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "institution_communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_messages: {
+        Row: {
+          community_id: string
+          created_at: string
+          id: string
+          message: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          community_id: string
+          created_at?: string
+          id?: string
+          message: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          community_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_messages_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "institution_communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_comments: {
         Row: {
           comment_text: string
@@ -122,6 +189,33 @@ export type Database = {
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: string
+        }
+        Relationships: []
+      }
+      institution_communities: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          institution_name: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          institution_name?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          institution_name?: string | null
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }

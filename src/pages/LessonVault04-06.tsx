@@ -33,6 +33,7 @@ import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
 import { supabase } from "@/integrations/supabase/client";
 import VerifiedBadge from "@/components/VerifiedBadge";
+import { InstitutionCommunity } from "@/components/InstitutionCommunity";
 import FlipBodyCard from "@/components/FlipBodyCard";
 import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
@@ -4865,6 +4866,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   className="mt-2 min-h-[120px]"
+                />
+              </div>
+            )}
+
+            {/* Institution Community Section */}
+            {profile && (
+              <div className="border border-border rounded-lg p-4 bg-card">
+                <InstitutionCommunity
+                  userId={profile.user_id}
+                  registrationType={profile.registration_type}
+                  profile={{
+                    first_name: profile.first_name,
+                    last_name: profile.last_name,
+                    username: profile.username,
+                    institution: profile.institution,
+                  }}
                 />
               </div>
             )}
