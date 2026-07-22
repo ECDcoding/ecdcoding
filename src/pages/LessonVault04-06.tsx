@@ -790,6 +790,36 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  // Load sent messages (direct messages the current user has sent)
+  const fetchSent = async () => {
+    if (!profile?.user_id) return;
+    try {
+      const { data, error } = await supabase
+        .from('direct_messages' as any)
+        .select('id, recipient_id, message, created_at')
+        .eq('sender_id', profile.user_id)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      const rows = (data || []) as any[];
+      const recipientIds = Array.from(new Set(rows.map((r) => r.recipient_id)));
+      let nameMap: Record<string, string> = {};
+      if (recipientIds.length > 0) {
+        const { data: profs } = await supabase
+          .from('profiles')
+          .select('user_id, first_name, last_name, username')
+          .in('user_id', recipientIds);
+        (profs || []).forEach((p: any) => {
+          nameMap[p.user_id] =
+            [p.first_name, p.last_name].filter(Boolean).join(' ') || p.username || 'Member';
+        });
+      }
+      setSentMessages(rows.map((r) => ({ ...r, recipient_name: nameMap[r.recipient_id] || 'Member' })));
+    } catch (e) {
+      console.error('Failed to load sent messages:', e);
+    }
+  };
+
   useEffect(() => {
     if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
     fetchInbox();
