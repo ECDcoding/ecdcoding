@@ -150,6 +150,7 @@ const LessonVault0406 = () => {
   const [broadcastMessage, setBroadcastMessage] = useState("");
   const [sendingBroadcast, setSendingBroadcast] = useState(false);
   const [inboxMessages, setInboxMessages] = useState<Array<{ id: string; sender_id: string; message: string; created_at: string; read_at: string | null; sender_name?: string }>>([]);
+  const [sentBroadcasts, setSentBroadcasts] = useState<Array<{ key: string; message: string; created_at: string; recipients: Array<{ user_id: string; name: string }> }>>([]);
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyingToUserId, setReplyingToUserId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
@@ -786,15 +787,62 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  // Load sent broadcasts (messages current user sent to others), grouped by message+time
+  const fetchSent = async () => {
+    if (!profile?.user_id) return;
+    try {
+      const { data, error } = await supabase
+        .from('direct_messages' as any)
+        .select('id, recipient_id, message, created_at')
+        .eq('sender_id', profile.user_id)
+        .order('created_at', { ascending: false })
+        .limit(200);
+      if (error) throw error;
+      const rows = (data || []) as any[];
+      const recipientIds = Array.from(new Set(rows.map((r) => r.recipient_id)));
+      let nameMap: Record<string, string> = {};
+      if (recipientIds.length > 0) {
+        const { data: profs } = await supabase
+          .from('profiles')
+          .select('user_id, first_name, last_name, username')
+          .in('user_id', recipientIds);
+        (profs || []).forEach((p: any) => {
+          nameMap[p.user_id] =
+            [p.first_name, p.last_name].filter(Boolean).join(' ') || p.username || 'Member';
+        });
+      }
+      // Group broadcasts sent within the same 5-second window with same message
+      const groups: Record<string, { message: string; created_at: string; recipients: Array<{ user_id: string; name: string }> }> = {};
+      rows.forEach((r) => {
+        const bucket = Math.floor(new Date(r.created_at).getTime() / 5000);
+        const key = `${bucket}::${r.message}`;
+        if (!groups[key]) groups[key] = { message: r.message, created_at: r.created_at, recipients: [] };
+        groups[key].recipients.push({ user_id: r.recipient_id, name: nameMap[r.recipient_id] || 'Member' });
+      });
+      const list = Object.entries(groups)
+        .map(([key, g]) => ({ key, ...g }))
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      setSentBroadcasts(list);
+    } catch (e) {
+      console.error('Failed to load sent messages:', e);
+    }
+  };
+
   useEffect(() => {
     if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
     fetchInbox();
+    fetchSent();
     const channel = supabase
       .channel('inbox-dm')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `recipient_id=eq.${profile.user_id}` },
         () => fetchInbox()
+      )
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `sender_id=eq.${profile.user_id}` },
+        () => fetchSent()
       )
       .subscribe();
     return () => {
@@ -5073,6 +5121,49 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       </div>
                                     </div>
                                   )}
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        {/* Sent: broadcasts the current user sent, with recipients list */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Send className="h-3.5 w-3.5" /> Sent
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{sentBroadcasts.length} broadcast{sentBroadcasts.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[220px] overflow-y-auto space-y-2">
+                            {sentBroadcasts.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
+                            ) : (
+                              sentBroadcasts.map((b) => (
+                                <div key={b.key} className="p-2 rounded border bg-background">
+                                  <div className="flex items-center justify-between gap-2 mb-1">
+                                    <p className="text-[10px] text-muted-foreground">
+                                      {new Date(b.created_at).toLocaleString()}
+                                    </p>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      Sent to {b.recipients.length} {b.recipients.length === 1 ? 'user' : 'users'}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs whitespace-pre-wrap break-words mb-2">{b.message}</p>
+                                  <div className="flex flex-wrap gap-1">
+                                    {b.recipients.map((r) => (
+                                      <span
+                                        key={r.user_id}
+                                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]"
+                                      >
+                                        <Avatar className="h-4 w-4 border">
+                                          <AvatarFallback className="bg-primary/20 text-primary text-[8px] font-semibold">
+                                            {r.name?.[0]?.toUpperCase() || 'U'}
+                                          </AvatarFallback>
+                                        </Avatar>
+                                        {r.name}
+                                      </span>
+                                    ))}
+                                  </div>
                                 </div>
                               ))
                             )}
