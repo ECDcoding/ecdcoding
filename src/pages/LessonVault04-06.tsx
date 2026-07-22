@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -149,6 +149,11 @@ const LessonVault0406 = () => {
   const [selectedRecipients, setSelectedRecipients] = useState<Set<string>>(new Set());
   const [broadcastMessage, setBroadcastMessage] = useState("");
   const [sendingBroadcast, setSendingBroadcast] = useState(false);
+  const [inboxMessages, setInboxMessages] = useState<Array<{ id: string; sender_id: string; message: string; created_at: string; read_at: string | null; sender_name?: string }>>([]);
+  const [replyingToId, setReplyingToId] = useState<string | null>(null);
+  const [replyingToUserId, setReplyingToUserId] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const [abcSafetyOpen, setAbcSafetyOpen] = useState(false);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
@@ -737,6 +742,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   };
 
   const fetchAllFeedback = async () => {
+    // (inbox helpers defined below)
     try {
       const { data, error } = await supabase
         .from('user_feedback')
@@ -749,6 +755,80 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       console.error('Error fetching feedback:', error);
     }
   };
+
+  // Load inbox (direct messages received by current user) and subscribe to new ones
+  const fetchInbox = async () => {
+    if (!profile?.user_id) return;
+    try {
+      const { data, error } = await supabase
+        .from('direct_messages' as any)
+        .select('id, sender_id, message, created_at, read_at')
+        .eq('recipient_id', profile.user_id)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      const rows = (data || []) as any[];
+      const senderIds = Array.from(new Set(rows.map((r) => r.sender_id)));
+      let nameMap: Record<string, string> = {};
+      if (senderIds.length > 0) {
+        const { data: profs } = await supabase
+          .from('profiles')
+          .select('user_id, first_name, last_name, username')
+          .in('user_id', senderIds);
+        (profs || []).forEach((p: any) => {
+          nameMap[p.user_id] =
+            [p.first_name, p.last_name].filter(Boolean).join(' ') || p.username || 'Member';
+        });
+      }
+      setInboxMessages(rows.map((r) => ({ ...r, sender_name: nameMap[r.sender_id] || 'Member' })));
+    } catch (e) {
+      console.error('Failed to load inbox:', e);
+    }
+  };
+
+  useEffect(() => {
+    if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
+    fetchInbox();
+    const channel = supabase
+      .channel('inbox-dm')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages', filter: `recipient_id=eq.${profile.user_id}` },
+        () => fetchInbox()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCommunityFeed, showProgressDialog, profile?.user_id]);
+
+  const handleSendReply = async () => {
+    if (!profile?.user_id || !replyingToUserId) return;
+    const text = replyText.trim();
+    if (!text) {
+      toast({ title: 'Empty reply', description: 'Type something before sending.', variant: 'destructive' });
+      return;
+    }
+    setSendingReply(true);
+    try {
+      const { error } = await supabase.from('direct_messages' as any).insert({
+        sender_id: profile.user_id,
+        recipient_id: replyingToUserId,
+        message: text,
+      });
+      if (error) throw error;
+      toast({ title: 'Reply sent' });
+      setReplyText('');
+      setReplyingToId(null);
+      setReplyingToUserId(null);
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message || 'Failed to send reply', variant: 'destructive' });
+    } finally {
+      setSendingReply(false);
+    }
+  };
+
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0);
   const [wordToCode, setWordToCode] = useState('');
   const [isCountingPlaying, setIsCountingPlaying] = useState(false);
@@ -4913,6 +4993,90 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           <p className="text-xs text-muted-foreground mt-1">
                             {myCommunityId ? 'Add members below to get the conversation going.' : 'Create your community, then add members below.'}
                           </p>
+                        </div>
+                        {/* Inbox: messages received from other users, with reply */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Inbox className="h-3.5 w-3.5" /> Inbox
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{inboxMessages.length} message{inboxMessages.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[200px] overflow-y-auto space-y-2">
+                            {inboxMessages.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">No messages yet.</p>
+                            ) : (
+                              inboxMessages.map((m) => (
+                                <div key={m.id} className="p-2 rounded border bg-background">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <Avatar className="h-7 w-7 border">
+                                        <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
+                                          {m.sender_name?.[0]?.toUpperCase() || 'U'}
+                                        </AvatarFallback>
+                                      </Avatar>
+                                      <div className="min-w-0">
+                                        <p className="text-xs font-medium truncate">{m.sender_name}</p>
+                                        <p className="text-[10px] text-muted-foreground">
+                                          {new Date(m.created_at).toLocaleString()}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (replyingToId === m.id) {
+                                          setReplyingToId(null);
+                                          setReplyingToUserId(null);
+                                          setReplyText('');
+                                        } else {
+                                          setReplyingToId(m.id);
+                                          setReplyingToUserId(m.sender_id);
+                                          setReplyText('');
+                                        }
+                                      }}
+                                      title="Reply"
+                                      className="p-1.5 rounded hover:bg-muted text-primary"
+                                    >
+                                      <Reply className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                  <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
+                                  {replyingToId === m.id && (
+                                    <div className="mt-2 space-y-2">
+                                      <Textarea
+                                        placeholder={`Reply to ${m.sender_name}...`}
+                                        value={replyText}
+                                        onChange={(e) => setReplyText(e.target.value)}
+                                        className="min-h-[50px] resize-none text-sm"
+                                        autoFocus
+                                      />
+                                      <div className="flex justify-end gap-2">
+                                        <Button
+                                          size="sm"
+                                          variant="outline"
+                                          onClick={() => {
+                                            setReplyingToId(null);
+                                            setReplyingToUserId(null);
+                                            setReplyText('');
+                                          }}
+                                        >
+                                          Cancel
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          onClick={handleSendReply}
+                                          disabled={sendingReply || !replyText.trim()}
+                                        >
+                                          <Send className="h-3 w-3 mr-1" /> Send reply
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ))
+                            )}
+                          </div>
                         </div>
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
