@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown } from "lucide-react";
+
+export interface InstitutionCommunityHandle {
+  openCreate: () => void;
+}
 
 interface InstitutionCommunityProps {
   userId: string;
@@ -40,7 +44,8 @@ interface CommunityMessage {
   username?: string;
 }
 
-export const InstitutionCommunity = ({ userId, registrationType, profile }: InstitutionCommunityProps) => {
+export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, InstitutionCommunityProps>(
+  ({ userId, registrationType, profile }, ref) => {
   const [communities, setCommunities] = useState<Community[]>([]);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [messages, setMessages] = useState<CommunityMessage[]>([]);
@@ -56,6 +61,10 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
   const { toast } = useToast();
 
   const isEcdManager = registrationType === "ecd-manager";
+
+  useImperativeHandle(ref, () => ({
+    openCreate: () => setCreateOpen(true),
+  }));
 
   const fetchCommunities = async () => {
     try {
@@ -465,4 +474,6 @@ export const InstitutionCommunity = ({ userId, registrationType, profile }: Inst
       )}
     </div>
   );
-};
+});
+
+InstitutionCommunity.displayName = "InstitutionCommunity";

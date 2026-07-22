@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronLeft, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -147,6 +147,7 @@ const LessonVault0406 = () => {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const institutionCommunityRef = useRef<{ openCreate: () => void }>(null);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
   const [sportPlayOpen, setSportPlayOpen] = useState(false);
@@ -4781,6 +4782,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </div>
               ) : (
                 <div className="border rounded-lg overflow-hidden">
+                  <div className="flex items-center justify-between p-3 border-b bg-background">
+                    <h4 className="text-sm font-semibold">Community</h4>
+                    {profile?.registration_type === 'ecd-manager' ? (
+                      <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
+                        <Plus className="h-3 w-3 mr-1" /> Create Community
+                      </Button>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">Ask your ECD Manager to create a community.</p>
+                    )}
+                  </div>
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
                     {allFeedback.length === 0 ? (
@@ -4874,6 +4885,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             {profile && (
               <div className="border border-border rounded-lg p-4 bg-card">
                 <InstitutionCommunity
+                  ref={institutionCommunityRef}
                   userId={profile.user_id}
                   registrationType={profile.registration_type}
                   profile={{
