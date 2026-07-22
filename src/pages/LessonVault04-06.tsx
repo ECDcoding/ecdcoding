@@ -687,6 +687,55 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   };
 
+  const toggleRecipient = (userId: string) => {
+    setSelectedRecipients((prev) => {
+      const next = new Set(prev);
+      if (next.has(userId)) next.delete(userId); else next.add(userId);
+      return next;
+    });
+  };
+
+  const toggleSelectAllRecipients = () => {
+    setSelectedRecipients((prev) =>
+      prev.size === communityUsers.length
+        ? new Set()
+        : new Set(communityUsers.map((u) => u.user_id))
+    );
+  };
+
+  const handleSendBroadcast = async (toAll: boolean) => {
+    if (!profile?.user_id) return;
+    const text = broadcastMessage.trim();
+    if (!text) {
+      toast({ title: 'Empty message', description: 'Please type a message first.', variant: 'destructive' });
+      return;
+    }
+    const recipientIds = toAll
+      ? communityUsers.map((u) => u.user_id)
+      : Array.from(selectedRecipients);
+    if (recipientIds.length === 0) {
+      toast({ title: 'No recipients', description: 'Select at least one user or use "Message all".', variant: 'destructive' });
+      return;
+    }
+    setSendingBroadcast(true);
+    try {
+      const rows = recipientIds.map((rid) => ({
+        sender_id: profile.user_id,
+        recipient_id: rid,
+        message: text,
+      }));
+      const { error } = await supabase.from('direct_messages' as any).insert(rows);
+      if (error) throw error;
+      toast({ title: 'Message sent', description: `Delivered to ${recipientIds.length} ${recipientIds.length === 1 ? 'user' : 'users'}.` });
+      setBroadcastMessage("");
+      setSelectedRecipients(new Set());
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message || 'Failed to send message', variant: 'destructive' });
+    } finally {
+      setSendingBroadcast(false);
+    }
+  };
+
   const fetchAllFeedback = async () => {
     try {
       const { data, error } = await supabase
