@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,11 +13,30 @@ interface RegisterDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const PENDING_REGISTRATION_KEY = "ecdcoding_pending_registration";
+
 const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
   const [registrationType, setRegistrationType] = useState<"parent" | "ecd-manager">("parent");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
+
+    if (!trimmedFirstName || !trimmedLastName) {
+      toast.error("Please enter your Name and Surname to continue.");
+      return;
+    }
+
+    const pending = {
+      firstName: trimmedFirstName,
+      lastName: trimmedLastName,
+      registrationType,
+    };
+    localStorage.setItem(PENDING_REGISTRATION_KEY, JSON.stringify(pending));
+
     setIsGoogleLoading(true);
     try {
       const result = await lovable.auth.signInWithOAuth("google", {
@@ -44,6 +64,26 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
         </DialogHeader>
         <Card className="border-0 shadow-none">
           <CardContent className="pt-4 space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="register-first-name">Name</Label>
+                <Input
+                  id="register-first-name"
+                  placeholder="Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="register-last-name">Surname</Label>
+                <Input
+                  id="register-last-name"
+                  placeholder="Surname"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <Label>I am a</Label>
               <Select value={registrationType} onValueChange={(v) => setRegistrationType(v as "parent" | "ecd-manager")}>
