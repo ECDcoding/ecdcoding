@@ -171,39 +171,6 @@ const SignIn = ({ open, onOpenChange }: SignInProps) => {
                 </div>
               )}
               
-              <div className="text-center text-sm">
-                <span className="text-muted-foreground">Don't have an account? </span>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="link" 
-                      className="text-primary hover:underline p-0 h-auto font-normal text-sm"
-                    >
-                      Register here <ChevronDown className="ml-1 h-3 w-3" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
-                    <DropdownMenuItem asChild>
-                      <Link 
-                        to="/register?type=parent" 
-                        className="cursor-pointer"
-                        onClick={() => onOpenChange(false)}
-                      >
-                        Parent
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link 
-                        to="/register?type=ecd-manager" 
-                        className="cursor-pointer"
-                        onClick={() => onOpenChange(false)}
-                      >
-                        ECD Manager
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
             </form>
           </CardContent>
         </Card>
