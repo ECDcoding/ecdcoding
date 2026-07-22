@@ -55,6 +55,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
   const [memberSearch, setMemberSearch] = useState("");
   const [searchResults, setSearchResults] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
   const [existingMemberIds, setExistingMemberIds] = useState<Set<string>>(new Set());
+  const [members, setMembers] = useState<Array<{ user_id: string; role: string; display_name: string; registration_type: string | null }>>([]);
   const [searching, setSearching] = useState(false);
   const [addingUserId, setAddingUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -142,6 +143,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
     if (!selectedCommunity) return;
 
     fetchMessages(selectedCommunity.id);
+    fetchMembers(selectedCommunity.id);
 
     const channel = supabase
       .channel(`community-messages-${selectedCommunity.id}`)
@@ -264,6 +266,38 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
     setExistingMemberIds(new Set((data || []).map((m: any) => m.user_id)));
   };
 
+  const fetchMembers = async (communityId: string) => {
+    try {
+      const { data: mem, error } = await supabase
+        .from("community_members")
+        .select("user_id, role")
+        .eq("community_id", communityId);
+      if (error) throw error;
+      const ids = (mem || []).map((m: any) => m.user_id);
+      let profileMap = new Map<string, { name: string; type: string | null }>();
+      if (ids.length) {
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("user_id, first_name, last_name, username, registration_type")
+          .in("user_id", ids);
+        (profs || []).forEach((p: any) => {
+          const name = `${p.first_name || ""} ${p.last_name || ""}`.trim() || p.username || "Member";
+          profileMap.set(p.user_id, { name, type: p.registration_type });
+        });
+      }
+      setMembers(
+        (mem || []).map((m: any) => ({
+          user_id: m.user_id,
+          role: m.role,
+          display_name: profileMap.get(m.user_id)?.name || (m.user_id === userId ? "You" : "Member"),
+          registration_type: profileMap.get(m.user_id)?.type ?? null,
+        }))
+      );
+    } catch (e) {
+      console.error("Error fetching members:", e);
+    }
+  };
+
   const handleAddMember = async (targetUserId: string) => {
     if (!selectedCommunity) return;
     setAddingUserId(targetUserId);
@@ -275,6 +309,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
       });
       if (error) throw error;
       setExistingMemberIds((prev) => new Set(prev).add(targetUserId));
+      fetchMembers(selectedCommunity.id);
       toast({ title: "Added", description: "Member added to the community." });
     } catch (error: any) {
       toast({ title: "Error", description: error.message || "Failed to add member", variant: "destructive" });
