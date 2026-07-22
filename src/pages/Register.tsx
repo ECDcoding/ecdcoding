@@ -284,11 +284,7 @@ const Register = () => {
   const [debitCardDialogOpen, setDebitCardDialogOpen] = useState(false);
   const [selectedPaymentAmount, setSelectedPaymentAmount] = useState(500);
   const [selectedPaymentType, setSelectedPaymentType] = useState("annual");
-  const [promoOpen, setPromoOpen] = useState(showChooser);
-
-  useEffect(() => {
-    if (showChooser) setPromoOpen(true);
-  }, [showChooser]);
+  const [promoOpen, setPromoOpen] = useState(false);
 
   // If a Google-authed user already has a profile, send them straight into the app.
   useEffect(() => {
