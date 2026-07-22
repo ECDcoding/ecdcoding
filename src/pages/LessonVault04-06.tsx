@@ -742,7 +742,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   };
 
   const fetchAllFeedback = async () => {
-    // no-op marker
     try {
       const { data, error } = await supabase
         .from('user_feedback')
