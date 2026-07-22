@@ -5260,15 +5260,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                       </AvatarFallback>
                                     </Avatar>
                                     <div className="flex-1 min-w-0">
-                                      onChange={() => toggleRecipient(u.user_id)}
-                                      className="h-4 w-4 accent-primary"
-                                    />
-                                    <Avatar className="h-8 w-8 border">
-                                      <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                        {u.display_name?.[0]?.toUpperCase() || 'U'}
-                                      </AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1 min-w-0">
                                       <p className="text-xs font-medium truncate">{u.display_name}</p>
                                       <p className="text-[10px] text-muted-foreground truncate">
                                         {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
