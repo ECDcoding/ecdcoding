@@ -1462,6 +1462,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             user_id: profile?.user_id,
             username: profile?.username || profile?.first_name || 'Anonymous',
             feedback_text: noteBody,
+            tagged_user_ids: taggedUsers.map((u) => u.user_id),
           });
 
         if (error) throw error;
