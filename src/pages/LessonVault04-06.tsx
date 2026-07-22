@@ -1486,6 +1486,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             ? `Note posted and ${taggedUsers.length} user${taggedUsers.length === 1 ? '' : 's'} tagged.`
             : "Your note has been shared with the community!",
         });
+
+        // Refresh feed so the new post appears immediately as proof
+        fetchAllFeedback();
       } else {
         // Send private response to ECD team
         toast({
