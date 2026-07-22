@@ -5033,15 +5033,41 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </div>
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
-                    {allFeedback.length === 0 ? (
-                      <div className="space-y-3">
-                        <div className="flex flex-col items-center justify-center py-4 text-center">
-                          <Users className="h-10 w-10 text-muted-foreground mb-2" />
-                          <p className="text-muted-foreground text-sm font-medium">No community feedback yet</p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {myCommunityId ? 'Add members below to get the conversation going.' : 'Create your community, then add members below.'}
-                          </p>
+                    <div className="space-y-3">
+                      {allFeedback.length > 0 && (
+                        <div className="space-y-2">
+                          {allFeedback.map((feedback) => (
+                            <div
+                              key={feedback.id}
+                              className={`p-3 rounded-lg ${
+                                feedback.user_id === profile?.user_id
+                                  ? 'bg-primary/5 border border-primary/20'
+                                  : 'bg-background border border-border'
+                              }`}
+                            >
+                              <div className="flex items-start gap-2">
+                                <Avatar className="h-8 w-8 border">
+                                  <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                    {feedback.username[0].toUpperCase()}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-semibold text-xs">{feedback.username}</span>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      {new Date(feedback.created_at).toLocaleDateString()}
+                                    </span>
+                                    {feedback.user_id === profile?.user_id && (
+                                      <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
+                      )}
                         {/* Inbox: messages received from other users, with reply */}
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
@@ -5250,39 +5276,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      allFeedback.map((feedback) => (
-                        <div 
-                          key={feedback.id} 
-                          className={`p-3 rounded-lg ${
-                            feedback.user_id === profile?.user_id 
-                              ? 'bg-primary/5 border border-primary/20' 
-                              : 'bg-background border border-border'
-                          }`}
-                        >
-                          <div className="flex items-start gap-2">
-                            <Avatar className="h-8 w-8 border">
-                              <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                {feedback.username[0].toUpperCase()}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="font-semibold text-xs">{feedback.username}</span>
-                                <span className="text-[10px] text-muted-foreground">
-                                  {new Date(feedback.created_at).toLocaleDateString()}
-                                </span>
-                                {feedback.user_id === profile?.user_id && (
-                                  <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
-                                )}
-                              </div>
-                              <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    )}
+                    </div>
                   </div>
                   
                   {/* Post to Community */}
