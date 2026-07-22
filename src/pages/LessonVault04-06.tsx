@@ -4997,6 +4997,118 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
                     )}
                   </div>
+                  <Dialog open={newMessageOpen} onOpenChange={setNewMessageOpen}>
+                    <DialogContent className="max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>New Message</DialogTitle>
+                        <DialogDescription>Select community members to message.</DialogDescription>
+                      </DialogHeader>
+                      {(() => {
+                        const members = communityUsers.filter((u) => addedMemberIds.has(u.user_id));
+                        return (
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <p className="text-xs text-muted-foreground">{members.length} member{members.length === 1 ? '' : 's'}</p>
+                              {members.length > 0 && (
+                                <button
+                                  type="button"
+                                  className="text-[10px] font-medium text-primary hover:underline"
+                                  onClick={() =>
+                                    setNewMessageRecipients((prev) =>
+                                      prev.size === members.length ? new Set() : new Set(members.map((m) => m.user_id))
+                                    )
+                                  }
+                                >
+                                  {newMessageRecipients.size === members.length ? 'Clear all' : 'Select all'}
+                                </button>
+                              )}
+                            </div>
+                            <div className="max-h-[240px] overflow-y-auto space-y-1 border rounded-md p-1">
+                              {members.length === 0 ? (
+                                <p className="text-xs text-muted-foreground text-center py-4">
+                                  No members yet. Add members from the list below first.
+                                </p>
+                              ) : (
+                                members.map((u) => {
+                                  const checked = newMessageRecipients.has(u.user_id);
+                                  return (
+                                    <label
+                                      key={u.user_id}
+                                      className={`flex items-center gap-2 p-2 rounded border cursor-pointer transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'bg-background hover:bg-muted/50'}`}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={checked}
+                                        onChange={() =>
+                                          setNewMessageRecipients((prev) => {
+                                            const next = new Set(prev);
+                                            if (next.has(u.user_id)) next.delete(u.user_id);
+                                            else next.add(u.user_id);
+                                            return next;
+                                          })
+                                        }
+                                        className="h-4 w-4 accent-primary"
+                                      />
+                                      <Avatar className="h-8 w-8 border">
+                                        <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                          {u.display_name?.[0]?.toUpperCase() || 'U'}
+                                        </AvatarFallback>
+                                      </Avatar>
+                                      <div className="flex-1 min-w-0">
+                                        <p className="text-xs font-medium truncate">{u.display_name}</p>
+                                        <p className="text-[10px] text-muted-foreground truncate">
+                                          {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
+                                        </p>
+                                      </div>
+                                    </label>
+                                  );
+                                })
+                              )}
+                            </div>
+                            <Textarea
+                              placeholder="Type your message..."
+                              value={newMessageText}
+                              onChange={(e) => setNewMessageText(e.target.value)}
+                              className="min-h-[80px] resize-none text-sm"
+                            />
+                            <div className="flex justify-end gap-2">
+                              <Button size="sm" variant="outline" onClick={() => setNewMessageOpen(false)}>
+                                Cancel
+                              </Button>
+                              <Button
+                                size="sm"
+                                disabled={sendingNewMessage || newMessageRecipients.size === 0 || !newMessageText.trim()}
+                                onClick={async () => {
+                                  if (!profile?.user_id) return;
+                                  setSendingNewMessage(true);
+                                  try {
+                                    const rows = Array.from(newMessageRecipients).map((rid) => ({
+                                      sender_id: profile.user_id,
+                                      recipient_id: rid,
+                                      message: newMessageText.trim(),
+                                    }));
+                                    const { error } = await supabase.from('direct_messages' as any).insert(rows);
+                                    if (error) throw error;
+                                    toast({ title: 'Message sent', description: `Delivered to ${rows.length} member${rows.length === 1 ? '' : 's'}.` });
+                                    setNewMessageOpen(false);
+                                    setNewMessageText("");
+                                    setNewMessageRecipients(new Set());
+                                  } catch (e: any) {
+                                    toast({ title: 'Error', description: e.message || 'Failed to send message', variant: 'destructive' });
+                                  } finally {
+                                    setSendingNewMessage(false);
+                                  }
+                                }}
+                              >
+                                <Send className="h-3 w-3 mr-1" />
+                                {sendingNewMessage ? 'Sending...' : `Send${newMessageRecipients.size > 0 ? ` (${newMessageRecipients.size})` : ''}`}
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </DialogContent>
+                  </Dialog>
                   {/* Community Feedback Feed */}
                   <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
                     {allFeedback.length === 0 ? (
