@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import SignIn from "./SignIn";
+import RegisterDialog from "./RegisterDialog";
 import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const [signInOpen, setSignInOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   const { user, signOut } = useAuth();
 
   return (
@@ -29,16 +31,25 @@ const Header = () => {
             </Button>
           </>
         ) : (
-          <Button 
-            variant="outline" 
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            onClick={() => setSignInOpen(true)}
-          >
-            Sign in
-          </Button>
+          <>
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              onClick={() => setSignInOpen(true)}
+            >
+              Sign in
+            </Button>
+            <Button
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={() => setRegisterOpen(true)}
+            >
+              Register
+            </Button>
+          </>
         )}
         
         <SignIn open={signInOpen} onOpenChange={setSignInOpen} />
+        <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
       </div>
     </header>
   );
