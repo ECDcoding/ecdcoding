@@ -142,6 +142,10 @@ const LessonVault0406 = () => {
     user_id: string;
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
+  const [communityUsers, setCommunityUsers] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
+  const [myCommunityId, setMyCommunityId] = useState<string | null>(null);
+  const [addedMemberIds, setAddedMemberIds] = useState<Set<string>>(new Set());
+  const [addingMemberId, setAddingMemberId] = useState<string | null>(null);
   const [trafficLightsOpen, setTrafficLightsOpen] = useState(false);
   const [abcSafetyOpen, setAbcSafetyOpen] = useState(false);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
