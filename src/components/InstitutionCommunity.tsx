@@ -62,6 +62,10 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
 
   const isEcdManager = registrationType === "ecd-manager";
 
+  useImperativeHandle(ref, () => ({
+    openCreate: () => setCreateOpen(true),
+  }));
+
   const fetchCommunities = async () => {
     try {
       const { data, error } = await supabase
