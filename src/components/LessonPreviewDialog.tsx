@@ -144,7 +144,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
     setShowRegistrationDialog(false);
     setShowSignInPromptDialog(false);
     onOpenChange(false);
-    navigate(`/register?type=${type}`);
+    navigate(`/sign-in`);
   };
 
   const handleSignIn = () => {

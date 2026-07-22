@@ -17,16 +17,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       navigate("/");
       return;
     }
-    // Authenticated but onboarding not completed (e.g. fresh Google sign-in)
-    if (
-      !loading &&
-      user &&
-      !profileLoading &&
-      !profile?.registration_type &&
-      user.email !== "childhoodpersonalitytalks@gmail.com"
-    ) {
-      navigate("/register", { replace: true });
-    }
+    // Registration removed; no redirect needed for missing profile.
   }, [user, loading, profile, profileLoading, navigate]);
 
   if (loading || (user && profileLoading)) {
