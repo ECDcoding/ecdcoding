@@ -21,6 +21,7 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
   const [registrationType, setRegistrationType] = useState<"parent" | "ecd-manager">("parent");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [agreePolicy, setAgreePolicy] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
