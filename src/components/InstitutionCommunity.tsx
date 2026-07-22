@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Plus, MessageCircle, Send, Trash2, X, ChevronLeft, Crown } from "lucide-react";
+import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown } from "lucide-react";
 
 interface InstitutionCommunityProps {
   userId: string;
