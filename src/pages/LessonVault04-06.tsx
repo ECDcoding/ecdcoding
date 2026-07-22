@@ -140,8 +140,12 @@ const LessonVault0406 = () => {
     feedback_text: string;
     created_at: string;
     user_id: string;
+    tagged_user_ids?: string[];
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
+  const [postReactions, setPostReactions] = useState<Record<string, Array<{ id: string; user_id: string; emoji: string }>>>({});
+  const [postComments, setPostComments] = useState<Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>>>({});
+  const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [communityUsers, setCommunityUsers] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
   const [myCommunityId, setMyCommunityId] = useState<string | null>(null);
   const [addedMemberIds, setAddedMemberIds] = useState<Set<string>>(new Set());
