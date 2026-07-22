@@ -33,7 +33,7 @@ import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
 import { supabase } from "@/integrations/supabase/client";
 import VerifiedBadge from "@/components/VerifiedBadge";
-import { InstitutionCommunity } from "@/components/InstitutionCommunity";
+// InstitutionCommunity removed
 import FlipBodyCard from "@/components/FlipBodyCard";
 import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
@@ -163,7 +163,7 @@ const LessonVault0406 = () => {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const institutionCommunityRef = useRef<{ openCreate: () => void }>(null);
+  // institutionCommunityRef removed
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
   const [sportPlayOpen, setSportPlayOpen] = useState(false);
@@ -675,8 +675,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleQuickAddMember = async (targetUserId: string) => {
     if (!myCommunityId) {
-      institutionCommunityRef.current?.openCreate();
-      toast({ title: 'Create a community first', description: 'Create your community, then add members.' });
+      toast({ title: 'No community available', description: 'You need a community before adding members.' });
       return;
     }
     setAddingMemberId(targetUserId);
@@ -4989,9 +4988,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                           <Send className="h-3 w-3 mr-1" /> New Message
                         </Button>
                       ) : (
-                        <Button size="sm" onClick={() => institutionCommunityRef.current?.openCreate()}>
-                          <Plus className="h-3 w-3 mr-1" /> Create Community
-                        </Button>
+                        <p className="text-xs text-muted-foreground">No community yet.</p>
                       )
                     ) : (
                       <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
@@ -5367,22 +5364,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
             )}
 
-            {/* Institution Community Section */}
-            {profile && (
-              <div className="border border-border rounded-lg p-4 bg-card">
-                <InstitutionCommunity
-                  ref={institutionCommunityRef}
-                  userId={profile.user_id}
-                  registrationType={profile.registration_type}
-                  profile={{
-                    first_name: profile.first_name,
-                    last_name: profile.last_name,
-                    username: profile.username,
-                    institution: profile.institution,
-                  }}
-                />
-              </div>
-            )}
+            {/* Institution Community section removed */}
 
             {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
