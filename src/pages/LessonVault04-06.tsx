@@ -5495,20 +5495,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               )}
             </div>
 
-            {/* Private Feedback Section */}
-            {!showCommunityFeed && (
-              <div>
-                <Label htmlFor="response" className="text-sm font-semibold">Private Feedback to ECD Team</Label>
-                <Textarea
-                  id="response"
-                  placeholder="Share your thoughts privately with the ECDCoding team..."
-                  value={responseText}
-                  onChange={(e) => setResponseText(e.target.value)}
-                  className="mt-2 min-h-[120px]"
-                />
-              </div>
-            )}
-
             {/* Action Buttons */}
             <div className="flex gap-2 justify-end">
               <Button
@@ -5522,11 +5508,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 Cancel
               </Button>
-              {!showCommunityFeed && (
-                <Button onClick={handleSendResponse}>
-                  Send to Team
-                </Button>
-              )}
             </div>
           </div>
         </DialogContent>
