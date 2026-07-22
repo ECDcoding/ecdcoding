@@ -33,6 +33,11 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
       return;
     }
 
+    if (!agreePolicy) {
+      toast.error("Please agree to the Privacy Policy to continue.");
+      return;
+    }
+
     const pending = {
       firstName: trimmedFirstName,
       lastName: trimmedLastName,
