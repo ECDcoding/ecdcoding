@@ -33,6 +33,7 @@ import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
 import { supabase } from "@/integrations/supabase/client";
 import VerifiedBadge from "@/components/VerifiedBadge";
+import { InstitutionCommunity } from "@/components/InstitutionCommunity";
 import FlipBodyCard from "@/components/FlipBodyCard";
 import FlipTrafficCard from "@/components/FlipTrafficCard";
 import FlipTransportCard from "@/components/FlipTransportCard";
