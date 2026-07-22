@@ -28,6 +28,7 @@ import TechFranchise from "./pages/TechFranchise";
 import RoboticsDesignCraftEvent from "./pages/RoboticsDesignCraftEvent";
 import LearnerProgressReport from "./pages/LearnerProgressReport";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProfileCompleter } from "./components/AuthProfileCompleter";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
       <Sonner />
       <CookieConsent />
       <BrowserRouter>
+        <AuthProfileCompleter />
         <Routes>
           {/* Public routes */}
           <Route path="/sign-in" element={<SignInPage />} />
