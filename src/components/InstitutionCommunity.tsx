@@ -61,6 +61,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
   const { toast } = useToast();
 
   const isEcdManager = registrationType === "ecd-manager";
+  const canCreateCommunity = registrationType === "ecd-manager" || registrationType === "parent";
 
   useImperativeHandle(ref, () => ({
     openCreate: () => setCreateOpen(true),
@@ -387,7 +388,7 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
             Connect with your institution or centre for updates and support.
           </p>
         </div>
-        {isEcdManager && (
+        {canCreateCommunity && (
           <Dialog open={createOpen} onOpenChange={setCreateOpen}>
             <DialogTrigger asChild>
               <Button size="sm">
@@ -397,20 +398,20 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
             <DialogContent className="max-w-sm">
               <DialogHeader>
                 <DialogTitle>Create Community</DialogTitle>
-                <DialogDescription>Set up a private space for your institution.</DialogDescription>
+                <DialogDescription>Set up a private space and invite parents and ECD managers to join.</DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <div>
                   <Label htmlFor="communityName">Community name</Label>
                   <Input
                     id="communityName"
-                    placeholder="e.g., ECD Centre Staff"
+                    placeholder="e.g., Parents & Teachers Circle"
                     value={newCommunityName}
                     onChange={(e) => setNewCommunityName(e.target.value)}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="institutionName">Institution / centre name</Label>
+                  <Label htmlFor="institutionName">Institution / centre name (optional)</Label>
                   <Input
                     id="institutionName"
                     placeholder="e.g., Bright Stars ECD Centre"
@@ -435,9 +436,9 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
         <div className="p-4 border rounded-lg bg-muted/30 text-center">
           <Users className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
           <p className="text-sm text-muted-foreground">
-            {isEcdManager
-              ? "You have not created a community yet. Create one for your institution."
-              : "You are not part of any community yet. Ask your ECD Manager to add you."}
+            {canCreateCommunity
+              ? "You have not created a community yet. Create one and invite parents and ECD managers to join."
+              : "You are not part of any community yet. Ask a parent or ECD Manager to add you."}
           </p>
         </div>
       ) : (
