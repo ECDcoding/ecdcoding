@@ -629,6 +629,61 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   }, [showCommunityFeed, showProgressDialog]);
 
+  // Load registered users + my admin community for quick-add in the community section
+  useEffect(() => {
+    if (!showCommunityFeed || !showProgressDialog || !profile?.user_id) return;
+    (async () => {
+      try {
+        const { data: users } = await supabase.rpc('search_app_users', { search_text: '', limit_count: 50 });
+        setCommunityUsers((users || []) as any);
+
+        const { data: myCommunities } = await supabase
+          .from('community_members')
+          .select('community_id, role')
+          .eq('user_id', profile.user_id)
+          .eq('role', 'admin')
+          .limit(1);
+        const communityId = myCommunities?.[0]?.community_id || null;
+        setMyCommunityId(communityId);
+
+        if (communityId) {
+          const { data: members } = await supabase
+            .from('community_members')
+            .select('user_id')
+            .eq('community_id', communityId);
+          setAddedMemberIds(new Set((members || []).map((m: any) => m.user_id)));
+        } else {
+          setAddedMemberIds(new Set());
+        }
+      } catch (e) {
+        console.error('Failed to load users for community add:', e);
+      }
+    })();
+  }, [showCommunityFeed, showProgressDialog, profile?.user_id]);
+
+  const handleQuickAddMember = async (targetUserId: string) => {
+    if (!myCommunityId) {
+      institutionCommunityRef.current?.openCreate();
+      toast({ title: 'Create a community first', description: 'Create your community, then add members.' });
+      return;
+    }
+    setAddingMemberId(targetUserId);
+    try {
+      const { error } = await supabase.from('community_members').insert({
+        community_id: myCommunityId,
+        user_id: targetUserId,
+        role: 'member',
+      });
+      if (error) throw error;
+      setAddedMemberIds((prev) => new Set(prev).add(targetUserId));
+      toast({ title: 'Added', description: 'Member added to your community.' });
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message || 'Failed to add member', variant: 'destructive' });
+    } finally {
+      setAddingMemberId(null);
+    }
+  };
+
   const fetchAllFeedback = async () => {
     try {
       const { data, error } = await supabase
