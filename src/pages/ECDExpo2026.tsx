@@ -597,6 +597,16 @@ const ECDExpo2026Content = () => {
                             >×</button>
                           </div>
                         )}
+                        {companyLogo && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCropFile(companyLogo)}
+                          >
+                            Crop & Align
+                          </Button>
+                        )}
                       </div>
                     </div>
 
@@ -1058,6 +1068,12 @@ const ECDExpo2026Content = () => {
         </div>
       </footer>
       <BusinessProposalDialog open={proposalOpen} onOpenChange={setProposalOpen} />
+      <ImageCropDialog
+        open={!!cropFile}
+        file={cropFile}
+        onCancel={() => setCropFile(null)}
+        onCropped={handleCropped}
+      />
     </div>
   );
 };
