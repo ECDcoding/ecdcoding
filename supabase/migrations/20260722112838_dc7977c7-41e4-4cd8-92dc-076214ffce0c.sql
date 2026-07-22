@@ -1,0 +1,1 @@
+CREATE POLICY "Authenticated can view community feedback" ON public.user_feedback FOR SELECT TO authenticated USING (true);
