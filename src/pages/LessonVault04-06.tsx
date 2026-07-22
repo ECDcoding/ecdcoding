@@ -5238,6 +5238,39 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             )}
                           </div>
                         </div>
+                        {/* Sent: messages the current user has sent to others */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Send className="h-3.5 w-3.5" /> Sent
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{sentMessages.length} message{sentMessages.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[200px] overflow-y-auto space-y-2">
+                            {sentMessages.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">You haven't sent any messages yet.</p>
+                            ) : (
+                              sentMessages.map((m) => (
+                                <div key={m.id} className="p-2 rounded border bg-background">
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    <Avatar className="h-7 w-7 border">
+                                      <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
+                                        {m.recipient_name?.[0]?.toUpperCase() || 'U'}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="min-w-0">
+                                      <p className="text-xs font-medium truncate">To: {m.recipient_name}</p>
+                                      <p className="text-[10px] text-muted-foreground">
+                                        {new Date(m.created_at).toLocaleString()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
