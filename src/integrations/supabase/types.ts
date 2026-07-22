@@ -219,6 +219,76 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_comments: {
+        Row: {
+          comment_text: string
+          created_at: string
+          feedback_id: string
+          id: string
+          updated_at: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          comment_text: string
+          created_at?: string
+          feedback_id: string
+          id?: string
+          updated_at?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          comment_text?: string
+          created_at?: string
+          feedback_id?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_comments_feedback_id_fkey"
+            columns: ["feedback_id"]
+            isOneToOne: false
+            referencedRelation: "user_feedback"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback_reactions: {
+        Row: {
+          created_at: string
+          emoji: string
+          feedback_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emoji?: string
+          feedback_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          feedback_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_reactions_feedback_id_fkey"
+            columns: ["feedback_id"]
+            isOneToOne: false
+            referencedRelation: "user_feedback"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       institution_communities: {
         Row: {
           created_at: string
@@ -614,6 +684,7 @@ export type Database = {
           created_at: string
           feedback_text: string
           id: string
+          tagged_user_ids: string[]
           updated_at: string
           user_id: string
           username: string
@@ -622,6 +693,7 @@ export type Database = {
           created_at?: string
           feedback_text: string
           id?: string
+          tagged_user_ids?: string[]
           updated_at?: string
           user_id: string
           username: string
@@ -630,6 +702,7 @@ export type Database = {
           created_at?: string
           feedback_text?: string
           id?: string
+          tagged_user_ids?: string[]
           updated_at?: string
           user_id?: string
           username?: string

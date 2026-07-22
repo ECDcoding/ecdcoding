@@ -140,8 +140,12 @@ const LessonVault0406 = () => {
     feedback_text: string;
     created_at: string;
     user_id: string;
+    tagged_user_ids?: string[];
   }>>([]);
   const [showCommunityFeed, setShowCommunityFeed] = useState(false);
+  const [postReactions, setPostReactions] = useState<Record<string, Array<{ id: string; user_id: string; emoji: string }>>>({});
+  const [postComments, setPostComments] = useState<Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>>>({});
+  const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [communityUsers, setCommunityUsers] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
   const [myCommunityId, setMyCommunityId] = useState<string | null>(null);
   const [addedMemberIds, setAddedMemberIds] = useState<Set<string>>(new Set());
@@ -630,6 +634,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           },
           () => fetchAllFeedback()
         )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'feedback_reactions' },
+          () => fetchReactionsAndComments()
+        )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'feedback_comments' },
+          () => fetchReactionsAndComments()
+        )
         .subscribe();
       
       return () => {
@@ -752,8 +766,70 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       
       if (error) throw error;
       setAllFeedback(data || []);
+      fetchReactionsAndComments();
     } catch (error) {
       console.error('Error fetching feedback:', error);
+    }
+  };
+
+  const fetchReactionsAndComments = async () => {
+    try {
+      const [{ data: reactions }, { data: comments }] = await Promise.all([
+        supabase.from('feedback_reactions' as any).select('id, feedback_id, user_id, emoji'),
+        supabase.from('feedback_comments' as any).select('id, feedback_id, user_id, username, comment_text, created_at').order('created_at', { ascending: true }),
+      ]);
+      const rMap: Record<string, Array<{ id: string; user_id: string; emoji: string }>> = {};
+      (reactions || []).forEach((r: any) => {
+        (rMap[r.feedback_id] ||= []).push({ id: r.id, user_id: r.user_id, emoji: r.emoji });
+      });
+      setPostReactions(rMap);
+      const cMap: Record<string, Array<{ id: string; user_id: string; username: string; comment_text: string; created_at: string }>> = {};
+      (comments || []).forEach((c: any) => {
+        (cMap[c.feedback_id] ||= []).push({ id: c.id, user_id: c.user_id, username: c.username, comment_text: c.comment_text, created_at: c.created_at });
+      });
+      setPostComments(cMap);
+    } catch (e) {
+      console.error('Failed to load reactions/comments:', e);
+    }
+  };
+
+  const toggleReaction = async (feedbackId: string, emoji: string) => {
+    if (!profile?.user_id) return;
+    const existing = (postReactions[feedbackId] || []).find(
+      (r) => r.emoji === emoji && r.user_id === profile.user_id
+    );
+    try {
+      if (existing) {
+        await supabase.from('feedback_reactions' as any).delete().eq('id', existing.id);
+      } else {
+        await supabase.from('feedback_reactions' as any).insert({
+          feedback_id: feedbackId,
+          user_id: profile.user_id,
+          emoji,
+        });
+      }
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Reaction failed', description: e.message || 'Try again', variant: 'destructive' });
+    }
+  };
+
+  const addComment = async (feedbackId: string) => {
+    if (!profile?.user_id) return;
+    const text = (commentDrafts[feedbackId] || '').trim();
+    if (!text) return;
+    try {
+      const { error } = await supabase.from('feedback_comments' as any).insert({
+        feedback_id: feedbackId,
+        user_id: profile.user_id,
+        username: profile.username || profile.first_name || 'Member',
+        comment_text: text,
+      });
+      if (error) throw error;
+      setCommentDrafts((d) => ({ ...d, [feedbackId]: '' }));
+      fetchReactionsAndComments();
+    } catch (e: any) {
+      toast({ title: 'Comment failed', description: e.message || 'Try again', variant: 'destructive' });
     }
   };
 
@@ -1386,7 +1462,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             user_id: profile?.user_id,
             username: profile?.username || profile?.first_name || 'Anonymous',
             feedback_text: noteBody,
-          });
+            tagged_user_ids: taggedUsers.map((u) => u.user_id),
+          } as any);
 
         if (error) throw error;
 
@@ -5155,11 +5232,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
                       {allFeedback.length > 0 && (
                         <div className="space-y-2">
-                          {allFeedback.map((feedback) => (
+                          {[...allFeedback]
+                            .sort((a, b) => {
+                              const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
+                              return bT - aT;
+                            })
+                            .map((feedback) => {
+                            const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
+                            const reactions = postReactions[feedback.id] || [];
+                            const comments = postComments[feedback.id] || [];
+                            const emojis = ['👍','❤️','😂','🎉','👏','🙌'];
+                            return (
                             <div
                               key={feedback.id}
                               className={`p-3 rounded-lg ${
-                                feedback.user_id === profile?.user_id
+                                iAmTagged
+                                  ? 'bg-amber-500/10 border border-amber-500/40'
+                                  : feedback.user_id === profile?.user_id
                                   ? 'bg-primary/5 border border-primary/20'
                                   : 'bg-background border border-border'
                               }`}
@@ -5179,12 +5269,75 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     {feedback.user_id === profile?.user_id && (
                                       <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
                                     )}
+                                    {iAmTagged && (
+                                      <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
+                                    )}
                                   </div>
                                   <p className="text-xs whitespace-pre-wrap break-words">{feedback.feedback_text}</p>
+
+                                  {/* Reactions */}
+                                  <div className="flex flex-wrap gap-1 mt-2">
+                                    {emojis.map((e) => {
+                                      const count = reactions.filter((r) => r.emoji === e).length;
+                                      const mine = reactions.some((r) => r.emoji === e && r.user_id === profile?.user_id);
+                                      return (
+                                        <button
+                                          key={e}
+                                          type="button"
+                                          onClick={() => toggleReaction(feedback.id, e)}
+                                          className={`text-xs px-2 py-0.5 rounded-full border transition ${
+                                            mine
+                                              ? 'bg-primary/20 border-primary'
+                                              : 'bg-background hover:bg-muted border-border'
+                                          }`}
+                                        >
+                                          <span>{e}</span>
+                                          {count > 0 && <span className="ml-1 text-[10px]">{count}</span>}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+
+                                  {/* Comments */}
+                                  {comments.length > 0 && (
+                                    <div className="mt-2 space-y-1 border-t border-border/60 pt-2">
+                                      {comments.map((c) => (
+                                        <div key={c.id} className="text-[11px]">
+                                          <span className="font-semibold">{c.username}: </span>
+                                          <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  <div className="flex gap-1 mt-2">
+                                    <Input
+                                      value={commentDrafts[feedback.id] || ''}
+                                      onChange={(e) =>
+                                        setCommentDrafts((d) => ({ ...d, [feedback.id]: e.target.value }))
+                                      }
+                                      placeholder="Write a comment..."
+                                      className="h-7 text-xs"
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          addComment(feedback.id);
+                                        }
+                                      }}
+                                    />
+                                    <Button
+                                      size="sm"
+                                      className="h-7 px-2 text-xs"
+                                      onClick={() => addComment(feedback.id)}
+                                      disabled={!(commentDrafts[feedback.id] || '').trim()}
+                                    >
+                                      Post
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       )}
                     </div>
