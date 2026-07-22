@@ -4994,6 +4994,90 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             {myCommunityId ? 'Add members below to get the conversation going.' : 'Create your community, then add members below.'}
                           </p>
                         </div>
+                        {/* Inbox: messages received from other users, with reply */}
+                        <div className="border-t pt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                              <Inbox className="h-3.5 w-3.5" /> Inbox
+                            </p>
+                            <span className="text-[10px] text-muted-foreground">{inboxMessages.length} message{inboxMessages.length === 1 ? '' : 's'}</span>
+                          </div>
+                          <div className="max-h-[200px] overflow-y-auto space-y-2">
+                            {inboxMessages.length === 0 ? (
+                              <p className="text-xs text-muted-foreground text-center py-3">No messages yet.</p>
+                            ) : (
+                              inboxMessages.map((m) => (
+                                <div key={m.id} className="p-2 rounded border bg-background">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <Avatar className="h-7 w-7 border">
+                                        <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
+                                          {m.sender_name?.[0]?.toUpperCase() || 'U'}
+                                        </AvatarFallback>
+                                      </Avatar>
+                                      <div className="min-w-0">
+                                        <p className="text-xs font-medium truncate">{m.sender_name}</p>
+                                        <p className="text-[10px] text-muted-foreground">
+                                          {new Date(m.created_at).toLocaleString()}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (replyingToId === m.id) {
+                                          setReplyingToId(null);
+                                          setReplyingToUserId(null);
+                                          setReplyText('');
+                                        } else {
+                                          setReplyingToId(m.id);
+                                          setReplyingToUserId(m.sender_id);
+                                          setReplyText('');
+                                        }
+                                      }}
+                                      title="Reply"
+                                      className="p-1.5 rounded hover:bg-muted text-primary"
+                                    >
+                                      <Reply className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                  <p className="text-xs mt-1 whitespace-pre-wrap break-words">{m.message}</p>
+                                  {replyingToId === m.id && (
+                                    <div className="mt-2 space-y-2">
+                                      <Textarea
+                                        placeholder={`Reply to ${m.sender_name}...`}
+                                        value={replyText}
+                                        onChange={(e) => setReplyText(e.target.value)}
+                                        className="min-h-[50px] resize-none text-sm"
+                                        autoFocus
+                                      />
+                                      <div className="flex justify-end gap-2">
+                                        <Button
+                                          size="sm"
+                                          variant="outline"
+                                          onClick={() => {
+                                            setReplyingToId(null);
+                                            setReplyingToUserId(null);
+                                            setReplyText('');
+                                          }}
+                                        >
+                                          Cancel
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          onClick={handleSendReply}
+                                          disabled={sendingReply || !replyText.trim()}
+                                        >
+                                          <Send className="h-3 w-3 mr-1" /> Send reply
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
