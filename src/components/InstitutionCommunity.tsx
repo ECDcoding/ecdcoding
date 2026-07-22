@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown } from "lucide-react";
+import { Users, Plus, MessageCircle, Send, Trash2, ChevronLeft, Crown, Search, UserPlus, Check } from "lucide-react";
 
 export interface InstitutionCommunityHandle {
   openCreate: () => void;
@@ -52,7 +52,11 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
   const [newCommunityName, setNewCommunityName] = useState("");
   const [newCommunityInstitution, setNewCommunityInstitution] = useState(profile?.institution || "");
   const [newMessage, setNewMessage] = useState("");
-  const [inviteEmail, setInviteEmail] = useState("");
+  const [memberSearch, setMemberSearch] = useState("");
+  const [searchResults, setSearchResults] = useState<Array<{ user_id: string; display_name: string; username: string | null; registration_type: string | null }>>([]);
+  const [existingMemberIds, setExistingMemberIds] = useState<Set<string>>(new Set());
+  const [searching, setSearching] = useState(false);
+  const [addingUserId, setAddingUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -236,23 +240,60 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
     }
   };
 
-  const handleInviteMember = async () => {
-    if (!inviteEmail.trim() || !selectedCommunity) return;
-
+  const runUserSearch = async (text: string) => {
+    setSearching(true);
     try {
-      // Look up user by email via auth admin (service role only) — for safety, use RPC or edge function.
-      // Simpler approach: ask the invitee to join via community code/name. For now, store invite as a member row
-      // only if we can find their user id. We'll skip the actual member insert here because we can't resolve auth email client-side.
-      toast({
-        title: "Invite feature",
-        description: "Please share the community name with your colleague. They can ask you to add them once they register.",
+      const { data, error } = await supabase.rpc("search_app_users", {
+        search_text: text,
+        limit_count: 50,
       });
-      setInviteEmail("");
-      setInviteOpen(false);
+      if (error) throw error;
+      setSearchResults((data || []) as any);
     } catch (error: any) {
-      toast({ title: "Error", description: error.message || "Failed to invite member", variant: "destructive" });
+      toast({ title: "Error", description: error.message || "Failed to search users", variant: "destructive" });
+    } finally {
+      setSearching(false);
     }
   };
+
+  const loadExistingMembers = async (communityId: string) => {
+    const { data } = await supabase
+      .from("community_members")
+      .select("user_id")
+      .eq("community_id", communityId);
+    setExistingMemberIds(new Set((data || []).map((m: any) => m.user_id)));
+  };
+
+  const handleAddMember = async (targetUserId: string) => {
+    if (!selectedCommunity) return;
+    setAddingUserId(targetUserId);
+    try {
+      const { error } = await supabase.from("community_members").insert({
+        community_id: selectedCommunity.id,
+        user_id: targetUserId,
+        role: "member",
+      });
+      if (error) throw error;
+      setExistingMemberIds((prev) => new Set(prev).add(targetUserId));
+      toast({ title: "Added", description: "Member added to the community." });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message || "Failed to add member", variant: "destructive" });
+    } finally {
+      setAddingUserId(null);
+    }
+  };
+
+  useEffect(() => {
+    if (!inviteOpen || !selectedCommunity) return;
+    loadExistingMembers(selectedCommunity.id);
+    runUserSearch("");
+  }, [inviteOpen, selectedCommunity]);
+
+  useEffect(() => {
+    if (!inviteOpen) return;
+    const t = setTimeout(() => runUserSearch(memberSearch.trim()), 250);
+    return () => clearTimeout(t);
+  }, [memberSearch, inviteOpen]);
 
   const openCommunity = (community: Community) => {
     setSelectedCommunity(community);
@@ -279,25 +320,61 @@ export const InstitutionCommunity = forwardRef<InstitutionCommunityHandle, Insti
                   <Plus className="h-4 w-4 mr-1" /> Add
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-sm">
+              <DialogContent className="max-w-md">
                 <DialogHeader>
-                  <DialogTitle>Add Member</DialogTitle>
-                  <DialogDescription>Invite a colleague to this community.</DialogDescription>
+                  <DialogTitle>Add Members</DialogTitle>
+                  <DialogDescription>Search and add ECDcoding users to this community.</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3">
-                  <div>
-                    <Label htmlFor="inviteEmail">Colleague email</Label>
+                  <div className="relative">
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
-                      id="inviteEmail"
-                      type="email"
-                      placeholder="colleague@example.com"
-                      value={inviteEmail}
-                      onChange={(e) => setInviteEmail(e.target.value)}
+                      autoFocus
+                      placeholder="Search by name or username"
+                      value={memberSearch}
+                      onChange={(e) => setMemberSearch(e.target.value)}
+                      className="pl-8"
                     />
                   </div>
-                  <Button className="w-full" onClick={handleInviteMember} disabled={!inviteEmail.trim()}>
-                    Send Invite
-                  </Button>
+                  <div className="max-h-[320px] overflow-y-auto space-y-1 border rounded-md p-1">
+                    {searching ? (
+                      <p className="text-xs text-muted-foreground p-3 text-center">Searching...</p>
+                    ) : searchResults.length === 0 ? (
+                      <p className="text-xs text-muted-foreground p-3 text-center">No users found.</p>
+                    ) : (
+                      searchResults.map((u) => {
+                        const already = existingMemberIds.has(u.user_id);
+                        return (
+                          <div key={u.user_id} className="flex items-center gap-2 p-2 rounded hover:bg-muted/40">
+                            <Avatar className="h-8 w-8 border">
+                              <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                {u.display_name?.[0]?.toUpperCase() || "U"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium truncate">{u.display_name}</p>
+                              <p className="text-[10px] text-muted-foreground truncate">
+                                {u.registration_type || "member"}{u.username ? ` • @${u.username}` : ""}
+                              </p>
+                            </div>
+                            {already ? (
+                              <Badge variant="outline" className="text-[10px] gap-1"><Check className="h-3 w-3" /> Added</Badge>
+                            ) : (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleAddMember(u.user_id)}
+                                disabled={addingUserId === u.user_id}
+                              >
+                                <UserPlus className="h-3 w-3 mr-1" />
+                                {addingUserId === u.user_id ? "Adding..." : "Add"}
+                              </Button>
+                            )}
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
               </DialogContent>
             </Dialog>
