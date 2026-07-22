@@ -5195,6 +5195,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             )}
                           </div>
                         </div>
+                        {/* Post to Community */}
+                        <div className="border-t pt-3 pb-3 bg-background">
+                          <div className="flex items-start gap-2">
+                            <Avatar className="h-8 w-8 border-2 border-primary">
+                              <AvatarImage src={profile?.profile_image_url || ''} />
+                              <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
+                                {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <Textarea
+                              placeholder="Share with the community..."
+                              value={responseText}
+                              onChange={(e) => setResponseText(e.target.value)}
+                              className="min-h-[60px] resize-none text-sm"
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                  e.preventDefault();
+                                  handleSendResponse();
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="flex justify-end mt-2">
+                            <Button size="sm" onClick={handleSendResponse} disabled={!responseText.trim()}>
+                              <Share2 className="h-3 w-3 mr-1" />
+                              Post
+                            </Button>
+                          </div>
+                        </div>
                         <div className="border-t pt-3">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Message registered users</p>
@@ -5222,6 +5251,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                                     <input
                                       type="checkbox"
                                       checked={checked}
+                                      onChange={() => toggleRecipient(u.user_id)}
+                                      className="h-4 w-4 accent-primary"
+                                    />
+                                    <Avatar className="h-8 w-8 border">
+                                      <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                                        {u.display_name?.[0]?.toUpperCase() || 'U'}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1 min-w-0">
                                       onChange={() => toggleRecipient(u.user_id)}
                                       className="h-4 w-4 accent-primary"
                                     />
