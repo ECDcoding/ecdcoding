@@ -18,7 +18,7 @@ const PaymentCancelled = () => {
             <Link to="/">Go to Homepage</Link>
           </Button>
           <Button asChild className="bg-[#132a13] text-yellow-400 hover:bg-[#132a13]/90">
-            <Link to="/register?type=parent">Try Again</Link>
+            <Link to="/">Try Again</Link>
           </Button>
         </div>
       </div>
