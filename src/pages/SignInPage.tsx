@@ -65,7 +65,7 @@ const SignInPage = () => {
       return;
     }
     await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/register`,
+      redirect_uri: `${window.location.origin}/`,
       extraParams: {
         prompt: "select_account",
       },
@@ -220,28 +220,6 @@ const SignInPage = () => {
             )}
           </form>
 
-          {/* Register CTA */}
-          <div className="mt-6 pt-6 border-t border-border/40 text-center">
-            <span className="text-sm text-muted-foreground">Don't have an account? </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="link"
-                  className="text-primary hover:underline p-0 h-auto font-semibold text-sm"
-                >
-                  Register <ChevronDown className="ml-1 h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="z-50 bg-card border border-border shadow-lg rounded-xl">
-                <DropdownMenuItem asChild>
-                  <Link to="/register?type=parent" className="cursor-pointer">Parent</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/register?type=ecd-manager" className="cursor-pointer">ECD Manager</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
         </div>
 
         <p className="mx-auto w-full max-w-md text-center text-[11px] text-muted-foreground/80 mt-6 px-4 leading-relaxed">
