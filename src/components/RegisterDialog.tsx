@@ -21,6 +21,8 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
   const [registrationType, setRegistrationType] = useState<"parent" | "ecd-manager">("parent");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [childFirstName, setChildFirstName] = useState("");
+  const [childLastName, setChildLastName] = useState("");
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
@@ -33,6 +35,13 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
       return;
     }
 
+    const trimmedChildFirst = childFirstName.trim();
+    const trimmedChildLast = childLastName.trim();
+    if (!trimmedChildFirst) {
+      toast.error("Please enter your child's name to register on their behalf.");
+      return;
+    }
+
     if (!agreePolicy) {
       toast.error("Please agree to the Privacy Policy to continue.");
       return;
@@ -42,6 +51,8 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
       firstName: trimmedFirstName,
       lastName: trimmedLastName,
       registrationType,
+      childFirstName: trimmedChildFirst,
+      childLastName: trimmedChildLast,
     };
     localStorage.setItem(PENDING_REGISTRATION_KEY, JSON.stringify(pending));
 
@@ -69,6 +80,9 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">Register with ECDcoding</DialogTitle>
+          <p className="text-center text-sm text-muted-foreground">
+            Parents and ECD Managers — register on behalf of your kids
+          </p>
         </DialogHeader>
         <Card className="border-0 shadow-none">
           <CardContent className="pt-4 space-y-4">
@@ -101,6 +115,34 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
                   <SelectItem value="ecd-manager">ECD Manager</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-2 rounded-lg border border-dashed p-3">
+              <Label className="text-sm font-semibold">
+                {registrationType === "parent" ? "Your child's details" : "Learner's details"}
+              </Label>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label htmlFor="child-first-name" className="text-xs font-normal">Child's name</Label>
+                  <Input
+                    id="child-first-name"
+                    placeholder="Child's name"
+                    value={childFirstName}
+                    onChange={(e) => setChildFirstName(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="child-last-name" className="text-xs font-normal">Surname (optional)</Label>
+                  <Input
+                    id="child-last-name"
+                    placeholder="Surname"
+                    value={childLastName}
+                    onChange={(e) => setChildLastName(e.target.value)}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                You're registering on behalf of your {registrationType === "parent" ? "child" : "learner"}. You can add more later.
+              </p>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox
