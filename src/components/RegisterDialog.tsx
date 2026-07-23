@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { lovable } from "@/integrations/lovable/index";
+import { supabase } from "@/integrations/supabase/client";
 
 interface RegisterDialogProps {
   open: boolean;
@@ -25,35 +26,79 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
   const [childLastName, setChildLastName] = useState("");
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
 
-  const handleGoogleSignIn = async () => {
+  const validateBasics = () => {
     const trimmedFirstName = firstName.trim();
     const trimmedLastName = lastName.trim();
-
     if (!trimmedFirstName || !trimmedLastName) {
       toast.error("Please enter your Name and Surname to continue.");
-      return;
+      return null;
     }
-
     const trimmedChildFirst = childFirstName.trim();
     const trimmedChildLast = childLastName.trim();
     if (!trimmedChildFirst) {
       toast.error("Please enter your child's name to register on their behalf.");
-      return;
+      return null;
     }
-
     if (!agreePolicy) {
       toast.error("Please agree to the Privacy Policy to continue.");
-      return;
+      return null;
     }
-
-    const pending = {
+    return {
       firstName: trimmedFirstName,
       lastName: trimmedLastName,
       registrationType,
       childFirstName: trimmedChildFirst,
       childLastName: trimmedChildLast,
     };
+  };
+
+  const handleEmailSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const pending = validateBasics();
+    if (!pending) return;
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return;
+    }
+
+    localStorage.setItem(PENDING_REGISTRATION_KEY, JSON.stringify(pending));
+    setIsEmailLoading(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: trimmedEmail,
+        password,
+        options: {
+          emailRedirectTo: window.location.origin,
+          data: {
+            first_name: pending.firstName,
+            last_name: pending.lastName,
+          },
+        },
+      });
+      if (error) throw error;
+      toast.success("Check your email to confirm your account.");
+      onOpenChange(false);
+    } catch (err: any) {
+      console.error("Email sign-up error:", err);
+      toast.error(err?.message || "Sign-up failed. Please try again.");
+    } finally {
+      setIsEmailLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const pending = validateBasics();
+    if (!pending) return;
     localStorage.setItem(PENDING_REGISTRATION_KEY, JSON.stringify(pending));
 
     setIsGoogleLoading(true);
@@ -156,6 +201,45 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
                   Privacy Policy
                 </Link>
               </Label>
+            </div>
+            <form onSubmit={handleEmailSignUp} className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="register-email">Email</Label>
+                <Input
+                  id="register-email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="register-password">Create Password</Label>
+                <Input
+                  id="register-password"
+                  type="password"
+                  placeholder="At least 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isEmailLoading || !agreePolicy}
+              >
+                {isEmailLoading ? "Creating account..." : "Submit"}
+              </Button>
+            </form>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">or</span>
+              </div>
             </div>
             <Button
               type="button"
