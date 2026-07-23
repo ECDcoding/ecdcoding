@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import ExpoCopilot from "@/components/ExpoCopilot";
-import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -1676,20 +1675,6 @@ const LessonVault0710 = () => {
       {/* ASK AI Copilot */}
       <ExpoCopilot context="My Lesson Vault (Ages 7-10)" />
 
-      {/* PayFast Reload Credits Dialog */}
-      <PayFastPaymentDialog
-        open={showReloadDialog}
-        onOpenChange={setShowReloadDialog}
-        amount={100}
-        itemName={hasActiveSubscription ? "Credit Top-Up (100 Credits)" : "Monthly Subscription (100 Credits)"}
-        paymentType={hasActiveSubscription ? "credits" : "subscription"}
-        userEmail={user?.email}
-        userFirstName={profile?.first_name}
-        userLastName={profile?.last_name}
-        onPaymentComplete={() => setShowReloadDialog(false)}
-        isCreditsLow={credits <= 20}
-        defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
-      />
       <NumeracyPracticeDialog
         open={numeracyOpen}
         onOpenChange={setNumeracyOpen}

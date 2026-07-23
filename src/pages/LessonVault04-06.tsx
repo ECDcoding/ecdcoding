@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import ExpoCopilot from "@/components/ExpoCopilot";
-import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5963,20 +5962,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 
-      {/* PayFast Reload Credits Dialog */}
-      <PayFastPaymentDialog
-        open={showReloadDialog}
-        onOpenChange={setShowReloadDialog}
-        amount={100}
-        itemName={hasActiveSubscription ? "Credit Top-Up (100 Credits)" : "Monthly Subscription (100 Credits)"}
-        paymentType={hasActiveSubscription ? "credits" : "subscription"}
-        userEmail={user?.email}
-        userFirstName={profile?.first_name}
-        userLastName={profile?.last_name}
-        onPaymentComplete={() => setShowReloadDialog(false)}
-        isCreditsLow={credits <= 20}
-        defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
-      />
     </div>
   );
 };
