@@ -174,6 +174,10 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
+                  disabled={false}
+                  readOnly={false}
+                  onClick={() => console.log("[RegisterDialog] email input clicked")}
+                  onFocus={() => console.log("[RegisterDialog] email input focused")}
                 />
               </div>
               <div className="space-y-2">
@@ -185,12 +189,14 @@ const RegisterDialog = ({ open, onOpenChange }: RegisterDialogProps) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
+                  disabled={false}
+                  readOnly={false}
                 />
               </div>
               <Button
                 type="submit"
                 className="w-full"
-                disabled={isEmailLoading || !agreePolicy}
+                disabled={isEmailLoading}
               >
                 {isEmailLoading ? "Creating account..." : "Submit"}
               </Button>
