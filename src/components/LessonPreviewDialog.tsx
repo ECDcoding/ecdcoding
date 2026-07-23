@@ -30,7 +30,7 @@ interface Lesson {
 
 const lessons: Lesson[] = [
   { id: "numeracy", title: "Numeracy", subItems: ["Counting 1-10", "Basic Addition", "Number Recognition"] },
-  { id: "free-class", title: "30 Day Free Trial", subItems: ["Transportation", "My Body", "Shapes", "Animals", "ABC Chart"], isSpecial: true },
+  { id: "free-class", title: "Welcome to ECDcoding", subItems: ["Transportation", "My Body", "Shapes", "Animals", "ABC Chart"], isSpecial: true },
   { id: "literacy", title: "Literacy", subItems: ["ABC Chart", "Letter Sounds", "Simple Words"] },
   { id: "note-of-week", title: "Note of the Week", subItems: ["Weekly Song", "Music Basics"] },
   { id: "life-skills", title: "Life Skills", subItems: ["My Body", "Five Senses", "Daily Routines"] },
@@ -231,7 +231,7 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
                          <Gift className="h-5 w-5 text-yellow-200 animate-bounce" style={{ animationDelay: '0.5s' }} />
                        </div>
                        <p className="relative z-10 text-[10px] text-white/90 mt-1 font-medium text-center">
-                         ✨ With an option to reload credits with PayFast ✨
+                         ✨ Discover fun lessons for young learners ✨
                        </p>
                      </div>
                   ) : (
@@ -266,17 +266,17 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
         </DialogContent>
       </Dialog>
 
-      {/* 30 Day Free Trial Splash (auto-dismisses after 3s) */}
+      {/* Welcome Splash (auto-dismisses after 3s) */}
       <Dialog open={showTrialSplash} onOpenChange={(o) => !o && setShowTrialSplash(false)}>
         <DialogContent className="sm:max-w-md bg-gradient-to-br from-primary via-purple-500 to-pink-500 border-0">
           <DialogHeader>
             <DialogTitle className="text-center text-3xl font-extrabold text-white drop-shadow-lg flex items-center justify-center gap-3">
               <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
-              30 Day Free Trial
+              Welcome to ECDcoding
               <Gift className="h-8 w-8 text-yellow-200 animate-bounce" />
             </DialogTitle>
             <DialogDescription className="text-center text-white/90 text-base mt-2">
-              ✨ Loading your free lessons... ✨
+              ✨ Loading your lesson preview... ✨
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-center py-6">
@@ -291,11 +291,11 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
           <DialogHeader>
             <DialogTitle className="text-center text-2xl font-bold flex items-center justify-center gap-2">
               <Sparkles className="h-6 w-6 text-primary animate-pulse" />
-               30 Day Free Trial
+               Welcome to ECDcoding
                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
             </DialogTitle>
             <DialogDescription className="text-center text-base">
-              Enjoy 30 days of free learning! Reload credits anytime with PayFast.
+              Explore our fun, interactive lessons for young learners.
             </DialogDescription>
           </DialogHeader>
           
