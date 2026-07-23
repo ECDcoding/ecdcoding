@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import ExpoCopilot from "@/components/ExpoCopilot";
-import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
