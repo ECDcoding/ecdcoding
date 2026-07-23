@@ -5962,20 +5962,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 
-      {/* PayFast Reload Credits Dialog */}
-      <PayFastPaymentDialog
-        open={showReloadDialog}
-        onOpenChange={setShowReloadDialog}
-        amount={100}
-        itemName={hasActiveSubscription ? "Credit Top-Up (100 Credits)" : "Monthly Subscription (100 Credits)"}
-        paymentType={hasActiveSubscription ? "credits" : "subscription"}
-        userEmail={user?.email}
-        userFirstName={profile?.first_name}
-        userLastName={profile?.last_name}
-        onPaymentComplete={() => setShowReloadDialog(false)}
-        isCreditsLow={credits <= 20}
-        defaultOption={hasActiveSubscription ? 'top-up' : 'recurring'}
-      />
     </div>
   );
 };
