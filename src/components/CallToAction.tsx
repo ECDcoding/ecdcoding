@@ -57,15 +57,6 @@ const CallToAction = () => {
         >
           Kids Aged 08 - 12
         </Button>
-        {!user && !authLoading && (
-          <Button
-            size="lg"
-            className="bg-lime-500 hover:bg-lime-600 text-white font-bold px-8 py-4 text-lg rounded-2xl"
-            onClick={() => setRegisterOpen(true)}
-          >
-            Register
-          </Button>
-        )}
       </div>
 
       <LessonPreviewDialog
