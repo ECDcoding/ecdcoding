@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import LessonPreviewDialog from "@/components/LessonPreviewDialog";
+import RegisterDialog from "@/components/RegisterDialog";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -21,6 +22,7 @@ const CallToAction = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<"04-07" | "08-12" | null>(null);
   const [underDevOpen, setUnderDevOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   
 
   const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
@@ -34,9 +36,8 @@ const CallToAction = () => {
       // Signed-in users go directly to lesson vault
       navigate(ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10");
     } else {
-      // Non-signed-in users see the lesson preview dialog
-      setSelectedAgeGroup(ageGroup);
-      setDialogOpen(true);
+      // Non-signed-in users see the Register dialog
+      setRegisterOpen(true);
     }
   };
 
@@ -64,6 +65,8 @@ const CallToAction = () => {
         onOpenChange={setDialogOpen}
         ageGroup={selectedAgeGroup}
       />
+
+      <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
 
       <Dialog open={underDevOpen} onOpenChange={setUnderDevOpen}>
         <DialogContent className="sm:max-w-md text-center">
