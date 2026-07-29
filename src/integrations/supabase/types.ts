@@ -798,6 +798,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      assert_can_write_profile_for: {
+        Args: { _user_id: string }
+        Returns: undefined
+      }
       create_user_profile: {
         Args: {
           _aspiration?: string
