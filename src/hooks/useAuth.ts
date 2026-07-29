@@ -175,14 +175,29 @@ export const useAuth = () => {
 
   const signOut = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      // Use local scope: revoking server-side fails when the session is
+      // already expired/missing, which surfaced as "Auth session missing".
+      const { error } = await supabase.auth.signOut({ scope: 'local' });
+
+      // Treat a missing session as a successful sign-out.
+      const isMissingSession =
+        error &&
+        (error.name === 'AuthSessionMissingError' ||
+          /session (missing|not found)/i.test(error.message));
+
+      if (error && !isMissingSession) throw error;
+
+      // Make sure nothing stale is left behind in this tab.
+      setSession(null);
+      setUser(null);
 
       toast({
         title: "Signed out",
         description: "You have been successfully signed out.",
       });
     } catch (error: any) {
+      setSession(null);
+      setUser(null);
       toast({
         title: "Sign out failed",
         description: error.message,
