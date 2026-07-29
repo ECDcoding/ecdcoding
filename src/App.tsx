@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
 import ContactUs from "./pages/ContactUs";
@@ -30,52 +30,70 @@ import LearnerProgressReport from "./pages/LearnerProgressReport";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProfileCompleter } from "./components/AuthProfileCompleter";
 import { AnnualPaymentPrompt } from "./components/AnnualPaymentPrompt";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
+/**
+ * Re-mounts the error boundary on every navigation so a crash on one page
+ * doesn't keep the fallback stuck when the user navigates elsewhere.
+ */
+const RouteBoundary = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  return <ErrorBoundary key={location.pathname} name={location.pathname}>{children}</ErrorBoundary>;
+};
+
+const AppRoutes = () => (
+  <RouteBoundary>
+    <Routes>
+      {/* Public routes */}
+      <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/data-deletion" element={<DataDeletion />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+      <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+
+      {/* Public landing */}
+      <Route path="/" element={<Index />} />
+
+      {/* Protected routes */}
+      <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
+      <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
+      <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
+      <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
+      <Route path="/biology-nature" element={<ProtectedRoute><BiologyNature /></ProtectedRoute>} />
+      <Route path="/emoji-ai" element={<ProtectedRoute><EmojiAI /></ProtectedRoute>} />
+      <Route path="/fruit-item-recognition" element={<ProtectedRoute><FruitItemRecognition /></ProtectedRoute>} />
+      <Route path="/facial-recognition" element={<ProtectedRoute><FacialRecognition /></ProtectedRoute>} />
+      <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
+      <Route path="/payment" element={<ProtectedRoute><PaymentForm /></ProtectedRoute>} />
+      <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
+      <Route path="/expo-admin" element={<ProtectedRoute><ExpoAdminDashboard /></ProtectedRoute>} />
+      <Route path="/tech-franchise" element={<ProtectedRoute><TechFranchise /></ProtectedRoute>} />
+      <Route path="/robotics-design-craft-event" element={<RoboticsDesignCraftEvent />} />
+      <Route path="/learner-progress-report" element={<ProtectedRoute><LearnerProgressReport /></ProtectedRoute>} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </RouteBoundary>
+);
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <ErrorBoundary name="root">
+   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <CookieConsent />
       <BrowserRouter>
-        <AuthProfileCompleter />
-        <AnnualPaymentPrompt />
-        <Routes>
-          {/* Public routes */}
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/data-deletion" element={<DataDeletion />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/payment-cancelled" element={<PaymentCancelled />} />
-
-          {/* Public landing */}
-          <Route path="/" element={<Index />} />
-
-          {/* Protected routes */}
-          <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
-          <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
-          <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
-          <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
-          <Route path="/biology-nature" element={<ProtectedRoute><BiologyNature /></ProtectedRoute>} />
-          <Route path="/emoji-ai" element={<ProtectedRoute><EmojiAI /></ProtectedRoute>} />
-          <Route path="/fruit-item-recognition" element={<ProtectedRoute><FruitItemRecognition /></ProtectedRoute>} />
-          <Route path="/facial-recognition" element={<ProtectedRoute><FacialRecognition /></ProtectedRoute>} />
-          <Route path="/transportation" element={<ProtectedRoute><Transportation /></ProtectedRoute>} />
-          <Route path="/payment" element={<ProtectedRoute><PaymentForm /></ProtectedRoute>} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/ecd-expo-2026" element={<ECDExpo2026 />} />
-          <Route path="/expo-admin" element={<ProtectedRoute><ExpoAdminDashboard /></ProtectedRoute>} />
-          <Route path="/tech-franchise" element={<ProtectedRoute><TechFranchise /></ProtectedRoute>} />
-          <Route path="/robotics-design-craft-event" element={<RoboticsDesignCraftEvent />} />
-          <Route path="/learner-progress-report" element={<ProtectedRoute><LearnerProgressReport /></ProtectedRoute>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <ErrorBoundary name="auth-profile-completer"><AuthProfileCompleter /></ErrorBoundary>
+        <ErrorBoundary name="annual-payment-prompt"><AnnualPaymentPrompt /></ErrorBoundary>
+        <AppRoutes />
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
+   </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
