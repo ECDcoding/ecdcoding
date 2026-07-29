@@ -40,6 +40,7 @@ const VALID_AMOUNTS = [
   100,    // Monthly subscription
   200,    // Delegate pass
   500,    // Tech Teacher Mentorship
+  600,    // ECDcoding Annual Usage
   1200,   // Annual subscription
   2500,   // Local Exhibitor
   5000,   // Bronze Sponsor / International Exhibitor
