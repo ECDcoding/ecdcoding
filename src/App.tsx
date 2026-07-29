@@ -29,6 +29,7 @@ import RoboticsDesignCraftEvent from "./pages/RoboticsDesignCraftEvent";
 import LearnerProgressReport from "./pages/LearnerProgressReport";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProfileCompleter } from "./components/AuthProfileCompleter";
+import { AnnualPaymentPrompt } from "./components/AnnualPaymentPrompt";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
       <CookieConsent />
       <BrowserRouter>
         <AuthProfileCompleter />
+        <AnnualPaymentPrompt />
         <Routes>
           {/* Public routes */}
           <Route path="/sign-in" element={<SignInPage />} />
