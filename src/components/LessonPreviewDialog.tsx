@@ -62,9 +62,11 @@ interface LessonPreviewDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   ageGroup: "04-07" | "08-12" | null;
+  /** When provided, the preview hands off to the app's Register dialog. */
+  onRequestRegister?: () => void;
 }
 
-const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDialogProps) => {
+const LessonPreviewDialog = ({ open, onOpenChange, ageGroup, onRequestRegister }: LessonPreviewDialogProps) => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
@@ -109,6 +111,12 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
       onOpenChange(false);
       navigate(card.route);
     } else {
+      if (onRequestRegister) {
+        setShowFreeClassDialog(false);
+        onOpenChange(false);
+        onRequestRegister();
+        return;
+      }
       // Not logged in, show registration dialog (same as other lessons)
       setPendingFreeClassCard(card);
       setShowFreeClassDialog(false);
@@ -174,6 +182,17 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
     }, 3000);
     return () => clearInterval(interval);
   }, [showFreeClassDialog]);
+
+  // After at least 10 seconds of preview, invite them to register
+  useEffect(() => {
+    if (!showFreeClassDialog || user || !onRequestRegister) return;
+    const timer = setTimeout(() => {
+      setShowFreeClassDialog(false);
+      onOpenChange(false);
+      onRequestRegister();
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [showFreeClassDialog, user, onRequestRegister, onOpenChange]);
 
   return (
     <>
@@ -393,7 +412,12 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup }: LessonPreviewDial
             <Button
               onClick={() => {
                 setShowFreeClassDialog(false);
-                setShowRegistrationDialog(true);
+                if (onRequestRegister) {
+                  onOpenChange(false);
+                  onRequestRegister();
+                } else {
+                  setShowRegistrationDialog(true);
+                }
               }}
               className="text-sm font-bold bg-lime-500 hover:bg-lime-600 text-white"
             >

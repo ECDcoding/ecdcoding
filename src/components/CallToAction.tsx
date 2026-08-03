@@ -36,8 +36,10 @@ const CallToAction = () => {
       // Signed-in users go directly to lesson vault
       navigate(ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10");
     } else {
-      // Non-signed-in users see the Register dialog
-      setRegisterOpen(true);
+      // Non-signed-in users see the welcome splash + lesson slide show first,
+      // then the Register dialog.
+      setSelectedAgeGroup(ageGroup);
+      setDialogOpen(true);
     }
   };
 
@@ -64,6 +66,7 @@ const CallToAction = () => {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         ageGroup={selectedAgeGroup}
+        onRequestRegister={() => setRegisterOpen(true)}
       />
 
       <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
