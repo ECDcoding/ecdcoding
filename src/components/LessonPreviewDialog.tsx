@@ -183,14 +183,14 @@ const LessonPreviewDialog = ({ open, onOpenChange, ageGroup, onRequestRegister }
     return () => clearInterval(interval);
   }, [showFreeClassDialog]);
 
-  // After at least 10 seconds of preview, invite them to register
+  // Let the whole slide show play through (6 cards x 3s) before inviting them to register
   useEffect(() => {
     if (!showFreeClassDialog || user || !onRequestRegister) return;
     const timer = setTimeout(() => {
       setShowFreeClassDialog(false);
       onOpenChange(false);
       onRequestRegister();
-    }, 10000);
+    }, freeClassCards.length * 3000 + 1500);
     return () => clearTimeout(timer);
   }, [showFreeClassDialog, user, onRequestRegister, onOpenChange]);
 
