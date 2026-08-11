@@ -3099,7 +3099,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <nav aria-label="Verbal Testing Space lessons" className="mb-10 max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
             {[
               {
-                heading: "Generic Lessons",
+                heading: "Generic Lesson Analysis",
                 filter: "generic" as const,
                 accent: "text-lime-400",
                 items: [
