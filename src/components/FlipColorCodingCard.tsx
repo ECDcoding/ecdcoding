@@ -52,7 +52,7 @@ const FlipColorCodingCard = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const currentData = sides[currentIndex];
+  const currentData = colorCodingSides[currentIndex];
   const isActive = selectedCardForTest === CARD_NAME;
 
   const handleFlip = (e?: React.MouseEvent) => {
