@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import colorCodingChartAsset from "@/assets/color-coding-chart.jpg.asset.json";
-import colorSequenceChartAsset from "@/assets/color-sequence-chart.jpg.asset.json";
 import caterpillarChartAsset from "@/assets/caterpillar-color-code-chart.jpg.asset.json";
 import matchPencilAsset from "@/assets/match-pencil-colors.jpg.asset.json";
 import bottlesAsset from "@/assets/color-code-bottles.jpg.asset.json";
@@ -22,10 +21,6 @@ const sides = [
   {
     image: colorCodingChartAsset.url,
     alt: "Color coding chart showing an owl made of colorful geometric shapes for kids",
-  },
-  {
-    image: colorSequenceChartAsset.url,
-    alt: "Arrange the colours in order activity chart with red, orange, blue, purple and green dots numbered one to five",
   },
   {
     image: caterpillarChartAsset.url,
