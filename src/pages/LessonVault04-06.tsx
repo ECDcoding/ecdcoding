@@ -3090,34 +3090,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
           
           <div className="overflow-hidden w-full relative group">
-            {/* Left Arrow */}
-            <button
-              onClick={() => {
-                if (carouselRef.current) {
-                  carouselRef.current.style.animationPlayState = 'paused';
-                  setCarouselPaused(true);
-                  carouselRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-                }
-              }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 shadow-lg transition-all opacity-80 hover:opacity-100"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            {/* Right Arrow */}
-            <button
-              onClick={() => {
-                if (carouselRef.current) {
-                  carouselRef.current.style.animationPlayState = 'paused';
-                  setCarouselPaused(true);
-                  carouselRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-                }
-              }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 shadow-lg transition-all opacity-80 hover:opacity-100"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
             <div 
               ref={carouselRef}
               className="flex gap-8 animate-scroll"
