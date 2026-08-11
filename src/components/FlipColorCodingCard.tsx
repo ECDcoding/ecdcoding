@@ -17,7 +17,7 @@ interface FlipColorCodingCardProps {
   recordingTime: number;
 }
 
-const sides = [
+export const colorCodingSides = [
   {
     image: colorCodingChartAsset.url,
     alt: "Color coding chart showing an owl made of colorful geometric shapes for kids",
@@ -59,7 +59,7 @@ const FlipColorCodingCard = ({
     e?.stopPropagation();
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrentIndex((prev) => (prev + 1) % sides.length);
+    setCurrentIndex((prev) => (prev + 1) % colorCodingSides.length);
     setTimeout(() => setIsAnimating(false), 600);
   };
 
@@ -90,7 +90,7 @@ const FlipColorCodingCard = ({
       </div>
 
       <div className="absolute top-2 left-2 z-20 flex gap-1">
-        {sides.map((side, index) => (
+        {colorCodingSides.map((side, index) => (
           <div
             key={side.image}
             className={`w-2 h-2 rounded-full transition-all ${
