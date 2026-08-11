@@ -64,7 +64,7 @@ import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
-import FlipColorCodingCard from "@/components/FlipColorCodingCard";
+import FlipColorCodingCard, { colorCodingSides } from "@/components/FlipColorCodingCard";
 import FlipProduceCard from "@/components/FlipProduceCard";
 import fruitsChartAsset from "@/assets/fruits-chart.jpg.asset.json";
 import vegetablesChartAsset from "@/assets/vegetables-chart.jpg.asset.json";
@@ -497,7 +497,19 @@ const LessonVault0406 = () => {
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
     "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500" },
     "Vegetables Chart": { image: vegetablesChartAsset.url, title: "Vegetables Chart", borderColor: "border-green-600" },
-    "Color Coding": { image: colorCodingChartAsset.url, title: "Color Coding", borderColor: "border-amber-500" },
+    "Color Coding": { title: "Color Coding", content: (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {colorCodingSides.map((side) => (
+          <img
+            key={side.image}
+            src={side.image}
+            alt={side.alt}
+            className="w-full h-auto rounded-lg border-2 border-amber-300 bg-white"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    ), borderColor: "border-amber-500" },
     "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
     "Domestic Animals": { image: domesticAnimalsCartoon, title: "Domestic Animals", borderColor: "border-orange-500" },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
