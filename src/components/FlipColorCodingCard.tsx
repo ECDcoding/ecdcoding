@@ -19,28 +19,31 @@ interface FlipColorCodingCardProps {
 
 export const colorCodingSides = [
   {
+    name: "Color Coding",
     image: colorCodingChartAsset.url,
     alt: "Color coding chart showing an owl made of colorful geometric shapes for kids",
   },
   {
+    name: "Colour the Caterpillars",
     image: caterpillarChartAsset.url,
     alt: "Use the code to colour the caterpillars activity sheet with colour code squares",
   },
   {
+    name: "Match the Pencils",
     image: matchPencilAsset.url,
     alt: "Match each coloured pencil to the correct empty box activity sheet",
   },
   {
+    name: "Colour the Bottles",
     image: bottlesAsset.url,
     alt: "Use the colour code squares to colour the bottles activity sheet",
   },
   {
+    name: "Colour the Ice Cream",
     image: iceCreamAsset.url,
     alt: "Use the code to colour the ice cream cones activity sheet",
   },
 ];
-
-const CARD_NAME = "Color Coding";
 
 const FlipColorCodingCard = ({
   onCardClick,
@@ -53,7 +56,8 @@ const FlipColorCodingCard = ({
   const [isAnimating, setIsAnimating] = useState(false);
 
   const currentData = colorCodingSides[currentIndex];
-  const isActive = selectedCardForTest === CARD_NAME;
+  const cardName = currentData.name;
+  const isActive = selectedCardForTest === cardName;
 
   const handleFlip = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -71,7 +75,7 @@ const FlipColorCodingCard = ({
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest("button") || target.closest(".flip-indicator")) return;
-    onCardClick(CARD_NAME);
+    onCardClick(cardName);
   };
 
   return (
@@ -110,7 +114,7 @@ const FlipColorCodingCard = ({
       >
         <CardContent className="p-0 relative" style={{ backfaceVisibility: "hidden" }}>
           <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-            Color Coding
+            {cardName}
           </h3>
           <img src={currentData.image} alt={currentData.alt} className="w-full h-auto rounded-lg" loading="lazy" />
           {isRecording && isActive && (
@@ -122,7 +126,7 @@ const FlipColorCodingCard = ({
       </div>
 
       <Button
-        onClick={onRecordingClick(CARD_NAME)}
+        onClick={onRecordingClick(cardName)}
         className={`absolute bottom-2 left-2 ${isRecording && isActive ? "bg-red-500 hover:bg-red-600" : "bg-lime-500 hover:bg-lime-600"} text-white rounded-full p-2 shadow-lg z-10`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
