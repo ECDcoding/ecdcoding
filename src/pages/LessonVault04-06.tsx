@@ -64,7 +64,7 @@ import fourWheelVehicles from "@/assets/four-wheel-vehicles.jpg";
 import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
-import FlipColorCodingCard from "@/components/FlipColorCodingCard";
+import FlipColorCodingCard, { colorCodingSides } from "@/components/FlipColorCodingCard";
 import FlipProduceCard from "@/components/FlipProduceCard";
 import fruitsChartAsset from "@/assets/fruits-chart.jpg.asset.json";
 import vegetablesChartAsset from "@/assets/vegetables-chart.jpg.asset.json";
