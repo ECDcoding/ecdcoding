@@ -496,6 +496,7 @@ const LessonVault0406 = () => {
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
     "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500" },
     "Vegetables Chart": { image: vegetablesChartAsset.url, title: "Vegetables Chart", borderColor: "border-green-600" },
+    "Color Coding Chart": { image: colorCodingChartAsset.url, title: "Color Coding Chart", borderColor: "border-amber-500" },
     "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
     "Domestic Animals": { image: domesticAnimalsCartoon, title: "Domestic Animals", borderColor: "border-orange-500" },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
