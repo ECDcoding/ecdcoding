@@ -6,6 +6,9 @@ import { RefreshCw } from "lucide-react";
 import colorCodingChartAsset from "@/assets/color-coding-chart.jpg.asset.json";
 import colorSequenceChartAsset from "@/assets/color-sequence-chart.jpg.asset.json";
 import caterpillarChartAsset from "@/assets/caterpillar-color-code-chart.jpg.asset.json";
+import matchPencilAsset from "@/assets/match-pencil-colors.jpg.asset.json";
+import bottlesAsset from "@/assets/color-code-bottles.jpg.asset.json";
+import iceCreamAsset from "@/assets/color-code-ice-cream.jpg.asset.json";
 
 interface FlipColorCodingCardProps {
   onCardClick: (cardName: string) => void;
@@ -27,6 +30,18 @@ const sides = [
   {
     image: caterpillarChartAsset.url,
     alt: "Use the code to colour the caterpillars activity sheet with colour code squares",
+  },
+  {
+    image: matchPencilAsset.url,
+    alt: "Match each coloured pencil to the correct empty box activity sheet",
+  },
+  {
+    image: bottlesAsset.url,
+    alt: "Use the colour code squares to colour the bottles activity sheet",
+  },
+  {
+    image: iceCreamAsset.url,
+    alt: "Use the code to colour the ice cream cones activity sheet",
   },
 ];
 
