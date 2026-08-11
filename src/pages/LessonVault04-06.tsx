@@ -3240,7 +3240,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-red-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Fruits Chart</h3>
-                  <img src={fruitsChartAsset.url} alt="Fruits chart showing apple, orange, grapes, banana, mango, watermelon, strawberry and more" className="w-full h-auto rounded-lg" loading="lazy" />
+                  <img src={fruitsChartAsset.url} alt="Fun fruits names for kids chart showing apple, banana, grapes, orange, strawberry, blueberry, mango, watermelon, pineapple, kiwi, cherry and papaya" className="w-full h-auto rounded-lg" loading="lazy" />
                   {isRecording && selectedCardForTest === "Fruits Chart" && (
                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
@@ -3405,7 +3405,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               >
                 <CardContent className="p-0 relative">
                   <h3 className="text-xl font-bold text-red-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Fruits Chart</h3>
-                  <img src={fruitsChartAsset.url} alt="Fruits chart showing apple, orange, grapes, banana, mango, watermelon, strawberry and more" className="w-full h-auto rounded-lg" loading="lazy" />
+                  <img src={fruitsChartAsset.url} alt="Fun fruits names for kids chart showing apple, banana, grapes, orange, strawberry, blueberry, mango, watermelon, pineapple, kiwi, cherry and papaya" className="w-full h-auto rounded-lg" loading="lazy" />
                   {isRecording && selectedCardForTest === "Fruits Chart" && (
                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
                       {recordingTime}s / 30s
