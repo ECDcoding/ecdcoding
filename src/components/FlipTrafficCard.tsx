@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAutoFlip } from "@/hooks/useAutoFlip";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
@@ -28,8 +29,8 @@ const FlipTrafficCard = ({
 
   const currentSide = trafficSides[currentIndex];
 
-  const handleFlip = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleFlip = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (isAnimating) return;
     
     setIsAnimating(true);
