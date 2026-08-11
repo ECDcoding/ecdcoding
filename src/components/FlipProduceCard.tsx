@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAutoFlip } from "@/hooks/useAutoFlip";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
@@ -51,13 +52,18 @@ const FlipProduceCard = ({
   const currentData = produceData[currentSide];
   const isActive = selectedCardForTest === "Fruits Chart" || selectedCardForTest === "Vegetables Chart";
 
-  const handleFlip = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleFlip = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % produceSides.length);
     setTimeout(() => setIsAnimating(false), 600);
   };
+
+  const cardRef = useAutoFlip<HTMLDivElement>({
+    onFlip: () => handleFlip(),
+    enabled: !isRecording,
+  });
 
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -67,6 +73,7 @@ const FlipProduceCard = ({
 
   return (
     <Card
+      ref={cardRef}
       className={`bg-white p-4 w-80 min-h-[400px] border-4 border-dashed ${currentData.borderColor} shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer overflow-hidden ${isAnimating ? "animate-pulse" : ""}`}
       onClick={handleClick}
       style={{ perspective: "1000px" }}

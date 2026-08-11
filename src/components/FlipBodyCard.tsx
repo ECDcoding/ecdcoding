@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAutoFlip } from "@/hooks/useAutoFlip";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
@@ -29,13 +30,18 @@ const FlipBodyCard = ({
   const currentImage = currentIndex === 0 ? girlBodyMyBody : boyBodyMyBody;
   const borderColor = currentIndex === 0 ? "border-yellow-400" : "border-red-400";
   
-  const handleFlip = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleFlip = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % bodySides.length);
     setTimeout(() => setIsAnimating(false), 600);
   };
   
+  const cardRef = useAutoFlip<HTMLDivElement>({
+    onFlip: () => handleFlip(),
+    enabled: !isRecording,
+  });
+
   const handleClick = (e: React.MouseEvent) => {
     // Don't trigger card click when clicking the mic button or flip icon
     if ((e.target as HTMLElement).closest('button, .flip-indicator')) {
@@ -46,6 +52,7 @@ const FlipBodyCard = ({
 
   return (
     <div 
+      ref={cardRef}
       className="flip-card-container w-80 flex-shrink-0"
       style={{ perspective: "1000px" }}
     >
