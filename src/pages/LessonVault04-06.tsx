@@ -3245,7 +3245,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 recordingTime={recordingTime}
               />
 
-              <FlipAnimalsCard              <FlipAnimalsCard
+              <FlipAnimalsCard
                 onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
@@ -3395,7 +3395,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 recordingTime={recordingTime}
               />
 
-              <FlipAnimalsCard              <FlipAnimalsCard
+              <FlipAnimalsCard
                 onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
                 isRecording={isRecording}
