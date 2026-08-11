@@ -1619,6 +1619,74 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   ];
 
+  const carouselItems = [
+    { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "traffic", category: "basic" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "generic" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "abc", category: "generic" as const, component: (
+      <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
+        <CardContent className="p-0 relative">
+          <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
+          <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
+          {isRecording && selectedCardForTest === "ABC Chart" && (
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+          )}
+        </CardContent>
+        <Button onClick={createRecordingHandler("ABC Chart")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABC Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+        </Button>
+      </Card>
+    )},
+    { key: "shapes", category: "basic" as const, component: (
+      <Card className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Shapes")}>
+        <CardContent className="p-0 relative">
+          <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
+          {isRecording && selectedCardForTest === "Basic Shapes" && (
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+          )}
+        </CardContent>
+        <Button onClick={createRecordingHandler("Basic Shapes")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+        </Button>
+      </Card>
+    )},
+    { key: "produce", category: "generic" as const, component: <FlipProduceCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "color", category: "basic" as const, component: <FlipColorCodingCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "animals", category: "generic" as const, component: <FlipAnimalsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "logic", category: "basic" as const, component: (
+      <Card className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Logic Thinking")}>
+        <CardContent className="p-0 relative">
+          <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
+          <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
+          {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+          )}
+        </CardContent>
+        <Button onClick={createRecordingHandler("Basic Logic Thinking")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Logic Thinking" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+        </Button>
+      </Card>
+    )},
+    { key: "bee", category: "generic" as const, component: (
+      <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Busy Bee")}>
+        <CardContent className="p-0 relative">
+          <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
+          <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
+          {isRecording && selectedCardForTest === "Busy Bee" && (
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+          )}
+        </CardContent>
+        <Button onClick={createRecordingHandler("Busy Bee")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+        </Button>
+      </Card>
+    )},
+    { key: "months", category: "generic" as const, component: <FlipMonthsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={(cardName) => createRecordingHandler(cardName)} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "numbers", category: "basic" as const, component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+  ];
+  const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
+  const animationDuration = 40 * (filteredItems.length / carouselItems.length);
+
   return (
     <div className="min-h-screen tailormade-lessons-texture">
       {/* Navigation Bar */}
@@ -3160,7 +3228,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               ref={carouselRef}
               className="flex gap-8 animate-scroll"
               style={{
-                animation: 'scroll-horizontal 40s linear infinite',
+                animation: `scroll-horizontal ${animationDuration}s linear infinite`,
                 width: 'max-content'
               }}
               onMouseEnter={(e) => {
@@ -3208,140 +3276,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 setTouchEnd(0);
               }}
             >
-              {[
-                { key: "body", category: "generic", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "traffic", category: "basic", component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "transport", category: "generic", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "abc", category: "generic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
-                      <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
-                      {isRecording && selectedCardForTest === "ABC Chart" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("ABC Chart")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABC Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "shapes", category: "basic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Shapes")}>
-                    <CardContent className="p-0 relative">
-                      <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
-                      {isRecording && selectedCardForTest === "Basic Shapes" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Basic Shapes")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "produce", category: "generic", component: <FlipProduceCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "color", category: "basic", component: <FlipColorCodingCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "animals", category: "generic", component: <FlipAnimalsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "logic", category: "basic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Logic Thinking")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
-                      <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
-                      {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Basic Logic Thinking")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Logic Thinking" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "bee", category: "generic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Busy Bee")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
-                      <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
-                      {isRecording && selectedCardForTest === "Busy Bee" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Busy Bee")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "months", category: "generic", component: <FlipMonthsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={(cardName) => createRecordingHandler(cardName)} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "numbers", category: "basic", component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-              ].filter((item) => carouselFilter === 'all' || item.category === carouselFilter).map((item, idx) => (
+              {filteredItems.map((item, idx) => (
                 <div key={`set1-${item.key}-${idx}`} className="flex-shrink-0">{item.component}</div>
               ))}
 
               {/* Duplicate cards for infinite loop */}
-              {[
-                { key: "body", category: "generic", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "traffic", category: "basic", component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "transport", category: "generic", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "abc", category: "generic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
-                      <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
-                      {isRecording && selectedCardForTest === "ABC Chart" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("ABC Chart")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABC Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "shapes", category: "basic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-green-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Shapes")}>
-                    <CardContent className="p-0 relative">
-                      <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
-                      {isRecording && selectedCardForTest === "Basic Shapes" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Basic Shapes")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "produce", category: "generic", component: <FlipProduceCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "color", category: "basic", component: <FlipColorCodingCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "animals", category: "generic", component: <FlipAnimalsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "bee", category: "generic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Busy Bee")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
-                      <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
-                      {isRecording && selectedCardForTest === "Busy Bee" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Busy Bee")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "logic", category: "basic", component: (
-                  <Card className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Logic Thinking")}>
-                    <CardContent className="p-0 relative">
-                      <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
-                      <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
-                      {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
-                        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
-                      )}
-                    </CardContent>
-                    <Button onClick={createRecordingHandler("Basic Logic Thinking")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Logic Thinking" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-                    </Button>
-                  </Card>
-                )},
-                { key: "months", category: "generic", component: <FlipMonthsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={(cardName) => createRecordingHandler(cardName)} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-                { key: "numbers", category: "basic", component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-              ].filter((item) => carouselFilter === 'all' || item.category === carouselFilter).map((item, idx) => (
+              {filteredItems.map((item, idx) => (
                 <div key={`set2-${item.key}-${idx}`} className="flex-shrink-0">{item.component}</div>
               ))}
             </div>
