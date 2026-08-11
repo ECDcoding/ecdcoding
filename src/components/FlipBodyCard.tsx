@@ -37,6 +37,11 @@ const FlipBodyCard = ({
     setTimeout(() => setIsAnimating(false), 600);
   };
   
+  const cardRef = useAutoFlip<HTMLDivElement>({
+    onFlip: () => handleFlip(),
+    enabled: !isRecording,
+  });
+
   const handleClick = (e: React.MouseEvent) => {
     // Don't trigger card click when clicking the mic button or flip icon
     if ((e.target as HTMLElement).closest('button, .flip-indicator')) {
@@ -47,6 +52,7 @@ const FlipBodyCard = ({
 
   return (
     <div 
+      ref={cardRef}
       className="flip-card-container w-80 flex-shrink-0"
       style={{ perspective: "1000px" }}
     >

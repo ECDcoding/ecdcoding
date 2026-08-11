@@ -41,6 +41,11 @@ const FlipTrafficCard = ({
     }, 600);
   };
 
+  const cardRef = useAutoFlip<HTMLDivElement>({
+    onFlip: () => handleFlip(),
+    enabled: !isRecording,
+  });
+
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button') || target.closest('.flip-indicator')) {
@@ -51,6 +56,7 @@ const FlipTrafficCard = ({
 
   return (
     <Card 
+      ref={cardRef}
       className={`bg-white p-4 w-80 min-h-[400px] border-4 border-dashed border-pink-400 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer overflow-hidden ${isAnimating ? 'animate-pulse' : ''}`}
       onClick={handleClick}
       style={{
