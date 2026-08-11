@@ -3109,7 +3109,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 ],
               },
               {
-                heading: "Basic Logic Lessons",
+                heading: "Basic Logic Analysis",
                 filter: "basic" as const,
                 accent: "text-amber-400",
                 items: [
