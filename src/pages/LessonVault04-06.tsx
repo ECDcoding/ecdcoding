@@ -182,6 +182,7 @@ const LessonVault0406 = () => {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
+  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'basic'>('all');
   const [testResults, setTestResults] = useState<{
     subject: string;
     audioUrl: string;
