@@ -3100,6 +3100,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             {[
               {
                 heading: "Generic Lessons",
+                filter: "generic" as const,
                 accent: "text-lime-400",
                 items: [
                   "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
@@ -3109,6 +3110,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               },
               {
                 heading: "Basic Logic Lessons",
+                filter: "basic" as const,
                 accent: "text-amber-400",
                 items: [
                   "Traffic Robot", "Stop Sign", "Basic Shapes",
@@ -3116,24 +3118,41 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
                 ],
               },
-            ].map((group) => (
-              <div key={group.heading} className="bg-black/20 rounded-xl p-5 border border-white/10">
-                <h2 className={`text-xl font-bold mb-3 ${group.accent}`}>{group.heading}</h2>
-                <ul className="flex flex-wrap gap-2">
-                  {group.items.filter((name) => carouselCardData[name]).map((name) => (
-                    <li key={name}>
-                      <button
-                        type="button"
-                        onClick={() => handleCardClick(name)()}
-                        className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-                      >
-                        {carouselCardData[name]?.title || name}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            ].map((group) => {
+              const isActive = carouselFilter === group.filter;
+              return (
+                <div
+                  key={group.heading}
+                  className={`rounded-xl p-5 border transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40"
+                      : "bg-black/20 border-white/10 hover:bg-white/10"
+                  }`}
+                  onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
+                >
+                  <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
+                    {group.heading}
+                    {isActive && <span className="text-xs bg-lime-500 text-black px-2 py-0.5 rounded-full">Showing</span>}
+                  </h2>
+                  <ul className="flex flex-wrap gap-2">
+                    {group.items.filter((name) => carouselCardData[name]).map((name) => (
+                      <li key={name}>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCardClick(name)();
+                          }}
+                          className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                        >
+                          {carouselCardData[name]?.title || name}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </nav>
 
           <div className="overflow-hidden w-full relative group">
