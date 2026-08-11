@@ -67,6 +67,7 @@ import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import FlipProduceCard from "@/components/FlipProduceCard";
 import fruitsChartAsset from "@/assets/fruits-chart.jpg.asset.json";
 import vegetablesChartAsset from "@/assets/vegetables-chart.jpg.asset.json";
+import colorCodingChartAsset from "@/assets/color-coding-chart.jpg.asset.json";
 import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
 import vowelsBackgroundMusic from "@/assets/vowels-background-music.mp3";
@@ -495,6 +496,7 @@ const LessonVault0406 = () => {
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
     "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500" },
     "Vegetables Chart": { image: vegetablesChartAsset.url, title: "Vegetables Chart", borderColor: "border-green-600" },
+    "Color Coding Chart": { image: colorCodingChartAsset.url, title: "Color Coding Chart", borderColor: "border-amber-500" },
     "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
     "Domestic Animals": { image: domesticAnimalsCartoon, title: "Domestic Animals", borderColor: "border-orange-500" },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
@@ -3245,6 +3247,29 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 recordingTime={recordingTime}
               />
 
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Color Coding Chart")}
+              >
+                <CardContent className="p-0 relative">
+                  <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Color Coding Chart</h3>
+                  <img src={colorCodingChartAsset.url} alt="Color coding chart showing an owl made of colorful geometric shapes for kids" className="w-full h-auto rounded-lg" />
+                  {isRecording && selectedCardForTest === "Color Coding Chart" && (
+                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
+                </CardContent>
+                <Button
+                  onClick={createRecordingHandler("Color Coding Chart")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Color Coding Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                </Button>
+              </Card>
+
               <FlipAnimalsCard
                 onCardClick={(cardName) => handleCardClick(cardName)()}
                 onRecordingClick={createRecordingHandler}
@@ -3394,6 +3419,29 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 selectedCardForTest={selectedCardForTest}
                 recordingTime={recordingTime}
               />
+
+              <Card 
+                className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+                onClick={handleCardClick("Color Coding Chart")}
+              >
+                <CardContent className="p-0 relative">
+                  <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Color Coding Chart</h3>
+                  <img src={colorCodingChartAsset.url} alt="Color coding chart showing an owl made of colorful geometric shapes for kids" className="w-full h-auto rounded-lg" />
+                  {isRecording && selectedCardForTest === "Color Coding Chart" && (
+                     <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">
+                      {recordingTime}s / 30s
+                    </div>
+                  )}
+                </CardContent>
+                <Button
+                  onClick={createRecordingHandler("Color Coding Chart")}
+                  className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Color Coding Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                </Button>
+              </Card>
 
               <FlipAnimalsCard
                 onCardClick={(cardName) => handleCardClick(cardName)()}
