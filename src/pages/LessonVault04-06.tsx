@@ -3093,7 +3093,48 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               {/* Removed central mic - now on each card */}
             </div>
           </div>
-          
+
+          {/* Lesson index navigation */}
+          <nav aria-label="Verbal Testing Space lessons" className="mb-10 max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
+            {[
+              {
+                heading: "Generic Lessons",
+                accent: "text-lime-400",
+                items: [
+                  "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
+                  "Wild Animals", "Domestic Animals", "Busy Bee", "Transportation",
+                  "Months of the Year", "Seasons of the Year",
+                ],
+              },
+              {
+                heading: "Basic Logic Lessons",
+                accent: "text-amber-400",
+                items: [
+                  "Traffic Robot", "Stop Sign", "Basic Shapes",
+                  ...colorCodingSides.map((s) => s.name),
+                  "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
+                ],
+              },
+            ].map((group) => (
+              <div key={group.heading} className="bg-black/20 rounded-xl p-5 border border-white/10">
+                <h2 className={`text-xl font-bold mb-3 ${group.accent}`}>{group.heading}</h2>
+                <ul className="flex flex-wrap gap-2">
+                  {group.items.filter((name) => carouselCardData[name]).map((name) => (
+                    <li key={name}>
+                      <button
+                        type="button"
+                        onClick={() => handleCardClick(name)()}
+                        className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                      >
+                        {carouselCardData[name]?.title || name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+
           <div className="overflow-hidden w-full relative group">
             <div 
               ref={carouselRef}
