@@ -65,6 +65,8 @@ import twoWheelVehicles from "@/assets/two-wheel-vehicles.jpg";
 import domesticAnimalsChart from "@/assets/domestic-animals-chart.jpg";
 import wildAnimalsChart from "@/assets/wild-animals-chart.jpg";
 import FlipProduceCard from "@/components/FlipProduceCard";
+import fruitsChartAsset from "@/assets/fruits-chart.jpg.asset.json";
+import vegetablesChartAsset from "@/assets/vegetables-chart.jpg.asset.json";
 import alphabetSong from "@/assets/ximo-abc-song.mp3";
 import countingSong from "@/assets/basic-counting-song.mp3";
 import vowelsBackgroundMusic from "@/assets/vowels-background-music.mp3";
