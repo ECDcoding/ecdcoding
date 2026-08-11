@@ -5119,12 +5119,13 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <div className="flex items-center justify-between mb-2">
                 <Label className="text-sm font-semibold">User Information</Label>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={() => setShowCommunityFeed(!showCommunityFeed)}
-                  className="text-xs"
+                  className="justify-start gap-2"
+                  style={{ backgroundColor: '#2a2d34', color: 'white', borderColor: 'rgba(255,255,255,0.1)' }}
                 >
-                  <Users className="h-3 w-3 mr-1" />
+                  <Users className="h-4 w-4" />
                   {showCommunityFeed ? 'Hide Community Feedback' : 'Community Feedback'}
                 </Button>
               </div>
