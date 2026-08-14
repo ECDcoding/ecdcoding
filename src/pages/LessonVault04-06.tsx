@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -210,7 +210,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     title?: string;
     content?: React.ReactNode;
     borderColor?: string;
-    gallery?: Array<{ label: string; image: string }>;
+    gallery?: Array<{ label: string; image?: string; content?: React.ReactNode }>;
   } | null>(null);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
@@ -475,8 +475,30 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     }
   };
   
+  const monthsOfYearContent = (
+    <div className="grid grid-cols-2 gap-2">
+      {[
+        ["January", "bg-red-500"], ["February", "bg-orange-500"], ["March", "bg-yellow-500"],
+        ["April", "bg-green-500"], ["May", "bg-teal-500"], ["June", "bg-blue-500"],
+        ["July", "bg-indigo-500"], ["August", "bg-purple-500"], ["September", "bg-pink-500"],
+        ["October", "bg-rose-500"], ["November", "bg-cyan-500"], ["December", "bg-emerald-500"],
+      ].map(([m, c]) => (
+        <div key={m} className={`${c} text-white font-bold rounded-lg p-3 text-center`}>{m}</div>
+      ))}
+    </div>
+  );
+
+  const seasonsOfYearContent = (
+    <div className="grid grid-cols-2 gap-3">
+      <div className="bg-yellow-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">☀️ Summer</div>
+      <div className="bg-sky-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">❄️ Winter</div>
+      <div className="bg-amber-600 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🍂 Autumn</div>
+      <div className="bg-lime-500 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🌸 Spring</div>
+    </div>
+  );
+
   // Carousel card data for full-screen view
-  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image: string }> }> = {
+  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image?: string; content?: React.ReactNode }> }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400", gallery: [
       { label: "Girl's Body", image: girlBodyMyBody },
       { label: "Boy's Body", image: boyBodyMyBody },
@@ -501,8 +523,26 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
           <TrafficLightProgress mode="traffic" />
         </div>
       </div>
-    ), borderColor: "border-pink-400" },
-    "Stop Sign": { image: stopSign, title: "Stop Sign", borderColor: "border-red-500" },
+    ), borderColor: "border-pink-400", gallery: [
+      { label: "Traffic Robot", content: (
+        <div className="flex flex-col items-center justify-center py-6">
+          <div className="transform scale-150">
+            <TrafficLightProgress mode="traffic" />
+          </div>
+        </div>
+      ) },
+      { label: "Stop Sign", image: stopSign },
+    ] },
+    "Stop Sign": { image: stopSign, title: "Stop Sign", borderColor: "border-red-500", gallery: [
+      { label: "Stop Sign", image: stopSign },
+      { label: "Traffic Robot", content: (
+        <div className="flex flex-col items-center justify-center py-6">
+          <div className="transform scale-150">
+            <TrafficLightProgress mode="traffic" />
+          </div>
+        </div>
+      ) },
+    ] },
     "Basic Logic": { title: "", content: (
       <div className="flex flex-col items-center justify-center">
         <div className="transform scale-150">
@@ -554,7 +594,10 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
       { label: "Wild Animals", image: wildAnimalsChart },
     ] },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
-    "Months of the Year": { title: "Months of the Year", content: (
+    "Months of the Year": { title: "Months of the Year", gallery: [
+      { label: "Months of the Year", content: monthsOfYearContent },
+      { label: "Seasons of the Year", content: seasonsOfYearContent },
+    ], content: (
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-red-500 text-white font-bold rounded-lg p-3 text-center">January</div>
@@ -572,7 +615,10 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         </div>
       </div>
     ), borderColor: "border-amber-500" },
-    "Seasons of the Year": { title: "Seasons of the Year", content: (
+    "Seasons of the Year": { title: "Seasons of the Year", gallery: [
+      { label: "Seasons of the Year", content: seasonsOfYearContent },
+      { label: "Months of the Year", content: monthsOfYearContent },
+    ], content: (
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-yellow-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">☀️ Summer</div>
         <div className="bg-sky-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">❄️ Winter</div>
@@ -1799,7 +1845,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   ];
 
   // Focused-area carousel flow: the clicked set's gallery, or every card in the active list
-  const focusFlow: Array<{ label: string; image: string }> = (() => {
+  const focusFlow: Array<{ label: string; image?: string; content?: React.ReactNode }> = (() => {
     const focused = focusedLessonCard ? carouselCardData[focusedLessonCard] : null;
     if (focused?.gallery?.length) return focused.gallery;
     if (focused?.image) return [{ label: focused.title || focusedLessonCard!, image: focused.image }];
@@ -4519,20 +4565,34 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     const gi = focusFlowIndex % gal.length;
                     const g = gal[gi];
                     return (
-                      <div className="relative">
-                        <div className="flex items-center justify-center">
-                          <img src={g.image} alt={g.label} className="max-w-full max-h-[55vh] object-contain rounded-lg shadow-lg" />
-                        </div>
+                       <div className="relative">
+                         <div className="flex items-center justify-center px-14">
+                           {g.image ? (
+                             <img src={g.image} alt={g.label} className="max-w-full max-h-[55vh] object-contain rounded-lg shadow-lg" />
+                           ) : (
+                             <div className="w-full max-h-[55vh] overflow-y-auto">{g.content}</div>
+                           )}
+                         </div>
                         <p className="text-center text-lg font-semibold mt-2">{g.label}</p>
                         {gal.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => setFocusFlowIndex((p) => (p + 1) % gal.length)}
-                            className="absolute top-1/2 right-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
-                            aria-label="Next card"
-                          >
-                            <ChevronRight className="h-7 w-7" />
-                          </button>
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => setFocusFlowIndex((p) => (p - 1 + gal.length) % gal.length)}
+                              className="absolute top-1/2 left-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
+                              aria-label="Previous card"
+                            >
+                              <ChevronLeft className="h-7 w-7" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setFocusFlowIndex((p) => (p + 1) % gal.length)}
+                              className="absolute top-1/2 right-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
+                              aria-label="Next card"
+                            >
+                              <ChevronRight className="h-7 w-7" />
+                            </button>
+                          </>
                         )}
                         <div className="flex justify-center gap-1.5 mt-3">
                           {gal.map((_, i) => (
@@ -4542,7 +4602,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </div>
                     );
                   })()
-                ) : fullScreenCard.image && (
+                ) : fullScreenCard.image ? (
                   <div className="flex items-center justify-center">
                     <img 
                       src={fullScreenCard.image} 
@@ -4550,9 +4610,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       className="max-w-full max-h-[60vh] object-contain rounded-lg shadow-lg"
                     />
                   </div>
-                )}
+                ) : null}
                 
-                {fullScreenCard.content && (
+                {!fullScreenCard.gallery && fullScreenCard.content && (
                   <div className="py-8">
                     {fullScreenCard.content}
                   </div>
