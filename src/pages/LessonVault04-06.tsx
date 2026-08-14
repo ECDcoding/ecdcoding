@@ -501,8 +501,26 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
           <TrafficLightProgress mode="traffic" />
         </div>
       </div>
-    ), borderColor: "border-pink-400" },
-    "Stop Sign": { image: stopSign, title: "Stop Sign", borderColor: "border-red-500" },
+    ), borderColor: "border-pink-400", gallery: [
+      { label: "Traffic Robot", content: (
+        <div className="flex flex-col items-center justify-center py-6">
+          <div className="transform scale-150">
+            <TrafficLightProgress mode="traffic" />
+          </div>
+        </div>
+      ) },
+      { label: "Stop Sign", image: stopSign },
+    ] },
+    "Stop Sign": { image: stopSign, title: "Stop Sign", borderColor: "border-red-500", gallery: [
+      { label: "Stop Sign", image: stopSign },
+      { label: "Traffic Robot", content: (
+        <div className="flex flex-col items-center justify-center py-6">
+          <div className="transform scale-150">
+            <TrafficLightProgress mode="traffic" />
+          </div>
+        </div>
+      ) },
+    ] },
     "Basic Logic": { title: "", content: (
       <div className="flex flex-col items-center justify-center">
         <div className="transform scale-150">
