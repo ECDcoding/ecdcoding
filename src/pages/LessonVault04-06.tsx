@@ -572,7 +572,10 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
       { label: "Wild Animals", image: wildAnimalsChart },
     ] },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
-    "Months of the Year": { title: "Months of the Year", content: (
+    "Months of the Year": { title: "Months of the Year", gallery: [
+      { label: "Months of the Year", content: monthsOfYearContent },
+      { label: "Seasons of the Year", content: seasonsOfYearContent },
+    ], content: (
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-red-500 text-white font-bold rounded-lg p-3 text-center">January</div>
@@ -590,7 +593,10 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         </div>
       </div>
     ), borderColor: "border-amber-500" },
-    "Seasons of the Year": { title: "Seasons of the Year", content: (
+    "Seasons of the Year": { title: "Seasons of the Year", gallery: [
+      { label: "Seasons of the Year", content: seasonsOfYearContent },
+      { label: "Months of the Year", content: monthsOfYearContent },
+    ], content: (
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-yellow-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">☀️ Summer</div>
         <div className="bg-sky-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">❄️ Winter</div>
