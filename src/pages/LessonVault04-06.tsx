@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -182,7 +182,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
-  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'basic'>('all');
+  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
   const [testResults, setTestResults] = useState<{
     subject: string;
     audioUrl: string;
@@ -1621,8 +1621,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const carouselItems = [
     { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "traffic", category: "basic" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "transport", category: "generic" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
@@ -1687,24 +1687,45 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
 
+  // Visual set tint per category so each carousel set is isolated at a glance
+  const categorySetStyles: Record<'generic' | 'road' | 'basic', string> = {
+    generic: "bg-lime-500/15 ring-1 ring-lime-400/40",
+    road: "bg-sky-500/15 ring-1 ring-sky-400/40",
+    basic: "bg-amber-500/15 ring-1 ring-amber-400/40",
+  };
+
   // Verbal Testing Space lesson index groups (left / right panels)
   const lessonGroups = [
     {
       heading: "Generic Analysis",
       filter: "generic" as const,
       accent: "text-lime-400",
+      activeClass: "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40",
+      badgeClass: "bg-lime-500 text-black",
       items: [
         "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
-        "Wild Animals", "Domestic Animals", "Busy Bee", "Transportation",
+        "Wild Animals", "Domestic Animals", "Busy Bee",
         "Months of the Year", "Seasons of the Year",
+      ],
+    },
+    {
+      heading: "Road Safety & Transport Analysis",
+      filter: "road" as const,
+      accent: "text-sky-400",
+      activeClass: "bg-sky-500/20 border-sky-400/60 ring-1 ring-sky-400/40",
+      badgeClass: "bg-sky-400 text-black",
+      items: [
+        "Traffic Robot", "Stop Sign", "Transportation",
       ],
     },
     {
       heading: "Basic Logic Analysis",
       filter: "basic" as const,
       accent: "text-amber-400",
+      activeClass: "bg-amber-500/20 border-amber-400/60 ring-1 ring-amber-400/40",
+      badgeClass: "bg-amber-400 text-black",
       items: [
-        "Traffic Robot", "Stop Sign", "Basic Shapes",
+        "Basic Shapes",
         ...colorCodingSides.map((s) => s.name),
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
       ],
@@ -1716,16 +1737,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     return (
       <div
         className={`rounded-xl p-5 border transition-all cursor-pointer h-full ${
-          isActive
-            ? "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40"
-            : "bg-black/20 border-white/10 hover:bg-white/10"
+          isActive ? group.activeClass : "bg-black/20 border-white/10 hover:bg-white/10"
         }`}
         onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
       >
         <p className="text-xs uppercase tracking-widest text-white/50 mb-1">Carousel Card List | Sets</p>
         <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
           {group.heading}
-          {isActive && <span className="text-xs bg-lime-500 text-black px-2 py-0.5 rounded-full">Showing</span>}
+          {isActive && <span className={`text-xs px-2 py-0.5 rounded-full ${group.badgeClass}`}>Showing</span>}
         </h2>
         <ul className="flex flex-wrap gap-2">
           {group.items.filter((name) => carouselCardData[name]).map((name) => (
@@ -3293,7 +3312,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           )}
           {/* Three-column layout: lesson lists flanking the testing header */}
           <div className="grid gap-6 mb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1fr)] items-start">
-            <nav aria-label="Generic lessons">{renderLessonGroup(lessonGroups[0])}</nav>
+            <div className="space-y-6">
+              <nav aria-label="Generic lessons">{renderLessonGroup(lessonGroups[0])}</nav>
+              <nav aria-label="Road safety and transport lessons">{renderLessonGroup(lessonGroups[1])}</nav>
+            </div>
 
             <div className="text-center">
               <h1 className="text-3xl md:text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
@@ -3329,25 +3351,37 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
             </div>
 
-            <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[1])}</nav>
+            <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[2])}</nav>
           </div>
 
-          {/* Carousel Flow steps */}
+          {/* Carousel Flow — ordered steps */}
           <div className="mb-6">
-            <h2 className="text-center text-2xl font-bold text-white/90 mb-4">Carousel Flow</h2>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <h2
+              className="text-center text-2xl font-bold text-lime-400 mb-4"
+              style={{ fontFamily: '"Bungee Shade", cursive' }}
+            >
+              Carousel Flow
+            </h2>
+            <ol className="flex flex-col lg:flex-row items-stretch justify-center gap-2 lg:gap-0">
               {[
-                "Put on your headsets",
-                "Click on the chosen card",
-                "Record your analysis",
-                "Save & share",
-              ].map((step, i) => (
-                <div key={step} className="rounded-xl border border-white/15 bg-black/20 p-4 text-center">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-lime-500 text-black font-bold text-sm mb-2">{i + 1}</span>
-                  <p className="text-white font-semibold text-sm">{step}</p>
-                </div>
+                "Put on Your Headsets",
+                "Click on the Chosen Card",
+                "Record Your Analysis",
+                "Save & Share",
+              ].map((step, i, arr) => (
+                <li key={step} className="flex items-center gap-2 lg:gap-3">
+                  <div className="flex items-center gap-3 rounded-full border border-white/15 bg-black/25 px-4 py-2">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-lime-500 text-black font-bold text-sm flex-shrink-0">
+                      {i + 1}
+                    </span>
+                    <span className="text-white font-semibold text-sm whitespace-nowrap">{step}</span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <ChevronRight className="h-5 w-5 text-lime-400 rotate-90 lg:rotate-0 mx-auto lg:mx-1 flex-shrink-0" />
+                  )}
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
 
           <div className="overflow-hidden w-full relative group">
@@ -3404,12 +3438,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               }}
             >
               {filteredItems.map((item, idx) => (
-                <div key={`set1-${item.key}-${idx}`} className="flex-shrink-0">{item.component}</div>
+                <div key={`set1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
 
               {/* Duplicate cards for infinite loop */}
               {filteredItems.map((item, idx) => (
-                <div key={`set2-${item.key}-${idx}`} className="flex-shrink-0">{item.component}</div>
+                <div key={`set2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
             </div>
           </div>
