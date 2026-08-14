@@ -3368,10 +3368,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <div className="text-center">
-              <h1 className="text-3xl md:text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-                Verbal Testing Space
-              </h1>
-              <p className="mt-3 text-white/80 italic">A dialogue between teacher &amp; learner</p>
+              <p className="text-white/80 italic">A dialogue between teacher &amp; learner</p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <Button
                   onClick={playNarration}
