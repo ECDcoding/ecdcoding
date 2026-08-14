@@ -2051,7 +2051,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                     <FileText className="mr-2 h-4 w-4" /> FLC Report
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => toast({ title: "Users' Media", description: "Coming soon." })}>
+                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
                     <Film className="mr-2 h-4 w-4" /> Users' Media
                   </DropdownMenuItem>
                   <DropdownMenuSub>
