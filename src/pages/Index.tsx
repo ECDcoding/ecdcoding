@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import Chatbot from "@/components/Chatbot";
+import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
 import { Copyright, ChevronDown, Calendar, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
@@ -46,7 +47,9 @@ const Index = () => {
         <CallToAction />
       </main>
       <Chatbot onVoiceModeChange={setIsVoiceModeActive} />
-      
+
+      <ExpoPhotoCarousel />
+
       {/* Footer */}
       <footer className="w-full bg-background border-t border-border py-6 px-4">
         <div className="flex items-center justify-center w-full">
