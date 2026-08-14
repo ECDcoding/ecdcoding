@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
+import { useAuth } from "@/hooks/useAuth";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import Chatbot from "@/components/Chatbot";
