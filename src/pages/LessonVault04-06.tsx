@@ -209,6 +209,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     title?: string;
     content?: React.ReactNode;
     borderColor?: string;
+    gallery?: Array<{ label: string; image: string }>;
   } | null>(null);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
@@ -474,10 +475,15 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   };
   
   // Carousel card data for full-screen view
-  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string }> = {
+  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image: string }> }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
     "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400" },
-    "My Body": { image: girlBodyMyBody, title: "My Body", borderColor: "border-gradient" },
+    "My Body": { image: girlBodyMyBody, title: "My Body", borderColor: "border-fuchsia-500", gallery: [
+      { label: "Girl's Body", image: girlBodyMyBody },
+      { label: "Boy's Body", image: boyBodyMyBody },
+      { label: "Girl's Body Parts", image: girlBodyPartsDiagram },
+      { label: "Boy's Body Parts", image: boyBodyPartsDiagram },
+    ] },
     "Traffic Robot": { title: "Traffic Robot", content: (
       <div className="flex flex-col items-center justify-center">
         <div className="transform scale-150">
@@ -493,7 +499,17 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         </div>
       </div>
     ), borderColor: "border-pink-400" },
-    "Transportation": { image: dumpTruckIcon, title: "Transportation", borderColor: "border-blue-600" },
+    "Transportation": { image: dumpTruckIcon, title: "Transportation", borderColor: "border-blue-600", gallery: [
+      { label: "Road Transport", image: roadTransportVehicles },
+      { label: "Four Wheels", image: fourWheelVehicles },
+      { label: "Two Wheels", image: twoWheelVehicles },
+      { label: "Rail Transport", image: railTransportVehicles },
+      { label: "Air Transport", image: airplaneIcon },
+      { label: "Water Transport", image: boatShipIcon },
+      { label: "Heavy Duty", image: dumpTruckIcon },
+      { label: "Stop Sign", image: stopSign },
+      { label: "Road Safety ABC", image: abcSafetyImage },
+    ] },
     "ABC Chart": { image: alphabetChart, title: "ABC Chart", borderColor: "border-purple-500" },
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
     "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500" },
@@ -1711,7 +1727,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       items: [
         "My Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
-        "Months of the Year", "Seasons of the Year",
+        "Months of the Year", "Seasons of the Year", "Transportation",
       ],
     },
     {
@@ -4505,7 +4521,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </h2>
                 )}
                 
-                {fullScreenCard.image && (
+                {fullScreenCard.gallery ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto">
+                    {fullScreenCard.gallery.map((g) => (
+                      <div key={g.label} className="rounded-xl border-2 border-dashed border-blue-300 p-2 bg-white">
+                        <img src={g.image} alt={g.label} className="w-full h-32 object-contain" />
+                        <p className="text-center text-sm font-semibold mt-1">{g.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : fullScreenCard.image && (
                   <div className="flex items-center justify-center">
                     <img 
                       src={fullScreenCard.image} 
