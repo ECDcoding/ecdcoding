@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -1698,6 +1698,82 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </Link>
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Open vault navigation"
+                    className="mb-1 ml-2 text-white hover:bg-white/15 border border-white/30 rounded-md"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-60 bg-background z-50">
+                  <DropdownMenuItem onClick={() => verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                    <Mic className="mr-2 h-4 w-4" /> VTS
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                    <FileText className="mr-2 h-4 w-4" /> FLC Report
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => toast({ title: "Users' Media", description: "Coming soon." })}>
+                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <BookOpen className="mr-2 h-4 w-4" /> Learner Records
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-64 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
+                          <Mic className="mr-2 h-4 w-4" /> Individual VTS Recordings
+                        </DropdownMenuItem>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <PenLine className="mr-2 h-4 w-4" /> Assignments
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>Hand Writing</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>Reading & Comprehension</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Coding Programs", description: "Coming soon." })}>Coding Programs</DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <FlaskConical className="mr-2 h-4 w-4" /> Research & Dev
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>
+                                <Recycle className="mr-2 h-4 w-4" /> Recycle My Robot
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
+                                <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
+                    <Newspaper className="mr-2 h-4 w-4" /> News
+                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <CalendarDays className="mr-2 h-4 w-4" /> Events
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>Recycle My Robot</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>ECD Expo 2026</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           <div className="flex flex-col items-end gap-1">
