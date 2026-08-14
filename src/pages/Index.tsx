@@ -68,7 +68,7 @@ const Index = () => {
               <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
                 <DropdownMenuItem asChild>
                   <Link to="/ecd-expo-2026" className="cursor-pointer">
-                    ECD Coding and Robotics Expo 2026
+                    ECD Coding and Robotics Expo
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

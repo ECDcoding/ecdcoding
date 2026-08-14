@@ -114,7 +114,7 @@ const ExpoAdminDashboard = () => {
 
       <div className="container mx-auto max-w-7xl px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">ECD Coding & Robotics Expo 2026</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">ECD Coding & Robotics Expo</h1>
           <p className="text-muted-foreground">Manage all expo participants — sponsors, exhibitors, speakers, and delegates.</p>
         </div>
 
@@ -315,7 +315,7 @@ const ExpoAdminDashboard = () => {
       {/* Footer */}
       <footer className="mt-12 py-6 px-6 border-t border-border bg-card/50">
         <p className="text-center text-sm text-muted-foreground">
-          Copyright © ECD Coding and Robotics Expo 2026. All rights reserved.
+          Copyright © ECD Coding and Robotics Expo. All rights reserved.
         </p>
       </footer>
     </div>

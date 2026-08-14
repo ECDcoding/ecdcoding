@@ -66,7 +66,7 @@ const BusinessProposalDialog = ({ open, onOpenChange }: Props) => {
         onContextMenu={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="text-white">Business Proposal — ECD Coding & Robotics Expo 2026</DialogTitle>
+          <DialogTitle className="text-white">Business Proposal — ECD Coding & Robotics Expo</DialogTitle>
         </DialogHeader>
         <div
           className="relative overflow-y-auto max-h-[78vh] rounded-md bg-[#2a2d34] select-none py-6 px-2 sm:px-6"
