@@ -3380,21 +3380,28 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </p>
               </div>
 
-              {/* Flowing carousel of lesson cards */}
+              {/* Picture — identical flowing carousel to the original one */}
               <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden">
                 {filteredItems.length > 0 ? (
-                  <div className="overflow-hidden py-3 group">
+                  <div className="overflow-hidden w-full relative">
                     <div
-                      className="flex gap-4 animate-scroll-horizontal group-hover:[animation-play-state:paused]"
-                      style={{ animationDuration: `${focusFlowDuration}s`, width: "max-content" }}
+                      className="flex gap-8 py-3"
+                      style={{
+                        animation: `scroll-horizontal ${animationDuration}s linear infinite`,
+                        width: 'max-content',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.animationPlayState = 'paused';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.animationPlayState = 'running';
+                      }}
                     >
-                      {[...filteredItems, ...filteredItems].map((item, i) => (
-                        <div
-                          key={`${item.key}-${i}`}
-                          className={`shrink-0 w-[300px] rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}
-                        >
-                          {item.component}
-                        </div>
+                      {filteredItems.map((item, idx) => (
+                        <div key={`focus1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
+                      ))}
+                      {filteredItems.map((item, idx) => (
+                        <div key={`focus2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
                       ))}
                     </div>
                   </div>
