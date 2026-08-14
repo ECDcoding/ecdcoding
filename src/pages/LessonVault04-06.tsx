@@ -3389,7 +3389,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     >
                       {[...filteredItems, ...filteredItems].map((item, i) => (
                         <div
-                          key={`${item.name}-${i}`}
+                          key={`${item.key}-${i}`}
                           className={`shrink-0 w-[300px] rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}
                         >
                           {item.component}
