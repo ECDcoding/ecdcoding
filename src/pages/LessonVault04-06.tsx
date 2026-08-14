@@ -1619,10 +1619,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   ];
 
-  const carouselItems = [
+  const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic'; tint?: string; component: React.ReactNode }> = [
     { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "generic" as const, tint: "bg-blue-500/15 ring-1 ring-blue-400/40", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
@@ -1705,7 +1705,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       items: [
         "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
-        "Months of the Year", "Seasons of the Year",
+        "Months of the Year", "Seasons of the Year", "Transportation",
       ],
     },
     {
@@ -1715,7 +1715,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-sky-500/20 border-sky-400/60 ring-1 ring-sky-400/40",
       badgeClass: "bg-sky-400 text-black",
       items: [
-        "Traffic Robot", "Stop Sign", "Transportation",
+        "Traffic Robot", "Stop Sign",
       ],
     },
     {
@@ -3438,12 +3438,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               }}
             >
               {filteredItems.map((item, idx) => (
-                <div key={`set1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
+                <div key={`set1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
 
               {/* Duplicate cards for infinite loop */}
               {filteredItems.map((item, idx) => (
-                <div key={`set2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
+                <div key={`set2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
             </div>
           </div>
