@@ -3584,7 +3584,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   Knowledge Base Improvement
                 </Button>
                 <p className="text-white/90 text-sm">
-                  Click Card, Click Mic and Record Presentation
+                  Click record your analysis
                 </p>
               </div>
 
@@ -4756,8 +4756,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       Recording: {recordingTime}s / 30s
                     </span>
                   )}
-                  {!isRecording && (
-                    <span className="text-gray-600 text-lg">Click to record your answer</span>
+                  {(!isRecording || selectedCardForTest !== fullScreenCard.name) && (
+                    <span className="text-gray-600 text-lg">Click record your analysis</span>
                   )}
                 </div>
               </div>
