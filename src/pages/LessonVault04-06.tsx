@@ -477,8 +477,18 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   
   // Carousel card data for full-screen view
   const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image: string }> }> = {
-    "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400" },
-    "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400" },
+    "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400", gallery: [
+      { label: "Girl's Body", image: girlBodyMyBody },
+      { label: "Boy's Body", image: boyBodyMyBody },
+      { label: "Girl's Body Parts", image: girlBodyPartsDiagram },
+      { label: "Boy's Body Parts", image: boyBodyPartsDiagram },
+    ] },
+    "Boy's Body": { image: boyBodyMyBody, title: "Boy's Body", borderColor: "border-red-400", gallery: [
+      { label: "Boy's Body", image: boyBodyMyBody },
+      { label: "Girl's Body", image: girlBodyMyBody },
+      { label: "Boy's Body Parts", image: boyBodyPartsDiagram },
+      { label: "Girl's Body Parts", image: girlBodyPartsDiagram },
+    ] },
     "My Body": { image: girlBodyMyBody, title: "My Body", borderColor: "border-fuchsia-500", gallery: [
       { label: "Girl's Body", image: girlBodyMyBody },
       { label: "Boy's Body", image: boyBodyMyBody },
@@ -513,16 +523,36 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     ] },
     "ABC Chart": { image: alphabetChart, title: "ABC Chart", borderColor: "border-purple-500" },
     "Basic Shapes": { image: shapesBasicColor, title: "Basic Shapes", borderColor: "border-green-500" },
-    "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500" },
-    "Vegetables Chart": { image: vegetablesChartAsset.url, title: "Vegetables Chart", borderColor: "border-green-600" },
+    "Fruits Chart": { image: fruitsChartAsset.url, title: "Fruits Chart", borderColor: "border-red-500", gallery: [
+      { label: "Fruits Chart", image: fruitsChartAsset.url },
+      { label: "Vegetables Chart", image: vegetablesChartAsset.url },
+    ] },
+    "Vegetables Chart": { image: vegetablesChartAsset.url, title: "Vegetables Chart", borderColor: "border-green-600", gallery: [
+      { label: "Vegetables Chart", image: vegetablesChartAsset.url },
+      { label: "Fruits Chart", image: fruitsChartAsset.url },
+    ] },
     ...Object.fromEntries(
-      colorCodingSides.map((side) => [
+      colorCodingSides.map((side, i) => [
         side.name,
-        { image: side.image, title: side.name, borderColor: "border-amber-500" },
+        {
+          image: side.image,
+          title: side.name,
+          borderColor: "border-amber-500",
+          gallery: [...colorCodingSides.slice(i), ...colorCodingSides.slice(0, i)].map((s) => ({
+            label: s.name,
+            image: s.image,
+          })),
+        },
       ])
     ),
-    "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600" },
-    "Domestic Animals": { image: domesticAnimalsCartoon, title: "Domestic Animals", borderColor: "border-orange-500" },
+    "Wild Animals": { image: wildAnimalsChart, title: "Wild Animals", borderColor: "border-teal-600", gallery: [
+      { label: "Wild Animals", image: wildAnimalsChart },
+      { label: "Domestic Animals", image: domesticAnimalsCartoon },
+    ] },
+    "Domestic Animals": { image: domesticAnimalsCartoon, title: "Domestic Animals", borderColor: "border-orange-500", gallery: [
+      { label: "Domestic Animals", image: domesticAnimalsCartoon },
+      { label: "Wild Animals", image: wildAnimalsChart },
+    ] },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
     "Months of the Year": { title: "Months of the Year", content: (
       <div className="space-y-3">
@@ -550,10 +580,22 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         <div className="bg-lime-500 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🌸 Spring</div>
       </div>
     ), borderColor: "border-amber-500" },
-    "Numbers 1-10": { image: numbers1to10, title: "Numbers 1 – 10", borderColor: "border-blue-500" },
-    "Numbers 11-20": { image: numbers11to20, title: "Numbers 11 – 20", borderColor: "border-green-500" },
-    "Numbers 21-30": { image: numbers21to30, title: "Numbers 21 – 30", borderColor: "border-yellow-500" },
-    "Numbers 31-40": { image: numbers31to40, title: "Numbers 31 – 40", borderColor: "border-pink-500" },
+    ...Object.fromEntries(
+      [
+        { key: "Numbers 1-10", title: "Numbers 1 – 10", image: numbers1to10, borderColor: "border-blue-500" },
+        { key: "Numbers 11-20", title: "Numbers 11 – 20", image: numbers11to20, borderColor: "border-green-500" },
+        { key: "Numbers 21-30", title: "Numbers 21 – 30", image: numbers21to30, borderColor: "border-yellow-500" },
+        { key: "Numbers 31-40", title: "Numbers 31 – 40", image: numbers31to40, borderColor: "border-pink-500" },
+      ].map((n, i, all) => [
+        n.key,
+        {
+          image: n.image,
+          title: n.title,
+          borderColor: n.borderColor,
+          gallery: [...all.slice(i), ...all.slice(0, i)].map((x) => ({ label: x.title, image: x.image })),
+        },
+      ])
+    ),
   };
 
   // Helper function to handle card click for stopping carousel and opening full-screen view
