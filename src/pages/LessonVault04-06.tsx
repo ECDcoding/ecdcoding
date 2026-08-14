@@ -1774,11 +1774,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     setFocusFlowIndex(0);
   }, [focusedLessonCard, carouselFilter]);
 
-  useEffect(() => {
-    if (focusFlow.length < 2) return;
-    const id = setInterval(() => setFocusFlowIndex((i) => (i + 1) % focusFlow.length), 3500);
-    return () => clearInterval(id);
-  }, [focusFlow.length]);
+  // Duration for the center focus-flow carousel — scales with item count so the
+  // visual scroll speed stays consistent regardless of how many cards are shown.
+  const focusFlowDuration = Math.max(12, focusFlow.length * 4);
 
   const renderLessonGroup = (group: typeof lessonGroups[number]) => {
     const isActive = carouselFilter === group.filter;
@@ -3384,36 +3382,39 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               {/* Picture */}
               <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden">
                 {focusFlow.length > 0 ? (
-                  <div className="relative aspect-[4/3]">
-                    {focusFlow.map((f, i) => (
-                      <img
-                        key={`${f.label}-${i}`}
-                        src={f.image}
-                        alt={f.label}
-                        className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
-                          i === focusFlowIndex % focusFlow.length ? "opacity-100" : "opacity-0"
-                        }`}
-                      />
-                    ))}
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/55 px-3 py-2 flex items-center justify-between gap-3">
-                      <span className="text-white text-sm font-semibold truncate">
-                        {focusFlow[focusFlowIndex % focusFlow.length]?.label}
-                      </span>
-                      {focusFlow.length > 1 && (
-                        <span className="flex items-center gap-1.5 shrink-0">
-                          {focusFlow.map((f, i) => (
-                            <button
-                              key={`dot-${f.label}-${i}`}
-                              type="button"
-                              aria-label={`Show ${f.label}`}
-                              onClick={() => setFocusFlowIndex(i)}
-                              className={`h-2 w-2 rounded-full transition-colors ${
-                                i === focusFlowIndex % focusFlow.length ? "bg-lime-400" : "bg-white/40 hover:bg-white/70"
-                              }`}
+                  <div className="relative">
+                    <div
+                      className="flex gap-4 py-3"
+                      style={{
+                        animation: `scroll-horizontal ${focusFlowDuration}s linear infinite`,
+                        width: 'max-content',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.animationPlayState = 'paused';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.animationPlayState = 'running';
+                      }}
+                    >
+                      {[...focusFlow, ...focusFlow].map((f, i) => (
+                        <div
+                          key={`ff-${f.label}-${i}`}
+                          className="flex-shrink-0 w-[250px] rounded-lg overflow-hidden bg-black/30 border border-white/10"
+                        >
+                          <div className="relative aspect-[4/3]">
+                            <img
+                              src={f.image}
+                              alt={f.label}
+                              className="w-full h-full object-contain"
                             />
-                          ))}
-                        </span>
-                      )}
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
+                              <span className="text-white text-xs font-semibold truncate block">
+                                {f.label}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ) : (
