@@ -26,6 +26,17 @@ import adminIcon from "@/assets/admin-icon.png";
 const Index = () => {
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false);
   const { isAdmin } = useIsAdmin();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Launch authenticated users straight into My Lesson Vault (covers Google OAuth return,
+  // which redirects to "/" rather than a protected route).
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/lesson-vault-04-06", { replace: true });
+    }
+  }, [user, loading, navigate]);
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
