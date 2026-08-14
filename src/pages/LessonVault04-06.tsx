@@ -1620,7 +1620,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   ];
 
   const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic'; tint?: string; component: React.ReactNode }> = [
-    { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "body", category: "generic" as const, tint: "bg-fuchsia-500/15 ring-1 ring-fuchsia-400/40", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "transport", category: "generic" as const, tint: "bg-blue-500/15 ring-1 ring-blue-400/40", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
@@ -1694,6 +1694,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     basic: "bg-amber-500/15 ring-1 ring-amber-400/40",
   };
 
+  // Sets that encompass multiple flip sides get their own unique colour chip
+  const setItemStyles: Record<string, string> = {
+    "Transportation": "bg-blue-500/30 text-blue-100 ring-1 ring-blue-400/60 hover:bg-blue-500/45",
+    "My Body": "bg-fuchsia-500/30 text-fuchsia-100 ring-1 ring-fuchsia-400/60 hover:bg-fuchsia-500/45",
+  };
+
   // Verbal Testing Space lesson index groups (left / right panels)
   const lessonGroups = [
     {
@@ -1703,7 +1709,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40",
       badgeClass: "bg-lime-500 text-black",
       items: [
-        "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
+        "My Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
         "Months of the Year", "Seasons of the Year", "Transportation",
       ],
@@ -1755,7 +1761,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   e.stopPropagation();
                   handleCardClick(name)();
                 }}
-                className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                className={`text-sm px-3 py-1.5 rounded-full transition-colors ${setItemStyles[name] || "bg-white/10 text-white hover:bg-white/20"}`}
               >
                 {carouselCardData[name]?.title || name}
               </button>
