@@ -550,7 +550,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         </div>
       </div>
     ), borderColor: "border-pink-400" },
-    "Transportation": { image: dumpTruckIcon, title: "Transportation", borderColor: "border-blue-600", gallery: [
+    "Transportation": { image: dumpTruckIcon, title: "All Modes of Transport", borderColor: "border-blue-600", gallery: [
       { label: "Road Transport", image: roadTransportVehicles },
       { label: "Four Wheels", image: fourWheelVehicles },
       { label: "Two Wheels", image: twoWheelVehicles },
