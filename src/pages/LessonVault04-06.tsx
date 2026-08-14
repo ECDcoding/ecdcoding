@@ -94,7 +94,7 @@ import alphabetChart from "@/assets/alphabet-chart.jpg";
 import basicLogicThinking from "@/assets/basic-logic-thinking.jpg";
 import stopSign from "@/assets/stop-sign.png";
 
-const LessonVault0406 = () => {
+const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
