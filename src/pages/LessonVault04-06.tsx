@@ -1687,6 +1687,66 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
 
+  // Verbal Testing Space lesson index groups (left / right panels)
+  const lessonGroups = [
+    {
+      heading: "Generic Analysis",
+      filter: "generic" as const,
+      accent: "text-lime-400",
+      items: [
+        "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
+        "Wild Animals", "Domestic Animals", "Busy Bee", "Transportation",
+        "Months of the Year", "Seasons of the Year",
+      ],
+    },
+    {
+      heading: "Basic Logic Analysis",
+      filter: "basic" as const,
+      accent: "text-amber-400",
+      items: [
+        "Traffic Robot", "Stop Sign", "Basic Shapes",
+        ...colorCodingSides.map((s) => s.name),
+        "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
+      ],
+    },
+  ];
+
+  const renderLessonGroup = (group: typeof lessonGroups[number]) => {
+    const isActive = carouselFilter === group.filter;
+    return (
+      <div
+        className={`rounded-xl p-5 border transition-all cursor-pointer h-full ${
+          isActive
+            ? "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40"
+            : "bg-black/20 border-white/10 hover:bg-white/10"
+        }`}
+        onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
+      >
+        <p className="text-xs uppercase tracking-widest text-white/50 mb-1">Carousel Card List | Sets</p>
+        <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
+          {group.heading}
+          {isActive && <span className="text-xs bg-lime-500 text-black px-2 py-0.5 rounded-full">Showing</span>}
+        </h2>
+        <ul className="flex flex-wrap gap-2">
+          {group.items.filter((name) => carouselCardData[name]).map((name) => (
+            <li key={name}>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCardClick(name)();
+                }}
+                className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              >
+                {carouselCardData[name]?.title || name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen tailormade-lessons-texture">
       {/* Navigation Bar */}
