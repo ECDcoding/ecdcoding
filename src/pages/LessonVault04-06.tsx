@@ -2103,7 +2103,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
                         <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>Recycle My Robot</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>ECD Expo 2026</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>ECD Expo</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>

@@ -182,7 +182,7 @@ const ExpoAdminDashboard = () => {
                   Expo Access Requests
                 </CardTitle>
                 <CardDescription>
-                  Professionals who have requested access to the ECD Expo 2026 page.
+                  Professionals who have requested access to the ECD Expo page.
                 </CardDescription>
               </CardHeader>
               <CardContent>
