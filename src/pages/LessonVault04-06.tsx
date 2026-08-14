@@ -2042,19 +2042,19 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               <DropdownMenuContent style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => navigate("/lesson-vault-04-06?period=day")}
+                  onClick={() => navigate("/verbal-testing-space?period=day")}
                 >
                   Day
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => navigate("/lesson-vault-04-06?period=month")}
+                  onClick={() => navigate("/verbal-testing-space?period=month")}
                 >
                   Month
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="font-medium text-white hover:bg-white/20 cursor-pointer"
-                  onClick={() => navigate("/lesson-vault-04-06?period=week")}
+                  onClick={() => navigate("/verbal-testing-space?period=week")}
                 >
                   Week
                 </DropdownMenuItem>
