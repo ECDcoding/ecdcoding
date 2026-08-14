@@ -70,7 +70,7 @@ const Index = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/tech-franchise" className="cursor-pointer">
-                    ECDcoding Tech Franchise
+                    Own an ECDcoding Tech Franchise
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
