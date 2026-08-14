@@ -4525,14 +4525,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </div>
                         <p className="text-center text-lg font-semibold mt-2">{g.label}</p>
                         {gal.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => setFocusFlowIndex((p) => (p + 1) % gal.length)}
-                            className="absolute top-1/2 right-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
-                            aria-label="Next card"
-                          >
-                            <ChevronRight className="h-7 w-7" />
-                          </button>
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => setFocusFlowIndex((p) => (p - 1 + gal.length) % gal.length)}
+                              className="absolute top-1/2 left-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
+                              aria-label="Previous card"
+                            >
+                              <ChevronLeft className="h-7 w-7" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setFocusFlowIndex((p) => (p + 1) % gal.length)}
+                              className="absolute top-1/2 right-0 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
+                              aria-label="Next card"
+                            >
+                              <ChevronRight className="h-7 w-7" />
+                            </button>
+                          </>
                         )}
                         <div className="flex justify-center gap-1.5 mt-3">
                           {gal.map((_, i) => (
