@@ -3290,83 +3290,64 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               />
             </div>
           )}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
-              Verbal Testing Space
-            </h1>
-            <div className="mt-6 flex items-center justify-center gap-4">
-              <Button
-                onClick={playNarration}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
-              >
-                Knowledge Base Testing
-              </Button>
-              <p className="text-foreground/90">
-                Click Card, Click Mic and Record Presentation
-              </p>
-              {/* Removed central mic - now on each card */}
+          {/* Three-column layout: lesson lists flanking the testing header */}
+          <div className="grid gap-6 mb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1fr)] items-start">
+            <nav aria-label="Generic lessons">{renderLessonGroup(lessonGroups[0])}</nav>
+
+            <div className="text-center">
+              <h1 className="text-3xl md:text-4xl font-bold text-lime-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{ fontFamily: '"Bungee Shade", cursive' }}>
+                Verbal Testing Space
+              </h1>
+              <p className="mt-3 text-white/80 italic">A dialogue between teacher &amp; learner</p>
+              <div className="mt-4 flex flex-col items-center gap-3">
+                <Button
+                  onClick={playNarration}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
+                >
+                  Knowledge Base Improvement
+                </Button>
+                <p className="text-white/90 text-sm">
+                  Click Card, Click Mic and Record Presentation
+                </p>
+              </div>
+
+              {/* Picture */}
+              <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden aspect-[4/3] flex items-center justify-center">
+                {focusedLessonCard && carouselCardData[focusedLessonCard]?.image ? (
+                  <img
+                    src={carouselCardData[focusedLessonCard]!.image}
+                    alt={carouselCardData[focusedLessonCard]?.title || focusedLessonCard}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="text-center px-6">
+                    <Mic className="h-10 w-10 mx-auto text-lime-400 mb-3" />
+                    <p className="text-white/70 text-sm">Pick a lesson card to display it here, then record the analysis.</p>
+                  </div>
+                )}
+              </div>
             </div>
+
+            <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[1])}</nav>
           </div>
 
-          {/* Lesson index navigation */}
-          <nav aria-label="Verbal Testing Space lessons" className="mb-10 max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
-            {[
-              {
-                heading: "Generic Lesson Analysis",
-                filter: "generic" as const,
-                accent: "text-lime-400",
-                items: [
-                  "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
-                  "Wild Animals", "Domestic Animals", "Busy Bee", "Transportation",
-                  "Months of the Year", "Seasons of the Year",
-                ],
-              },
-              {
-                heading: "Basic Logic Analysis",
-                filter: "basic" as const,
-                accent: "text-amber-400",
-                items: [
-                  "Traffic Robot", "Stop Sign", "Basic Shapes",
-                  ...colorCodingSides.map((s) => s.name),
-                  "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
-                ],
-              },
-            ].map((group) => {
-              const isActive = carouselFilter === group.filter;
-              return (
-                <div
-                  key={group.heading}
-                  className={`rounded-xl p-5 border transition-all cursor-pointer ${
-                    isActive
-                      ? "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40"
-                      : "bg-black/20 border-white/10 hover:bg-white/10"
-                  }`}
-                  onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
-                >
-                  <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
-                    {group.heading}
-                    {isActive && <span className="text-xs bg-lime-500 text-black px-2 py-0.5 rounded-full">Showing</span>}
-                  </h2>
-                  <ul className="flex flex-wrap gap-2">
-                    {group.items.filter((name) => carouselCardData[name]).map((name) => (
-                      <li key={name}>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleCardClick(name)();
-                          }}
-                          className="text-sm px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-                        >
-                          {carouselCardData[name]?.title || name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+          {/* Carousel Flow steps */}
+          <div className="mb-6">
+            <h2 className="text-center text-2xl font-bold text-white/90 mb-4">Carousel Flow</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                "Put on your headsets",
+                "Click on the chosen card",
+                "Record your analysis",
+                "Save & share",
+              ].map((step, i) => (
+                <div key={step} className="rounded-xl border border-white/15 bg-black/20 p-4 text-center">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-lime-500 text-black font-bold text-sm mb-2">{i + 1}</span>
+                  <p className="text-white font-semibold text-sm">{step}</p>
                 </div>
-              );
-            })}
-          </nav>
+              ))}
+            </div>
+          </div>
 
           <div className="overflow-hidden w-full relative group">
             <div 
