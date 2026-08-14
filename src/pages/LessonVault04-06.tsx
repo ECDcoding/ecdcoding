@@ -182,6 +182,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
+  const [focusFlowIndex, setFocusFlowIndex] = useState(0);
   const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
   const [testResults, setTestResults] = useState<{
     subject: string;
@@ -1753,6 +1754,31 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       ],
     },
   ];
+
+  // Focused-area carousel flow: the clicked set's gallery, or every card in the active list
+  const focusFlow: Array<{ label: string; image: string }> = (() => {
+    const focused = focusedLessonCard ? carouselCardData[focusedLessonCard] : null;
+    if (focused?.gallery?.length) return focused.gallery;
+    if (focused?.image) return [{ label: focused.title || focusedLessonCard!, image: focused.image }];
+    const activeGroup = lessonGroups.find((g) => g.filter === carouselFilter);
+    const source = activeGroup ? activeGroup.items : lessonGroups.flatMap((g) => g.items);
+    return source
+      .map((name) => {
+        const card = carouselCardData[name];
+        return card?.image ? { label: card.title || name, image: card.image } : null;
+      })
+      .filter((x): x is { label: string; image: string } => !!x);
+  })();
+
+  useEffect(() => {
+    setFocusFlowIndex(0);
+  }, [focusedLessonCard, carouselFilter]);
+
+  useEffect(() => {
+    if (focusFlow.length < 2) return;
+    const id = setInterval(() => setFocusFlowIndex((i) => (i + 1) % focusFlow.length), 3500);
+    return () => clearInterval(id);
+  }, [focusFlow.length]);
 
   const renderLessonGroup = (group: typeof lessonGroups[number]) => {
     const isActive = carouselFilter === group.filter;
@@ -3359,17 +3385,46 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
 
               {/* Picture */}
-              <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden aspect-[4/3] flex items-center justify-center">
-                {focusedLessonCard && carouselCardData[focusedLessonCard]?.image ? (
-                  <img
-                    src={carouselCardData[focusedLessonCard]!.image}
-                    alt={carouselCardData[focusedLessonCard]?.title || focusedLessonCard}
-                    className="w-full h-full object-contain"
-                  />
+              <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden">
+                {focusFlow.length > 0 ? (
+                  <div className="relative aspect-[4/3]">
+                    {focusFlow.map((f, i) => (
+                      <img
+                        key={`${f.label}-${i}`}
+                        src={f.image}
+                        alt={f.label}
+                        className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
+                          i === focusFlowIndex % focusFlow.length ? "opacity-100" : "opacity-0"
+                        }`}
+                      />
+                    ))}
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/55 px-3 py-2 flex items-center justify-between gap-3">
+                      <span className="text-white text-sm font-semibold truncate">
+                        {focusFlow[focusFlowIndex % focusFlow.length]?.label}
+                      </span>
+                      {focusFlow.length > 1 && (
+                        <span className="flex items-center gap-1.5 shrink-0">
+                          {focusFlow.map((f, i) => (
+                            <button
+                              key={`dot-${f.label}-${i}`}
+                              type="button"
+                              aria-label={`Show ${f.label}`}
+                              onClick={() => setFocusFlowIndex(i)}
+                              className={`h-2 w-2 rounded-full transition-colors ${
+                                i === focusFlowIndex % focusFlow.length ? "bg-lime-400" : "bg-white/40 hover:bg-white/70"
+                              }`}
+                            />
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 ) : (
-                  <div className="text-center px-6">
-                    <Mic className="h-10 w-10 mx-auto text-lime-400 mb-3" />
-                    <p className="text-white/70 text-sm">Pick a lesson card to display it here, then record the analysis.</p>
+                  <div className="aspect-[4/3] flex items-center justify-center text-center px-6">
+                    <div>
+                      <Mic className="h-10 w-10 mx-auto text-lime-400 mb-3" />
+                      <p className="text-white/70 text-sm">Pick a lesson card to display it here, then record the analysis.</p>
+                    </div>
                   </div>
                 )}
               </div>
