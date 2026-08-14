@@ -5336,385 +5336,43 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
             </div>
 
-            {/* User Information with Community Feedback */}
+            {/* User Information — community engagements now live in Users' Media */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <Label className="text-sm font-semibold">User Information</Label>
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setShowCommunityFeed(!showCommunityFeed)}
+                  onClick={() => navigate('/users-media')}
                   className="justify-start gap-2"
                   style={{ backgroundColor: '#2a2d34', color: 'white', borderColor: 'rgba(255,255,255,0.1)' }}
                 >
                   <Users className="h-4 w-4" />
-                  {showCommunityFeed ? 'Hide Community Feedback' : 'Community Feedback'}
+                  Community Feedback
                 </Button>
               </div>
-              
-              {!showCommunityFeed ? (
-                <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
-                  <div 
-                    className="flex flex-col items-center gap-3 cursor-pointer group"
-                    onClick={() => setShowCommunityFeed(true)}
-                  >
-                    <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
-                      <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
-                      <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
-                        {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                      profile?.registration_type === 'parent' 
-                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                        : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                    }`}>
-                      {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
-                    </span>
-                    <p className="text-xs text-muted-foreground text-center">Click to view community feedback</p>
-                  </div>
+
+              <div className="mt-2 p-4 bg-muted rounded-md hover:bg-muted/80 transition-colors">
+                <div
+                  className="flex flex-col items-center gap-3 cursor-pointer group"
+                  onClick={() => navigate('/users-media')}
+                >
+                  <Avatar className="h-20 w-20 border-2 border-primary group-hover:scale-110 transition-transform">
+                    <AvatarImage src={profile?.profile_image_url || ''} alt={profile?.username || 'User'} />
+                    <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                      {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                    profile?.registration_type === 'parent'
+                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                      : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                  }`}>
+                    {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
+                  </span>
+                  <p className="text-xs text-muted-foreground text-center">Open Users' Media for community feedback</p>
                 </div>
-              ) : (
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="flex items-center justify-between p-3 border-b bg-background">
-                    <h4 className="text-sm font-semibold">Community</h4>
-                    {(profile?.registration_type === 'ecd-manager' || profile?.registration_type === 'parent') ? (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button size="sm" variant="outline" className={selectedFeedbackType ? "border-primary bg-primary/10" : ""}>
-                            <MessageSquare className="h-3 w-3 mr-1" />
-                            {selectedFeedbackType ? `Feedback: ${selectedFeedbackType}` : 'Feedback'}
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="min-w-[220px]">
-                          <DropdownMenuItem
-                            onClick={() => {
-                              setSelectedFeedbackType('Lesson Issues');
-                              institutionCommunityRef.current?.openCreate();
-                            }}
-                            className={selectedFeedbackType === 'Lesson Issues' ? "bg-primary/10 font-semibold" : ""}
-                          >
-                            <span className="flex-1">Lesson Issues</span>
-                            {selectedFeedbackType === 'Lesson Issues' && <Check className="h-4 w-4 ml-2 text-primary" />}
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => {
-                              setSelectedFeedbackType('FLC Progress');
-                              institutionCommunityRef.current?.openCreate();
-                            }}
-                            className={selectedFeedbackType === 'FLC Progress' ? "bg-primary/10 font-semibold" : ""}
-                          >
-                            <span className="flex-1">FLC Progress</span>
-                            {selectedFeedbackType === 'FLC Progress' && <Check className="h-4 w-4 ml-2 text-primary" />}
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => {
-                              setSelectedFeedbackType('General');
-                              institutionCommunityRef.current?.openCreate();
-                            }}
-                            className={selectedFeedbackType === 'General' ? "bg-primary/10 font-semibold" : ""}
-                          >
-                            <span className="flex-1">General</span>
-                            {selectedFeedbackType === 'General' && <Check className="h-4 w-4 ml-2 text-primary" />}
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    ) : (
-                      <p className="text-xs text-muted-foreground">Ask a parent or ECD Manager to create a community.</p>
-                    )}
-                  </div>
-                  {/* Community Feedback Feed */}
-                  <div className="max-h-[300px] overflow-y-auto p-4 space-y-3 bg-muted/30">
-                    <div className="space-y-3">
-                      {allFeedback.length > 0 && (
-                        <div className="space-y-2">
-                          {[...allFeedback]
-                            .sort((a, b) => {
-                              const aT = a.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                              const bT = b.tagged_user_ids?.includes(profile?.user_id || '') ? 1 : 0;
-                              return bT - aT;
-                            })
-                            .map((feedback) => {
-                            const iAmTagged = feedback.tagged_user_ids?.includes(profile?.user_id || '');
-                            const reactions = postReactions[feedback.id] || [];
-                            const comments = postComments[feedback.id] || [];
-                            const emojis = ['👍','❤️','😂','🎉','👏','🙌'];
-                            return (
-                            <div
-                              key={feedback.id}
-                              className={`p-3 rounded-lg ${
-                                iAmTagged
-                                  ? 'bg-amber-500/10 border border-amber-500/40'
-                                  : feedback.user_id === profile?.user_id
-                                  ? 'bg-primary/5 border border-primary/20'
-                                  : 'bg-background border border-border'
-                              }`}
-                            >
-                              <div className="flex items-start gap-2">
-                                <Avatar className="h-8 w-8 border">
-                                  <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                    {feedback.username[0].toUpperCase()}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-xs">{feedback.username}</span>
-                                    <span className="text-[10px] text-muted-foreground">
-                                      {new Date(feedback.created_at).toLocaleDateString()}
-                                    </span>
-                                    {feedback.user_id === profile?.user_id && (
-                                      <Badge variant="outline" className="text-[10px] h-4 px-1">You</Badge>
-                                    )}
-                                    {iAmTagged && (
-                                      <Badge className="text-[10px] h-4 px-1 bg-amber-500 hover:bg-amber-500 text-white">Tagged you</Badge>
-                                    )}
-                                  </div>
-                                  <p className="text-lg whitespace-pre-wrap break-words">{stripLeadingMentions(feedback.feedback_text)}</p>
-                                  {feedback.tagged_user_ids && feedback.tagged_user_ids.length > 0 && (
-                                    <div className="mt-1.5 flex flex-wrap items-center gap-1">
-                                      <span className="text-[10px] text-muted-foreground">Tagged:</span>
-                                      {feedback.tagged_user_ids
-                                        .map((id) => communityUsers.find((u) => u.user_id === id))
-                                        .filter(Boolean)
-                                        .map((u) => (
-                                          <span
-                                            key={u!.user_id}
-                                            className="inline-flex items-center px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px]"
-                                          >
-                                            @{u!.display_name}
-                                          </span>
-                                        ))}
-                                    </div>
-                                  )}
-
-                                  {/* Reactions */}
-                                  <div className="flex flex-wrap gap-1 mt-2">
-                                    {emojis.map((e) => {
-                                      const count = reactions.filter((r) => r.emoji === e).length;
-                                      const mine = reactions.some((r) => r.emoji === e && r.user_id === profile?.user_id);
-                                      return (
-                                        <button
-                                          key={e}
-                                          type="button"
-                                          onClick={() => toggleReaction(feedback.id, e)}
-                                          className={`text-xs px-2 py-0.5 rounded-full border transition ${
-                                            mine
-                                              ? 'bg-primary/20 border-primary'
-                                              : 'bg-background hover:bg-muted border-border'
-                                          }`}
-                                        >
-                                          <span>{e}</span>
-                                          {count > 0 && <span className="ml-1 text-[10px]">{count}</span>}
-                                        </button>
-                                      );
-                                    })}
-                                  </div>
-
-                                  {/* Comments */}
-                                  {comments.length > 0 && (() => {
-                                    const topLevel = comments.filter((c) => !c.parent_comment_id);
-                                    const repliesByParent: Record<string, typeof comments> = {};
-                                    comments.filter((c) => c.parent_comment_id).forEach((c) => {
-                                      (repliesByParent[c.parent_comment_id as string] ||= []).push(c);
-                                    });
-                                    const canReply = (feedback.tagged_user_ids?.includes(profile?.user_id || '')) || feedback.user_id === profile?.user_id;
-                                    return (
-                                      <div className="mt-2 space-y-2 border-t border-border/60 pt-2">
-                                        {topLevel.map((c) => {
-                                          const replies = repliesByParent[c.id] || [];
-                                          const isOpen = !!replyOpen[c.id];
-                                          return (
-                                            <div key={c.id} className="text-[11px]">
-                                              <div>
-                                                <span className="font-semibold">{c.username}: </span>
-                                                <span className="whitespace-pre-wrap break-words">{c.comment_text}</span>
-                                              </div>
-                                              {(replies.length > 0 || canReply) && (
-                                                <div className="ml-4 mt-1 border-l-2 border-border/60 pl-2 space-y-1">
-                                                  {replies.map((r) => (
-                                                    <div key={r.id} className="text-[11px]">
-                                                      <span className="font-semibold text-primary">↳ {r.username}: </span>
-                                                      <span className="whitespace-pre-wrap break-words">{r.comment_text}</span>
-                                                    </div>
-                                                  ))}
-                                                  {canReply && (
-                                                    <div>
-                                                      {!isOpen ? (
-                                                        <button
-                                                          type="button"
-                                                          className="text-[10px] text-primary hover:underline"
-                                                          onClick={() => setReplyOpen((o) => ({ ...o, [c.id]: true }))}
-                                                        >
-                                                          Reply
-                                                        </button>
-                                                      ) : (
-                                                        <div className="flex gap-1 mt-1">
-                                                          <Input
-                                                            value={replyDrafts[c.id] || ''}
-                                                            onChange={(e) => setReplyDrafts((d) => ({ ...d, [c.id]: e.target.value }))}
-                                                            placeholder={`Reply to ${c.username}...`}
-                                                            className="h-6 text-[11px]"
-                                                            autoFocus
-                                                            onKeyDown={(e) => {
-                                                              if (e.key === 'Enter') {
-                                                                e.preventDefault();
-                                                                addReply(feedback.id, c.id);
-                                                              }
-                                                            }}
-                                                          />
-                                                          <Button
-                                                            size="sm"
-                                                            className="h-6 px-2 text-[10px]"
-                                                            onClick={() => addReply(feedback.id, c.id)}
-                                                            disabled={!(replyDrafts[c.id] || '').trim()}
-                                                          >
-                                                            Send
-                                                          </Button>
-                                                        </div>
-                                                      )}
-                                                    </div>
-                                                  )}
-                                                </div>
-                                              )}
-                                            </div>
-                                          );
-                                        })}
-                                      </div>
-                                    );
-                                  })()}
-                                  <div className="flex gap-1 mt-2">
-                                    <Input
-                                      value={commentDrafts[feedback.id] || ''}
-                                      onChange={(e) =>
-                                        setCommentDrafts((d) => ({ ...d, [feedback.id]: e.target.value }))
-                                      }
-                                      placeholder="Write a comment..."
-                                      className="h-7 text-xs"
-                                      onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                          e.preventDefault();
-                                          addComment(feedback.id);
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      size="sm"
-                                      className="h-7 px-2 text-xs"
-                                      onClick={() => addComment(feedback.id)}
-                                      disabled={!(commentDrafts[feedback.id] || '').trim()}
-                                    >
-                                      Post
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {/* Post a note with tags */}
-                      <div className="p-3 rounded-lg border bg-background space-y-2">
-                        <div className="flex items-start gap-2">
-                          <Avatar className="h-8 w-8 border-2 border-primary">
-                            <AvatarImage src={profile?.profile_image_url || ''} />
-                            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
-                              {profile?.first_name?.[0]}{profile?.last_name?.[0]}
-                            </AvatarFallback>
-                          </Avatar>
-                          <Textarea
-                            placeholder="Post a note to the community..."
-                            value={responseText}
-                            onChange={(e) => setResponseText(e.target.value)}
-                            className="min-h-[60px] resize-none text-sm"
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault();
-                                handleSendResponse();
-                              }
-                            }}
-                          />
-                        </div>
-                        {selectedRecipients.size > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {communityUsers
-                              .filter((u) => selectedRecipients.has(u.user_id))
-                              .map((u) => (
-                                <span
-                                  key={u.user_id}
-                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]"
-                                >
-                                  @{u.display_name}
-                                  <button
-                                    type="button"
-                                    onClick={() => toggleRecipient(u.user_id)}
-                                    className="hover:text-destructive"
-                                    aria-label={`Remove ${u.display_name}`}
-                                  >
-                                    <X className="h-3 w-3" />
-                                  </button>
-                                </span>
-                              ))}
-                          </div>
-                        )}
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Tag users</p>
-                            {communityUsers.length > 0 && (
-                              <button
-                                type="button"
-                                onClick={toggleSelectAllRecipients}
-                                className="text-[10px] font-medium text-primary hover:underline"
-                              >
-                                {selectedRecipients.size === communityUsers.length ? 'Clear all' : 'Tag all'}
-                              </button>
-                            )}
-                          </div>
-                          <Button size="sm" onClick={handleSendResponse} disabled={!responseText.trim()}>
-                            <Share2 className="h-3 w-3 mr-1" />
-                            Post
-                          </Button>
-                        </div>
-
-                        <div className="max-h-[160px] overflow-y-auto space-y-1 border-t pt-2">
-                          {communityUsers.length === 0 ? (
-                            <p className="text-xs text-muted-foreground text-center py-3">No users found.</p>
-                          ) : (
-                            communityUsers.map((u) => {
-                              const checked = selectedRecipients.has(u.user_id);
-                              return (
-                                <label
-                                  key={u.user_id}
-                                  className={`flex items-center gap-2 p-2 rounded border cursor-pointer transition-colors ${checked ? 'bg-primary/10 border-primary/40' : 'bg-background hover:bg-muted/50'}`}
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={checked}
-                                    onChange={() => toggleRecipient(u.user_id)}
-                                    className="h-4 w-4 accent-primary"
-                                  />
-                                  <Avatar className="h-8 w-8 border">
-                                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                                      {u.display_name?.[0]?.toUpperCase() || 'U'}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-xs font-medium truncate">{u.display_name}</p>
-                                    <p className="text-[10px] text-muted-foreground truncate">
-                                      {u.registration_type || 'member'}{u.username ? ` • @${u.username}` : ''}
-                                    </p>
-                                  </div>
-                                </label>
-                              );
-                            })
-                          )}
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
 
             {/* Action Buttons */}
