@@ -1622,7 +1622,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic'; tint?: string; component: React.ReactNode }> = [
     { key: "body", category: "generic" as const, tint: "bg-fuchsia-500/15 ring-1 ring-fuchsia-400/40", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "transport", category: "generic" as const, tint: "bg-blue-500/15 ring-1 ring-blue-400/40", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
@@ -1711,17 +1711,17 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       items: [
         "My Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
-        "Months of the Year", "Seasons of the Year", "Transportation",
+        "Months of the Year", "Seasons of the Year",
       ],
     },
     {
-      heading: "Road Safety & Transport Analysis",
+      heading: "Transportation",
       filter: "road" as const,
       accent: "text-sky-400",
       activeClass: "bg-sky-500/20 border-sky-400/60 ring-1 ring-sky-400/40",
       badgeClass: "bg-sky-400 text-black",
       items: [
-        "Traffic Robot", "Stop Sign",
+        "Transportation", "Traffic Robot", "Stop Sign",
       ],
     },
     {
@@ -3320,7 +3320,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <div className="grid gap-6 mb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1fr)] items-start">
             <div className="space-y-6">
               <nav aria-label="Generic lessons">{renderLessonGroup(lessonGroups[0])}</nav>
-              <nav aria-label="Road safety and transport lessons">{renderLessonGroup(lessonGroups[1])}</nav>
+              <nav aria-label="Transportation lessons">{renderLessonGroup(lessonGroups[1])}</nav>
             </div>
 
             <div className="text-center">
