@@ -1775,6 +1775,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
+                  // Launch the set into the carousel flow as well as the full-screen view
+                  setCarouselFilter(group.filter);
                   handleCardClick(name)();
                 }}
                 className={`text-sm px-3 py-1.5 rounded-full transition-colors ${setItemStyles[name] || "bg-white/10 text-white hover:bg-white/20"}`}
