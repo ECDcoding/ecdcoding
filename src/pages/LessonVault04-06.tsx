@@ -2115,7 +2115,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
               </Link>
             </div>
-            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Verbal Testing Space" : "My Lesson Vault"}</h1>
+            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Verbal Testing Space" : "Learning the Basics"}</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -2151,7 +2151,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         {!vtsOnly && (
         <>
           <div className="mb-8 mt-12 text-center">
-            <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
+
             <div className="mt-4 flex items-center justify-center gap-4">
               <Button 
                 onClick={speakWhatToExpected}
