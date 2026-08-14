@@ -1817,7 +1817,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   ];
 
   // Focused-area carousel flow: the clicked set's gallery, or every card in the active list
-  const focusFlow: Array<{ label: string; image: string }> = (() => {
+  const focusFlow: Array<{ label: string; image?: string; content?: React.ReactNode }> = (() => {
     const focused = focusedLessonCard ? carouselCardData[focusedLessonCard] : null;
     if (focused?.gallery?.length) return focused.gallery;
     if (focused?.image) return [{ label: focused.title || focusedLessonCard!, image: focused.image }];
