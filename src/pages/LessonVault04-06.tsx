@@ -3379,38 +3379,24 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </p>
               </div>
 
-              {/* Picture — single card view with next-card arrow */}
+              {/* Flowing carousel of lesson cards */}
               <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden">
                 {filteredItems.length > 0 ? (
-                  (() => {
-                    const idx = focusFlowIndex % filteredItems.length;
-                    const item = filteredItems[idx];
-                    return (
-                      <div className="w-full relative">
-                        <div className={`rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>
+                  <div className="overflow-hidden py-3 group">
+                    <div
+                      className="flex gap-4 animate-scroll-horizontal group-hover:[animation-play-state:paused]"
+                      style={{ animationDuration: `${focusFlowDuration}s`, width: "max-content" }}
+                    >
+                      {[...filteredItems, ...filteredItems].map((item, i) => (
+                        <div
+                          key={`${item.name}-${i}`}
+                          className={`shrink-0 w-[300px] rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}
+                        >
                           {item.component}
                         </div>
-                        {filteredItems.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => setFocusFlowIndex((p) => (p + 1) % filteredItems.length)}
-                            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 inline-flex items-center justify-center w-12 h-12 rounded-full bg-lime-500 text-black hover:bg-lime-400 transition shadow-lg"
-                            aria-label="Next card"
-                          >
-                            <ChevronRight className="h-7 w-7" />
-                          </button>
-                        )}
-                        <div className="flex justify-center gap-1.5 py-2">
-                          {filteredItems.map((_, i) => (
-                            <span
-                              key={i}
-                              className={`h-2 rounded-full transition-all ${i === idx ? 'w-6 bg-lime-400' : 'w-2 bg-white/30'}`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })()
+                      ))}
+                    </div>
+                  </div>
                 ) : (
                   <div className="aspect-[4/3] flex items-center justify-center text-center px-6">
                     <div>
