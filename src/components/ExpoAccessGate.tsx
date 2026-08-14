@@ -61,7 +61,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
       return;
     }
     setVerified(true);
-    toast.success(`Welcome, ${companyName.trim()}! You now have access to the ECD Expo 2026.`);
+    toast.success(`Welcome, ${companyName.trim()}! You now have access to the ECD Expo.`);
   };
 
   if (verified) {
@@ -76,7 +76,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
           <div className="mx-auto mb-4 p-4 bg-primary/10 rounded-full w-fit">
             <Building2 className="h-10 w-10 text-primary" />
           </div>
-          <CardTitle className="text-2xl">ECD Expo 2026 Access</CardTitle>
+          <CardTitle className="text-2xl">ECD Expo Access</CardTitle>
           <CardDescription className="text-base">
             Only <span className="font-semibold text-primary">Sponsors</span> | <span className="font-semibold text-primary">Exhibitors</span> | <span className="font-semibold text-primary">Delegates (Key Note Speakers)</span> | <span className="font-semibold text-primary">Interested Parties</span> may access this information.
           </CardDescription>
@@ -116,7 +116,7 @@ const ExpoAccessGate = ({ children }: ExpoAccessGateProps) => {
               disabled={!!emailError && businessEmail.length > 0}
             >
               <CheckCircle className="mr-2 h-4 w-4" />
-              Access ECD Expo 2026
+              Access ECD Expo
             </Button>
 
             <Button asChild variant="outline" className="w-full">

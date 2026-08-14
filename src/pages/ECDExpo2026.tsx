@@ -783,7 +783,7 @@ const ECDExpo2026Content = () => {
                 <CardHeader>
                   <CardTitle>Keynote Speaker Application</CardTitle>
                   <CardDescription>
-                    Apply to be a speaker at the ECD Coding & Robotics Expo 2026
+                    Apply to be a speaker at the ECD Coding & Robotics Expo
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -999,7 +999,7 @@ const ECDExpo2026Content = () => {
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-8 px-6">
         <div className="container mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-2">ECD Coding & Robotics Expo 2026</h3>
+          <h3 className="text-2xl font-bold mb-2">ECD Coding & Robotics Expo</h3>
           <p className="mb-4">Empowering Tech Savvy Kids for the Future World of Work</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary">09 October 2026</Badge>
@@ -1025,7 +1025,7 @@ const ECDExpo2026Content = () => {
         open={isSponsorPaymentDialogOpen}
         onOpenChange={setIsSponsorPaymentDialogOpen}
         amount={sponsorPaymentAmount}
-        itemName={`ECD Expo 2026 ${sponsorForm.sponsorshipTier ? sponsorForm.sponsorshipTier.charAt(0).toUpperCase() + sponsorForm.sponsorshipTier.slice(1) : ''} Sponsor`}
+        itemName={`ECD Expo ${sponsorForm.sponsorshipTier ? sponsorForm.sponsorshipTier.charAt(0).toUpperCase() + sponsorForm.sponsorshipTier.slice(1) : ''} Sponsor`}
         paymentType="subscription"
         userEmail={sponsorForm.email}
         userFirstName={sponsorForm.contactPerson.split(' ')[0]}
