@@ -4537,10 +4537,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     const gi = focusFlowIndex % gal.length;
                     const g = gal[gi];
                     return (
-                      <div className="relative">
-                        <div className="flex items-center justify-center">
-                          <img src={g.image} alt={g.label} className="max-w-full max-h-[55vh] object-contain rounded-lg shadow-lg" />
-                        </div>
+                       <div className="relative">
+                         <div className="flex items-center justify-center px-14">
+                           {g.image ? (
+                             <img src={g.image} alt={g.label} className="max-w-full max-h-[55vh] object-contain rounded-lg shadow-lg" />
+                           ) : (
+                             <div className="w-full max-h-[55vh] overflow-y-auto">{g.content}</div>
+                           )}
+                         </div>
                         <p className="text-center text-lg font-semibold mt-2">{g.label}</p>
                         {gal.length > 1 && (
                           <>
@@ -4570,7 +4574,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       </div>
                     );
                   })()
-                ) : fullScreenCard.image && (
+                ) : fullScreenCard.image ? (
                   <div className="flex items-center justify-center">
                     <img 
                       src={fullScreenCard.image} 
@@ -4578,9 +4582,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       className="max-w-full max-h-[60vh] object-contain rounded-lg shadow-lg"
                     />
                   </div>
-                )}
+                ) : null}
                 
-                {fullScreenCard.content && (
+                {!fullScreenCard.gallery && fullScreenCard.content && (
                   <div className="py-8">
                     {fullScreenCard.content}
                   </div>
