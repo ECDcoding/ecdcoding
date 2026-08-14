@@ -210,7 +210,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     title?: string;
     content?: React.ReactNode;
     borderColor?: string;
-    gallery?: Array<{ label: string; image: string }>;
+    gallery?: Array<{ label: string; image?: string; content?: React.ReactNode }>;
   } | null>(null);
   const [musicLabTitle, setMusicLabTitle] = useState('');
   const [musicLabUrl, setMusicLabUrl] = useState('');
@@ -476,7 +476,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   };
   
   // Carousel card data for full-screen view
-  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image: string }> }> = {
+  const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image?: string; content?: React.ReactNode }> }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400", gallery: [
       { label: "Girl's Body", image: girlBodyMyBody },
       { label: "Boy's Body", image: boyBodyMyBody },
