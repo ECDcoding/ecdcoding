@@ -1812,6 +1812,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
         {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
+        {!vtsOnly && (
+        <>
           <div className="mb-8 mt-12 text-center">
             <h2 className="text-4xl font-bold text-center text-yellow-400 inline-block pb-2 border-b-4 border-dotted border-current" style={{fontFamily: 'Bungee Shade, cursive'}}>Learning the Basics</h2>
             <div className="mt-4 flex items-center justify-center gap-4">
