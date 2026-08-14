@@ -1998,6 +1998,23 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                {/* Road Signs */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
+                      🚸 Road Signs
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="right" style={{ backgroundColor: "#132a13" }} className="border border-gray-200 shadow-lg z-50">
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(stopSign); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={stopSign} alt="Stop Sign" className="w-8 h-8" /> Stop Sign
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {setSelectedEmoji(abcSafetyImage); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
+                      <img src={abcSafetyImage} alt="Road Safety ABC" className="w-8 h-8" /> Road Safety ABC
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
