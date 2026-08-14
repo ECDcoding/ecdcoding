@@ -210,7 +210,7 @@ const LearnerProgressReport = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <FileText className="h-6 w-6 text-lime-500" />
-            <h1 className="text-3xl font-bold text-white">Learner FLC Progress Report</h1>
+            <h1 className="text-3xl font-bold text-white">Foundational Learning Competencies</h1>
             <Sparkles className="h-6 w-6 text-lime-500" />
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
@@ -249,12 +249,20 @@ const LearnerProgressReport = () => {
         </Card>
 
         <div className="space-y-6">
-          {Object.entries(grouped).map(([category, items]) => (
-            <Card key={category} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
+          {FLC_CATEGORIES.map((cat) => {
+            const items = grouped[cat.key] || [];
+            const covered = items.filter((i) => selected.includes(i.id)).length;
+            return (
+            <Card key={cat.key} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
               <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-4 flex-wrap">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-lime-500 text-sm font-bold text-[#1a1c21]">
+                    {cat.letter}
+                  </span>
                   <BookOpen className="h-5 w-5 text-lime-500" />
-                  <h2 className="text-lg font-semibold text-white">{category}</h2>
+                  <h2 className="text-lg font-semibold text-white">{cat.label}</h2>
+                  <Badge className="bg-[#1e2025] text-lime-400 border-white/10">{cat.key}</Badge>
+                  <span className="ml-auto text-xs text-gray-400">{covered}/{items.length} covered</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
@@ -281,7 +289,8 @@ const LearnerProgressReport = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
 
         <Card className="mt-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
