@@ -475,6 +475,28 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
     }
   };
   
+  const monthsOfYearContent = (
+    <div className="grid grid-cols-2 gap-2">
+      {[
+        ["January", "bg-red-500"], ["February", "bg-orange-500"], ["March", "bg-yellow-500"],
+        ["April", "bg-green-500"], ["May", "bg-teal-500"], ["June", "bg-blue-500"],
+        ["July", "bg-indigo-500"], ["August", "bg-purple-500"], ["September", "bg-pink-500"],
+        ["October", "bg-rose-500"], ["November", "bg-cyan-500"], ["December", "bg-emerald-500"],
+      ].map(([m, c]) => (
+        <div key={m} className={`${c} text-white font-bold rounded-lg p-3 text-center`}>{m}</div>
+      ))}
+    </div>
+  );
+
+  const seasonsOfYearContent = (
+    <div className="grid grid-cols-2 gap-3">
+      <div className="bg-yellow-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">☀️ Summer</div>
+      <div className="bg-sky-400 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">❄️ Winter</div>
+      <div className="bg-amber-600 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🍂 Autumn</div>
+      <div className="bg-lime-500 text-white font-bold rounded-lg p-4 text-center text-base shadow-md">🌸 Spring</div>
+    </div>
+  );
+
   // Carousel card data for full-screen view
   const carouselCardData: Record<string, { image?: string; title?: string; content?: React.ReactNode; borderColor: string; gallery?: Array<{ label: string; image?: string; content?: React.ReactNode }> }> = {
     "Girl's Body": { image: girlBodyMyBody, title: "Girl's Body", borderColor: "border-yellow-400", gallery: [
