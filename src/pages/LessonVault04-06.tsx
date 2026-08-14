@@ -2042,14 +2042,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-60 bg-background z-50">
-                  <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                    <Mic className="mr-2 h-4 w-4" /> VTS
+                  <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
+                    <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
                   </DropdownMenuItem>
-                  {vtsOnly && (
-                    <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
-                      <BookOpen className="mr-2 h-4 w-4" /> My Lesson Vault
-                    </DropdownMenuItem>
-                  )}
+                  <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                    <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                     <FileText className="mr-2 h-4 w-4" /> FLC Report
                   </DropdownMenuItem>
