@@ -9,6 +9,7 @@ import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 import LessonVault0406 from "./pages/LessonVault04-06";
 import LessonVault0710 from "./pages/LessonVault07-10";
+import VerbalTestingSpace from "./pages/VerbalTestingSpace";
 import PaymentForm from "./pages/PaymentForm";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancelled from "./pages/PaymentCancelled";
@@ -59,6 +60,7 @@ const AppRoutes = () => (
       {/* Protected routes */}
       <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
       <Route path="/lesson-vault-04-06" element={<ProtectedRoute><LessonVault0406 /></ProtectedRoute>} />
+      <Route path="/verbal-testing-space" element={<ProtectedRoute><VerbalTestingSpace /></ProtectedRoute>} />
       <Route path="/lesson-vault-07-10" element={<ProtectedRoute><LessonVault0710 /></ProtectedRoute>} />
       <Route path="/domestic-ecology" element={<ProtectedRoute><DomesticEcology /></ProtectedRoute>} />
       <Route path="/biology-nature" element={<ProtectedRoute><BiologyNature /></ProtectedRoute>} />
