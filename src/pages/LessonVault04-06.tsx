@@ -1705,7 +1705,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       items: [
         "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
-        "Months of the Year", "Seasons of the Year",
+        "Months of the Year", "Seasons of the Year", "Transportation",
       ],
     },
     {
@@ -1715,7 +1715,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-sky-500/20 border-sky-400/60 ring-1 ring-sky-400/40",
       badgeClass: "bg-sky-400 text-black",
       items: [
-        "Traffic Robot", "Stop Sign", "Transportation",
+        "Traffic Robot", "Stop Sign",
       ],
     },
     {
@@ -3438,12 +3438,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               }}
             >
               {filteredItems.map((item, idx) => (
-                <div key={`set1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
+                <div key={`set1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
 
               {/* Duplicate cards for infinite loop */}
               {filteredItems.map((item, idx) => (
-                <div key={`set2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${categorySetStyles[item.category]}`}>{item.component}</div>
+                <div key={`set2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
               ))}
             </div>
           </div>
