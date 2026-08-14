@@ -60,7 +60,7 @@ const Index = () => {
             <span className="text-sm">|</span>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-sm font-semibold hover:text-foreground transition-colors cursor-pointer">
-                <Calendar className="mr-1 h-4 w-4 text-lime-400" /> <span>Events</span> <ChevronDown className="ml-1 h-3 w-3" />
+                <Calendar className="mr-1 h-4 w-4 text-lime-400" /> <span>Events for Future Projects</span> <ChevronDown className="ml-1 h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
                 <DropdownMenuItem asChild>
@@ -71,11 +71,6 @@ const Index = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/tech-franchise" className="cursor-pointer">
                     ECDcoding Tech Franchise
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/robotics-design-craft-event" className="cursor-pointer">
-                    Book Your 'Recycle My Robot' Event
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
