@@ -1755,6 +1755,31 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     },
   ];
 
+  // Focused-area carousel flow: the clicked set's gallery, or every card in the active list
+  const focusFlow: Array<{ label: string; image: string }> = (() => {
+    const focused = focusedLessonCard ? carouselCardData[focusedLessonCard] : null;
+    if (focused?.gallery?.length) return focused.gallery;
+    if (focused?.image) return [{ label: focused.title || focusedLessonCard!, image: focused.image }];
+    const activeGroup = lessonGroups.find((g) => g.filter === carouselFilter);
+    const source = activeGroup ? activeGroup.items : lessonGroups.flatMap((g) => g.items);
+    return source
+      .map((name) => {
+        const card = carouselCardData[name];
+        return card?.image ? { label: card.title || name, image: card.image } : null;
+      })
+      .filter((x): x is { label: string; image: string } => !!x);
+  })();
+
+  useEffect(() => {
+    setFocusFlowIndex(0);
+  }, [focusedLessonCard, carouselFilter]);
+
+  useEffect(() => {
+    if (focusFlow.length < 2) return;
+    const id = setInterval(() => setFocusFlowIndex((i) => (i + 1) % focusFlow.length), 3500);
+    return () => clearInterval(id);
+  }, [focusFlow.length]);
+
   const renderLessonGroup = (group: typeof lessonGroups[number]) => {
     const isActive = carouselFilter === group.filter;
     return (
