@@ -1703,6 +1703,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   ];
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
+  // Duration for the center focus-flow carousel — scales with item count so the
+  // visual scroll speed stays consistent regardless of how many cards are shown.
+  const focusFlowDuration = Math.max(12, focusFlow.length * 4);
 
   // Visual set tint per category so each carousel set is isolated at a glance
   const categorySetStyles: Record<'generic' | 'road' | 'basic', string> = {
