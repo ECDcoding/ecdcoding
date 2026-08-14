@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import vrStudents from "@/assets/expo/vr-students.jpg";
 import boyTv from "@/assets/expo/boy-tv.jpg";
 import kidTechGlasses from "@/assets/expo/kid-tech-glasses.jpg";
@@ -21,16 +20,7 @@ const ExpoPhotoCarousel = () => {
   const loop = [...photos, ...photos];
 
   return (
-    <section className="w-full py-12 overflow-hidden" aria-labelledby="expo-carousel-heading">
-      <div className="text-center px-4 mb-6">
-        <h2 id="expo-carousel-heading" className="text-2xl sm:text-3xl font-bold text-foreground">
-          A Glimpse of the ECD Coding &amp; Robotics Expo
-        </h2>
-        <Link to="/ecd-expo-2026" className="text-sm text-lime-400 hover:text-lime-300 transition-colors">
-          Explore Expo 2026 →
-        </Link>
-      </div>
-
+    <section className="w-full py-12 overflow-hidden">
       <div className="group relative w-full overflow-hidden">
         <div className="flex w-max gap-4 animate-[expo-scroll_40s_linear_infinite] group-hover:[animation-play-state:paused]">
           {loop.map((photo, i) => (
