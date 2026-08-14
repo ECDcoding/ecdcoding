@@ -1774,11 +1774,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     setFocusFlowIndex(0);
   }, [focusedLessonCard, carouselFilter]);
 
-  useEffect(() => {
-    if (focusFlow.length < 2) return;
-    const id = setInterval(() => setFocusFlowIndex((i) => (i + 1) % focusFlow.length), 3500);
-    return () => clearInterval(id);
-  }, [focusFlow.length]);
+  // Duration for the center focus-flow carousel — scales with item count so the
+  // visual scroll speed stays consistent regardless of how many cards are shown.
+  const focusFlowDuration = Math.max(12, focusFlow.length * 4);
 
   const renderLessonGroup = (group: typeof lessonGroups[number]) => {
     const isActive = carouselFilter === group.filter;
