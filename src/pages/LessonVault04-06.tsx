@@ -2775,6 +2775,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </DropdownMenu>
           </div>
         </div>
+        </>
+        )}
 
         {/* Full Page Emoji View */}
         {selectedEmojiCategory && (
