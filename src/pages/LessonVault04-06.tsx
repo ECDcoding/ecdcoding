@@ -577,6 +577,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
       // Open full-screen view with card data
       const cardData = carouselCardData[cardName];
       if (cardData) {
+        setFocusFlowIndex(0);
         setFullScreenCard({
           name: cardName,
           ...cardData
