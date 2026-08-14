@@ -112,7 +112,7 @@ const FlipTransportCard = ({
           style={{ backfaceVisibility: 'hidden' }}
         >
           <h3 className={`text-xl font-bold ${currentData.color} mb-4`} style={{ fontFamily: '"Bungee Shade", cursive' }}>
-            {currentData.title} Transport
+            Transportation
           </h3>
           <div className="flex-1 flex items-center justify-center">
             <img 
