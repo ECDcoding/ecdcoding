@@ -2013,9 +2013,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenuItem onClick={() => {setSelectedEmoji(abcSafetyImage); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
                       <img src={abcSafetyImage} alt="Road Safety ABC" className="w-8 h-8" /> Road Safety ABC
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {setSelectedEmoji(trafficRobotImage); setEmojiDialogOpen(true);}} className="font-medium text-white hover:bg-white/20 flex items-center gap-2">
-                      <img src={trafficRobotImage} alt="Traffic Robot" className="w-8 h-8" /> Traffic Robot
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </DropdownMenuContent>
