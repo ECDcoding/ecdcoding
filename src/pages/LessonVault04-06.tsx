@@ -1622,7 +1622,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const carouselItems = [
     { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "generic" as const, tint: "bg-blue-500/15 ring-1 ring-blue-400/40", component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
