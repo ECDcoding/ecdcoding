@@ -3379,14 +3379,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 </p>
               </div>
 
-              {/* Picture */}
+              {/* Picture — identical flowing carousel to the main one below */}
               <div className="mt-5 rounded-xl border border-white/15 bg-black/25 overflow-hidden">
-                {focusFlow.length > 0 ? (
-                  <div className="relative">
+                {filteredItems.length > 0 ? (
+                  <div className="overflow-hidden w-full relative">
                     <div
-                      className="flex gap-4 py-3"
+                      className="flex gap-8 py-3"
                       style={{
-                        animation: `scroll-horizontal ${focusFlowDuration}s linear infinite`,
+                        animation: `scroll-horizontal ${animationDuration}s linear infinite`,
                         width: 'max-content',
                       }}
                       onMouseEnter={(e) => {
@@ -3396,24 +3396,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         e.currentTarget.style.animationPlayState = 'running';
                       }}
                     >
-                      {[...focusFlow, ...focusFlow].map((f, i) => (
-                        <div
-                          key={`ff-${f.label}-${i}`}
-                          className="flex-shrink-0 w-[250px] rounded-lg overflow-hidden bg-black/30 border border-white/10"
-                        >
-                          <div className="relative aspect-[4/3]">
-                            <img
-                              src={f.image}
-                              alt={f.label}
-                              className="w-full h-full object-contain"
-                            />
-                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                              <span className="text-white text-xs font-semibold truncate block">
-                                {f.label}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                      {filteredItems.map((item, idx) => (
+                        <div key={`focus1-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
+                      ))}
+                      {filteredItems.map((item, idx) => (
+                        <div key={`focus2-${item.key}-${idx}`} className={`flex-shrink-0 rounded-2xl p-3 ${item.tint || categorySetStyles[item.category]}`}>{item.component}</div>
                       ))}
                     </div>
                   </div>
