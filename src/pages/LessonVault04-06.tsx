@@ -4756,7 +4756,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       Recording: {recordingTime}s / 30s
                     </span>
                   )}
-                  {(!isRecording || selectedCardForTest !== fullScreenCard.name) && (
+                  {!isRecording && (
                     <span className="text-gray-600 text-lg">Click record your analysis</span>
                   )}
                 </div>
