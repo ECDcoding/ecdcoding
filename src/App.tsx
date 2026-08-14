@@ -28,6 +28,7 @@ import ExpoAdminDashboard from "./pages/ExpoAdminDashboard";
 import TechFranchise from "./pages/TechFranchise";
 import RoboticsDesignCraftEvent from "./pages/RoboticsDesignCraftEvent";
 import LearnerProgressReport from "./pages/LearnerProgressReport";
+import UsersMedia from "./pages/UsersMedia";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProfileCompleter } from "./components/AuthProfileCompleter";
 import { AnnualPaymentPrompt } from "./components/AnnualPaymentPrompt";
@@ -75,6 +76,7 @@ const AppRoutes = () => (
       <Route path="/tech-franchise" element={<ProtectedRoute><TechFranchise /></ProtectedRoute>} />
       <Route path="/robotics-design-craft-event" element={<RoboticsDesignCraftEvent />} />
       <Route path="/learner-progress-report" element={<ProtectedRoute><LearnerProgressReport /></ProtectedRoute>} />
+      <Route path="/users-media" element={<ProtectedRoute><UsersMedia /></ProtectedRoute>} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>

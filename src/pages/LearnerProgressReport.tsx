@@ -24,26 +24,46 @@ import {
 
 type LessonOption = { id: string; title: string; category: string };
 
+/** FLC sub-categories (Category of Proof) as per the FLC Report framework. */
+const FLC_CATEGORIES = [
+  { key: "PoLAB", label: "Proof of Learning All the Basics", letter: "A" },
+  { key: "PoVTS", label: "Proof of Verbal Testing Space", letter: "B" },
+  { key: "PoCA", label: "Proof of Completing Assignments", letter: "C" },
+  { key: "PoCNP", label: "Proof of Creating New Project", letter: "D" },
+] as const;
+
 const LESSON_CATALOG: LessonOption[] = [
-  { id: "numeracy", title: "Numeracy", category: "Learning the Basics" },
-  { id: "literacy", title: "Literacy (ABC & Vowels)", category: "Learning the Basics" },
-  { id: "life-skills", title: "Life Skills", category: "Learning the Basics" },
-  { id: "tech-skills", title: "Tech Skills", category: "Learning the Basics" },
-  { id: "road-safety", title: "Road Safety", category: "Learning the Basics" },
-  { id: "transportation", title: "Transportation", category: "Learning the Basics" },
-  { id: "note-of-week", title: "Note of the Week", category: "Learning the Basics" },
-  { id: "card-animals", title: "Animals", category: "Carousel Cards" },
-  { id: "card-my-body", title: "My Body", category: "Carousel Cards" },
-  { id: "card-shapes", title: "Shapes", category: "Carousel Cards" },
-  { id: "card-months", title: "Months of the Year", category: "Carousel Cards" },
-  { id: "card-traffic-robot", title: "Traffic Robot", category: "Carousel Cards" },
-  { id: "card-transport", title: "Transport Vehicles", category: "Carousel Cards" },
-  { id: "science-human-body", title: "Human Body", category: "Science & Discovery" },
-  { id: "science-five-senses", title: "Five Senses", category: "Science & Discovery" },
-  { id: "science-animals", title: "Wild & Domestic Animals", category: "Science & Discovery" },
-  { id: "coding-alphabets", title: "Coding in Alphabets", category: "Tech & Coding" },
-  { id: "emoji-ai", title: "Emoji AI", category: "Tech & Coding" },
-  { id: "facial-recognition", title: "Facial Recognition", category: "Tech & Coding" },
+  // A — Proof of Learning All the Basics (PoLAB)
+  { id: "numeracy", title: "Numeracy", category: "PoLAB" },
+  { id: "literacy", title: "Literacy (ABC & Vowels)", category: "PoLAB" },
+  { id: "life-skills", title: "Life Skills", category: "PoLAB" },
+  { id: "tech-skills", title: "Tech Skills", category: "PoLAB" },
+  { id: "road-safety", title: "Road Safety", category: "PoLAB" },
+  { id: "transportation", title: "All Modes of Transport", category: "PoLAB" },
+  { id: "note-of-week", title: "Note of the Week", category: "PoLAB" },
+  { id: "science-human-body", title: "Human Body", category: "PoLAB" },
+  { id: "science-five-senses", title: "Five Senses", category: "PoLAB" },
+  { id: "science-animals", title: "Wild & Domestic Animals", category: "PoLAB" },
+  // B — Proof of Verbal Testing Space (PoVTS)
+  { id: "card-animals", title: "Animals Analysis", category: "PoVTS" },
+  { id: "card-my-body", title: "My Body Analysis", category: "PoVTS" },
+  { id: "card-shapes", title: "Shapes Analysis", category: "PoVTS" },
+  { id: "card-months", title: "Months of the Year Analysis", category: "PoVTS" },
+  { id: "card-traffic-robot", title: "Traffic Robot Analysis", category: "PoVTS" },
+  { id: "card-transport", title: "Transport Vehicles Analysis", category: "PoVTS" },
+  { id: "card-produce", title: "Fruits & Vegetables Analysis", category: "PoVTS" },
+  { id: "card-color-coding", title: "Color Coding Analysis", category: "PoVTS" },
+  // C — Proof of Completing Assignments (PoCA)
+  { id: "assign-basic-logic", title: "Basic Logic Assignment", category: "PoCA" },
+  { id: "assign-facial-recognition", title: "Facial Recognition Assignment", category: "PoCA" },
+  { id: "assign-emoji-ai", title: "Emoji AI Assignment", category: "PoCA" },
+  { id: "assign-coding-alphabets", title: "Coding in Alphabets Assignment", category: "PoCA" },
+  { id: "assign-numeracy-practice", title: "Numeracy Practice Assignment", category: "PoCA" },
+  // D — Proof of Creating New Project (PoCNP)
+  { id: "project-recycle-robot", title: "Recycle My Robot Build", category: "PoCNP" },
+  { id: "project-blockly", title: "Blockly Mini Project", category: "PoCNP" },
+  { id: "project-music-lab", title: "Music Lab Creation", category: "PoCNP" },
+  { id: "project-own-idea", title: "Own Idea / Free Project", category: "PoCNP" },
 ];
 
 const DURATIONS = [
@@ -190,7 +210,7 @@ const LearnerProgressReport = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <FileText className="h-6 w-6 text-lime-500" />
-            <h1 className="text-3xl font-bold text-white">Learner FLC Progress Report</h1>
+            <h1 className="text-3xl font-bold text-white">Foundational Learning Competencies</h1>
             <Sparkles className="h-6 w-6 text-lime-500" />
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
@@ -229,12 +249,20 @@ const LearnerProgressReport = () => {
         </Card>
 
         <div className="space-y-6">
-          {Object.entries(grouped).map(([category, items]) => (
-            <Card key={category} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
+          {FLC_CATEGORIES.map((cat) => {
+            const items = grouped[cat.key] || [];
+            const covered = items.filter((i) => selected.includes(i.id)).length;
+            return (
+            <Card key={cat.key} style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
               <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-4 flex-wrap">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-lime-500 text-sm font-bold text-[#1a1c21]">
+                    {cat.letter}
+                  </span>
                   <BookOpen className="h-5 w-5 text-lime-500" />
-                  <h2 className="text-lg font-semibold text-white">{category}</h2>
+                  <h2 className="text-lg font-semibold text-white">{cat.label}</h2>
+                  <Badge className="bg-[#1e2025] text-lime-400 border-white/10">{cat.key}</Badge>
+                  <span className="ml-auto text-xs text-gray-400">{covered}/{items.length} covered</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {items.map((l) => {
@@ -261,7 +289,8 @@ const LearnerProgressReport = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
 
         <Card className="mt-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
