@@ -3272,8 +3272,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         )}
 
-        {/* Tailormade Testing Platform */}
-        <div ref={verbalTestingRef} className="mt-16 p-8" style={{ backgroundColor: '#395B50' }}>
+        {/* Tailormade Testing Platform — lives on its own /verbal-testing-space page */}
+        {vtsOnly && (
+        <div ref={verbalTestingRef} className="mt-6 p-8 rounded-xl" style={{ backgroundColor: '#395B50' }}>
           {/* Lesson of the Day/Week/Month focus banner — only when navigated from dropdown */}
           {showLessonFocusBanner && (
             <div className="mb-8">
@@ -3413,6 +3414,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
           </div>
         </div>
+        )}
         {/* Number Counting Full Overlay */}
         {countingOpen && selectedCountingRange && (
           <div className="fixed inset-0 bg-[#395B50] z-[100] overflow-y-auto">
