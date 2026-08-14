@@ -3584,7 +3584,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   Knowledge Base Improvement
                 </Button>
                 <p className="text-white/90 text-sm">
-                  Click record your analysis
+                  Put headsets on, click record your analysis
                 </p>
               </div>
 
@@ -4757,7 +4757,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </span>
                   )}
                   {!isRecording && (
-                    <span className="text-gray-600 text-lg">Click record your analysis</span>
+                    <span className="text-gray-600 text-lg">Put headsets on, click record your analysis</span>
                   )}
                 </div>
               </div>
