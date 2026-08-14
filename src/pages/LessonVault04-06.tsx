@@ -182,7 +182,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
-  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'basic'>('all');
+  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
   const [testResults, setTestResults] = useState<{
     subject: string;
     audioUrl: string;
@@ -1621,8 +1621,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const carouselItems = [
     { key: "body", category: "generic" as const, component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "traffic", category: "basic" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "transport", category: "generic" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "abc", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
@@ -1687,24 +1687,45 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
 
+  // Visual set tint per category so each carousel set is isolated at a glance
+  const categorySetStyles: Record<'generic' | 'road' | 'basic', string> = {
+    generic: "bg-lime-500/15 ring-1 ring-lime-400/40",
+    road: "bg-sky-500/15 ring-1 ring-sky-400/40",
+    basic: "bg-amber-500/15 ring-1 ring-amber-400/40",
+  };
+
   // Verbal Testing Space lesson index groups (left / right panels)
   const lessonGroups = [
     {
       heading: "Generic Analysis",
       filter: "generic" as const,
       accent: "text-lime-400",
+      activeClass: "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40",
+      badgeClass: "bg-lime-500 text-black",
       items: [
         "Girl's Body", "Boy's Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
-        "Wild Animals", "Domestic Animals", "Busy Bee", "Transportation",
+        "Wild Animals", "Domestic Animals", "Busy Bee",
         "Months of the Year", "Seasons of the Year",
+      ],
+    },
+    {
+      heading: "Road Safety & Transport Analysis",
+      filter: "road" as const,
+      accent: "text-sky-400",
+      activeClass: "bg-sky-500/20 border-sky-400/60 ring-1 ring-sky-400/40",
+      badgeClass: "bg-sky-400 text-black",
+      items: [
+        "Traffic Robot", "Stop Sign", "Transportation",
       ],
     },
     {
       heading: "Basic Logic Analysis",
       filter: "basic" as const,
       accent: "text-amber-400",
+      activeClass: "bg-amber-500/20 border-amber-400/60 ring-1 ring-amber-400/40",
+      badgeClass: "bg-amber-400 text-black",
       items: [
-        "Traffic Robot", "Stop Sign", "Basic Shapes",
+        "Basic Shapes",
         ...colorCodingSides.map((s) => s.name),
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
       ],
@@ -1716,16 +1737,14 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     return (
       <div
         className={`rounded-xl p-5 border transition-all cursor-pointer h-full ${
-          isActive
-            ? "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40"
-            : "bg-black/20 border-white/10 hover:bg-white/10"
+          isActive ? group.activeClass : "bg-black/20 border-white/10 hover:bg-white/10"
         }`}
         onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
       >
         <p className="text-xs uppercase tracking-widest text-white/50 mb-1">Carousel Card List | Sets</p>
         <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
           {group.heading}
-          {isActive && <span className="text-xs bg-lime-500 text-black px-2 py-0.5 rounded-full">Showing</span>}
+          {isActive && <span className={`text-xs px-2 py-0.5 rounded-full ${group.badgeClass}`}>Showing</span>}
         </h2>
         <ul className="flex flex-wrap gap-2">
           {group.items.filter((name) => carouselCardData[name]).map((name) => (
