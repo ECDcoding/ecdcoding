@@ -269,7 +269,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
 
         {/* Upload form */}
         <div className="space-y-4 rounded-lg border border-border p-4">
-          <h3 className="font-semibold">Post a research video clip</h3>
+          <h3 className="font-semibold">Post a research video clip or picture</h3>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label>Species category</Label>
