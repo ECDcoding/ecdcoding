@@ -32,7 +32,7 @@ interface ResearchVideo {
   category: string;
   title: string;
   description: string | null;
-  video_path: string;
+  video_path: string | null;
   image_path: string | null;
   created_at: string;
 }
