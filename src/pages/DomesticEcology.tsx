@@ -1,7 +1,6 @@
 import { ArrowLeft, Home } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import EcologyVideoAnalysis, { ECOLOGY_CATEGORIES } from "@/components/EcologyVideoAnalysis";
 
 const DomesticEcology = () => {
