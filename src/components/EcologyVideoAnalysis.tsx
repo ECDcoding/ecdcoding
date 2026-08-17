@@ -386,10 +386,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                       )}
                       <div className="flex gap-2">
                         <Button size="sm" variant="outline" className="flex-1 bg-zinc-800/70 border-zinc-600 text-zinc-100 hover:bg-zinc-700 hover:text-zinc-50" onClick={() => play(v)}>
-                          Watch
+                          {v.video_path ? "Watch" : "View"}
                         </Button>
                         {user?.id === v.user_id && (
-                          <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete clip">
+                          <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete post">
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         )}
