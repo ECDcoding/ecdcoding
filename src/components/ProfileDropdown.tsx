@@ -1456,6 +1456,13 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           </div>
         </DialogContent>
       </Dialog>
+
+      <PersonalityVerification
+        open={personalityOpen}
+        onOpenChange={setPersonalityOpen}
+        initialTab={personalityTab}
+        learnerName={profile?.learner_first_name || undefined}
+      />
     </>
   );
 };
