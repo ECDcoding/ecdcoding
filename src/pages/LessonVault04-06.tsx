@@ -2059,7 +2059,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuItem>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Learner Records
+                      <BookOpen className="mr-2 h-4 w-4" /> Learner Review
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-64 bg-background z-50">
@@ -2095,7 +2095,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenuSub>
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
-                            <UserCheck className="mr-2 h-4 w-4" /> Personality Reviews
+                            <UserCheck className="mr-2 h-4 w-4" /> Personality
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="w-60 bg-background z-50">
