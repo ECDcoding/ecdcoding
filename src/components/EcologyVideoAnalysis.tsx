@@ -202,7 +202,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
         toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
         return;
       }
-      setPlaying({ title: video.title, url: data.signedUrl });
+      setPlaying({ title: video.title, url: data.signedUrl, isImage: false });
     } else if (video.image_path) {
       // Picture-only post: open the picture in the dialog
       const { data, error } = await supabase.storage
@@ -212,7 +212,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
         toast({ title: "Could not open picture", description: error?.message ?? "Unknown error", variant: "destructive" });
         return;
       }
-      setPlaying({ title: video.title, url: data.signedUrl });
+      setPlaying({ title: video.title, url: data.signedUrl, isImage: true });
     } else {
       toast({ title: "Nothing to play", description: "This post has no video or picture.", variant: "destructive" });
     }
