@@ -194,14 +194,28 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   };
 
   const play = async (video: ResearchVideo) => {
-    const { data, error } = await supabase.storage
-      .from("research-videos")
-      .createSignedUrl(video.video_path, 60 * 60 * 8);
-    if (error || !data?.signedUrl) {
-      toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
-      return;
+    if (video.video_path) {
+      const { data, error } = await supabase.storage
+        .from("research-videos")
+        .createSignedUrl(video.video_path, 60 * 60 * 8);
+      if (error || !data?.signedUrl) {
+        toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
+        return;
+      }
+      setPlaying({ title: video.title, url: data.signedUrl });
+    } else if (video.image_path) {
+      // Picture-only post: open the picture in the dialog
+      const { data, error } = await supabase.storage
+        .from("research-videos")
+        .createSignedUrl(video.image_path, 60 * 60 * 8);
+      if (error || !data?.signedUrl) {
+        toast({ title: "Could not open picture", description: error?.message ?? "Unknown error", variant: "destructive" });
+        return;
+      }
+      setPlaying({ title: video.title, url: data.signedUrl });
+    } else {
+      toast({ title: "Nothing to play", description: "This post has no video or picture.", variant: "destructive" });
     }
-    setPlaying({ title: video.title, url: data.signedUrl });
   };
 
   const remove = async (video: ResearchVideo) => {
@@ -210,11 +224,13 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       toast({ title: "Could not delete", description: error.message, variant: "destructive" });
       return;
     }
-    await supabase.storage.from("research-videos").remove([video.video_path]);
+    if (video.video_path) {
+      await supabase.storage.from("research-videos").remove([video.video_path]);
+    }
     if (video.image_path) {
       await supabase.storage.from("research-videos").remove([video.image_path]);
     }
-    toast({ title: "Clip removed" });
+    toast({ title: "Post removed" });
     loadVideos();
   };
 
