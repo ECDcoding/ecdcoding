@@ -15,10 +15,10 @@ interface ExpoCopilotProps {
 }
 
 const SUGGESTED_QUESTIONS = [
+  "Why does my 4-year-old act out of bounds?",
+  "What behaviour should I expect at each age?",
   "What are the sponsorship packages?",
   "How do I register as a delegate?",
-  "When and where is the expo?",
-  "How do I become an exhibitor?",
 ];
 
 const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
