@@ -2090,6 +2090,27 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
                                 <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology
                               </DropdownMenuItem>
+                              <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                  <TreePine className="mr-2 h-4 w-4" /> Video Analysis
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuPortal>
+                                  <DropdownMenuSubContent className="w-60 bg-background z-50">
+                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
+                                      Garden Species
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
+                                      Grass Species
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
+                                      Water Pond Species
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
+                                      Other
+                                    </DropdownMenuItem>
+                                  </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+                              </DropdownMenuSub>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
