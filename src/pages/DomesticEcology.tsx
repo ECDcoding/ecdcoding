@@ -1,9 +1,16 @@
 import { ArrowLeft, Home } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import EcologyVideoAnalysis, { ECOLOGY_CATEGORIES } from "@/components/EcologyVideoAnalysis";
 
 const DomesticEcology = () => {
+  const [searchParams] = useSearchParams();
+  const requested = searchParams.get("category");
+  const initialCategory = ECOLOGY_CATEGORIES.some((c) => c.value === requested)
+    ? (requested as string)
+    : undefined;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b border-border p-4">
@@ -26,7 +33,7 @@ const DomesticEcology = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-6">
+      <main className="max-w-7xl mx-auto p-6 space-y-6">
         <Card className="w-full">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Domestic Ecology Content</CardTitle>
@@ -54,6 +61,8 @@ const DomesticEcology = () => {
             </div>
           </CardContent>
         </Card>
+
+        <EcologyVideoAnalysis initialCategory={initialCategory} />
       </main>
     </div>
   );
