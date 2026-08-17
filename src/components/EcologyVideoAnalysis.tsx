@@ -295,7 +295,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           <DialogHeader>
             <DialogTitle>{playing?.title}</DialogTitle>
           </DialogHeader>
-          {playing && <video src={playing.url} controls autoPlay className="w-full rounded-lg" />}
+          {playing && <ResearchVideoPlayer src={playing.url} title={playing.title} />}
         </DialogContent>
       </Dialog>
     </Card>
