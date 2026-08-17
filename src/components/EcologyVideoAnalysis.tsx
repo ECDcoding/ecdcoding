@@ -116,11 +116,15 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       toast({ title: "Please sign in", description: "You need to be signed in to post a research clip.", variant: "destructive" });
       return;
     }
-    if (!file || !title.trim()) {
-      toast({ title: "Missing details", description: "Add a title and pick a video clip.", variant: "destructive" });
+    if (!title.trim()) {
+      toast({ title: "Missing details", description: "Add a title for your post.", variant: "destructive" });
       return;
     }
-    if (file.size > MAX_BYTES) {
+    if (!file && !image) {
+      toast({ title: "Missing details", description: "Pick a video clip or a picture to post.", variant: "destructive" });
+      return;
+    }
+    if (file && file.size > MAX_BYTES) {
       toast({ title: "Video too large", description: "Please keep clips under 100MB.", variant: "destructive" });
       return;
     }
@@ -130,17 +134,19 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     }
 
     setUploading(true);
-    const ext = file.name.split(".").pop() || "mp4";
-    const path = `${user.id}/${category}/${Date.now()}.${ext}`;
 
-    const { error: uploadError } = await supabase.storage
-      .from("research-videos")
-      .upload(path, file, { contentType: file.type || "video/mp4" });
-
-    if (uploadError) {
-      setUploading(false);
-      toast({ title: "Upload failed", description: uploadError.message, variant: "destructive" });
-      return;
+    let path: string | null = null;
+    if (file) {
+      const ext = file.name.split(".").pop() || "mp4";
+      path = `${user.id}/${category}/${Date.now()}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from("research-videos")
+        .upload(path, file, { contentType: file.type || "video/mp4" });
+      if (uploadError) {
+        setUploading(false);
+        toast({ title: "Upload failed", description: uploadError.message, variant: "destructive" });
+        return;
+      }
     }
 
     let imagePath: string | null = null;
@@ -172,7 +178,12 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       return;
     }
 
-    toast({ title: "Research clip posted", description: "Your video is now in the Video Analysis library." });
+    toast({
+      title: file ? "Research clip posted" : "Picture posted",
+      description: file
+        ? "Your video is now in the Video Analysis library."
+        : "Your picture is now in the Video Analysis library.",
+    });
     setTitle("");
     setDescription("");
     setFile(null);
