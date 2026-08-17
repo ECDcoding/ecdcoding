@@ -91,17 +91,30 @@ export const ResearchVideoPlayer = ({ src, title }: Props) => {
 
   return (
     <div className="space-y-3">
-      <video
-        ref={videoRef}
-        src={src}
-        title={title}
-        controls
-        playsInline
-        preload="auto"
-        loop={loop}
-        muted={muted}
-        className="w-full rounded-lg bg-black"
-      />
+      <div className="relative">
+        <video
+          ref={videoRef}
+          src={src}
+          title={title}
+          playsInline
+          preload="auto"
+          loop={loop}
+          muted={muted}
+          className="w-full rounded-lg bg-black"
+        />
+        {!playing && (
+          <button
+            type="button"
+            onClick={togglePlay}
+            aria-label="Play video"
+            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
+          >
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg">
+              <Play className="h-8 w-8 translate-x-0.5 text-zinc-900" />
+            </span>
+          </button>
+        )}
+      </div>
       <div className="flex flex-wrap items-center gap-2">
         <Button size="sm" onClick={togglePlay} aria-label={playing ? "Pause video" : "Play video"}>
           {playing ? <Pause className="mr-2 h-4 w-4" /> : <Play className="mr-2 h-4 w-4" />}
