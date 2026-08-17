@@ -136,6 +136,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const [allFeedback, setAllFeedback] = useState<Array<{
@@ -5857,6 +5859,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       <ExpoCopilot context="My Lesson Vault (Ages 4-6)" />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
+
+      <PersonalityVerification
+        open={personalityOpen}
+        onOpenChange={setPersonalityOpen}
+        initialTab={personalityTab}
+      />
 
     </div>
   );
