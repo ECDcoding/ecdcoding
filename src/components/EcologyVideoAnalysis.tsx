@@ -223,6 +223,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             Repeat buttons as many times as you need.
           </p>
           <ResearchVideoPlayer src={SAMPLE_VIDEO_URL} title="Sample research clip" />
+          <p className="text-sm font-medium text-zinc-100">Post a video related picture here.</p>
           <div className="space-y-2">
             <p className="text-sm font-medium">Related picture example: Busy Bee</p>
             <img
