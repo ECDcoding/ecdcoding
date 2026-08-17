@@ -357,7 +357,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                         <p className="line-clamp-2 text-sm text-muted-foreground">{v.description}</p>
                       )}
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="flex-1" onClick={() => play(v)}>
+                        <Button size="sm" variant="outline" className="flex-1 bg-zinc-800/70 border-zinc-600 text-zinc-100 hover:bg-zinc-700 hover:text-zinc-50" onClick={() => play(v)}>
                           Watch
                         </Button>
                         {user?.id === v.user_id && (
