@@ -9,12 +9,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, Newspaper, CalendarDays, PenLine, Recycle, FlaskConical, UserCheck } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -136,6 +137,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const [allFeedback, setAllFeedback] = useState<Array<{
@@ -2086,6 +2089,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
                                 <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <UserCheck className="mr-2 h-4 w-4" /> Personality Verification
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
+                                Ages and Stages
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
+                                Individuality
                               </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
@@ -5842,6 +5860,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       <ExpoCopilot context="My Lesson Vault (Ages 4-6)" />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
+
+      <PersonalityVerification
+        open={personalityOpen}
+        onOpenChange={setPersonalityOpen}
+        initialTab={personalityTab}
+      />
 
     </div>
   );

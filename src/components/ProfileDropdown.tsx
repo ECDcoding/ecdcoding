@@ -1,4 +1,5 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen, FileText } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen, FileText, UserCheck } from "lucide-react";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -25,6 +26,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [voice2FAOpen, setVoice2FAOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -794,12 +797,12 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                         </div>
                         
                         <div>
-                          <Label htmlFor="number_of_kids">Number of Kids</Label>
+                          <Label htmlFor="number_of_kids">Age of Kid</Label>
                           <Input
                             id="number_of_kids"
                             value={formData.number_of_kids}
                             onChange={(e) => setFormData(prev => ({...prev, number_of_kids: e.target.value}))}
-                            placeholder="e.g., 1, 2, 3"
+                            placeholder="e.g., 4, 4.5, 5, 6, 7"
                           />
                         </div>
                       </div>
@@ -1300,6 +1303,35 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           </DialogHeader>
           
           <div className="space-y-4">
+            {(profile?.registration_type === 'parent' || profile?.registration_type === 'ecd-manager') && (
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold flex items-center gap-2">
+                      <UserCheck className="h-5 w-5" />
+                      Personality Verification
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Understand the state of being of your child's personality — Ages &amp; Stages and Individuality.
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}
+                      >
+                        Ages and Stages
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}
+                      >
+                        Individuality
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
             {profile?.registration_type === 'parent' && (
               <Card>
                 <CardContent className="pt-6">
@@ -1424,6 +1456,13 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
           </div>
         </DialogContent>
       </Dialog>
+
+      <PersonalityVerification
+        open={personalityOpen}
+        onOpenChange={setPersonalityOpen}
+        initialTab={personalityTab}
+        learnerName={profile?.learner_first_name || undefined}
+      />
     </>
   );
 };
