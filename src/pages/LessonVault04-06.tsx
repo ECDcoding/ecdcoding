@@ -2074,7 +2074,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             <DropdownMenuSubContent className="w-60 bg-background z-50">
                               <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>Hand Writing</DropdownMenuItem>
                               <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>Reading & Comprehension</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding Skills", description: "Coming soon." })}>Coding Skills</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>Coding Ability</DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
