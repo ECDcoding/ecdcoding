@@ -15,6 +15,7 @@ import { Link, useNavigate, useLocation, useSearchParams } from "react-router-do
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
