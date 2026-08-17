@@ -7,9 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Film, Loader2, Trash2, Upload, Video } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -50,6 +47,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [category, setCategory] = useState<string>(initialCategory ?? "garden-species");
+  const [libraryCategory, setLibraryCategory] = useState<string>(initialCategory ?? "garden-species");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -59,7 +57,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [playing, setPlaying] = useState<{ title: string; url: string } | null>(null);
 
   useEffect(() => {
-    if (initialCategory) setCategory(initialCategory);
+    if (initialCategory) {
+      setCategory(initialCategory);
+      setLibraryCategory(initialCategory);
+    }
   }, [initialCategory]);
 
   const loadVideos = useCallback(async () => {
@@ -242,51 +243,58 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading clips...
           </div>
         ) : (
-          <Accordion type="single" collapsible defaultValue={category} className="w-full">
-            {ECOLOGY_CATEGORIES.map((c) => (
-              <AccordionItem key={c.value} value={c.value}>
-                <AccordionTrigger>
-                  {c.label} <span className="ml-2 text-sm text-muted-foreground">({grouped[c.value]?.length ?? 0})</span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  {(grouped[c.value]?.length ?? 0) === 0 ? (
-                    <p className="py-2 text-sm text-muted-foreground">No research clips posted yet.</p>
-                  ) : (
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {grouped[c.value].map((v) => (
-                        <Card key={v.id} className="overflow-hidden">
-                          <button
-                            type="button"
-                            onClick={() => play(v)}
-                            className="flex h-32 w-full items-center justify-center bg-muted transition-colors hover:bg-muted/70"
-                            aria-label={`Play ${v.title}`}
-                          >
-                            <Film className="h-10 w-10 text-muted-foreground" />
-                          </button>
-                          <CardContent className="space-y-2 p-4">
-                            <p className="font-semibold">{v.title}</p>
-                            {v.description && (
-                              <p className="line-clamp-2 text-sm text-muted-foreground">{v.description}</p>
-                            )}
-                            <div className="flex gap-2">
-                              <Button size="sm" variant="outline" className="flex-1" onClick={() => play(v)}>
-                                Watch
-                              </Button>
-                              {user?.id === v.user_id && (
-                                <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete clip">
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <div className="space-y-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Label className="whitespace-nowrap">Filter by species category</Label>
+              <Select value={libraryCategory} onValueChange={setLibraryCategory}>
+                <SelectTrigger className="w-full sm:max-w-xs">
+                  <SelectValue placeholder="Choose a category" />
+                </SelectTrigger>
+                <SelectContent className="bg-background z-50">
+                  {ECOLOGY_CATEGORIES.map((c) => (
+                    <SelectItem key={c.value} value={c.value}>
+                      {c.label} ({grouped[c.value]?.length ?? 0})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {(grouped[libraryCategory]?.length ?? 0) === 0 ? (
+              <p className="py-2 text-sm text-muted-foreground">No research clips posted yet.</p>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {grouped[libraryCategory].map((v) => (
+                  <Card key={v.id} className="overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => play(v)}
+                      className="flex h-32 w-full items-center justify-center bg-muted transition-colors hover:bg-muted/70"
+                      aria-label={`Play ${v.title}`}
+                    >
+                      <Film className="h-10 w-10 text-muted-foreground" />
+                    </button>
+                    <CardContent className="space-y-2 p-4">
+                      <p className="font-semibold">{v.title}</p>
+                      {v.description && (
+                        <p className="line-clamp-2 text-sm text-muted-foreground">{v.description}</p>
+                      )}
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" className="flex-1" onClick={() => play(v)}>
+                          Watch
+                        </Button>
+                        {user?.id === v.user_id && (
+                          <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete clip">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </CardContent>
 
