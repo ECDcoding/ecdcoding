@@ -312,7 +312,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-2 rounded-lg bg-zinc-800/70 border border-zinc-600 p-3 sm:flex-row sm:items-center">
               <Label className="whitespace-nowrap">Filter by species category</Label>
               <Select value={libraryCategory} onValueChange={setLibraryCategory}>
                 <SelectTrigger className="w-full sm:max-w-xs bg-zinc-800/70 border-zinc-600 text-zinc-100">
