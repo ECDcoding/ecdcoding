@@ -246,10 +246,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             <div>
               <Label>Species category</Label>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="mt-2">
+                <SelectTrigger className="mt-2 bg-zinc-800/70 border-zinc-600 text-zinc-100">
                   <SelectValue placeholder="Choose a category" />
                 </SelectTrigger>
-                <SelectContent className="bg-background z-50">
+                <SelectContent className="bg-zinc-800 z-50 border-zinc-600">
                   {ECOLOGY_CATEGORIES.map((c) => (
                     <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
                   ))}
@@ -260,7 +260,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
               <Label htmlFor="ecology-title">Title</Label>
               <Input
                 id="ecology-title"
-                className="mt-2"
+                className="mt-2 bg-zinc-800/70 border-zinc-600 text-zinc-100 placeholder:text-zinc-400"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Bees on the lavender bush"
@@ -271,7 +271,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             <Label htmlFor="ecology-desc">What is observed? (optional)</Label>
             <Textarea
               id="ecology-desc"
-              className="mt-2"
+              className="mt-2 bg-zinc-800/70 border-zinc-600 text-zinc-100 placeholder:text-zinc-400"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Short research note for this clip"
@@ -284,7 +284,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
               ref={fileRef}
               type="file"
               accept="video/*"
-              className="mt-2 cursor-pointer"
+              className="mt-2 cursor-pointer bg-zinc-800/70 border-zinc-600 text-zinc-100 file:text-zinc-100"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             />
           </div>
@@ -295,7 +295,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
               ref={imageRef}
               type="file"
               accept="image/*"
-              className="mt-2 cursor-pointer"
+              className="mt-2 cursor-pointer bg-zinc-800/70 border-zinc-600 text-zinc-100 file:text-zinc-100"
               onChange={(e) => setImage(e.target.files?.[0] ?? null)}
             />
           </div>
