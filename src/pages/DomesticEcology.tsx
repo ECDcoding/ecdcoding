@@ -36,7 +36,7 @@ const DomesticEcology = () => {
       <main className="max-w-7xl mx-auto p-6 space-y-6">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Domestic Ecology Content</CardTitle>
+            <CardTitle className="text-2xl text-center">Domestic Ecology Pictures</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center space-y-6">
             <div className="w-full max-w-4xl">
