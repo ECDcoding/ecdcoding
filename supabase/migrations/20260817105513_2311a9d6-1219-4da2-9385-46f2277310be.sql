@@ -1,0 +1,1 @@
+ALTER TABLE public.research_videos ADD COLUMN IF NOT EXISTS image_path TEXT;
