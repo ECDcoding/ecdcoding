@@ -1,0 +1,1 @@
+alter table public.research_videos alter column video_path drop not null;

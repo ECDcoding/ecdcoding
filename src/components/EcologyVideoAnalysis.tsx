@@ -32,7 +32,7 @@ interface ResearchVideo {
   category: string;
   title: string;
   description: string | null;
-  video_path: string;
+  video_path: string | null;
   image_path: string | null;
   created_at: string;
 }
@@ -58,7 +58,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [uploading, setUploading] = useState(false);
   const [videos, setVideos] = useState<ResearchVideo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [playing, setPlaying] = useState<{ title: string; url: string } | null>(null);
+  const [playing, setPlaying] = useState<{ title: string; url: string; isImage: boolean } | null>(null);
   const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -116,11 +116,15 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       toast({ title: "Please sign in", description: "You need to be signed in to post a research clip.", variant: "destructive" });
       return;
     }
-    if (!file || !title.trim()) {
-      toast({ title: "Missing details", description: "Add a title and pick a video clip.", variant: "destructive" });
+    if (!title.trim()) {
+      toast({ title: "Missing details", description: "Add a title for your post.", variant: "destructive" });
       return;
     }
-    if (file.size > MAX_BYTES) {
+    if (!file && !image) {
+      toast({ title: "Missing details", description: "Pick a video clip or a picture to post.", variant: "destructive" });
+      return;
+    }
+    if (file && file.size > MAX_BYTES) {
       toast({ title: "Video too large", description: "Please keep clips under 100MB.", variant: "destructive" });
       return;
     }
@@ -130,17 +134,19 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     }
 
     setUploading(true);
-    const ext = file.name.split(".").pop() || "mp4";
-    const path = `${user.id}/${category}/${Date.now()}.${ext}`;
 
-    const { error: uploadError } = await supabase.storage
-      .from("research-videos")
-      .upload(path, file, { contentType: file.type || "video/mp4" });
-
-    if (uploadError) {
-      setUploading(false);
-      toast({ title: "Upload failed", description: uploadError.message, variant: "destructive" });
-      return;
+    let path: string | null = null;
+    if (file) {
+      const ext = file.name.split(".").pop() || "mp4";
+      path = `${user.id}/${category}/${Date.now()}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from("research-videos")
+        .upload(path, file, { contentType: file.type || "video/mp4" });
+      if (uploadError) {
+        setUploading(false);
+        toast({ title: "Upload failed", description: uploadError.message, variant: "destructive" });
+        return;
+      }
     }
 
     let imagePath: string | null = null;
@@ -172,7 +178,12 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       return;
     }
 
-    toast({ title: "Research clip posted", description: "Your video is now in the Video Analysis library." });
+    toast({
+      title: file ? "Research clip posted" : "Picture posted",
+      description: file
+        ? "Your video is now in the Video Analysis library."
+        : "Your picture is now in the Video Analysis library.",
+    });
     setTitle("");
     setDescription("");
     setFile(null);
@@ -183,14 +194,28 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   };
 
   const play = async (video: ResearchVideo) => {
-    const { data, error } = await supabase.storage
-      .from("research-videos")
-      .createSignedUrl(video.video_path, 60 * 60 * 8);
-    if (error || !data?.signedUrl) {
-      toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
-      return;
+    if (video.video_path) {
+      const { data, error } = await supabase.storage
+        .from("research-videos")
+        .createSignedUrl(video.video_path, 60 * 60 * 8);
+      if (error || !data?.signedUrl) {
+        toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
+        return;
+      }
+      setPlaying({ title: video.title, url: data.signedUrl, isImage: false });
+    } else if (video.image_path) {
+      // Picture-only post: open the picture in the dialog
+      const { data, error } = await supabase.storage
+        .from("research-videos")
+        .createSignedUrl(video.image_path, 60 * 60 * 8);
+      if (error || !data?.signedUrl) {
+        toast({ title: "Could not open picture", description: error?.message ?? "Unknown error", variant: "destructive" });
+        return;
+      }
+      setPlaying({ title: video.title, url: data.signedUrl, isImage: true });
+    } else {
+      toast({ title: "Nothing to play", description: "This post has no video or picture.", variant: "destructive" });
     }
-    setPlaying({ title: video.title, url: data.signedUrl });
   };
 
   const remove = async (video: ResearchVideo) => {
@@ -199,11 +224,13 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       toast({ title: "Could not delete", description: error.message, variant: "destructive" });
       return;
     }
-    await supabase.storage.from("research-videos").remove([video.video_path]);
+    if (video.video_path) {
+      await supabase.storage.from("research-videos").remove([video.video_path]);
+    }
     if (video.image_path) {
       await supabase.storage.from("research-videos").remove([video.image_path]);
     }
-    toast({ title: "Clip removed" });
+    toast({ title: "Post removed" });
     loadVideos();
   };
 
@@ -223,7 +250,6 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             Repeat buttons as many times as you need.
           </p>
           <ResearchVideoPlayer src={SAMPLE_VIDEO_URL} title="Sample research clip" />
-          <p className="text-sm font-medium text-zinc-100">Post a video related picture here.</p>
           <div className="space-y-2">
             <p className="text-sm font-medium">Related picture example: Busy Bee</p>
             <img
@@ -242,7 +268,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
 
         {/* Upload form */}
         <div className="space-y-4 rounded-lg border border-border p-4">
-          <h3 className="font-semibold">Post a research video clip</h3>
+          <h3 className="font-semibold">Post a research video clip or picture</h3>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label>Species category</Label>
@@ -279,7 +305,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             />
           </div>
           <div>
-            <Label htmlFor="ecology-video">Video clip (max 100MB)</Label>
+            <Label htmlFor="ecology-video">Video clip (optional, max 100MB)</Label>
             <Input
               id="ecology-video"
               ref={fileRef}
@@ -290,7 +316,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             />
           </div>
           <div>
-            <Label htmlFor="ecology-picture">Related picture (optional, max 10MB)</Label>
+            <Label htmlFor="ecology-picture">Picture (optional, max 10MB) — post a picture on its own or with a clip</Label>
             <Input
               id="ecology-picture"
               ref={imageRef}
@@ -359,10 +385,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                       )}
                       <div className="flex gap-2">
                         <Button size="sm" variant="outline" className="flex-1 bg-zinc-800/70 border-zinc-600 text-zinc-100 hover:bg-zinc-700 hover:text-zinc-50" onClick={() => play(v)}>
-                          Watch
+                          {v.video_path ? "Watch" : "View"}
                         </Button>
                         {user?.id === v.user_id && (
-                          <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete clip">
+                          <Button size="sm" variant="destructive" onClick={() => remove(v)} aria-label="Delete post">
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         )}
@@ -381,7 +407,15 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           <DialogHeader>
             <DialogTitle>{playing?.title}</DialogTitle>
           </DialogHeader>
-          {playing && <ResearchVideoPlayer src={playing.url} title={playing.title} />}
+          {playing && playing.isImage ? (
+            <img
+              src={playing.url}
+              alt={playing.title}
+              className="w-full rounded-lg border border-border"
+            />
+          ) : playing ? (
+            <ResearchVideoPlayer src={playing.url} title={playing.title} />
+          ) : null}
         </DialogContent>
       </Dialog>
     </Card>

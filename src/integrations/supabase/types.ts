@@ -596,7 +596,7 @@ export type Database = {
           image_path: string | null
           title: string
           user_id: string
-          video_path: string
+          video_path: string | null
         }
         Insert: {
           category: string
@@ -606,7 +606,7 @@ export type Database = {
           image_path?: string | null
           title: string
           user_id: string
-          video_path: string
+          video_path?: string | null
         }
         Update: {
           category?: string
@@ -616,7 +616,7 @@ export type Database = {
           image_path?: string | null
           title?: string
           user_id?: string
-          video_path?: string
+          video_path?: string | null
         }
         Relationships: []
       }
