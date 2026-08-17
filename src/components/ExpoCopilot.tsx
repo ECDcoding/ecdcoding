@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Bot, X, Send, Loader2, Minimize2, Maximize2 } from "lucide-react";
+import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
@@ -28,6 +28,8 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [feedback, setFeedback] = useState<Record<number, "up" | "down">>({});
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -134,6 +136,31 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
     }
   };
 
+  const handleCopy = async (idx: number, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedIdx(idx);
+      setTimeout(() => setCopiedIdx((c) => (c === idx ? null : c)), 1500);
+    } catch {
+      toast.error("Could not copy to clipboard.");
+    }
+  };
+
+  const handleFeedback = (idx: number, value: "up" | "down") => {
+    setFeedback((prev) => {
+      const next = { ...prev };
+      if (next[idx] === value) {
+        delete next[idx];
+        return next;
+      }
+      next[idx] = value;
+      return next;
+    });
+    if (feedback[idx] !== value) {
+      toast.success(value === "up" ? "Thanks for the thumbs up!" : "Thanks — we'll use this to improve.");
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -210,7 +237,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
                   messages.map((msg, i) => (
                     <div
                       key={i}
-                      className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                      className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
                     >
                       <div
                         className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
@@ -226,6 +253,35 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
                           </span>
                         )}
                       </div>
+                      {msg.role === "assistant" && msg.content && (
+                        <div className="flex items-center gap-1 mt-1 ml-1">
+                          <button
+                            aria-label="Helpful"
+                            onClick={() => handleFeedback(i, "up")}
+                            className={`p-1 rounded-md transition-colors hover:bg-muted ${
+                              feedback[i] === "up" ? "text-primary" : "text-muted-foreground"
+                            }`}
+                          >
+                            <ThumbsUp className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            aria-label="Not helpful"
+                            onClick={() => handleFeedback(i, "down")}
+                            className={`p-1 rounded-md transition-colors hover:bg-muted ${
+                              feedback[i] === "down" ? "text-destructive" : "text-muted-foreground"
+                            }`}
+                          >
+                            <ThumbsDown className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            aria-label="Copy response"
+                            onClick={() => handleCopy(i, msg.content)}
+                            className="p-1 rounded-md text-muted-foreground transition-colors hover:bg-muted"
+                          >
+                            {copiedIdx === i ? <Check className="h-3.5 w-3.5 text-primary" /> : <Copy className="h-3.5 w-3.5" />}
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ))
                 )}
