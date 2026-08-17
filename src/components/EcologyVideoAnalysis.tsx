@@ -58,7 +58,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [uploading, setUploading] = useState(false);
   const [videos, setVideos] = useState<ResearchVideo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [playing, setPlaying] = useState<{ title: string; url: string } | null>(null);
+  const [playing, setPlaying] = useState<{ title: string; url: string; isImage: boolean } | null>(null);
   const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
