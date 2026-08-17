@@ -2087,15 +2087,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>
                                 <Recycle className="mr-2 h-4 w-4" /> Recycle My Robot
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
-                                <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology
-                              </DropdownMenuItem>
                               <DropdownMenuSub>
                                 <DropdownMenuSubTrigger>
-                                  <TreePine className="mr-2 h-4 w-4" /> Video Analysis
+                                  <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Videos
                                 </DropdownMenuSubTrigger>
                                 <DropdownMenuPortal>
                                   <DropdownMenuSubContent className="w-60 bg-background z-50">
+                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
+                                      All Videos
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
                                       Garden Species
                                     </DropdownMenuItem>
@@ -3140,7 +3140,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       onClick={() => window.location.href = '/domestic-ecology'}
                     >
                       <BookOpen className="h-4 w-4" />
-                      Domestic Ecology
+                      Domestic Ecology Videos
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
