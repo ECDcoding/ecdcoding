@@ -408,7 +408,15 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           <DialogHeader>
             <DialogTitle>{playing?.title}</DialogTitle>
           </DialogHeader>
-          {playing && <ResearchVideoPlayer src={playing.url} title={playing.title} />}
+          {playing && playing.isImage ? (
+            <img
+              src={playing.url}
+              alt={playing.title}
+              className="w-full rounded-lg border border-border"
+            />
+          ) : playing ? (
+            <ResearchVideoPlayer src={playing.url} title={playing.title} />
+          ) : null}
         </DialogContent>
       </Dialog>
     </Card>
