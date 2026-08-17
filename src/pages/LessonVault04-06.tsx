@@ -2090,6 +2090,21 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <UserCheck className="mr-2 h-4 w-4" /> Personality Verification
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
+                                Ages and Stages
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
+                                Individuality
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
