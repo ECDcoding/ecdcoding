@@ -587,6 +587,36 @@ export type Database = {
         }
         Relationships: []
       }
+      research_videos: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+          user_id: string
+          video_path: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+          user_id: string
+          video_path: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+          user_id?: string
+          video_path?: string
+        }
+        Relationships: []
+      }
       sensitive_data_access_log: {
         Row: {
           access_type: string
