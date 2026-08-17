@@ -1,4 +1,5 @@
-import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen, FileText } from "lucide-react";
+import { User, Key, Phone, LogOut, Settings, Save, X, Upload, Camera, ImageIcon, Film, Play, Mic, BookOpen, FileText, UserCheck } from "lucide-react";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -25,6 +26,8 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [voice2FAOpen, setVoice2FAOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
