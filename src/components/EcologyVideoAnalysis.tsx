@@ -337,7 +337,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                     <button
                       type="button"
                       onClick={() => play(v)}
-                      className="relative flex h-32 w-full items-center justify-center overflow-hidden bg-muted transition-colors hover:bg-muted/70"
+                      className="relative flex h-32 w-full items-center justify-center overflow-hidden bg-zinc-800 transition-colors hover:bg-zinc-700"
                       aria-label={`Play ${v.title}`}
                     >
                       {imageUrls[v.id] ? (
