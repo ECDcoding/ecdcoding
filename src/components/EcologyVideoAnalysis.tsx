@@ -315,10 +315,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <Label className="whitespace-nowrap">Filter by species category</Label>
               <Select value={libraryCategory} onValueChange={setLibraryCategory}>
-                <SelectTrigger className="w-full sm:max-w-xs">
+                <SelectTrigger className="w-full sm:max-w-xs bg-zinc-800/70 border-zinc-600 text-zinc-100">
                   <SelectValue placeholder="Choose a category" />
                 </SelectTrigger>
-                <SelectContent className="bg-background z-50">
+                <SelectContent className="bg-zinc-800 z-50 border-zinc-600">
                   {ECOLOGY_CATEGORIES.map((c) => (
                     <SelectItem key={c.value} value={c.value}>
                       {c.label} ({grouped[c.value]?.length ?? 0})
