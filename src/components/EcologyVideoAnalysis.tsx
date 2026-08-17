@@ -15,6 +15,11 @@ import { Film, Loader2, Trash2, Upload, Video } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { ResearchVideoPlayer } from "@/components/ResearchVideoPlayer";
+
+/** Sample clip that shows parents and kids what a good research video looks like. */
+const SAMPLE_VIDEO_URL =
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4";
 
 export const ECOLOGY_CATEGORIES = [
   { value: "garden-species", label: "Garden Species" },
@@ -139,7 +144,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const play = async (video: ResearchVideo) => {
     const { data, error } = await supabase.storage
       .from("research-videos")
-      .createSignedUrl(video.video_path, 3600);
+      .createSignedUrl(video.video_path, 60 * 60 * 8);
     if (error || !data?.signedUrl) {
       toast({ title: "Could not open video", description: error?.message ?? "Unknown error", variant: "destructive" });
       return;
@@ -166,6 +171,16 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
+        {/* Sample expectation clip */}
+        <div className="space-y-3 rounded-lg border border-border p-4">
+          <h3 className="font-semibold">Sample: what we expect from your clip</h3>
+          <p className="text-sm text-muted-foreground">
+            Watch this short example before recording on your own device. Use the Play, Replay and
+            Repeat buttons as many times as you need.
+          </p>
+          <ResearchVideoPlayer src={SAMPLE_VIDEO_URL} title="Sample research clip" />
+        </div>
+
         {/* Upload form */}
         <div className="space-y-4 rounded-lg border border-border p-4">
           <h3 className="font-semibold">Post a research video clip</h3>
