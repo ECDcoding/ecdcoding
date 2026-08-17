@@ -312,7 +312,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-2 rounded-lg bg-zinc-800/70 border border-zinc-600 p-3 sm:flex-row sm:items-center">
               <Label className="whitespace-nowrap">Filter by species category</Label>
               <Select value={libraryCategory} onValueChange={setLibraryCategory}>
                 <SelectTrigger className="w-full sm:max-w-xs bg-zinc-800/70 border-zinc-600 text-zinc-100">
@@ -337,7 +337,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                     <button
                       type="button"
                       onClick={() => play(v)}
-                      className="relative flex h-32 w-full items-center justify-center overflow-hidden bg-muted transition-colors hover:bg-muted/70"
+                      className="relative flex h-32 w-full items-center justify-center overflow-hidden bg-zinc-800 transition-colors hover:bg-zinc-700"
                       aria-label={`Play ${v.title}`}
                     >
                       {imageUrls[v.id] ? (
@@ -357,7 +357,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                         <p className="line-clamp-2 text-sm text-muted-foreground">{v.description}</p>
                       )}
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="flex-1" onClick={() => play(v)}>
+                        <Button size="sm" variant="outline" className="flex-1 bg-zinc-800/70 border-zinc-600 text-zinc-100 hover:bg-zinc-700 hover:text-zinc-50" onClick={() => play(v)}>
                           Watch
                         </Button>
                         {user?.id === v.user_id && (
