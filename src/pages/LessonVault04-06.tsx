@@ -2064,7 +2064,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-64 bg-background z-50">
                         <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
-                          <Mic className="mr-2 h-4 w-4" /> Individual VTS Recordings
+                          <Mic className="mr-2 h-4 w-4" /> Verbal Recordings
                         </DropdownMenuItem>
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
