@@ -306,7 +306,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             />
           </div>
           <div>
-            <Label htmlFor="ecology-video">Video clip (max 100MB)</Label>
+            <Label htmlFor="ecology-video">Video clip (optional, max 100MB)</Label>
             <Input
               id="ecology-video"
               ref={fileRef}
@@ -317,7 +317,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             />
           </div>
           <div>
-            <Label htmlFor="ecology-picture">Related picture (optional, max 10MB)</Label>
+            <Label htmlFor="ecology-picture">Picture (optional, max 10MB) — post a picture on its own or with a clip</Label>
             <Input
               id="ecology-picture"
               ref={imageRef}
