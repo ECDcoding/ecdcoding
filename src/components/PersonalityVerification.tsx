@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useProfile } from "@/hooks/useProfile";
+import { toast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { UserCheck, Sparkles, HeartHandshake, Ruler, Info } from "lucide-react";
+import { UserCheck, Sparkles, HeartHandshake, Ruler, Info, Share2, Loader2 } from "lucide-react";
 
 export type PersonalityTab = "ages" | "individuality";
 
@@ -183,9 +186,64 @@ const PersonalityVerification = ({
   const [tab, setTab] = useState<PersonalityTab>(initialTab);
   const [activeStage, setActiveStage] = useState<string>(AGE_STAGES[0].id);
   const [ticked, setTicked] = useState<Record<string, boolean>>({});
+  const [sharing, setSharing] = useState(false);
+  const { profile } = useProfile();
 
   const stage = AGE_STAGES.find((s) => s.id === activeStage) ?? AGE_STAGES[0];
   const tickedCount = stage.traits.filter((t) => ticked[`${stage.id}:${t}`]).length;
+
+  const shareToUsersMedia = async () => {
+    const selected = stage.traits.filter((t) => ticked[`${stage.id}:${t}`]);
+    if (!selected.length) {
+      toast({
+        title: "Nothing ticked",
+        description: "Tick the traits you observe before sharing.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!profile?.user_id) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to share on the post wall.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSharing(true);
+    try {
+      const child = learnerName ? ` for ${learnerName}` : "";
+      const body = [
+        `Personality Review${child} — ${stage.label}`,
+        "",
+        ...selected.map((t) => `• ${t}`),
+        "",
+        "What would you advise to help with this? Comments welcome.",
+      ].join("\n");
+
+      const { error } = await supabase.from("user_feedback").insert({
+        user_id: profile.user_id,
+        username: profile.username || profile.first_name || "Anonymous",
+        feedback_text: body,
+        tagged_user_ids: [],
+      } as any);
+      if (error) throw error;
+
+      toast({
+        title: "Shared",
+        description: "Your personality review is on the Users' Media post wall.",
+      });
+    } catch (e: any) {
+      toast({
+        title: "Could not share",
+        description: e?.message || "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSharing(false);
+    }
+  };
 
   return (
     <Dialog
@@ -199,7 +257,7 @@ const PersonalityVerification = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <UserCheck className="h-5 w-5 text-primary" />
-            Personality Verification
+            Personality Reviews
           </DialogTitle>
           <DialogDescription>
             Use this checklist to understand the calibre of the child
@@ -282,6 +340,21 @@ const PersonalityVerification = ({
                       </li>
                     ))}
                   </ul>
+
+                  <Separator />
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs text-muted-foreground">
+                      Share your ticked list on the Users' Media post wall to get advice on how to help.
+                    </p>
+                    <Button size="sm" onClick={shareToUsersMedia} disabled={sharing}>
+                      {sharing ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Share2 className="mr-2 h-4 w-4" />
+                      )}
+                      Share ticked list
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>

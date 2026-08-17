@@ -1309,7 +1309,7 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                   <div className="space-y-3">
                     <h3 className="font-semibold flex items-center gap-2">
                       <UserCheck className="h-5 w-5" />
-                      Personality Verification
+                      Personality Reviews
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       Understand the state of being of your child's personality — Ages &amp; Stages and Individuality.

@@ -2095,7 +2095,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenuSub>
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
-                            <UserCheck className="mr-2 h-4 w-4" /> Personality Verification
+                            <UserCheck className="mr-2 h-4 w-4" /> Personality Reviews
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="w-60 bg-background z-50">
