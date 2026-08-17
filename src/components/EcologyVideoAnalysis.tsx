@@ -50,6 +50,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [category, setCategory] = useState<string>(initialCategory ?? "garden-species");
+  const [libraryCategory, setLibraryCategory] = useState<string>(initialCategory ?? "garden-species");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -59,7 +60,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [playing, setPlaying] = useState<{ title: string; url: string } | null>(null);
 
   useEffect(() => {
-    if (initialCategory) setCategory(initialCategory);
+    if (initialCategory) {
+      setCategory(initialCategory);
+      setLibraryCategory(initialCategory);
+    }
   }, [initialCategory]);
 
   const loadVideos = useCallback(async () => {
