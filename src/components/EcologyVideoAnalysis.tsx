@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { ResearchVideoPlayer } from "@/components/ResearchVideoPlayer";
+import busyBeeImage from "@/assets/busy-bee.jpg";
 
 /** Sample clip that shows parents and kids what a good research video looks like. */
 const SAMPLE_VIDEO_URL =
@@ -32,6 +33,7 @@ interface ResearchVideo {
   title: string;
   description: string | null;
   video_path: string;
+  image_path: string | null;
   created_at: string;
 }
 
@@ -45,16 +47,19 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const [category, setCategory] = useState<string>(initialCategory ?? "garden-species");
   const [libraryCategory, setLibraryCategory] = useState<string>(initialCategory ?? "garden-species");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [videos, setVideos] = useState<ResearchVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState<{ title: string; url: string } | null>(null);
+  const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (initialCategory) {
@@ -72,7 +77,22 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     if (error) {
       toast({ title: "Could not load videos", description: error.message, variant: "destructive" });
     } else {
-      setVideos((data ?? []) as ResearchVideo[]);
+      const rows = (data ?? []) as ResearchVideo[];
+      setVideos(rows);
+      const withImages = rows.filter((r) => r.image_path);
+      if (withImages.length) {
+        const { data: signed } = await supabase.storage
+          .from("research-videos")
+          .createSignedUrls(withImages.map((r) => r.image_path as string), 60 * 60 * 8);
+        const map: Record<string, string> = {};
+        withImages.forEach((r, i) => {
+          const url = signed?.[i]?.signedUrl;
+          if (url) map[r.id] = url;
+        });
+        setImageUrls(map);
+      } else {
+        setImageUrls({});
+      }
     }
     setLoading(false);
   }, [toast]);
@@ -104,6 +124,10 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       toast({ title: "Video too large", description: "Please keep clips under 100MB.", variant: "destructive" });
       return;
     }
+    if (image && image.size > 10 * 1024 * 1024) {
+      toast({ title: "Picture too large", description: "Please keep pictures under 10MB.", variant: "destructive" });
+      return;
+    }
 
     setUploading(true);
     const ext = file.name.split(".").pop() || "mp4";
@@ -119,12 +143,26 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       return;
     }
 
+    let imagePath: string | null = null;
+    if (image) {
+      const imgExt = image.name.split(".").pop() || "jpg";
+      imagePath = `${user.id}/${category}/${Date.now()}-picture.${imgExt}`;
+      const { error: imgError } = await supabase.storage
+        .from("research-videos")
+        .upload(imagePath, image, { contentType: image.type || "image/jpeg" });
+      if (imgError) {
+        imagePath = null;
+        toast({ title: "Picture not uploaded", description: imgError.message, variant: "destructive" });
+      }
+    }
+
     const { error: insertError } = await supabase.from("research_videos").insert({
       user_id: user.id,
       category,
       title: title.trim(),
       description: description.trim() || null,
       video_path: path,
+      image_path: imagePath,
     });
 
     setUploading(false);
@@ -138,7 +176,9 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     setTitle("");
     setDescription("");
     setFile(null);
+    setImage(null);
     if (fileRef.current) fileRef.current.value = "";
+    if (imageRef.current) imageRef.current.value = "";
     loadVideos();
   };
 
@@ -160,6 +200,9 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
       return;
     }
     await supabase.storage.from("research-videos").remove([video.video_path]);
+    if (video.image_path) {
+      await supabase.storage.from("research-videos").remove([video.image_path]);
+    }
     toast({ title: "Clip removed" });
     loadVideos();
   };
@@ -180,6 +223,20 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             Repeat buttons as many times as you need.
           </p>
           <ResearchVideoPlayer src={SAMPLE_VIDEO_URL} title="Sample research clip" />
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Related picture example: Busy Bee</p>
+            <img
+              src={busyBeeImage}
+              alt="Busy bee collecting pollen on a lavender flower"
+              loading="lazy"
+              width={1024}
+              height={640}
+              className="w-full max-w-md rounded-lg border border-border"
+            />
+            <p className="text-sm text-muted-foreground">
+              Post a still picture like this together with your clip so the species is easy to identify.
+            </p>
+          </div>
         </div>
 
         {/* Upload form */}
@@ -231,6 +288,17 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             />
           </div>
+          <div>
+            <Label htmlFor="ecology-picture">Related picture (optional, max 10MB)</Label>
+            <Input
+              id="ecology-picture"
+              ref={imageRef}
+              type="file"
+              accept="image/*"
+              className="mt-2 cursor-pointer"
+              onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+            />
+          </div>
           <Button onClick={handleUpload} disabled={uploading} className="w-full md:w-auto">
             {uploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
             {uploading ? "Uploading..." : "Post research clip"}
@@ -269,10 +337,19 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
                     <button
                       type="button"
                       onClick={() => play(v)}
-                      className="flex h-32 w-full items-center justify-center bg-muted transition-colors hover:bg-muted/70"
+                      className="relative flex h-32 w-full items-center justify-center overflow-hidden bg-muted transition-colors hover:bg-muted/70"
                       aria-label={`Play ${v.title}`}
                     >
-                      <Film className="h-10 w-10 text-muted-foreground" />
+                      {imageUrls[v.id] ? (
+                        <img
+                          src={imageUrls[v.id]}
+                          alt={`Picture for ${v.title}`}
+                          loading="lazy"
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <Film className="h-10 w-10 text-muted-foreground" />
+                      )}
                     </button>
                     <CardContent className="space-y-2 p-4">
                       <p className="font-semibold">{v.title}</p>
