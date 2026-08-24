@@ -490,40 +490,7 @@ const LessonVault0710 = () => {
     }
   }, [selectedCountingRange, isCountingPlaying]);
 
-  // Show loading state while checking admin status
-  if (adminLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
-          <p className="mt-4 text-white">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Restrict access to admin only
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center max-w-md mx-auto p-8">
-          <Construction className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
-          <h1 className="text-3xl font-bold text-white mb-4">Under Construction</h1>
-          <p className="text-white/80 mb-6">
-            The Kids Aged 08-12 section is currently being developed. 
-            Please check back soon for exciting STEM courses!
-          </p>
-          <Button 
-            onClick={() => navigate("/")}
-            className="bg-primary hover:bg-primary/90"
-          >
-            <Home className="h-4 w-4 mr-2" />
-            Return Home
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  // Signed-in users may enter this section while it is under construction.
 
   const vowels = ["A", "E", "I", "O", "U"];
   
