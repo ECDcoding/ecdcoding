@@ -124,12 +124,67 @@ const AGE_STAGES: AgeStage[] = [
       "Loves watching TV & listening to radio",
       "Reads a lot if possible",
       "Very observant",
+      "Loves pencils, especially sharpened ones",
+      "Intellect is in the ascendancy",
+      "Very choosy in what he sees & does",
+      "High expectations about himself",
+      "Has high learning days & forgetting-everything days",
+      "Feels people are against him at times",
+      "Withdraws with a sad facial expression",
     ],
     notes: [
       "His hands are also very busy touching, exploring and feeling everything he comes into contact with.",
+      "If his bad days start, a wise mother will keep her child at home the minute he gets out of bed.",
+      "Seven year olds tend to feel that people — including teachers and parents — are against him in many ways; when that happens he withdraws.",
+    ],
+  },
+  {
+    id: "eight",
+    label: "Eight Years",
+    cycle: "Expansive & speedy",
+    traits: [
+      "Out-going",
+      "Nothing is too difficult for him",
+      "Quite confident and motivated",
+      "Always ready to tackle any challenge",
+      "Often overestimates his own ability",
+      "Easily discouraged when he fails, and may cry",
+      "Never gives up trying afresh the next day",
+      "Constantly busy & active",
+      "Performs tasks to the best of his ability",
+      "Concerned about the nature of his relationships",
+      "Always concerned about what people say or think about him",
+      "Generous to other people if they care",
+      "Very close relationship with his mother",
+    ],
+    notes: [
+      "He needs protection from himself at certain times.",
+      "A two-way relationship will work best for him.",
+      "His personality becomes a benchmark for the future self.",
+    ],
+  },
+  {
+    id: "nine",
+    label: "Nine Years",
+    traits: [
+      "Quiet",
+      "Lives more within himself",
+      "More self-contained & self-sufficient",
+      "Counts a lot on his contacts",
+      "Loves to be independent from others",
+      "Resists too much bossing by his parents",
+      "Likes the company of friends more than the family circle",
+      "Opinions of friends matter more than those of family",
+      "Displays remarkable self-reliance and capability",
+    ],
+    notes: [
+      "It is important to avoid imposing yourself on him.",
+      "He wants his maturity, independence & separateness respected.",
+      "Nine can be an age of perfecting skills and of real, solid accomplishment.",
     ],
   },
 ];
+
 
 const INDIVIDUALITY_CATEGORIES = [
   {
