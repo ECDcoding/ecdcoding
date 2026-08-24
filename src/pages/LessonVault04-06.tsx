@@ -2145,7 +2145,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 7. News */}
+                  {/* 7. Foundational Learning Outcomes */}
+                  <DropdownMenuItem onClick={() => toast({ title: "Foundational Learning Outcomes", description: "Coming soon." })}>
+                    <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
+                  </DropdownMenuItem>
+
+                  {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
                     <Newspaper className="mr-2 h-4 w-4" /> News
                   </DropdownMenuItem>
