@@ -2065,28 +2065,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Assignments */}
+                  {/* 3. Assignments — dropdown list alone */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <Eye className="mr-2 h-4 w-4" /> Assignments
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-64 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
-                          <Mic className="mr-2 h-4 w-4" /> Verbal Recordings
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
                         </DropdownMenuItem>
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <PenLine className="mr-2 h-4 w-4" /> Assignments
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-60 bg-background z-50">
-                              <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>Hand Writing</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>Reading & Comprehension</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>Coding Ability</DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
+                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Coding Ability
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
