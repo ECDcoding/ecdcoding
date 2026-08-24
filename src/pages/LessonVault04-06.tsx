@@ -1879,7 +1879,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         }`}
         onClick={() => setCarouselFilter(isActive ? 'all' : group.filter)}
       >
-        <p className="text-xs uppercase tracking-widest text-white/50 mb-1">Carousel Card List | Sets</p>
         <h2 className={`text-xl font-bold mb-3 ${group.accent} flex items-center gap-2`}>
           {group.heading}
           {isActive && <span className={`text-xs px-2 py-0.5 rounded-full ${group.badgeClass}`}>Showing</span>}
@@ -2196,7 +2195,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
               </Link>
             </div>
-            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Verbal Testing Space" : "Learning the Basics"}</h1>
+            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Knowledge Base Development" : "Learning the Basics"}</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -3662,7 +3661,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   onClick={playNarration}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
                 >
-                  Knowledge Base Improvement
+                  Verbal Testing Space
                 </Button>
                 <p className="text-white/90 text-sm">
                   Put headsets on, click record your analysis
