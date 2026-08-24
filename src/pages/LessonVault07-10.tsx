@@ -9,15 +9,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
@@ -105,6 +106,8 @@ const LessonVault0710 = () => {
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const [allFeedback, setAllFeedback] = useState<Array<{
