@@ -2144,14 +2144,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
                           Individuality
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Review
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-
-                  {/* 6. FLC Report */}
-                  <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                    <FileText className="mr-2 h-4 w-4" /> FLC Report
-                  </DropdownMenuItem>
 
                   {/* 7. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
