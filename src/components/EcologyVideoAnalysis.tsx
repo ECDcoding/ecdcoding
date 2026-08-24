@@ -191,6 +191,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     setImage(null);
     if (fileRef.current) fileRef.current.value = "";
     if (imageRef.current) imageRef.current.value = "";
+    setShowForm(false);
     loadVideos();
   };
 
