@@ -343,6 +343,8 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             {uploading ? "Uploading..." : "Post research clip"}
           </Button>
         </div>
+        )}
+
 
         {/* Library */}
         {loading ? (
