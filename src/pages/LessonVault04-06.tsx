@@ -2091,16 +2091,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 4. Users' Media — feed + Domestic Ecology Stories */}
+                  {/* 4. Users' Media */}
+                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                  </DropdownMenuItem>
+
+                  {/* 5. Research and Development — Domestic Ecology Stories */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <Film className="mr-2 h-4 w-4" /> Users' Media
+                      <Microscope className="mr-2 h-4 w-4" /> Research and Development
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                          Open Feed
-                        </DropdownMenuItem>
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
@@ -2129,10 +2131,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 5. Personality */}
+                  {/* 6. Child Behavior */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <UserCheck className="mr-2 h-4 w-4" /> Personality
+                      <UserCheck className="mr-2 h-4 w-4" /> Child Behavior
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
