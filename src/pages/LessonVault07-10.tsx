@@ -9,15 +9,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ObjectCharacters } from "@/components/ObjectCharacters";
+import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 
 import { CourseLikeComment } from "@/components/CourseLikeComment";
 import { TrafficLightProgress } from "@/components/TrafficLightProgress";
@@ -105,6 +106,8 @@ const LessonVault0710 = () => {
   const [selectedAnimalType, setSelectedAnimalType] = useState<string | null>(null);
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
+  const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
   const [allFeedback, setAllFeedback] = useState<Array<{
@@ -490,40 +493,7 @@ const LessonVault0710 = () => {
     }
   }, [selectedCountingRange, isCountingPlaying]);
 
-  // Show loading state while checking admin status
-  if (adminLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
-          <p className="mt-4 text-white">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Restrict access to admin only
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#313056]">
-        <div className="text-center max-w-md mx-auto p-8">
-          <Construction className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
-          <h1 className="text-3xl font-bold text-white mb-4">Under Construction</h1>
-          <p className="text-white/80 mb-6">
-            The Kids Aged 08-12 section is currently being developed. 
-            Please check back soon for exciting STEM courses!
-          </p>
-          <Button 
-            onClick={() => navigate("/")}
-            className="bg-primary hover:bg-primary/90"
-          >
-            <Home className="h-4 w-4 mr-2" />
-            Return Home
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  // Signed-in users may enter this section while it is under construction.
 
   const vowels = ["A", "E", "I", "O", "U"];
   
@@ -731,11 +701,122 @@ const LessonVault0710 = () => {
       <nav className="bg-[#395B50] text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-end gap-4">
-            <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
-              <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
-            </Link>
-            <h1 className="text-2xl font-bold mb-1">My Lesson Vault</h1>
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Open vault navigation"
+                    className="text-white hover:bg-white/15 border border-white/30 rounded-md"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-64 bg-background z-50">
+                  {/* 1. Learning the Basics */}
+                  <DropdownMenuItem onClick={() => navigate("/lesson-vault-07-10")}>
+                    <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                  </DropdownMenuItem>
+
+                  {/* 2. Knowledge Base Development */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-72 bg-background z-50">
+                        <DropdownMenuItem onClick={() => verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                          <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 3. Assignments */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Eye className="mr-2 h-4 w-4" /> Assignments
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Coding Ability
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 4. Users' Media */}
+                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                  </DropdownMenuItem>
+
+                  {/* 5. Domestic Ecology Stories */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>Other</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 6. Child Behavior */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <UserCheck className="mr-2 h-4 w-4" /> Child Behavior
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
+                          Ages and Stages
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
+                          Individuality
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Review
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 7. Foundational Learning Outcomes */}
+                  <DropdownMenuItem onClick={() => toast({ title: "Foundational Learning Outcomes", description: "Coming soon." })}>
+                    <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
+                  </DropdownMenuItem>
+
+                  {/* 8. News */}
+                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
+                    <Newspaper className="mr-2 h-4 w-4" /> News
+                  </DropdownMenuItem>
+
+                  {/* 9. Events */}
+                  <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>
+                    <CalendarDays className="mr-2 h-4 w-4" /> Events
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
+                <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
+              </Link>
+            </div>
+            <h1 className="text-2xl font-bold mb-1">Learning the Basics</h1>
           </div>
+
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
               profileImage={profileImage} 
