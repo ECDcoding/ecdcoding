@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, Recycle, FlaskConical, UserCheck } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, Recycle, FlaskConical, UserCheck, Newspaper, CalendarDays } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -2060,24 +2060,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
                           <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Social Knowledge", description: "Coming soon." })}>Social Knowledge</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Conceptual Knowledge", description: "Coming soon." })}>Conceptual Knowledge</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 2. Assignments — Time Table for 04 - 07 and 08 - 12 lessons */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <PenLine className="mr-2 h-4 w-4" /> Assignments
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 04 - 07 yrs", description: "Coming soon." })}>Time Table 04 - 07 yrs</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 08 - 12 yrs", description: "Coming soon." })}>Time Table 08 - 12 yrs</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
 
                   {/* 3. Learner Review */}
                   <DropdownMenuSub>
@@ -2101,50 +2087,47 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 4. Users' Media — feed + Domestic Ecology Stories */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Film className="mr-2 h-4 w-4" /> Users' Media
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                          Open Feed
+                        </DropdownMenuItem>
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
-                            <FlaskConical className="mr-2 h-4 w-4" /> Research & Dev
+                            <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="w-60 bg-background z-50">
-                              <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>
-                                <Recycle className="mr-2 h-4 w-4" /> Recycle My Robot
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
+                                All Stories
                               </DropdownMenuItem>
-                              <DropdownMenuSub>
-                                <DropdownMenuSubTrigger>
-                                  <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Videos
-                                </DropdownMenuSubTrigger>
-                                <DropdownMenuPortal>
-                                  <DropdownMenuSubContent className="w-60 bg-background z-50">
-                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
-                                      All Videos
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
-                                      Garden Species
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
-                                      Grass Species
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
-                                      Water Pond Species
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
-                                      Other
-                                    </DropdownMenuItem>
-                                  </DropdownMenuSubContent>
-                                </DropdownMenuPortal>
-                              </DropdownMenuSub>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
+                                Garden Species
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
+                                Grass Species
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
+                                Water Pond Species
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
+                                Other
+                              </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-
-                  {/* 4. Users' Media */}
-                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Media
-                  </DropdownMenuItem>
 
                   {/* 5. Personality */}
                   <DropdownMenuSub>
@@ -2166,6 +2149,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {/* 6. FLC Report */}
                   <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                     <FileText className="mr-2 h-4 w-4" /> FLC Report
+                  </DropdownMenuItem>
+
+                  {/* 7. News */}
+                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
+                    <Newspaper className="mr-2 h-4 w-4" /> News
+                  </DropdownMenuItem>
+
+                  {/* 8. Events */}
+                  <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>
+                    <CalendarDays className="mr-2 h-4 w-4" /> Events
                   </DropdownMenuItem>
                 </DropdownMenuContent>
 
