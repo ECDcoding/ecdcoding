@@ -2045,16 +2045,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64 bg-background z-50">
-                  {/* 1. Learning the Basics — Knowledge Base Development */}
+                  {/* 1. Learning the Basics */}
+                  <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
+                    <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                  </DropdownMenuItem>
+
+                  {/* 2. Knowledge Base Development — Physical / Social / Conceptual Knowledge */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-72 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
-                          <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
-                        </DropdownMenuItem>
                         {/* Physical Knowledge — contains Verbal Testing Space */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
