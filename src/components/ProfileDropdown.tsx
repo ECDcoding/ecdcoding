@@ -1309,10 +1309,10 @@ export const ProfileDropdown = ({ profileImage, onLogout }: ProfileDropdownProps
                   <div className="space-y-3">
                     <h3 className="font-semibold flex items-center gap-2">
                       <UserCheck className="h-5 w-5" />
-                      Personality Reviews
+                      Child Behavior
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Understand the state of being of your child's personality — Ages &amp; Stages and Individuality.
+                      Understand the state of being of your child's behavior — Ages &amp; Stages and Individuality.
                     </p>
                     <div className="grid grid-cols-2 gap-2">
                       <Button
