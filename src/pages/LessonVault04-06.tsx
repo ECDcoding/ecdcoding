@@ -2045,7 +2045,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64 bg-background z-50">
-                  {/* 1. Learning the Basics — knowledge base + assignments */}
+                  {/* 1. Learning the Basics — Knowledge Base Development */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
@@ -2055,104 +2055,51 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
                           <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
                         </DropdownMenuItem>
+                        {/* Physical Knowledge — contains Verbal Testing Space */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
-                            <PenLine className="mr-2 h-4 w-4" /> Assignments
+                            <BookOpen className="mr-2 h-4 w-4" /> Physical Knowledge
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="w-64 bg-background z-50">
-                              <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>Hand Writing</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>Reading & Comprehension</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>Coding Ability</DropdownMenuItem>
+                              <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                  <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuPortal>
+                                  <DropdownMenuSubContent className="w-64 bg-background z-50">
+                                    <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                                      Generic Logic Analysis
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                                      Basic Logic Analysis
+                                    </DropdownMenuItem>
+                                  </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+                              </DropdownMenuSub>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
-                        <DropdownMenuItem onClick={() => toast({ title: "Physical Knowledge", description: "Coming soon." })}>Physical Knowledge</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toast({ title: "Social Knowledge", description: "Coming soon." })}>Social Knowledge</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toast({ title: "Conceptual Knowledge", description: "Coming soon." })}>Conceptual Knowledge</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 2. Verbal Testing Space */}
+                  {/* 2. Assignments — Time Table for 04 - 07 and 08 - 12 lessons */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-64 bg-background z-50">
-                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                          Generic Logic Analysis
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                          Basic Logic Analysis
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-
-                  {/* 3. Domestic Ecology Stories */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-64 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Videos</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>Other</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-
-                  {/* 4. Ideation */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Code className="mr-2 h-4 w-4" /> Ideation
+                      <PenLine className="mr-2 h-4 w-4" /> Assignments
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding", description: "Coming soon." })}>Coding</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Programming", description: "Coming soon." })}>Programming</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "AI Engineering", description: "Coming soon." })}>AI Engineering</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Design", description: "Coming soon." })}>Design</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 04 - 07 yrs", description: "Coming soon." })}>Time Table 04 - 07 yrs</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 08 - 12 yrs", description: "Coming soon." })}>Time Table 08 - 12 yrs</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 5. Time Table */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <CalendarDays className="mr-2 h-4 w-4" /> Time Table
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 04 - 07 yrs", description: "Coming soon." })}>04 - 07 yrs</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 08 - 12 yrs", description: "Coming soon." })}>08 - 12 yrs</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-
-                  {/* 6. Life Skills */}
-                  <DropdownMenuItem onClick={() => toast({ title: "Life Skills", description: "Coming soon." })}>
-                    <Users className="mr-2 h-4 w-4" /> Life Skills
-                  </DropdownMenuItem>
-
-                  {/* 7. CAMI Maths software */}
-                  <DropdownMenuItem onClick={() => toast({ title: "CAMI Maths", description: "Learning mathematics software — coming soon." })}>
-                    <Calculator className="mr-2 h-4 w-4" /> CAMI Maths
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                    <FileText className="mr-2 h-4 w-4" /> FLC Report
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Media
-                  </DropdownMenuItem>
-
+                  {/* 3. Learner Review */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <BookOpen className="mr-2 h-4 w-4" /> Learner Review
@@ -2214,7 +2161,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* Personality — now a main list item, directly under Learner Review */}
+                  {/* 4. Users' Media */}
+                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                  </DropdownMenuItem>
+
+                  {/* 5. Personality */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <UserCheck className="mr-2 h-4 w-4" /> Personality
@@ -2231,20 +2183,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
-                    <Newspaper className="mr-2 h-4 w-4" /> News
+                  {/* 6. FLC Report */}
+                  <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                    <FileText className="mr-2 h-4 w-4" /> FLC Report
                   </DropdownMenuItem>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <CalendarDays className="mr-2 h-4 w-4" /> Events
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/robotics-design-craft-event")}>Recycle My Robot</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>ECD Expo</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
                 </DropdownMenuContent>
 
               </DropdownMenu>
