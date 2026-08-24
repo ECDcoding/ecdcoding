@@ -2044,19 +2044,115 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <Menu className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-60 bg-background z-50">
-                  <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
-                    <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                <DropdownMenuContent align="start" className="w-64 bg-background z-50">
+                  {/* 1. Learning the Basics — knowledge base + assignments */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-72 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/lesson-vault-04-06")}>
+                          <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
+                        </DropdownMenuItem>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <PenLine className="mr-2 h-4 w-4" /> Assignments
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>Hand Writing</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>Reading & Comprehension</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>Coding Ability</DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuItem onClick={() => toast({ title: "Physical Knowledge", description: "Coming soon." })}>Physical Knowledge</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Social Knowledge", description: "Coming soon." })}>Social Knowledge</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Conceptual Knowledge", description: "Coming soon." })}>Conceptual Knowledge</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 2. Verbal Testing Space */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-64 bg-background z-50">
+                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                          Generic Logic Analysis
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                          Basic Logic Analysis
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 3. Domestic Ecology Stories */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-64 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Videos</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>Other</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 4. Ideation */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Code className="mr-2 h-4 w-4" /> Ideation
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => toast({ title: "Coding", description: "Coming soon." })}>Coding</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Programming", description: "Coming soon." })}>Programming</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "AI Engineering", description: "Coming soon." })}>AI Engineering</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Design", description: "Coming soon." })}>Design</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 5. Time Table */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <CalendarDays className="mr-2 h-4 w-4" /> Time Table
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 04 - 07 yrs", description: "Coming soon." })}>04 - 07 yrs</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast({ title: "Time Table 08 - 12 yrs", description: "Coming soon." })}>08 - 12 yrs</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* 6. Life Skills */}
+                  <DropdownMenuItem onClick={() => toast({ title: "Life Skills", description: "Coming soon." })}>
+                    <Users className="mr-2 h-4 w-4" /> Life Skills
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                    <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+
+                  {/* 7. CAMI Maths software */}
+                  <DropdownMenuItem onClick={() => toast({ title: "CAMI Maths", description: "Learning mathematics software — coming soon." })}>
+                    <Calculator className="mr-2 h-4 w-4" /> CAMI Maths
                   </DropdownMenuItem>
+
                   <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                     <FileText className="mr-2 h-4 w-4" /> FLC Report
                   </DropdownMenuItem>
+
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
                     <Film className="mr-2 h-4 w-4" /> Users' Media
                   </DropdownMenuItem>
+
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <BookOpen className="mr-2 h-4 w-4" /> Learner Review
@@ -2114,24 +2210,27 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <UserCheck className="mr-2 h-4 w-4" /> Personality
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-60 bg-background z-50">
-                              <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
-                                Ages and Stages
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
-                                Individuality
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
+
+                  {/* Personality — now a main list item, directly under Learner Review */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <UserCheck className="mr-2 h-4 w-4" /> Personality
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
+                          Ages and Stages
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
+                          Individuality
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
                     <Newspaper className="mr-2 h-4 w-4" /> News
                   </DropdownMenuItem>
@@ -2147,6 +2246,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
                 </DropdownMenuContent>
+
               </DropdownMenu>
               <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
                 <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
