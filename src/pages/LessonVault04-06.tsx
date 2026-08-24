@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays, Eye } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -2065,10 +2065,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Learner Review */}
+                  {/* 3. Assignments */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Learner Review
+                      <Eye className="mr-2 h-4 w-4" /> Assignments
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-64 bg-background z-50">
@@ -2144,14 +2144,12 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
                           Individuality
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Review
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-
-                  {/* 6. FLC Report */}
-                  <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                    <FileText className="mr-2 h-4 w-4" /> FLC Report
-                  </DropdownMenuItem>
 
                   {/* 7. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
