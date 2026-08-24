@@ -8,7 +8,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Film, Loader2, Trash2, Upload, Video } from "lucide-react";
+import { Film, Loader2, Plus, Trash2, Upload, Video } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -60,6 +60,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState<{ title: string; url: string; isImage: boolean } | null>(null);
   const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (initialCategory) {
