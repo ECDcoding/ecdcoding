@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useProfile } from "@/hooks/useProfile";
-import { toast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { UserCheck, Sparkles, HeartHandshake, Ruler, Info, Share2, Loader2 } from "lucide-react";
+import { UserCheck, Sparkles, HeartHandshake, Ruler, Info } from "lucide-react";
 
 export type PersonalityTab = "ages" | "individuality";
 
@@ -240,65 +235,8 @@ const PersonalityVerification = ({
 }: PersonalityVerificationProps) => {
   const [tab, setTab] = useState<PersonalityTab>(initialTab);
   const [activeStage, setActiveStage] = useState<string>(AGE_STAGES[0].id);
-  const [ticked, setTicked] = useState<Record<string, boolean>>({});
-  const [sharing, setSharing] = useState(false);
-  const { profile } = useProfile();
 
   const stage = AGE_STAGES.find((s) => s.id === activeStage) ?? AGE_STAGES[0];
-  const tickedCount = stage.traits.filter((t) => ticked[`${stage.id}:${t}`]).length;
-
-  const shareToUsersMedia = async () => {
-    const selected = stage.traits.filter((t) => ticked[`${stage.id}:${t}`]);
-    if (!selected.length) {
-      toast({
-        title: "Nothing ticked",
-        description: "Tick the traits you observe before sharing.",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!profile?.user_id) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in to share on the post wall.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setSharing(true);
-    try {
-      const child = learnerName ? ` for ${learnerName}` : "";
-      const body = [
-        `Personality Review${child} — ${stage.label}`,
-        "",
-        ...selected.map((t) => `• ${t}`),
-        "",
-        "What would you advise to help with this? Comments welcome.",
-      ].join("\n");
-
-      const { error } = await supabase.from("user_feedback").insert({
-        user_id: profile.user_id,
-        username: profile.username || profile.first_name || "Anonymous",
-        feedback_text: body,
-        tagged_user_ids: [],
-      } as any);
-      if (error) throw error;
-
-      toast({
-        title: "Shared",
-        description: "Your personality review is on the Users' Media post wall.",
-      });
-    } catch (e: any) {
-      toast({
-        title: "Could not share",
-        description: e?.message || "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setSharing(false);
-    }
-  };
 
   return (
     <Dialog
@@ -312,7 +250,7 @@ const PersonalityVerification = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <UserCheck className="h-5 w-5 text-primary" />
-            Personality Reviews
+            Child Behavior
           </DialogTitle>
           <DialogDescription>
             Use this checklist to understand the calibre of the child
@@ -356,35 +294,22 @@ const PersonalityVerification = ({
 
               <Card>
                 <CardContent className="pt-6 space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h3 className="text-lg font-semibold">{stage.label}</h3>
-                    <Badge variant="outline">
-                      {tickedCount}/{stage.traits.length} ticked
-                    </Badge>
-                  </div>
+                  <h3 className="text-lg font-semibold">{stage.label}</h3>
                   {stage.cycle && (
                     <p className="text-sm text-muted-foreground">{stage.cycle}</p>
                   )}
 
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {stage.traits.map((trait) => {
-                      const key = `${stage.id}:${trait}`;
-                      return (
-                        <label
-                          key={key}
-                          className="flex items-start gap-2 rounded-md border border-border p-2 text-sm cursor-pointer hover:bg-muted/50"
-                        >
-                          <Checkbox
-                            checked={!!ticked[key]}
-                            onCheckedChange={(v) =>
-                              setTicked((prev) => ({ ...prev, [key]: !!v }))
-                            }
-                          />
-                          <span>{trait}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
+                  <ul className="grid gap-2 sm:grid-cols-2">
+                    {stage.traits.map((trait) => (
+                      <li
+                        key={trait}
+                        className="flex items-start gap-2 rounded-md border border-border p-2 text-sm"
+                      >
+                        <Info className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
+                        <span>{trait}</span>
+                      </li>
+                    ))}
+                  </ul>
 
                   <Separator />
                   <ul className="space-y-2 text-sm text-muted-foreground">
@@ -395,21 +320,6 @@ const PersonalityVerification = ({
                       </li>
                     ))}
                   </ul>
-
-                  <Separator />
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs text-muted-foreground">
-                      Share your ticked list on the Users' Media post wall to get advice on how to help.
-                    </p>
-                    <Button size="sm" onClick={shareToUsersMedia} disabled={sharing}>
-                      {sharing ? (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      ) : (
-                        <Share2 className="mr-2 h-4 w-4" />
-                      )}
-                      Share ticked list
-                    </Button>
-                  </div>
                 </CardContent>
               </Card>
             </div>
