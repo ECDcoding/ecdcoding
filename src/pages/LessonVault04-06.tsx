@@ -2065,10 +2065,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Learner Review */}
+                  {/* 3. Assignments */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Learner Review
+                      <Eye className="mr-2 h-4 w-4" /> Assignments
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-64 bg-background z-50">
