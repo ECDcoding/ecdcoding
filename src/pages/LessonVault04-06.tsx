@@ -3655,7 +3655,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <div className="text-center">
-              <p className="text-white/80 italic">A dialogue between teacher &amp; learner</p>
+              <p className="text-white/80 italic">Conceptual Knowledge Construction</p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <Button
                   onClick={playNarration}
