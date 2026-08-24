@@ -238,7 +238,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl">
-          <Video className="h-6 w-6" /> Video Analysis
+          <Video className="h-6 w-6" /> Social Knowledge Construction
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
@@ -266,9 +266,21 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           </div>
         </div>
 
+        {/* Add story toggle */}
+        <Button
+          onClick={() => setShowForm((s) => !s)}
+          className="w-full md:w-auto"
+          variant={showForm ? "outline" : "default"}
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          {showForm ? "Close story form" : videos.length ? "Add Another Story" : "Add a New Story"}
+        </Button>
+
         {/* Upload form */}
+        {showForm && (
         <div className="space-y-4 rounded-lg border border-border p-4">
           <h3 className="font-semibold">Post a research video clip or picture</h3>
+
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label>Species category</Label>
