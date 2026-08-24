@@ -8,7 +8,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Film, Loader2, Trash2, Upload, Video } from "lucide-react";
+import { Film, Loader2, Plus, Trash2, Upload, Video } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -60,6 +60,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState<{ title: string; url: string; isImage: boolean } | null>(null);
   const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (initialCategory) {
@@ -190,6 +191,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     setImage(null);
     if (fileRef.current) fileRef.current.value = "";
     if (imageRef.current) imageRef.current.value = "";
+    setShowForm(false);
     loadVideos();
   };
 
@@ -238,7 +240,7 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl">
-          <Video className="h-6 w-6" /> Video Analysis
+          <Video className="h-6 w-6" /> Social Knowledge Construction
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
@@ -266,9 +268,21 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
           </div>
         </div>
 
+        {/* Add story toggle */}
+        <Button
+          onClick={() => setShowForm((s) => !s)}
+          className="w-full md:w-auto"
+          variant={showForm ? "outline" : "default"}
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          {showForm ? "Close story form" : videos.length ? "Add Another Story" : "Add a New Story"}
+        </Button>
+
         {/* Upload form */}
+        {showForm && (
         <div className="space-y-4 rounded-lg border border-border p-4">
           <h3 className="font-semibold">Post a research video clip or picture</h3>
+
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label>Species category</Label>
@@ -331,6 +345,8 @@ export const EcologyVideoAnalysis = ({ initialCategory }: Props) => {
             {uploading ? "Uploading..." : "Post research clip"}
           </Button>
         </div>
+        )}
+
 
         {/* Library */}
         {loading ? (

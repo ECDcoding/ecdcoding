@@ -2090,40 +2090,32 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <Film className="mr-2 h-4 w-4" /> Users' Media
                   </DropdownMenuItem>
 
-                  {/* 5. Research and Development — Domestic Ecology Stories */}
+                  {/* 5. Domestic Ecology Stories */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <Microscope className="mr-2 h-4 w-4" /> Research and Development
+                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-60 bg-background z-50">
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
-                                All Stories
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
-                                Garden Species
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
-                                Grass Species
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
-                                Water Pond Species
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
-                                Other
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
+                          All Stories
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
+                          Garden Species
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
+                          Grass Species
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
+                          Water Pond Species
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
+                          Other
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
+
 
                   {/* 6. Child Behavior */}
                   <DropdownMenuSub>
