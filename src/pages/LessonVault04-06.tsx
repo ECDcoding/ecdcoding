@@ -2056,31 +2056,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-72 bg-background z-50">
-                        {/* Physical Knowledge — contains Verbal Testing Space */}
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <BookOpen className="mr-2 h-4 w-4" /> Physical Knowledge
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-64 bg-background z-50">
-                              <DropdownMenuSub>
-                                <DropdownMenuSubTrigger>
-                                  <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
-                                </DropdownMenuSubTrigger>
-                                <DropdownMenuPortal>
-                                  <DropdownMenuSubContent className="w-64 bg-background z-50">
-                                    <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                                      Generic Logic Analysis
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                                      Basic Logic Analysis
-                                    </DropdownMenuItem>
-                                  </DropdownMenuSubContent>
-                                </DropdownMenuPortal>
-                              </DropdownMenuSub>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
+                        {/* Verbal Testing Space — launches carousel directly */}
+                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                          <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toast({ title: "Social Knowledge", description: "Coming soon." })}>Social Knowledge</DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toast({ title: "Conceptual Knowledge", description: "Coming soon." })}>Conceptual Knowledge</DropdownMenuItem>
                       </DropdownMenuSubContent>
@@ -3655,7 +3634,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <div className="text-center">
-              <p className="text-white/80 italic">A dialogue between teacher &amp; learner</p>
+              <p className="text-white/80 italic">Conceptual Knowledge Construction</p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <Button
                   onClick={playNarration}
