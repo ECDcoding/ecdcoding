@@ -746,9 +746,34 @@ const LessonVault0710 = () => {
                               <DropdownMenuItem onClick={() => toast({ title: "Coding in Color", description: "Coming soon." })}>
                                 🎨 Coding in Color
                               </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setCodeEditorTitle('Blockly Code Editor');
+                                  setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                                  setCodeEditorOpen(true);
+                                }}
+                              >
+                                🧩 Blockly Code Editor
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')}>
+                                🎮 Blockly Games
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
+                                🔬 Micro:bit Analysis (with Voice)
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}>
+                                💡 Micro:bit Editor
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')}>
+                                🏫 Micro:bit Classroom
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setCryptogramOpen(true)}>
+                                🔑 Creating Crypto Secrets
+                              </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
+
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
