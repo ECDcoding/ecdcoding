@@ -1776,6 +1776,12 @@ const LessonVault0710 = () => {
       {/* ASK AI Copilot */}
       <ExpoCopilot context="My Lesson Vault (Ages 7-10)" />
 
+      <PersonalityVerification
+        open={personalityOpen}
+        onOpenChange={setPersonalityOpen}
+        initialTab={personalityTab}
+      />
+
       <NumeracyPracticeDialog
         open={numeracyOpen}
         onOpenChange={setNumeracyOpen}
