@@ -28,10 +28,6 @@ const CallToAction = () => {
   const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
     // Wait for auth to resolve to avoid flashing the trial splash for signed-in users
     if (authLoading) return;
-    if (ageGroup === "08-12" && !isAdmin) {
-      setUnderDevOpen(true);
-      return;
-    }
     if (user) {
       // Signed-in users go directly to lesson vault
       navigate(ageGroup === "04-07" ? "/lesson-vault-04-06" : "/lesson-vault-07-10");
