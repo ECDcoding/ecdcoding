@@ -5,7 +5,6 @@ import LessonPreviewDialog from "@/components/LessonPreviewDialog";
 import RegisterDialog from "@/components/RegisterDialog";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
 import {
   Dialog,
   DialogContent,
