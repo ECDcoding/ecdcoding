@@ -2060,6 +2060,26 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
                           <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
                         </DropdownMenuItem>
+
+                        {/* Coding */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <Code className="mr-2 h-4 w-4" /> Coding
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => setCodingDialogOpen(true)}>
+                                🔤 Coding in Alphabets
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setCodingNumbersOpen(true)}>
+                                🔢 Coding in Numbers
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Coding in Color", description: "Coming soon." })}>
+                                🎨 Coding in Color
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
