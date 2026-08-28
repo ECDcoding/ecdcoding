@@ -746,9 +746,34 @@ const LessonVault0710 = () => {
                               <DropdownMenuItem onClick={() => toast({ title: "Coding in Color", description: "Coming soon." })}>
                                 🎨 Coding in Color
                               </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setCodeEditorTitle('Blockly Code Editor');
+                                  setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                                  setCodeEditorOpen(true);
+                                }}
+                              >
+                                🧩 Blockly Code Editor
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')}>
+                                🎮 Blockly Games
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
+                                🔬 Micro:bit Analysis (with Voice)
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}>
+                                💡 Micro:bit Editor
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')}>
+                                🏫 Micro:bit Classroom
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setCryptogramOpen(true)}>
+                                🔑 Creating Crypto Secrets
+                              </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
+
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -1342,122 +1367,111 @@ const LessonVault0710 = () => {
                   <Badge className="ml-1 bg-cyan-500 text-white text-[10px] px-1.5">NEW</Badge>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[200px]">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        🤖 AI
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
-                      Facial Recognition
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      Object Identification
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        💻 Coding
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <DropdownMenuItem className="font-medium text-white hover:bg-cyan-500/20 flex items-center justify-between cursor-pointer">
-                          <span className="flex items-center gap-2">
-                            🧱 Blockly
-                          </span>
-                          <ChevronDown className="h-4 w-4" />
-                        </DropdownMenuItem>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
-                        <DropdownMenuItem 
-                          onClick={() => {
-                            setCodeEditorTitle('Blockly Code Editor');
-                            setCodeEditorDescription('Build your first program using blocks (no internet needed).');
-                            setCodeEditorOpen(true);
-                          }} 
-                          className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
-                        >
-                          🧩 Blockly Code Editor
-                          <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')} 
-                          className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
-                        >
-                          🎮 Blockly Games
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DropdownMenuItem 
-                      onClick={() => setCodingDialogOpen(true)} 
-                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🔤 Coding in Alphabets
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-amber-500/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        🔐 Cryptography
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      onClick={() => setCryptogramOpen(true)} 
-                      className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                    >
-                      🔑 Creating Crypto Secrets
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-purple-500/20 flex items-center justify-between cursor-pointer">
-                      <span className="flex items-center gap-2">
-                        🔌 Micro:bit
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-purple-400/30 shadow-lg z-50">
-                    <DropdownMenuItem 
-                      onClick={() => setMicrobitAnalysisOpen(true)} 
-                      className="font-medium text-white hover:bg-purple-500/20"
-                    >
-                      🔬 Micro:bit Analysis (with Voice)
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')} 
-                      className="font-medium text-white hover:bg-purple-500/20"
-                    >
-                      🏫 Micro:bit Classroom
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')} 
-                      className="font-medium text-white hover:bg-purple-500/20"
-                    >
-                      💡 Micro:bit Editor
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[220px]">
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
+                    🤖 AI
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
+                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
+                        Facial Recognition
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
+                        Object Identification
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-purple-500/20 data-[state=open]:bg-purple-500/20">
+                    💻 Coding
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger className="font-medium text-white hover:bg-cyan-500/20 data-[state=open]:bg-cyan-500/20">
+                          🧱 Blockly
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                          <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50">
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setCodeEditorTitle('Blockly Code Editor');
+                                setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                                setCodeEditorOpen(true);
+                              }}
+                              className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                            >
+                              🧩 Blockly Code Editor
+                              <Badge className="ml-1 bg-green-500 text-white text-[8px] px-1">Built-in</Badge>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')}
+                              className="font-medium text-white hover:bg-cyan-500/20 flex items-center gap-2 cursor-pointer"
+                            >
+                              🎮 Blockly Games
+                            </DropdownMenuItem>
+                          </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                      </DropdownMenuSub>
+                      <DropdownMenuItem
+                        onClick={() => setCodingDialogOpen(true)}
+                        className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
+                      >
+                        🔤 Coding in Alphabets
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-amber-500/20 data-[state=open]:bg-amber-500/20">
+                    🔐 Cryptography
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50">
+                      <DropdownMenuItem
+                        onClick={() => setCryptogramOpen(true)}
+                        className="font-medium text-white hover:bg-amber-500/20 cursor-pointer"
+                      >
+                        🔑 Creating Crypto Secrets
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-purple-500/20 data-[state=open]:bg-purple-500/20">
+                    🔌 Micro:bit
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-purple-400/30 shadow-lg z-50">
+                      <DropdownMenuItem
+                        onClick={() => setMicrobitAnalysisOpen(true)}
+                        className="font-medium text-white hover:bg-purple-500/20"
+                      >
+                        🔬 Micro:bit Analysis (with Voice)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')}
+                        className="font-medium text-white hover:bg-purple-500/20"
+                      >
+                        🏫 Micro:bit Classroom
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}
+                        className="font-medium text-white hover:bg-purple-500/20"
+                      >
+                        💡 Micro:bit Editor
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
+
           </div>
         </div>
 
