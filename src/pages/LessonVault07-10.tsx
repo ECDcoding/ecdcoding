@@ -791,8 +791,8 @@ const LessonVault0710 = () => {
                         <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
                           <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Coding Ability
+                        <DropdownMenuItem onClick={() => toast({ title: "Coding", description: "Coming soon." })}>
+                          <PenLine className="mr-2 h-4 w-4" /> Coding
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
