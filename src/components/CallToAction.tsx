@@ -17,11 +17,10 @@ import { Construction } from "lucide-react";
 const CallToAction = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const { isAdmin } = useIsAdmin();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<"04-07" | "08-12" | null>(null);
-  const [underDevOpen, setUnderDevOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+
   
 
   const handleButtonClick = (ageGroup: "04-07" | "08-12") => {
