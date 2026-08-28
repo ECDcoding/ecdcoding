@@ -5,14 +5,6 @@ import LessonPreviewDialog from "@/components/LessonPreviewDialog";
 import RegisterDialog from "@/components/RegisterDialog";
 
 import { useAuth } from "@/hooks/useAuth";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Construction } from "lucide-react";
 
 const CallToAction = () => {
   const navigate = useNavigate();
