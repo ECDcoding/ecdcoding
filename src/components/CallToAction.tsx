@@ -56,24 +56,6 @@ const CallToAction = () => {
       />
 
       <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
-
-      <Dialog open={underDevOpen} onOpenChange={setUnderDevOpen}>
-        <DialogContent className="sm:max-w-md text-center">
-          <DialogHeader>
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
-                <Construction className="h-8 w-8 text-orange-500" />
-              </div>
-            </div>
-            <DialogTitle className="text-center text-xl">
-              This Section is Still Under Development
-            </DialogTitle>
-            <DialogDescription className="text-center">
-              We're working hard to bring lessons for Kids Aged 08 - 12. Please check back soon!
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };
