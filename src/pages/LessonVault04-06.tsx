@@ -28,6 +28,7 @@ import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";

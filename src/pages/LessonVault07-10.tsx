@@ -31,6 +31,7 @@ import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { supabase } from "@/integrations/supabase/client";
