@@ -76,6 +76,8 @@ const LessonVault0710 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const assignmentAlerts = useAssignmentAlerts("08-12");
+
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-07-10');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
