@@ -10,19 +10,20 @@ import {
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export type AssignmentItem = { id: string; title: string; via: string };
+export type AssignmentItem = { id: string; title: string; via: string; task: string };
 
 /** Grade R assignment checklist (Conceptual Knowledge Construction). */
 export const ASSIGNMENT_CHECKLIST: AssignmentItem[] = [
-  { id: "curiosity-discovery", title: "Curiosity & Discovery", via: "Domestic Ecology" },
-  { id: "cardinality-1-30", title: "Reaching Cardinality 1 – 30", via: "VTS" },
-  { id: "road-transport", title: "Road Transport Analysis", via: "VTS" },
-  { id: "hand-writing-shapes", title: "Hand Writing | Shapes", via: "Google Docs" },
-  { id: "rainbow-colors", title: "Colors of the Rainbow Analysis", via: "VTS" },
-  { id: "rhythmic-training", title: "Rhythmic Training", via: "Performing Arts" },
-  { id: "coding-alphabets", title: "Coding in Alphabets", via: "Coding" },
-  { id: "coding-numbers", title: "Coding in Numbers", via: "Coding" },
+  { id: "curiosity-discovery", title: "Curiosity & Discovery", via: "Domestic Ecology", task: "Record a short story about one living thing you found at home or in the garden." },
+  { id: "cardinality-1-30", title: "Reaching Cardinality 1 – 30", via: "VTS", task: "Count 1 to 30 out loud, then say how many objects are on the card." },
+  { id: "road-transport", title: "Road Transport Analysis", via: "VTS", task: "Name each vehicle on the card and say where it travels." },
+  { id: "hand-writing-shapes", title: "Hand Writing | Shapes", via: "Google Docs", task: "Draw a circle, square, triangle and rectangle, then name each one." },
+  { id: "rainbow-colors", title: "Colors of the Rainbow Analysis", via: "VTS", task: "Say the colors of the rainbow in order and point at each one." },
+  { id: "rhythmic-training", title: "Rhythmic Training", via: "Performing Arts", task: "Clap the rhythm of your own name, then sing it back." },
+  { id: "coding-alphabets", title: "Coding in Alphabets", via: "Coding", task: "Type the words MOM, DAD and BEE — read the number code out loud (e.g. BEE = 2, 5, 5)." },
+  { id: "coding-numbers", title: "Coding in Numbers", via: "Coding", task: "Turn the code 3, 1, 20 back into letters and say the word (CAT)." },
 ];
+
 
 const storageKey = (group: string) => `ecdcoding:assignment-alerts:${group}`;
 
