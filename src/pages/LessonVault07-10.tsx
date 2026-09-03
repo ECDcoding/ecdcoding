@@ -31,6 +31,7 @@ import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { supabase } from "@/integrations/supabase/client";
@@ -76,6 +77,8 @@ const LessonVault0710 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const assignmentAlerts = useAssignmentAlerts("08-12");
+
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-07-10');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
@@ -778,25 +781,9 @@ const LessonVault0710 = () => {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 3. Assignments */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Eye className="mr-2 h-4 w-4" /> Assignments
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Coding
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  {/* 3. Assignments — checklist with red alert */}
+                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+
 
                   {/* 4. Users' Media */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>

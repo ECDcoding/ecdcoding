@@ -28,6 +28,7 @@ import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
@@ -108,6 +109,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
   const showLessonFocusBanner = lessonPeriodParam !== null;
   const { toast } = useToast();
+  const assignmentAlerts = useAssignmentAlerts("04-07");
+
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
@@ -2085,25 +2088,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Assignments — dropdown list alone */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Eye className="mr-2 h-4 w-4" /> Assignments
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Coding Ability
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  {/* 3. Assignments — checklist with red alert */}
+                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+
 
                   {/* 4. Users' Media */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
