@@ -778,25 +778,9 @@ const LessonVault0710 = () => {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 3. Assignments */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Eye className="mr-2 h-4 w-4" /> Assignments
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Coding
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  {/* 3. Assignments — checklist with red alert */}
+                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+
 
                   {/* 4. Users' Media */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
