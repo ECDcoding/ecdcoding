@@ -2085,25 +2085,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Assignments — dropdown list alone */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Eye className="mr-2 h-4 w-4" /> Assignments
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => toast({ title: "Hand Writing", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Hand Writing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Reading & Comprehension", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Reading & Comprehension
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast({ title: "Coding Ability", description: "Coming soon." })}>
-                          <PenLine className="mr-2 h-4 w-4" /> Coding Ability
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  {/* 3. Assignments — checklist with red alert */}
+                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+
 
                   {/* 4. Users' Media */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
