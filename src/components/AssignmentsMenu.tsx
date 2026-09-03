@@ -61,9 +61,11 @@ export const useAssignmentAlerts = (group: "04-07" | "08-12") => {
 interface AssignmentsSubMenuProps {
   flagged: string[];
   onToggle: (id: string) => void;
+  /** Opens the lesson/page linked to a flagged assignment. */
+  onOpen?: (id: string) => void;
 }
 
-export const AssignmentsSubMenu = ({ flagged, onToggle }: AssignmentsSubMenuProps) => {
+export const AssignmentsSubMenu = ({ flagged, onToggle, onOpen }: AssignmentsSubMenuProps) => {
   const hasAlerts = flagged.length > 0;
   return (
     <DropdownMenuSub>
@@ -81,7 +83,7 @@ export const AssignmentsSubMenu = ({ flagged, onToggle }: AssignmentsSubMenuProp
         )}
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
-        <DropdownMenuSubContent className="w-72 bg-background z-50">
+        <DropdownMenuSubContent className="w-80 bg-background z-50">
           <DropdownMenuLabel className="text-xs uppercase tracking-wide text-muted-foreground">
             Checklist of Assignments
           </DropdownMenuLabel>
@@ -89,16 +91,37 @@ export const AssignmentsSubMenu = ({ flagged, onToggle }: AssignmentsSubMenuProp
           {ASSIGNMENT_CHECKLIST.map((item) => {
             const isFlagged = flagged.includes(item.id);
             return (
-              <DropdownMenuCheckboxItem
-                key={item.id}
-                checked={isFlagged}
-                onCheckedChange={() => onToggle(item.id)}
-                onSelect={(e) => e.preventDefault()}
-                className={isFlagged ? "text-destructive" : undefined}
-              >
-                <span className="flex-1">{item.title}</span>
-                <span className="ml-2 text-[10px] text-muted-foreground">{item.via}</span>
-              </DropdownMenuCheckboxItem>
+              <div key={item.id}>
+                <DropdownMenuCheckboxItem
+                  checked={isFlagged}
+                  onCheckedChange={() => onToggle(item.id)}
+                  onSelect={(e) => e.preventDefault()}
+                  className={isFlagged ? "text-destructive" : undefined}
+                >
+                  <span className="flex-1">{item.title}</span>
+                  <span className="ml-2 text-[10px] text-muted-foreground">{item.via}</span>
+                </DropdownMenuCheckboxItem>
+                {isFlagged && (
+                  <div className="ml-8 mr-2 mb-1 rounded-md border border-destructive/40 bg-destructive/5 p-2">
+                    <p className="text-[11px] leading-snug text-muted-foreground">
+                      <span className="font-semibold text-destructive">What to do: </span>
+                      {item.task}
+                    </p>
+                    {onOpen && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpen(item.id);
+                        }}
+                        className="mt-1.5 inline-flex items-center gap-1 rounded bg-destructive px-2 py-1 text-[11px] font-semibold text-destructive-foreground hover:opacity-90"
+                      >
+                        Start assignment <ArrowRight className="h-3 w-3" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
           {hasAlerts && (
@@ -114,3 +137,4 @@ export const AssignmentsSubMenu = ({ flagged, onToggle }: AssignmentsSubMenuProp
     </DropdownMenuSub>
   );
 };
+
