@@ -2117,8 +2117,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
-                          All Stories
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>
+                          Kids' Conceptual Stories
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
                           Garden Species
@@ -2128,9 +2128,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
                           Water Pond Species
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=other")}>
-                          Other
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
