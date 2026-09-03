@@ -20,10 +20,10 @@ const SAMPLE_VIDEO_URL =
   "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4";
 
 export const ECOLOGY_CATEGORIES = [
+  { value: "kids-conceptual-stories", label: "Kids' Conceptual Stories" },
   { value: "garden-species", label: "Garden Species" },
   { value: "grass-species", label: "Grass Species" },
   { value: "water-pond-species", label: "Water Pond Species" },
-  { value: "other", label: "Other" },
 ] as const;
 
 interface ResearchVideo {
