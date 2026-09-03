@@ -108,6 +108,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
   const showLessonFocusBanner = lessonPeriodParam !== null;
   const { toast } = useToast();
+  const assignmentAlerts = useAssignmentAlerts("04-07");
+
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
