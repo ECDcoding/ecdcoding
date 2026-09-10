@@ -402,7 +402,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder={isListening ? "Listening…" : "Ask about the Expo…"}
+                  placeholder={isListening ? "Listening…" : "Ask about behaviour or lessons…"}
                   className="flex-1 text-sm h-9 min-w-0"
                   disabled={isLoading}
                 />
