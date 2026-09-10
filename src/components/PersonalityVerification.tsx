@@ -284,7 +284,11 @@ const PersonalityVerification = ({
                   <Button
                     key={s.id}
                     size="sm"
-                    className="bg-zinc-800 text-foreground hover:bg-zinc-700 border-zinc-700"
+                    className={`border-zinc-700 ${
+                      s.id === activeStage
+                        ? "bg-zinc-400 text-black hover:bg-zinc-300"
+                        : "bg-zinc-800 text-foreground hover:bg-zinc-700"
+                    }`}
                     variant={s.id === activeStage ? "secondary" : "outline"}
                     onClick={() => setActiveStage(s.id)}
                   >
