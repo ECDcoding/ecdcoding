@@ -154,6 +154,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
           </div>
         </div>
       </Button>
+      )}
 
       {/* Chat Window */}
       {isOpen && (
