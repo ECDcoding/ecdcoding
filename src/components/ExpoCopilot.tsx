@@ -12,6 +12,11 @@ type Message = { role: "user" | "assistant"; content: string };
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
   context?: string;
+  /** Hide the built-in floating launcher (when an external launcher controls it) */
+  hideLauncher?: boolean;
+  /** Controlled open state */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const SUGGESTED_QUESTIONS = [
