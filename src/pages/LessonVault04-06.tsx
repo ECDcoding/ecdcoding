@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import ExpoCopilot from "@/components/ExpoCopilot";
+import AssistantHub from "@/components/AssistantHub";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5886,7 +5886,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Dialog>
       
       {/* ASK AI Copilot */}
-      <ExpoCopilot context="Learning the Basic (4-7)" />
+      <AssistantHub context="Learning the Basic (4-7)" />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 

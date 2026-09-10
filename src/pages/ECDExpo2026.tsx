@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { DebitCardPaymentDialog } from "@/components/DebitCardPaymentDialog";
 import { PayFastPaymentDialog } from "@/components/PayFastPaymentDialog";
 import ExpoAccessGate from "@/components/ExpoAccessGate";
-import ExpoCopilot from "@/components/ExpoCopilot";
+import AssistantHub from "@/components/AssistantHub";
 import ExpoAccountsList from "@/components/ExpoAccountsList";
 import BusinessProposalDialog from "@/components/BusinessProposalDialog";
 import ImageCropDialog from "@/components/ImageCropDialog";
@@ -1034,7 +1034,7 @@ const ECDExpo2026Content = () => {
       />
 
       {/* Expo Copilot — contextually aware of the active tab */}
-      <ExpoCopilot
+      <AssistantHub
         context={
           activeTab === "overview"
             ? "Event Overview & Registration Options"

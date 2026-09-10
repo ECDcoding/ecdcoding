@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import ExpoCopilot from "@/components/ExpoCopilot";
+import AssistantHub from "@/components/AssistantHub";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -1772,7 +1772,7 @@ const LessonVault0710 = () => {
       <audio ref={alphabetAudioRef} src={alphabetSong} preload="auto" />
 
       {/* ASK AI Copilot */}
-      <ExpoCopilot context="My Lesson Vault (Ages 7-10)" />
+      <AssistantHub context="My Lesson Vault (Ages 7-10)" />
 
       <PersonalityVerification
         open={personalityOpen}
