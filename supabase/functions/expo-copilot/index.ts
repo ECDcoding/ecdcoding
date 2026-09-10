@@ -86,7 +86,7 @@ serve(async (req) => {
 
     // Build system prompt with optional hover context
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}\n\nThe user is currently viewing the "${context}" section of the expo page. Tailor your response to be relevant to that section.`
+      ? `${EXPO_SYSTEM_PROMPT}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
       : EXPO_SYSTEM_PROMPT;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
