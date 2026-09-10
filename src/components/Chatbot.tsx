@@ -7,8 +7,21 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { MessageCircle, X, Mic, MicOff, Send } from 'lucide-react';
 
-const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean) => void }) => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatbotProps {
+  onVoiceModeChange?: (isActive: boolean) => void;
+  /** Hide the built-in floating launcher (when an external launcher controls it) */
+  hideLauncher?: boolean;
+  /** Controlled open state */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: ChatbotProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = open ?? internalOpen;
+  const setIsOpen = (value: boolean) => {
+    onOpenChange ? onOpenChange(value) : setInternalOpen(value);
+  };
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
