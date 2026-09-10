@@ -8,6 +8,13 @@
       "when": 1789028845587,
       "tag": "0000_create_assignment_alerts",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789042454846,
+      "tag": "0001_create_learning_basics_content",
+      "breakpoints": true
     }
   ]
 }

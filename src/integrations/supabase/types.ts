@@ -403,6 +403,60 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_basics_content: {
+        Row: {
+          age_group: string
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          display_order: number
+          extras: Json
+          id: string
+          image_url: string | null
+          is_active: boolean
+          link_url: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          age_group: string
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          display_order?: number
+          extras?: Json
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          link_url?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          age_group?: string
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          display_order?: number
+          extras?: Json
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          link_url?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       lesson_baskets: {
         Row: {
           created_at: string
