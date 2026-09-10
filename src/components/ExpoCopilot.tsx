@@ -327,8 +327,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       )}
 
       {/* Trigger Button */}
+      {!hideLauncher && (
       <Button
-        onClick={() => { setIsOpen((o) => !o); setIsMinimized(false); }}
+        onClick={() => { setIsOpen(!isOpen); setIsMinimized(false); }}
         className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
         size="icon"
       >
@@ -343,6 +344,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
           </>
         )}
       </Button>
+      )}
     </div>
   );
 };
