@@ -28,7 +28,7 @@ import { SportPlayField } from "@/components/SportPlayField";
 import MusicLabWrapper from "@/components/MusicLabWrapper";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
-import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
+import { AssignmentsNavItem } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { useEarlyAdopter } from "@/hooks/useEarlyAdopter";
@@ -109,8 +109,6 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const lessonPeriod: "day" | "week" | "month" = lessonPeriodParam ?? "day";
   const showLessonFocusBanner = lessonPeriodParam !== null;
   const { toast } = useToast();
-  const assignmentAlerts = useAssignmentAlerts("04-07");
-
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-04-06');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
   const { profile } = useProfile();
@@ -2088,8 +2086,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Assignments — checklist with red alert */}
-                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+                  {/* 3. Assignments — direct page with red alert */}
+                  <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
 
 
                   {/* 4. Users' Media */}
