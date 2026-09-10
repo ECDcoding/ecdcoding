@@ -1,140 +1,77 @@
 import { useCallback, useEffect, useState } from "react";
-import { AlertCircle, ArrowRight, PenLine } from "lucide-react";
-import {
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-} from "@/components/ui/dropdown-menu";
+import { AlertCircle, Eye } from "lucide-react";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
-export type AssignmentItem = { id: string; title: string; via: string; task: string };
+export type AssignmentItem = {
+  id: string;
+  title: string;
+  via: string;
+  category: string;
+  task: string;
+  destination?: string;
+};
 
-/** Grade R assignment checklist (Conceptual Knowledge Construction). */
+/** Current Grade R work plus the numeracy activities supplied by ECDcoding. */
 export const ASSIGNMENT_CHECKLIST: AssignmentItem[] = [
-  { id: "curiosity-discovery", title: "Curiosity & Discovery", via: "Domestic Ecology", task: "Record a short story about one living thing you found at home or in the garden." },
-  { id: "cardinality-1-30", title: "Reaching Cardinality 1 – 30", via: "VTS", task: "Count 1 to 30 out loud, then say how many objects are on the card." },
-  { id: "road-transport", title: "Road Transport Analysis", via: "VTS", task: "Name each vehicle on the card and say where it travels." },
-  { id: "hand-writing-shapes", title: "Hand Writing | Shapes", via: "Google Docs", task: "Draw a circle, square, triangle and rectangle, then name each one." },
-  { id: "rainbow-colors", title: "Colors of the Rainbow Analysis", via: "VTS", task: "Say the colors of the rainbow in order and point at each one." },
-  { id: "rhythmic-training", title: "Rhythmic Training", via: "Performing Arts", task: "Clap the rhythm of your own name, then sing it back." },
-  { id: "coding-alphabets", title: "Coding in Alphabets", via: "Coding", task: "Type the words MOM, DAD and BEE — read the number code out loud (e.g. BEE = 2, 5, 5)." },
-  { id: "coding-numbers", title: "Coding in Numbers", via: "Coding", task: "Turn the code 3, 1, 20 back into letters and say the word (CAT)." },
+  { id: "curiosity-discovery", title: "Curiosity & Discovery", via: "Domestic Ecology", category: "Discovery", task: "Record a short story about one living thing you found at home or in the garden.", destination: "/domestic-ecology?category=kids-conceptual-stories" },
+  { id: "cardinality-1-30", title: "Reaching Cardinality 1–30", via: "Verbal Testing Space", category: "Number Concept", task: "Count 1 to 30 out loud, then say how many objects are on the card.", destination: "/verbal-testing-space" },
+  { id: "road-transport", title: "Road Transport Analysis", via: "Verbal Testing Space", category: "Analysis", task: "Name each vehicle on the card and say where it travels.", destination: "/verbal-testing-space" },
+  { id: "hand-writing-shapes", title: "Hand Writing | Shapes", via: "Learning the Basics", category: "Writing & Shapes", task: "Draw a circle, square, triangle and rectangle, then name each one.", destination: "/lesson-vault-04-06" },
+  { id: "rainbow-colors", title: "Colors of the Rainbow Analysis", via: "Verbal Testing Space", category: "Analysis", task: "Say the colors of the rainbow in order and point at each one.", destination: "/verbal-testing-space" },
+  { id: "rhythmic-training", title: "Rhythmic Training", via: "Performing Arts", category: "Rhythm", task: "Clap the rhythm of your own name, then sing it back.", destination: "/lesson-vault-04-06" },
+  { id: "coding-alphabets", title: "Coding in Alphabets", via: "Coding", category: "Coding", task: "Type the words MOM, DAD and BEE, then read the number code aloud. For example, BEE = 2, 5, 5.", destination: "/lesson-vault-04-06?activity=coding-alphabets" },
+  { id: "coding-numbers", title: "Coding in Numbers", via: "Coding", category: "Coding", task: "Turn the code 3, 1, 20 back into letters and say the word CAT.", destination: "/lesson-vault-04-06?activity=coding-numbers" },
+  { id: "developing-number-concept", title: "Developing a Number Concept", via: "Numeracy", category: "Number Concept", task: "Practise counting all, verbal counting, object counting, counting forward and backward in the groups 1–10, 10–20 and 20–30.", destination: "/verbal-testing-space" },
+  { id: "counting-on", title: "Counting On from a Given Number", via: "Numeracy", category: "Number Concept", task: "Start at 1, 3 or 5 and continue counting until you reach 10.", destination: "/verbal-testing-space" },
+  { id: "building-numbers", title: "Breaking Down & Building Up Numbers", via: "Numeracy", category: "Number Operations", task: "Use objects to show that 5 can be broken into 2 + 3 and that 3 + 2 builds 5.", destination: "/lesson-vault-04-06" },
+  { id: "conceptual-subtraction", title: "Conceptual Subtraction", via: "Numeracy", category: "Number Operations", task: "Count the objects, take some away, and say how many remain.", destination: "/lesson-vault-04-06" },
+  { id: "ordinal-counting", title: "Ordinal Counting", via: "Numeracy", category: "Position", task: "Arrange three objects and identify which is 1st, 2nd and 3rd. Describe position, size, distance and direction.", destination: "/lesson-vault-04-06" },
+  { id: "cardinal-numbering", title: "Cardinal Numbering", via: "Numeracy", category: "Number Concept", task: "Count a group of houses, then count their windows and chimneys. Say how many there are altogether.", destination: "/lesson-vault-04-06" },
 ];
 
+export const useAssignmentAlerts = (ageGroup: "04-07" | "08-12") => {
+  const { user } = useAuth();
+  const [alertCount, setAlertCount] = useState(0);
 
-const storageKey = (group: string) => `ecdcoding:assignment-alerts:${group}`;
-
-/** Tracks which assignments have been flagged for the learner to attend to. */
-export const useAssignmentAlerts = (group: "04-07" | "08-12") => {
-  const [flagged, setFlagged] = useState<string[]>([]);
+  const refresh = useCallback(async () => {
+    if (!user) {
+      setAlertCount(0);
+      return;
+    }
+    const [{ data: assignments }, { data: responses }] = await Promise.all([
+      supabase.from("assignments").select("id").eq("age_group", ageGroup).eq("is_active", true),
+      supabase.from("assignment_responses").select("assignment_id,status").eq("user_id", user.id),
+    ]);
+    const completed = new Set((responses ?? []).filter((item) => item.status === "completed").map((item) => item.assignment_id));
+    setAlertCount((assignments ?? []).filter((item) => !completed.has(item.id)).length);
+  }, [ageGroup, user]);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(storageKey(group));
-      if (raw) setFlagged(JSON.parse(raw));
-    } catch {
-      /* ignore */
-    }
-  }, [group]);
+    void refresh();
+    const channel = supabase
+      .channel(`assignment-alerts-${ageGroup}-${user?.id ?? "guest"}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "assignments" }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "assignment_responses" }, refresh)
+      .subscribe();
+    return () => { void supabase.removeChannel(channel); };
+  }, [ageGroup, refresh, user?.id]);
 
-  const toggle = useCallback(
-    (id: string) => {
-      setFlagged((prev) => {
-        const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-        try {
-          localStorage.setItem(storageKey(group), JSON.stringify(next));
-        } catch {
-          /* ignore */
-        }
-        return next;
-      });
-    },
-    [group]
-  );
-
-  return { flagged, toggle, hasAlerts: flagged.length > 0 };
+  return { alertCount, hasAlerts: alertCount > 0, refresh };
 };
 
-interface AssignmentsSubMenuProps {
-  flagged: string[];
-  onToggle: (id: string) => void;
-  /** Opens the lesson/page linked to a flagged assignment. */
-  onOpen?: (id: string) => void;
-}
-
-export const AssignmentsSubMenu = ({ flagged, onToggle, onOpen }: AssignmentsSubMenuProps) => {
-  const hasAlerts = flagged.length > 0;
+export const AssignmentsNavItem = ({ ageGroup, onOpen }: { ageGroup: "04-07" | "08-12"; onOpen: () => void }) => {
+  const { alertCount, hasAlerts } = useAssignmentAlerts(ageGroup);
   return (
-    <DropdownMenuSub>
-      <DropdownMenuSubTrigger className={hasAlerts ? "text-destructive font-semibold" : undefined}>
-        {hasAlerts ? (
-          <AlertCircle className="mr-2 h-4 w-4 text-destructive animate-pulse" />
-        ) : (
-          <PenLine className="mr-2 h-4 w-4" />
-        )}
-        Assignments
-        {hasAlerts && (
-          <span className="ml-2 rounded-full bg-destructive px-1.5 text-[10px] font-bold leading-4 text-destructive-foreground">
-            {flagged.length}
-          </span>
-        )}
-      </DropdownMenuSubTrigger>
-      <DropdownMenuPortal>
-        <DropdownMenuSubContent className="w-80 bg-background z-50">
-          <DropdownMenuLabel className="text-xs uppercase tracking-wide text-muted-foreground">
-            Checklist of Assignments
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {ASSIGNMENT_CHECKLIST.map((item) => {
-            const isFlagged = flagged.includes(item.id);
-            return (
-              <div key={item.id}>
-                <DropdownMenuCheckboxItem
-                  checked={isFlagged}
-                  onCheckedChange={() => onToggle(item.id)}
-                  onSelect={(e) => e.preventDefault()}
-                  className={isFlagged ? "text-destructive" : undefined}
-                >
-                  <span className="flex-1">{item.title}</span>
-                  <span className="ml-2 text-[10px] text-muted-foreground">{item.via}</span>
-                </DropdownMenuCheckboxItem>
-                {isFlagged && (
-                  <div className="ml-8 mr-2 mb-1 rounded-md border border-destructive/40 bg-destructive/5 p-2">
-                    <p className="text-[11px] leading-snug text-muted-foreground">
-                      <span className="font-semibold text-destructive">What to do: </span>
-                      {item.task}
-                    </p>
-                    {onOpen && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpen(item.id);
-                        }}
-                        className="mt-1.5 inline-flex items-center gap-1 rounded bg-destructive px-2 py-1 text-[11px] font-semibold text-destructive-foreground hover:opacity-90"
-                      >
-                        Start assignment <ArrowRight className="h-3 w-3" />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-          {hasAlerts && (
-            <>
-              <DropdownMenuSeparator />
-              <div className="px-2 py-1.5 text-xs text-destructive">
-                Assignment alert — {flagged.length} task{flagged.length > 1 ? "s" : ""} for the student to attend to.
-              </div>
-            </>
-          )}
-        </DropdownMenuSubContent>
-      </DropdownMenuPortal>
-    </DropdownMenuSub>
+    <DropdownMenuItem onClick={onOpen} className={hasAlerts ? "font-semibold text-destructive" : undefined}>
+      {hasAlerts ? <AlertCircle className="mr-2 h-4 w-4 animate-pulse" /> : <Eye className="mr-2 h-4 w-4" />}
+      <span className="flex-1">Assignments</span>
+      {hasAlerts && (
+        <span className="ml-2 rounded-full bg-destructive px-1.5 text-[10px] font-bold leading-4 text-destructive-foreground">
+          {alertCount}
+        </span>
+      )}
+    </DropdownMenuItem>
   );
 };
-

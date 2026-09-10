@@ -31,7 +31,7 @@ import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
-import { AssignmentsSubMenu, useAssignmentAlerts } from "@/components/AssignmentsMenu";
+import { AssignmentsNavItem } from "@/components/AssignmentsMenu";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 import { useCredits } from "@/hooks/useCredits";
 import { supabase } from "@/integrations/supabase/client";
@@ -77,8 +77,6 @@ const LessonVault0710 = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const assignmentAlerts = useAssignmentAlerts("08-12");
-
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const { onlineUsers, onlineCount } = useOnlineUsers('lesson-vault-07-10');
   const { credits, topupCredits, loading: creditsLoading, purchaseCredits, useCredits: consumeCredits, showReloadDialog, setShowReloadDialog } = useCredits();
@@ -781,8 +779,8 @@ const LessonVault0710 = () => {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 3. Assignments — checklist with red alert */}
-                  <AssignmentsSubMenu flagged={assignmentAlerts.flagged} onToggle={assignmentAlerts.toggle} />
+                  {/* 3. Assignments — direct page with red alert */}
+                  <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
 
 
                   {/* 4. Users' Media */}
