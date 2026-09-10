@@ -359,21 +359,58 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               </div>
 
               {/* Input */}
-              <div className="p-3 border-t border-border flex gap-2">
+              <div className="p-3 border-t border-border space-y-2">
+                {attachment && (
+                  <div className="flex items-center gap-2 text-xs bg-muted rounded-md px-2 py-1">
+                    <Paperclip className="h-3 w-3 flex-shrink-0" />
+                    <span className="truncate flex-1">{attachment.name}</span>
+                    <button aria-label="Remove attachment" onClick={() => setAttachment(null)}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".txt,.md,.csv,.json,text/plain,application/json"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  aria-label="Attach file"
+                  className="h-9 w-9 flex-shrink-0"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isLoading}
+                >
+                  <Paperclip className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={isListening ? "default" : "outline"}
+                  size="icon"
+                  aria-label={isListening ? "Stop voice input" : "Start voice input"}
+                  className="h-9 w-9 flex-shrink-0"
+                  onClick={toggleListening}
+                  disabled={isLoading}
+                >
+                  {isListening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+                </Button>
                 <Input
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about the Expo…"
-                  className="flex-1 text-sm h-9"
+                  placeholder={isListening ? "Listening…" : "Ask about the Expo…"}
+                  className="flex-1 text-sm h-9 min-w-0"
                   disabled={isLoading}
                 />
                 <Button
                   size="icon"
                   className="h-9 w-9 flex-shrink-0"
                   onClick={() => sendMessage(input)}
-                  disabled={isLoading || !input.trim()}
+                  disabled={isLoading || (!input.trim() && !attachment)}
                 >
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
