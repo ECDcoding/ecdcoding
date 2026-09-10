@@ -288,7 +288,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <div className="space-y-3">
                     <div className="bg-muted rounded-xl p-3 text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-1">👋 Hi! I'm your ECD AI</p>
-                      <p>I can answer questions about the ECD Coding & Robotics EXPO 2026 — sponsorship, exhibiting, speakers, or delegate registration.</p>
+                      <p>I can help you understand your child's behaviour at every age, and guide you through the lessons on offer — literacy, numeracy, coding, road safety, science and life skills.</p>
                     </div>
                     <p className="text-xs text-muted-foreground px-1">Try asking:</p>
                     <div className="space-y-2">
