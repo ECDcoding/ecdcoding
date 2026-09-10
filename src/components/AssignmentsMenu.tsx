@@ -64,7 +64,7 @@ export const useAssignmentAlerts = (ageGroup: "04-07" | "08-12") => {
 export const AssignmentsNavItem = ({ ageGroup, onOpen }: { ageGroup: "04-07" | "08-12"; onOpen: () => void }) => {
   const { alertCount, hasAlerts } = useAssignmentAlerts(ageGroup);
   return (
-    <DropdownMenuItem onClick={onOpen} className={hasAlerts ? "font-semibold text-destructive" : undefined}>
+    <DropdownMenuItem onClick={onOpen} className={`bg-muted ${hasAlerts ? "font-semibold text-destructive" : ""}`}>
       {hasAlerts ? <AlertCircle className="mr-2 h-4 w-4 animate-pulse" /> : <Eye className="mr-2 h-4 w-4" />}
       <span className="flex-1">Assignments</span>
       {hasAlerts && (
