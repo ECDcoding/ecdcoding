@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check } from "lucide-react";
+import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip } from "lucide-react";
 import { toast } from "sonner";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
@@ -39,8 +39,12 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isVisible, setIsVisible] = useState(false);
   const [feedback, setFeedback] = useState<Record<number, "up" | "down">>({});
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   // Animate in after mount
   useEffect(() => {
@@ -119,12 +123,16 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   }, []);
 
   const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || isLoading) return;
+    if ((!text.trim() && !attachment) || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: text };
+    const content = attachment
+      ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
+      : text;
+    const userMsg: Message = { role: "user", content };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setInput("");
+    setAttachment(null);
     setIsLoading(true);
 
     try {
@@ -136,7 +144,60 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat]);
+  }, [messages, context, isLoading, streamChat, attachment]);
+
+  const toggleListening = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      toast.error("Voice input isn't supported in this browser.");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-ZA";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onresult = (event: any) => {
+      const transcript = Array.from(event.results)
+        .map((r: any) => r[0].transcript)
+        .join(" ");
+      setInput(transcript);
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast.error("Couldn't hear that — please try again.");
+    };
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsListening(true);
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > 1024 * 1024) {
+      toast.error("Please attach a file smaller than 1 MB.");
+      return;
+    }
+    const readable = /^(text\/|application\/json)/.test(file.type) || /\.(txt|md|csv|json)$/i.test(file.name);
+    if (!readable) {
+      toast.error("Please attach a text file (.txt, .md, .csv, .json).");
+      return;
+    }
+    try {
+      const text = await file.text();
+      setAttachment({ name: file.name, text: text.slice(0, 8000) });
+      toast.success(`Attached ${file.name}`);
+    } catch {
+      toast.error("Could not read that file.");
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -298,21 +359,58 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               </div>
 
               {/* Input */}
-              <div className="p-3 border-t border-border flex gap-2">
+              <div className="p-3 border-t border-border space-y-2">
+                {attachment && (
+                  <div className="flex items-center gap-2 text-xs bg-muted rounded-md px-2 py-1">
+                    <Paperclip className="h-3 w-3 flex-shrink-0" />
+                    <span className="truncate flex-1">{attachment.name}</span>
+                    <button aria-label="Remove attachment" onClick={() => setAttachment(null)}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".txt,.md,.csv,.json,text/plain,application/json"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  aria-label="Attach file"
+                  className="h-9 w-9 flex-shrink-0"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isLoading}
+                >
+                  <Paperclip className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={isListening ? "default" : "outline"}
+                  size="icon"
+                  aria-label={isListening ? "Stop voice input" : "Start voice input"}
+                  className="h-9 w-9 flex-shrink-0"
+                  onClick={toggleListening}
+                  disabled={isLoading}
+                >
+                  {isListening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+                </Button>
                 <Input
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about the Expo…"
-                  className="flex-1 text-sm h-9"
+                  placeholder={isListening ? "Listening…" : "Ask about the Expo…"}
+                  className="flex-1 text-sm h-9 min-w-0"
                   disabled={isLoading}
                 />
                 <Button
                   size="icon"
                   className="h-9 w-9 flex-shrink-0"
                   onClick={() => sendMessage(input)}
-                  disabled={isLoading || !input.trim()}
+                  disabled={isLoading || (!input.trim() && !attachment)}
                 >
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -320,6 +418,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <Send className="h-4 w-4" />
                   )}
                 </Button>
+                </div>
               </div>
             </CardContent>
           )}
