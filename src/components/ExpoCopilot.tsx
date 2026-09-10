@@ -123,12 +123,16 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   }, []);
 
   const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || isLoading) return;
+    if ((!text.trim() && !attachment) || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: text };
+    const content = attachment
+      ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
+      : text;
+    const userMsg: Message = { role: "user", content };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setInput("");
+    setAttachment(null);
     setIsLoading(true);
 
     try {
