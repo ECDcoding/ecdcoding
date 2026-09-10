@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import { useAuth } from "@/hooks/useAuth";
 import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
-import Chatbot from "@/components/Chatbot";
+import AssistantHub from "@/components/AssistantHub";
 import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
 import { Copyright, ChevronDown, Calendar, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
@@ -46,7 +46,7 @@ const Index = () => {
         <Hero />
         <CallToAction />
       </main>
-      <Chatbot onVoiceModeChange={setIsVoiceModeActive} />
+      <AssistantHub context="ECDcoding Home" onVoiceModeChange={setIsVoiceModeActive} />
 
       <ExpoPhotoCarousel />
 

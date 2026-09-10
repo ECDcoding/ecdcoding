@@ -12,6 +12,11 @@ type Message = { role: "user" | "assistant"; content: string };
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
   context?: string;
+  /** Hide the built-in floating launcher (when an external launcher controls it) */
+  hideLauncher?: boolean;
+  /** Controlled open state */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -21,8 +26,12 @@ const SUGGESTED_QUESTIONS = [
   "How do I register as a delegate?",
 ];
 
-const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = open ?? internalOpen;
+  const setIsOpen = (value: boolean) => {
+    onOpenChange ? onOpenChange(value) : setInternalOpen(value);
+  };
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -164,7 +173,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-3">
+    <div className={`fixed ${hideLauncher ? "bottom-28" : "bottom-6"} left-6 z-50 flex flex-col items-start gap-3`}>
       {/* Chat Window */}
       {isOpen && (
         <Card
@@ -318,8 +327,9 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
       )}
 
       {/* Trigger Button */}
+      {!hideLauncher && (
       <Button
-        onClick={() => { setIsOpen((o) => !o); setIsMinimized(false); }}
+        onClick={() => { setIsOpen(!isOpen); setIsMinimized(false); }}
         className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
         size="icon"
       >
@@ -334,6 +344,7 @@ const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
           </>
         )}
       </Button>
+      )}
     </div>
   );
 };

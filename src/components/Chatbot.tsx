@@ -7,8 +7,21 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { MessageCircle, X, Mic, MicOff, Send } from 'lucide-react';
 
-const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean) => void }) => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatbotProps {
+  onVoiceModeChange?: (isActive: boolean) => void;
+  /** Hide the built-in floating launcher (when an external launcher controls it) */
+  hideLauncher?: boolean;
+  /** Controlled open state */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: ChatbotProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = open ?? internalOpen;
+  const setIsOpen = (value: boolean) => {
+    onOpenChange ? onOpenChange(value) : setInternalOpen(value);
+  };
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -24,6 +37,15 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
       setTermsAccepted(true);
     }
   }, []);
+
+  // When opened from an external launcher, ask for terms first
+  useEffect(() => {
+    if (isOpen && !termsAccepted) {
+      setShowTerms(true);
+      setIsOpen(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, termsAccepted]);
 
   const handleChatOpen = () => {
     if (!termsAccepted) {
@@ -119,6 +141,7 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
   return (
     <>
       {/* Chat Button with Waving Hand */}
+      {!hideLauncher && (
       <Button
         onClick={handleChatOpen}
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg z-50 group"
@@ -131,6 +154,7 @@ const Chatbot = ({ onVoiceModeChange }: { onVoiceModeChange?: (isActive: boolean
           </div>
         </div>
       </Button>
+      )}
 
       {/* Chat Window */}
       {isOpen && (
