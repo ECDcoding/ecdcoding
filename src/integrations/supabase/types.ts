@@ -14,6 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
+      assignment_responses: {
+        Row: {
+          assignment_id: string
+          id: string
+          responded_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assignment_id: string
+          id?: string
+          responded_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          assignment_id?: string
+          id?: string
+          responded_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignment_responses_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assignments: {
+        Row: {
+          age_group: string
+          category: string
+          created_at: string
+          created_by: string
+          delivery_method: string
+          id: string
+          instructions: string
+          is_active: boolean
+          template_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          age_group: string
+          category: string
+          created_at?: string
+          created_by?: string
+          delivery_method: string
+          id?: string
+          instructions: string
+          is_active?: boolean
+          template_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          age_group?: string
+          category?: string
+          created_at?: string
+          created_by?: string
+          delivery_method?: string
+          id?: string
+          instructions?: string
+          is_active?: boolean
+          template_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       community_members: {
         Row: {
           community_id: string
