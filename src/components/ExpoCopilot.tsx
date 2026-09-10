@@ -144,7 +144,60 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat]);
+  }, [messages, context, isLoading, streamChat, attachment]);
+
+  const toggleListening = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      toast.error("Voice input isn't supported in this browser.");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-ZA";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onresult = (event: any) => {
+      const transcript = Array.from(event.results)
+        .map((r: any) => r[0].transcript)
+        .join(" ");
+      setInput(transcript);
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast.error("Couldn't hear that — please try again.");
+    };
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsListening(true);
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > 1024 * 1024) {
+      toast.error("Please attach a file smaller than 1 MB.");
+      return;
+    }
+    const readable = /^(text\/|application\/json)/.test(file.type) || /\.(txt|md|csv|json)$/i.test(file.name);
+    if (!readable) {
+      toast.error("Please attach a text file (.txt, .md, .csv, .json).");
+      return;
+    }
+    try {
+      const text = await file.text();
+      setAttachment({ name: file.name, text: text.slice(0, 8000) });
+      toast.success(`Attached ${file.name}`);
+    } catch {
+      toast.error("Could not read that file.");
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
