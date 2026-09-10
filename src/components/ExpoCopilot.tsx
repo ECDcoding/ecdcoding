@@ -173,7 +173,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-3">
+    <div className={`fixed ${hideLauncher ? "bottom-28" : "bottom-6"} left-6 z-50 flex flex-col items-start gap-3`}>
       {/* Chat Window */}
       {isOpen && (
         <Card
