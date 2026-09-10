@@ -198,14 +198,14 @@ const Assignments = () => {
           <h2 className="mb-4 text-xl font-semibold">Checklist of Assignments</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => (
-              <div key={category} className="rounded-md border border-border bg-card p-4">
-                <h3 className="mb-3 font-semibold text-primary">{category}</h3>
+              <div key={category} className="rounded-md border border-zinc-700 bg-zinc-800 p-4">
+                <h3 className="mb-3 font-semibold text-lime-400">{category}</h3>
                 <div className="space-y-3">
                   {ASSIGNMENT_CHECKLIST.filter((item) => item.category === category).map((item) => (
-                    <div key={item.id} className="border-t border-border pt-3 first:border-0 first:pt-0">
-                      <p className="text-sm font-medium">{item.title}</p>
-                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.task}</p>
-                      <Button variant="link" size="sm" className="mt-1 h-auto px-0" onClick={() => openLesson(item.id)}>Open lesson</Button>
+                    <div key={item.id} className="rounded-md border border-zinc-700 bg-zinc-800/60 p-3 first:border-0">
+                      <p className="text-sm font-medium text-white">{item.title}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-gray-300">{item.task}</p>
+                      <Button variant="link" size="sm" className="mt-1 h-auto px-0 text-lime-400 hover:text-lime-300" onClick={() => openLesson(item.id)}>Open lesson</Button>
                     </div>
                   ))}
                 </div>
