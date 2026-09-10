@@ -284,6 +284,7 @@ const PersonalityVerification = ({
                   <Button
                     key={s.id}
                     size="sm"
+                    className="bg-zinc-800 text-foreground hover:bg-zinc-700 border-zinc-700"
                     variant={s.id === activeStage ? "secondary" : "outline"}
                     onClick={() => setActiveStage(s.id)}
                   >
@@ -303,7 +304,7 @@ const PersonalityVerification = ({
                     {stage.traits.map((trait) => (
                       <li
                         key={trait}
-                        className="flex items-start gap-2 rounded-md border border-border p-2 text-sm"
+                        className="flex items-start gap-2 rounded-md border border-zinc-700 bg-zinc-800 p-2 text-sm"
                       >
                         <Info className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
                         <span>{trait}</span>
@@ -314,7 +315,7 @@ const PersonalityVerification = ({
                   <Separator />
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {stage.notes.map((note) => (
-                      <li key={note} className="flex gap-2">
+                      <li key={note} className="flex gap-2 rounded-md border border-zinc-700 bg-zinc-800 p-2">
                         <Info className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
                         <span>{note}</span>
                       </li>
