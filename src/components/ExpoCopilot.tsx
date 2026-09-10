@@ -26,8 +26,12 @@ const SUGGESTED_QUESTIONS = [
   "How do I register as a delegate?",
 ];
 
-const ExpoCopilot = ({ context }: ExpoCopilotProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = open ?? internalOpen;
+  const setIsOpen = (value: boolean) => {
+    onOpenChange ? onOpenChange(value) : setInternalOpen(value);
+  };
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
