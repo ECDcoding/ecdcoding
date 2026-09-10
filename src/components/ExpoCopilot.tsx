@@ -39,8 +39,12 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isVisible, setIsVisible] = useState(false);
   const [feedback, setFeedback] = useState<Record<number, "up" | "down">>({});
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   // Animate in after mount
   useEffect(() => {
