@@ -141,6 +141,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
   return (
     <>
       {/* Chat Button with Waving Hand */}
+      {!hideLauncher && (
       <Button
         onClick={handleChatOpen}
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-lime-500 hover:bg-lime-600 shadow-lg z-50 group"
