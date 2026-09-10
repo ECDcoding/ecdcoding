@@ -38,6 +38,15 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
     }
   }, []);
 
+  // When opened from an external launcher, ask for terms first
+  useEffect(() => {
+    if (isOpen && !termsAccepted) {
+      setShowTerms(true);
+      setIsOpen(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, termsAccepted]);
+
   const handleChatOpen = () => {
     if (!termsAccepted) {
       setShowTerms(true);
