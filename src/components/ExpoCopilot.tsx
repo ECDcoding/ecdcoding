@@ -22,8 +22,8 @@ interface ExpoCopilotProps {
 const SUGGESTED_QUESTIONS = [
   "Why does my 4-year-old act out of bounds?",
   "What behaviour should I expect at each age?",
-  "What are the sponsorship packages?",
-  "How do I register as a delegate?",
+  "Which lessons suit a 5-year-old?",
+  "How does the Verbal Testing Space work?",
 ];
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
