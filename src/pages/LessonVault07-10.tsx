@@ -1510,6 +1510,54 @@ const LessonVault0710 = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Coding — 08-12 only */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-gradient-to-r from-amber-500/20 to-pink-500/20 text-white border-amber-400/40 hover:bg-amber-500/30 font-bold justify-start text-left flex items-center gap-2">
+                  <Code className="h-4 w-4 text-amber-300" />
+                  Coding
+                  <ChevronDown className="h-4 w-4" />
+                  <Badge className="ml-1 bg-amber-500 text-white text-[10px] px-1.5">NEW</Badge>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-amber-400/30 shadow-lg z-50 min-w-[240px]">
+                <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)} className="font-medium text-white hover:bg-white/20">
+                  🔬 Micro:bit Analysis
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setCodeEditorTitle('Blockly Code Editor');
+                    setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                    setCodeEditorOpen(true);
+                  }}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  🧩 Blockly Code Editor
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  🎮 Blockly Games
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openCodeEditor('Scratch', 'https://scratch.mit.edu/projects/editor/', 'Create stories, games and animations with Scratch')}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  🐱 Scratch
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}
+                  className="font-medium text-white hover:bg-white/20"
+                >
+                  💡 Micro:bit Editor
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCodingDialogOpen(true)} className="font-medium text-white hover:bg-white/20">
+                  🔤 Coding in Alphabets
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
           </div>
         </div>
 
