@@ -170,7 +170,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, context, language } = await req.json();
+    const { messages, context, language, topic } = await req.json();
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -180,9 +180,20 @@ serve(async (req) => {
     // Build system prompt with optional hover context
     const responseLanguage = language === "tn" ? "Setswana" : "English";
     const languageInstruction = `\n\nRESPONSE LANGUAGE: ${responseLanguage}. The user selected ${responseLanguage}; respond entirely in ${responseLanguage}, regardless of the language used in earlier messages.`;
+
+    const TOPIC_FOCUS: Record<string, string> = {
+      behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.
+The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships and school readiness. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO and CHILD DEVELOPMENT QUESTION GUIDE knowledge. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic tab to "FP Mathematics" or "Lessons".`,
+      maths: `\n\nSELECTED TOPIC: FOUNDATION PHASE MATHEMATICS.
+The user is focused on Foundation Phase mathematics teaching and learning. Answer from the FOUNDATION PHASE MATHEMATICS ETHOS: constructivism, the three kinds of knowledge, conceptual understanding, strategic competence, procedural fluency, adaptive reasoning, productive disposition, the child-centred environment and the five-phase learning cycle. Give concrete, age-appropriate activities. Do not drift into general behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic tab to "Child Behavior" or "Lessons".`,
+      lessons: `\n\nSELECTED TOPIC: LESSONS ON OFFER.
+The user is focused on the ECDcoding lessons and activities. Answer from the LESSONS ON OFFER list, the Verbal Testing Space and the FLC Report, recommending what suits the child's age. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic tab to "Child Behavior" or "FP Mathematics".`,
+    };
+    const topicInstruction = TOPIC_FOCUS[topic as string] ?? "";
+
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}${languageInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
-      : `${EXPO_SYSTEM_PROMPT}${languageInstruction}`;
+      ? `${EXPO_SYSTEM_PROMPT}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
+      : `${EXPO_SYSTEM_PROMPT}${languageInstruction}${topicInstruction}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
