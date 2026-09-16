@@ -8,6 +8,7 @@ import { toast } from "sonner";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 type Message = { role: "user" | "assistant"; content: string };
+type CopilotLanguage = "en" | "tn";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -19,16 +20,48 @@ interface ExpoCopilotProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-const SUGGESTED_QUESTIONS = [
-  "What developmental milestones should I expect at my child's age?",
-  "How can I understand my child's individuality and behaviour patterns?",
-  "How can I support healthy eating and sleeping habits?",
-  "Are mood swings normal at my child's age?",
-  "How can I strengthen our parent-child relationship?",
-  "How can I tell if my child is ready for school?",
-  "Do body types affect a child's development?",
-  "Which ECDcoding lessons suit my child's age and needs?",
-];
+const COPILOT_COPY = {
+  en: {
+    welcomeTitle: "👋 Hi! I'm your ECD AI",
+    welcome: "I can help you understand your child's behaviour at every age, and guide you through the lessons on offer — literacy, numeracy, coding, road safety, science and life skills.",
+    tryAsking: "Try asking:",
+    placeholder: "Ask about behaviour or lessons…",
+    listening: "Listening…",
+    thinking: "Thinking…",
+    listenError: "Couldn't hear that — please try again.",
+    voiceUnsupported: "Voice input isn't supported in this browser.",
+    questions: [
+      "What developmental milestones should I expect at my child's age?",
+      "How can I understand my child's individuality and behaviour patterns?",
+      "How can I support healthy eating and sleeping habits?",
+      "Are mood swings normal at my child's age?",
+      "How can I strengthen our parent-child relationship?",
+      "How can I tell if my child is ready for school?",
+      "Do body types affect a child's development?",
+      "Which ECDcoding lessons suit my child's age and needs?",
+    ],
+  },
+  tn: {
+    welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
+    welcome: "Nka go thusa go tlhaloganya boitshwaro jwa ngwana wa gago mo dingwageng tsotlhe, le go go kaela ka dithuto tsa go bala le go kwala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
+    tryAsking: "Leka go botsa:",
+    placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
+    listening: "Ke reeditse…",
+    thinking: "Ke a akanya…",
+    listenError: "Ga ke a go utlwa — tsweetswee leka gape.",
+    voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
+    questions: [
+      "Ke dikgato dife tsa kgolo tse ke tshwanetseng go di lebelela mo dingwageng tsa ngwana wa me?",
+      "Nka tlhaloganya jang botho le boitshwaro jwa ngwana wa me?",
+      "Nka tshegetsa jang mekgwa e e siameng ya go ja le go robala?",
+      "A go fetofetoga ga maikutlo go tlwaelegile mo dingwageng tsa ngwana wa me?",
+      "Nka nonotsha jang kamano ya me le ngwana wa me?",
+      "Nka itse jang gore ngwana wa me o siametse go simolola sekolo?",
+      "A mefuta ya mmele e ama kgolo ya ngwana?",
+      "Ke dithuto dife tsa ECDcoding tse di siametseng dingwaga le ditlhoko tsa ngwana wa me?",
+    ],
+  },
+} as const;
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -44,6 +77,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [feedback, setFeedback] = useState<Record<number, "up" | "down">>({});
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
+  const [language, setLanguage] = useState<CopilotLanguage>("en");
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -68,6 +102,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isOpen, isMinimized]);
 
+  const copy = COPILOT_COPY[language];
+
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
       method: "POST",
@@ -75,7 +111,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages: userMessages, context: ctx }),
+      body: JSON.stringify({ messages: userMessages, context: ctx, language }),
     });
 
     if (!resp.ok || !resp.body) {
@@ -124,7 +160,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         }
       }
     }
-  }, []);
+  }, [language]);
 
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
@@ -153,7 +189,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      toast.error("Voice input isn't supported in this browser.");
+      toast.error(copy.voiceUnsupported);
       return;
     }
     if (isListening) {
@@ -162,7 +198,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       return;
     }
     const recognition = new SpeechRecognition();
-    recognition.lang = "en-ZA";
+    recognition.lang = language === "tn" ? "tn-ZA" : "en-ZA";
     recognition.interimResults = true;
     recognition.continuous = false;
     recognition.onresult = (event: any) => {
@@ -173,7 +209,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     };
     recognition.onerror = () => {
       setIsListening(false);
-      toast.error("Couldn't hear that — please try again.");
+      toast.error(copy.listenError);
     };
     recognition.onend = () => setIsListening(false);
     recognitionRef.current = recognition;
@@ -315,6 +351,28 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </p>
                   )}
                 </div>
+                <div className="flex rounded-md border border-primary-foreground/30 p-0.5" aria-label="ECD AI language">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    aria-pressed={language === "en"}
+                    onClick={() => setLanguage("en")}
+                    className={`h-6 rounded px-2 text-[10px] ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
+                  >
+                    English
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    aria-pressed={language === "tn"}
+                    onClick={() => setLanguage("tn")}
+                    className={`h-6 rounded px-2 text-[10px] ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
+                  >
+                    Setswana
+                  </Button>
+                </div>
               </div>
               <div className="flex items-center gap-1">
                 <Button
@@ -344,12 +402,12 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                 {messages.length === 0 ? (
                   <div className="space-y-3">
                     <div className="bg-muted rounded-xl p-3 text-sm text-muted-foreground">
-                      <p className="font-medium text-foreground mb-1">👋 Hi! I'm your ECD AI</p>
-                      <p>I can help you understand your child's behaviour at every age, and guide you through the lessons on offer — literacy, numeracy, coding, road safety, science and life skills.</p>
+                      <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
+                      <p>{copy.welcome}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground px-1">Try asking:</p>
+                    <p className="text-xs text-muted-foreground px-1">{copy.tryAsking}</p>
                     <div className="space-y-2">
-                      {SUGGESTED_QUESTIONS.map((q) => (
+                      {copy.questions.map((q) => (
                         <button
                           key={q}
                           onClick={() => sendMessage(q)}
@@ -376,7 +434,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                         {msg.content || (
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
-                            Thinking…
+                            {copy.thinking}
                           </span>
                         )}
                       </div>
@@ -459,7 +517,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder={isListening ? "Listening…" : "Ask about behaviour or lessons…"}
+                   placeholder={isListening ? copy.listening : copy.placeholder}
                   className="flex-1 text-sm h-9 min-w-0"
                   disabled={isLoading}
                 />
