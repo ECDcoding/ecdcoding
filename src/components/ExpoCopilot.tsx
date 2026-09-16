@@ -237,7 +237,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         }
       }
     }
-  }, [language]);
+  }, [language, topic]);
 
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
