@@ -5885,7 +5885,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         </DialogContent>
       </Dialog>
       
-      {/* ASK AI Copilot */}
+      {/* ECD AI Copilot */}
       <AssistantHub context="Learning the Basic (4-7)" />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />

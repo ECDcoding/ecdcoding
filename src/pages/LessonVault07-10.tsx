@@ -1771,7 +1771,7 @@ const LessonVault0710 = () => {
       {/* Audio elements */}
       <audio ref={alphabetAudioRef} src={alphabetSong} preload="auto" />
 
-      {/* ASK AI Copilot */}
+      {/* ECD AI Copilot */}
       <AssistantHub context="My Lesson Vault (Ages 7-10)" />
 
       <PersonalityVerification

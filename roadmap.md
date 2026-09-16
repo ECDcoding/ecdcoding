@@ -6,3 +6,7 @@
 - [x] Show red assignment alerts for active, incomplete work.
 - [x] Confirm production build and database access policies.
 - [ ] Verify publishing and completion while signed in — blocked until the project owner signs into the preview.
+- [x] Rename the flipping launcher from Ask AI to ECD AI.
+- [x] Keep Reception on the landing page only and show standalone ECD AI elsewhere.
+- [x] Add the attached child-development themes to ECD AI guidance and suggested questions.
+- [x] Deploy and verify the updated ECD AI.
