@@ -181,6 +181,14 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
 
+    // Visitors: 1 free question per week, then R100 once off for 50 credits
+    if (isGuest && !guest.canAsk) {
+      setPaywallOpen(true);
+      return;
+    }
+    if (isGuest) guest.registerQuestion();
+
+
     const content = attachment
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
