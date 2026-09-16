@@ -141,6 +141,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
+  const [topic, setTopic] = useState<CopilotTopic>("behaviour");
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
