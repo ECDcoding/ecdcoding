@@ -720,53 +720,65 @@ const LessonVault0710 = () => {
                     <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
                   </DropdownMenuItem>
 
-                  {/* 2. Knowledge Base Development */}
+                  {/* 2. Knowledge Base Library */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
+                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Library
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-72 bg-background z-50">
-                        <DropdownMenuItem onClick={() => verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>
-                          <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
-                        </DropdownMenuItem>
+                        {/* 1. Verbal Testing Space */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                                🎙️ Open Verbal Testing Space
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Generic Logic Analysis", description: "Coming soon." })}>
+                                🧠 Generic Logic Analysis
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Basic Logic Analysis", description: "Coming soon." })}>
+                                🧩 Basic Logic Analysis
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
+                                🔬 Micro:bit Analysis
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
 
-                        {/* Coding */}
+                        {/* 2. Fixing the Order of */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <BookOpen className="mr-2 h-4 w-4" /> Fixing the Order of
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => toast({ title: "Alphabets | Shapes", description: "Coming soon." })}>
+                                🔤 Alphabets | Shapes
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Numbers | Objects", description: "Coming soon." })}>
+                                🔢 Numbers | Objects
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
+                        {/* 3. Coding */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <Code className="mr-2 h-4 w-4" /> Coding
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
                               <DropdownMenuItem onClick={() => setCodingDialogOpen(true)}>
                                 🔤 Coding in Alphabets
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => toast({ title: "Coding in Numbers", description: "Coming soon." })}>
                                 🔢 Coding in Numbers
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding in Color", description: "Coming soon." })}>
-                                🎨 Coding in Color
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                onClick={() => {
-                                  setCodeEditorTitle('Blockly Code Editor');
-                                  setCodeEditorDescription('Build your first program using blocks (no internet needed).');
-                                  setCodeEditorOpen(true);
-                                }}
-                              >
-                                🧩 Blockly Code Editor
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => openCodeEditor('Blockly Games', 'https://blockly.games/?lang=en', 'Fun coding games built with Blockly')}>
-                                🎮 Blockly Games
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
-                                🔬 Micro:bit Analysis (with Voice)
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}>
-                                💡 Micro:bit Editor
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')}>
-                                🏫 Micro:bit Classroom
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => setCryptogramOpen(true)}>
                                 🔑 Creating Crypto Secrets
@@ -775,6 +787,48 @@ const LessonVault0710 = () => {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
 
+                        {/* 4. Programming */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <Code className="mr-2 h-4 w-4" /> Programming
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setCodeEditorTitle('Blockly Code Editor');
+                                  setCodeEditorDescription('Build your first program using blocks (no internet needed).');
+                                  setCodeEditorOpen(true);
+                                }}
+                              >
+                                🧩 Blockly
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Scratch', 'https://scratch.mit.edu/projects/editor/', 'Create stories, games and animations with Scratch')}>
+                                🐱 Scratch
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit MakeCode', 'https://makecode.microbit.org/', 'Program BBC micro:bit with blocks or JavaScript')}>
+                                💡 Micro:bit Editor
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => openCodeEditor('Micro:bit Classroom', 'https://classroom.microbit.org/', 'Collaborative coding for classrooms')}>
+                                🏫 Micro:bit Classroom
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
+                        {/* 5. Handwriting */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <BookOpen className="mr-2 h-4 w-4" /> Handwriting
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => window.open("https://docs.google.com/drawings/create", "_blank", "noopener,noreferrer")}>
+                                ✍️ Google Docs Draw
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
