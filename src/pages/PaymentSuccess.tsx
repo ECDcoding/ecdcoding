@@ -1,10 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { grantGuestCredits, PENDING_CREDITS_KEY } from "@/hooks/useGuestAiCredits";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
+  const [aiCredits, setAiCredits] = useState<number | null>(null);
+
+  // Grant ECD AI credits for a once-off R100 visitor purchase
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = parseInt(params.get("ecd_ai_credits") || "", 10);
+    const pending = parseInt(localStorage.getItem(PENDING_CREDITS_KEY) || "", 10);
+    const amount = Number.isFinite(fromUrl) && fromUrl > 0 ? fromUrl : pending;
+    if (Number.isFinite(amount) && amount > 0) {
+      grantGuestCredits(amount);
+      localStorage.removeItem(PENDING_CREDITS_KEY);
+      setAiCredits(amount);
+    }
+  }, []);
 
   useEffect(() => {
     // Auto-redirect after 5 seconds
