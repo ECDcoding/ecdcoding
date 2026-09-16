@@ -17,7 +17,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate("/lesson-vault-04-06");
+    if (user) navigate("/");
   }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,7 +27,8 @@ const SignInPage = () => {
     try {
       const { data, error } = await signIn(email, password);
       if (data && !error) {
-        navigate("/lesson-vault-04-06");
+        navigate("/");
+
       } else if (error) {
         setShowForgotPassword(true);
       }
