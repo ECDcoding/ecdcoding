@@ -603,6 +603,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         )}
       </Button>
       )}
+
+      <AiCreditsPaywallDialog open={paywallOpen} onOpenChange={setPaywallOpen} />
     </div>
   );
 };
