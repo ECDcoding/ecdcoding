@@ -12,6 +12,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 type Message = { role: "user" | "assistant"; content: string };
 type CopilotLanguage = "en" | "tn";
+type CopilotTopic = "behaviour" | "maths" | "lessons";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -26,45 +27,104 @@ interface ExpoCopilotProps {
 const COPILOT_COPY = {
   en: {
     welcomeTitle: "👋 Hi! I'm your ECD AI",
-    welcome: "I can help you understand your child's behaviour at every age, and guide you through the lessons on offer — literacy, numeracy, coding, road safety, science and life skills.",
-    tryAsking: "Try asking:",
+    welcome: "Choose a topic below and I'll stay focused on it — child behaviour, Foundation Phase mathematics, or the lessons on offer.",
+    tryAsking: "Frequently asked questions:",
     placeholder: "Ask about behaviour or lessons…",
     listening: "Listening…",
     thinking: "Thinking…",
     listenError: "Couldn't hear that — please try again.",
     voiceUnsupported: "Voice input isn't supported in this browser.",
-    questions: [
-      "What developmental milestones should I expect at my child's age?",
-      "How can I understand my child's individuality and behaviour patterns?",
-      "How can I support healthy eating and sleeping habits?",
-      "Are mood swings normal at my child's age?",
-      "How can I strengthen our parent-child relationship?",
-      "How can I tell if my child is ready for school?",
-      "Do body types affect a child's development?",
-      "Which ECDcoding lessons suit my child's age and needs?",
-    ],
+    topicLabels: {
+      behaviour: "Child Behavior",
+      maths: "FP Mathematics",
+      lessons: "Lessons",
+    },
+    topicHints: {
+      behaviour: "Ages and stages, individuality, moods, routines and school readiness.",
+      maths: "Foundation Phase mathematics teaching, activities and proficiency.",
+      lessons: "Literacy, numeracy, coding, road safety, science and life skills.",
+    },
+    faqs: {
+      behaviour: [
+        "What developmental milestones should I expect at my child's age?",
+        "How can I understand my child's individuality and behaviour patterns?",
+        "How can I support healthy eating and sleeping habits?",
+        "Are mood swings normal at my child's age?",
+        "How can I strengthen our parent-child relationship?",
+        "How can I tell if my child is ready for school?",
+        "Do body types affect a child's development?",
+      ],
+      maths: [
+        "How do young children build mathematical understanding?",
+        "What hands-on activities teach counting and number sense?",
+        "How do I help my child explain their own method instead of memorising?",
+        "What is procedural fluency at ages 4–7, and how do I build it?",
+        "How do I use the five-phase learning cycle in a maths activity?",
+        "How do I build my child's confidence in mathematics?",
+        "How should I respond when my child makes a maths mistake?",
+      ],
+      lessons: [
+        "Which ECDcoding lessons suit my child's age and needs?",
+        "What is in the Verbal Testing Space and how does it work?",
+        "How does the FLC Report show my child's progress?",
+        "What coding lessons are available for 04–07 and 08–12?",
+        "Which road safety and transport lessons should we start with?",
+        "What does Science Discovery cover?",
+      ],
+    },
   },
   tn: {
     welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
-    welcome: "Nka go thusa go tlhaloganya boitshwaro jwa ngwana wa gago mo dingwageng tsotlhe, le go go kaela ka dithuto tsa go bala le go kwala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
-    tryAsking: "Leka go botsa:",
+    welcome: "Tlhopha setlhogo fa tlase mme ke tla tsepamisa mogopolo mo go sona — boitshwaro jwa ngwana, dipalo tsa Foundation Phase, kgotsa dithuto tse di leng teng.",
+    tryAsking: "Dipotso tse di botswang gantsi:",
     placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
     listening: "Ke reeditse…",
     thinking: "Ke a akanya…",
     listenError: "Ga ke a go utlwa — tsweetswee leka gape.",
     voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
-    questions: [
-      "Ke dikgato dife tsa kgolo tse ke tshwanetseng go di lebelela mo dingwageng tsa ngwana wa me?",
-      "Nka tlhaloganya jang botho le boitshwaro jwa ngwana wa me?",
-      "Nka tshegetsa jang mekgwa e e siameng ya go ja le go robala?",
-      "A go fetofetoga ga maikutlo go tlwaelegile mo dingwageng tsa ngwana wa me?",
-      "Nka nonotsha jang kamano ya me le ngwana wa me?",
-      "Nka itse jang gore ngwana wa me o siametse go simolola sekolo?",
-      "A mefuta ya mmele e ama kgolo ya ngwana?",
-      "Ke dithuto dife tsa ECDcoding tse di siametseng dingwaga le ditlhoko tsa ngwana wa me?",
-    ],
+    topicLabels: {
+      behaviour: "Boitshwaro",
+      maths: "Dipalo (FP)",
+      lessons: "Dithuto",
+    },
+    topicHints: {
+      behaviour: "Dingwaga le dikgato, botho, maikutlo, mekgwa le go siamela sekolo.",
+      maths: "Go ruta dipalo tsa Foundation Phase le ditiro tsa tsona.",
+      lessons: "Go bala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
+    },
+    faqs: {
+      behaviour: [
+        "Ke dikgato dife tsa kgolo tse ke tshwanetseng go di lebelela mo dingwageng tsa ngwana wa me?",
+        "Nka tlhaloganya jang botho le boitshwaro jwa ngwana wa me?",
+        "Nka tshegetsa jang mekgwa e e siameng ya go ja le go robala?",
+        "A go fetofetoga ga maikutlo go tlwaelegile mo dingwageng tsa ngwana wa me?",
+        "Nka nonotsha jang kamano ya me le ngwana wa me?",
+        "Nka itse jang gore ngwana wa me o siametse go simolola sekolo?",
+        "A mefuta ya mmele e ama kgolo ya ngwana?",
+      ],
+      maths: [
+        "Bana ba bannye ba aga jang tlhaloganyo ya dipalo?",
+        "Ke ditiro dife tsa diatla tse di ruta go bala le go tlhaloganya dipalo?",
+        "Nka thusa jang ngwana wa me go tlhalosa mokgwa wa gagwe go na le go tshwara ka pelo?",
+        "Bokgoni jwa mekgwa ya dipalo ke eng mo dingwageng di le 4–7, mme nka bo aga jang?",
+        "Nka dirisa jang dikgato tse tlhano tsa go ithuta mo tirong ya dipalo?",
+        "Nka aga jang boitshepo jwa ngwana wa me mo dipalong?",
+        "Ke tshwanetse go arabela jang fa ngwana wa me a dira phoso mo dipalong?",
+      ],
+      lessons: [
+        "Ke dithuto dife tsa ECDcoding tse di siametseng dingwaga le ditlhoko tsa ngwana wa me?",
+        "Verbal Testing Space e na le eng mme e dira jang?",
+        "Pego ya FLC e bontsha jang kgatelopele ya ngwana wa me?",
+        "Ke dithuto dife tsa khouto tse di leng teng mo 04–07 le 08–12?",
+        "Re tshwanetse go simolola ka dithuto dife tsa pabalesego mo tseleng le dipalangwa?",
+        "Science Discovery e akaretsa eng?",
+      ],
+    },
   },
 } as const;
+
+const TOPIC_ORDER: CopilotTopic[] = ["behaviour", "maths", "lessons"];
+
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -81,6 +141,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
+  const [topic, setTopic] = useState<CopilotTopic>("behaviour");
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -127,7 +188,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages: userMessages, context: ctx, language }),
+      body: JSON.stringify({ messages: userMessages, context: ctx, language, topic }),
     });
 
     if (!resp.ok || !resp.body) {
@@ -176,7 +237,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         }
       }
     }
-  }, [language]);
+  }, [language, topic]);
 
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
@@ -419,6 +480,30 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
+              {/* Topic tabs — keeps FAQs and answers focused on one aspect */}
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-2 py-2">
+                <div className="grid grid-cols-3 gap-1" role="group" aria-label="ECD AI topic">
+                  {TOPIC_ORDER.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      aria-pressed={topic === t}
+                      onClick={() => setTopic(t)}
+                      className={`h-7 rounded text-[11px] font-medium transition-colors ${
+                        topic === t
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-background text-muted-foreground hover:bg-primary/10"
+                      }`}
+                    >
+                      {copy.topicLabels[t]}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-1.5 px-1 text-[10px] leading-snug text-muted-foreground">
+                  {copy.topicHints[topic]}
+                </p>
+              </div>
+
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {messages.length === 0 ? (
@@ -427,9 +512,11 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground px-1">{copy.tryAsking}</p>
+                    <p className="text-xs text-muted-foreground px-1">
+                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[topic]}</span>
+                    </p>
                     <div className="space-y-2">
-                      {copy.questions.map((q) => (
+                      {copy.faqs[topic].map((q) => (
                         <button
                           key={q}
                           onClick={() => sendMessage(q)}
@@ -440,6 +527,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       ))}
                     </div>
                   </div>
+
                 ) : (
                   messages.map((msg, i) => (
                     <div
