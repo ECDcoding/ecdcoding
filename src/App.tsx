@@ -14,6 +14,7 @@ import PaymentForm from "./pages/PaymentForm";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancelled from "./pages/PaymentCancelled";
 import SignInPage from "./pages/SignInPage";
+import ResetPassword from "./pages/ResetPassword";
 import DomesticEcology from "./pages/DomesticEcology";
 import BiologyNature from "./pages/BiologyNature";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -51,6 +52,7 @@ const AppRoutes = () => (
     <Routes>
       {/* Public routes */}
       <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/data-deletion" element={<DataDeletion />} />
       <Route path="/payment-success" element={<PaymentSuccess />} />

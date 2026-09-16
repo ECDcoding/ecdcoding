@@ -2,17 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { AnnualSubscriptionDialog } from "@/components/AnnualSubscriptionDialog";
+import { useLocation } from "react-router-dom";
 
 const DISMISS_KEY = "ecdcoding_annual_payment_dismissed";
 
 export const AnnualPaymentPrompt = () => {
   const { user } = useAuth();
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const checkedRef = useRef<string | null>(null);
 
   useEffect(() => {
     const check = async () => {
-      if (!user) return;
+      if (!user || pathname === "/reset-password") return;
       if (checkedRef.current === user.id) return;
       checkedRef.current = user.id;
 
@@ -31,14 +33,14 @@ export const AnnualPaymentPrompt = () => {
       }
     };
     check();
-  }, [user]);
+  }, [pathname, user]);
 
   const handleOpenChange = (next: boolean) => {
     setOpen(next);
     if (!next && user) sessionStorage.setItem(`${DISMISS_KEY}_${user.id}`, "1");
   };
 
-  if (!user) return null;
+  if (!user || pathname === "/reset-password") return null;
 
   return (
     <AnnualSubscriptionDialog
