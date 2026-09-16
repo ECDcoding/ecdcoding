@@ -208,7 +208,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat, attachment]);
+  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest]);
 
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
