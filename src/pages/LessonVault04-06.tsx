@@ -2050,19 +2050,54 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
                   </DropdownMenuItem>
 
-                  {/* 2. Knowledge Base Development — Physical / Social / Conceptual Knowledge */}
+                  {/* 2. Knowledge Base Library */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Development
+                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Library
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-72 bg-background z-50">
-                        {/* Verbal Testing Space — launches carousel directly */}
-                        <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
-                          <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
-                        </DropdownMenuItem>
+                        {/* 1. Verbal Testing Space */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <Mic className="mr-2 h-4 w-4" /> Verbal Testing Space
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => (vtsOnly ? verbalTestingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) : navigate("/verbal-testing-space"))}>
+                                🎙️ Open Verbal Testing Space
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Generic Logic Analysis", description: "Coming soon." })}>
+                                🧠 Generic Logic Analysis
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Basic Logic Analysis", description: "Coming soon." })}>
+                                🧩 Basic Logic Analysis
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Micro:bit Analysis", description: "Coming soon." })}>
+                                🔬 Micro:bit Analysis
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
 
-                        {/* Coding */}
+                        {/* 2. Fixing the Order of */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <FileText className="mr-2 h-4 w-4" /> Fixing the Order of
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-64 bg-background z-50">
+                              <DropdownMenuItem onClick={() => toast({ title: "Alphabets | Shapes", description: "Coming soon." })}>
+                                🔤 Alphabets | Shapes
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => toast({ title: "Numbers | Objects", description: "Coming soon." })}>
+                                🔢 Numbers | Objects
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
+                        {/* 3. Coding */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <Code className="mr-2 h-4 w-4" /> Coding
@@ -2075,8 +2110,36 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               <DropdownMenuItem onClick={() => setCodingNumbersOpen(true)}>
                                 🔢 Coding in Numbers
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding in Color", description: "Coming soon." })}>
-                                🎨 Coding in Color
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
+                        {/* 4. Programming */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <Code className="mr-2 h-4 w-4" /> Programming
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => window.open("https://blockly.games/?lang=en", "_blank", "noopener,noreferrer")}>
+                                🧩 Blockly
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => window.open("https://scratch.mit.edu/projects/editor/", "_blank", "noopener,noreferrer")}>
+                                🐱 Scratch
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
+                        {/* 5. Handwriting */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <FileText className="mr-2 h-4 w-4" /> Handwriting
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => window.open("https://docs.google.com/drawings/create", "_blank", "noopener,noreferrer")}>
+                                ✍️ Google Docs Draw
                               </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>

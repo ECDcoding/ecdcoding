@@ -181,21 +181,74 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     setIsListening(true);
   };
 
+  // Words/phrases that make a file unsuitable for a child-education assistant
+  const BLOCKED_TERMS = [
+    "porn", "pornographic", "xxx", "nsfw", "nude", "nudes", "naked", "sex", "sexual", "sexy",
+    "erotic", "erotica", "fetish", "escort", "brothel", "orgy", "masturbat", "genital", "penis",
+    "vagina", "boobs", "rape", "incest", "paedophil", "pedophil", "child porn", "bestiality",
+    "kill yourself", "suicide method", "self-harm", "cutting myself", "behead", "gore", "snuff",
+    "terrorist attack", "bomb making", "how to make a bomb", "pipe bomb", "explosive device",
+    "buy a gun illegally", "cocaine", "heroin", "meth", "methamphetamine", "ecstasy pills",
+    "weed dealer", "gambling site", "betting tips", "credit card dump", "hack a password",
+    "malware", "ransomware", "keylogger", "phishing kit", "fuck", "shit", "bitch", "cunt",
+    "nigger", "faggot", "kaffir", "whore", "slut",
+  ];
+
+  const findBlockedTerm = (value: string) => {
+    const lower = value.toLowerCase();
+    return BLOCKED_TERMS.find((term) => lower.includes(term));
+  };
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
+
+    // 1. Refuse pictures, music, videos and any other non-text media outright
+    const mediaLike =
+      /^(image|audio|video)\//.test(file.type) ||
+      /\.(jpg|jpeg|png|gif|webp|bmp|tif|tiff|heic|heif|svg|ico|psd|ai|mp3|wav|m4a|aac|ogg|flac|wma|mid|midi|mp4|mov|avi|mkv|webm|wmv|flv|3gp|exe|dmg|apk|msi|bat|sh|zip|rar|7z|iso)$/i.test(
+        file.name,
+      );
+    if (mediaLike) {
+      toast.error("Pictures, music, videos and app files can't be attached. Please attach a text file (.txt, .md, .csv, .json) only.");
+      return;
+    }
+
     if (file.size > 1024 * 1024) {
       toast.error("Please attach a file smaller than 1 MB.");
       return;
     }
+
     const readable = /^(text\/|application\/json)/.test(file.type) || /\.(txt|md|csv|json)$/i.test(file.name);
     if (!readable) {
-      toast.error("Please attach a text file (.txt, .md, .csv, .json).");
+      toast.error("Only text files (.txt, .md, .csv, .json) can be attached to ECD AI.");
       return;
     }
+
+    // 2. Refuse inappropriate file names
+    if (findBlockedTerm(file.name)) {
+      toast.error("That file name isn't appropriate for a children's learning assistant, so it was not accepted.");
+      return;
+    }
+
     try {
       const text = await file.text();
+
+      // 3. Refuse files that are not really text (binary content disguised as text)
+      // eslint-disable-next-line no-control-regex
+      if (/[\u0000-\u0008\u000E-\u001F]/.test(text.slice(0, 4000))) {
+        toast.error("That file isn't readable text, so it was not accepted.");
+        return;
+      }
+
+      // 4. Refuse inappropriate content inside the file
+      const blocked = findBlockedTerm(text.slice(0, 20000));
+      if (blocked) {
+        toast.error("This file contains content that isn't appropriate for a children's learning assistant, so it was refused.");
+        return;
+      }
+
       setAttachment({ name: file.name, text: text.slice(0, 8000) });
       toast.success(`Attached ${file.name}`);
     } catch {
