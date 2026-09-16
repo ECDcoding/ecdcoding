@@ -433,6 +433,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       {!hideLauncher && (
       <Button
         onClick={() => { setIsOpen(!isOpen); setIsMinimized(false); }}
+        aria-label={isOpen ? "Close ECD AI" : "ECD AI"}
+        title={isOpen ? "Close ECD AI" : "ECD AI"}
         className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
         size="icon"
       >

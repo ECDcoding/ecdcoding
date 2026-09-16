@@ -9,4 +9,4 @@
 - [x] Rename the flipping launcher from Ask AI to ECD AI.
 - [x] Keep Reception on the landing page only and show standalone ECD AI elsewhere.
 - [x] Add the attached child-development themes to ECD AI guidance and suggested questions.
-- [ ] Deploy and verify the updated ECD AI.
+- [x] Deploy and verify the updated ECD AI.
