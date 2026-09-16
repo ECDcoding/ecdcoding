@@ -30,13 +30,8 @@ const Index = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  // Launch authenticated users straight into My Lesson Vault (covers Google OAuth return,
-  // which redirects to "/" rather than a protected route).
-  useEffect(() => {
-    if (!loading && user) {
-      navigate("/lesson-vault-04-06", { replace: true });
-    }
-  }, [user, loading, navigate]);
+  // Signed-in users stay on the landing page so they can choose their own age group.
+
 
 
   return (
