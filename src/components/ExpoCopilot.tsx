@@ -480,6 +480,30 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
+              {/* Topic tabs — keeps FAQs and answers focused on one aspect */}
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-2 py-2">
+                <div className="grid grid-cols-3 gap-1" role="group" aria-label="ECD AI topic">
+                  {TOPIC_ORDER.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      aria-pressed={topic === t}
+                      onClick={() => setTopic(t)}
+                      className={`h-7 rounded text-[11px] font-medium transition-colors ${
+                        topic === t
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-background text-muted-foreground hover:bg-primary/10"
+                      }`}
+                    >
+                      {copy.topicLabels[t]}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-1.5 px-1 text-[10px] leading-snug text-muted-foreground">
+                  {copy.topicHints[topic]}
+                </p>
+              </div>
+
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {messages.length === 0 ? (
@@ -488,9 +512,11 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground px-1">{copy.tryAsking}</p>
+                    <p className="text-xs text-muted-foreground px-1">
+                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[topic]}</span>
+                    </p>
                     <div className="space-y-2">
-                      {copy.questions.map((q) => (
+                      {copy.faqs[topic].map((q) => (
                         <button
                           key={q}
                           onClick={() => sendMessage(q)}
@@ -501,6 +527,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       ))}
                     </div>
                   </div>
+
                 ) : (
                   messages.map((msg, i) => (
                     <div
