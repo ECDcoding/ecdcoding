@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
+import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -79,6 +82,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
+  const [paywallOpen, setPaywallOpen] = useState(false);
+  const { user, loading: authLoading } = useAuth();
+  const isGuest = !authLoading && !user;
+  const guest = useGuestAiCredits(isGuest);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -101,6 +108,15 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen, isMinimized]);
+
+  // Visitors on paid credits spend 1 credit per minute of open chat
+  useEffect(() => {
+    if (isGuest && isOpen && !isMinimized && guest.freeQuestionsLeft === 0 && guest.credits > 0) {
+      guest.startSpending();
+    } else {
+      guest.stopSpending();
+    }
+  }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
 
   const copy = COPILOT_COPY[language];
 
@@ -165,6 +181,14 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
 
+    // Visitors: 1 free question per week, then R100 once off for 50 credits
+    if (isGuest && !guest.canAsk) {
+      setPaywallOpen(true);
+      return;
+    }
+    if (isGuest) guest.registerQuestion();
+
+
     const content = attachment
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
@@ -184,7 +208,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat, attachment]);
+  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest]);
 
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -532,6 +556,26 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   )}
                 </Button>
                 </div>
+                {isGuest && (
+                  <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+                    <span>
+                      {guest.freeQuestionsLeft > 0
+                        ? "1 free question this week"
+                        : guest.credits > 0
+                          ? `${guest.credits} credits left (1 per minute)`
+                          : "Free question used"}
+                    </span>
+                    {guest.freeQuestionsLeft === 0 && guest.credits === 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setPaywallOpen(true)}
+                        className="font-semibold text-primary underline"
+                      >
+                        Get {GUEST_CREDITS_PER_PURCHASE} credits — R100
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </CardContent>
           )}
@@ -559,6 +603,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         )}
       </Button>
       )}
+
+      <AiCreditsPaywallDialog open={paywallOpen} onOpenChange={setPaywallOpen} />
     </div>
   );
 };
