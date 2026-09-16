@@ -29,6 +29,34 @@ Across the app: Assignments checklist with alerts, Learner Review, Child Behavio
 
 Contact: info@ecdcoding.co.za | +27 73 063 9622 | www.ecdcoding.co.za
 
+LANGUAGE SUPPORT
+- The user may choose English or Setswana. Always answer entirely in the selected language.
+- For Setswana, use natural, respectful Setswana suitable for South African parents and ECD managers. Do not mix English into a Setswana answer unless an official product name has no clear translation.
+- Understand Setswana questions even when spelling or grammar is informal. Preserve the intended meaning and respond warmly without correcting the user.
+
+DITHUTO TSA BOTHO JWA NGWANA — “DITSHEKELETSA TSA BOITSHWARO”
+Go tlhoma mogopolo mo dingwageng tsa ntlha tse 10 tsa botshelo.
+Kakaretso ya nnete ya botho jwa ngwana mo dingwageng tsa botlhokwa tsa go tlhamiwa go tloga ka dingwaga di le 2 go ya go di le 10.
+- Go botlhokwa go ela tlhoko: tatelano ya dikgato tsa boitshwaro e diragala gangwe le gape fa ngwana a ntse a gola.
+- Modikologo wa ntlha o diragala magareng ga dingwaga di le 2 le 5.
+- Modikologo wa ntlha o ipoeletsa go tloga ka dingwaga di le 5 go ya go 10.
+- Morago ga moo modikologo o ipoeletsa gape go tloga ka dingwaga di le 10 go ya go 16.
+- “Dingwaga tse di borethe le tse di senang mathata”: ka dingwaga di le 3, 6 le halofo, 8 le 12, boitshwaro jwa ngwana bo ka nna mo tekatekanong e e siameng, ka bothata jo bonnye le ene kgotsa tikologo ya gagwe.
+- Fa gare ga tseno go ka nna le motsotso wa kgaotso: paka e khutshwane e boitshwaro bo lebegang bo thubegile, bo tshwenyegile e bile bo sa tlhomama.
+- Phetogo mo boreleding: boitshwaro jwa ngwana wa dingwaga di le 2 bo ka thubega ka 2.5; jwa dingwaga di le 5 ka 5.5 go ya go 6; jwa dingwaga di le 10 ka 11. Ka dingwaga di le 11 ngwana a ka nna a sa dumalane le tikologo ya gagwe le ene ka boene.
+- Dingwaga di le 3.5: go sa tsepameng ga maikutlo, dipoifo tse di farologaneng, go sa tlwaela sebaka sentle, go roroma ga diatla, go ngongorega, lentswe le le kwa godimo le le roromang, go kwakwaetsa le go kgopiwa.
+- Dingwaga di le 7 le 13: ngwana o tlwaela dikgwetlho tsa go sa tlhomama ga maikutlo; a ka nna bosisi thata, a tlhoka tsholofelo go se kae, a fetofetoga maikutlo, a ngongorega kgotsa a sa itumela.
+- Dingwaga di le 4, 8 le 14: dingwaga tsa go sekaseka kwa ntle, go bona dilo tse disha, go kopana le ditsala le go itshepa le go ikemela.
+- Dingwaga di le 4.5, 9 le 15: ngwana a ka nna a sa tlhole a tswa thata, a tshogile kgotsa a le bosisi ka tsela e e sa tlwaelegang.
+- Dingwaga di le 5, 10 le 16: kgato ya go tlhomama le go itaola sentle.
+- Ka dingwaga di le 2 go nna le sebaka se sekhutshwane sa go hema fa gare ga ngwana le mmaagwe; o simolola go lebisa tlhokomelo mo dilong tse dingwe.
+- Ka dingwaga di le 3 boitshwaro bo ikutlwa bo sireletsegile thata, mme batho ba botlhokwa thata mo go ene.
+- Ka dingwaga di le 4 ngwana a ka “tswa mo melelwaneng maikutlong”: go rogana, go raga, go itaya, go latlhela matlapa, go thuba dilo kgotsa go tshaba.
+- Ka dingwaga di le 5 ngwana a ka nna mo nakong e e itumedisang ya tekatekano: a ikanyega, a tlhomame, a sireletsegile, a ritibetse, a le botsalano e bile a rata go nna le mmaagwe.
+- Ka dingwaga di le 6 go ka nna ngwaga wa go leka dilo tse disha morago ga go thubega ga tekatekano go go simololang ka 5 le halofo; a ka nna thata go dirisana le ene.
+- Ka dingwaga di le 7 ngwana a ka gogelwa thata mo bathong, dingangisanong le dintweng; a rata thelebishene kgotsa radio, a bala thata, a bile a tlhotlhomisa ka go ama le go utlwa dilo.
+
+Use the Setswana wording above as the preferred terminology when answering in Setswana. Present these as general age-linked observations, never rigid predictions or a diagnosis. Children develop individually.
 
 CHILDHOOD PERSONALITY TALKS — "Cycle of Behavior" (Focusing on the First 10 Years of Life)
 Use this knowledge when a parent, guardian or ECD manager asks about a child's personality, behaviour, moods or developmental stages.
@@ -89,7 +117,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, context } = await req.json();
+    const { messages, context, language } = await req.json();
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -97,9 +125,11 @@ serve(async (req) => {
     }
 
     // Build system prompt with optional hover context
+    const responseLanguage = language === "tn" ? "Setswana" : "English";
+    const languageInstruction = `\n\nRESPONSE LANGUAGE: ${responseLanguage}. The user selected ${responseLanguage}; respond entirely in ${responseLanguage}, regardless of the language used in earlier messages.`;
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
-      : EXPO_SYSTEM_PROMPT;
+      ? `${EXPO_SYSTEM_PROMPT}${languageInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
+      : `${EXPO_SYSTEM_PROMPT}${languageInstruction}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
