@@ -740,9 +740,6 @@ const LessonVault0710 = () => {
                               <DropdownMenuItem onClick={() => toast({ title: "Generic Logic Analysis", description: "Coming soon." })}>
                                 🧠 Generic Logic Analysis
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Basic Logic Analysis", description: "Coming soon." })}>
-                                🧩 Basic Logic Analysis
-                              </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
                                 🔬 Micro:bit Analysis
                               </DropdownMenuItem>
@@ -750,36 +747,13 @@ const LessonVault0710 = () => {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
 
-                        {/* 2. Fixing the Order of */}
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <BookOpen className="mr-2 h-4 w-4" /> Fixing the Order of
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-64 bg-background z-50">
-                              <DropdownMenuItem onClick={() => toast({ title: "Alphabets | Shapes", description: "Coming soon." })}>
-                                🔤 Alphabets | Shapes
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Numbers | Objects", description: "Coming soon." })}>
-                                🔢 Numbers | Objects
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
-
-                        {/* 3. Coding */}
+                        {/* 2. Coding */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <Code className="mr-2 h-4 w-4" /> Coding
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent className="w-64 bg-background z-50">
-                              <DropdownMenuItem onClick={() => setCodingDialogOpen(true)}>
-                                🔤 Coding in Alphabets
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Coding in Numbers", description: "Coming soon." })}>
-                                🔢 Coding in Numbers
-                              </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => setCryptogramOpen(true)}>
                                 🔑 Creating Crypto Secrets
                               </DropdownMenuItem>
@@ -787,7 +761,7 @@ const LessonVault0710 = () => {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
 
-                        {/* 4. Programming */}
+                        {/* 3. Programming */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <Code className="mr-2 h-4 w-4" /> Programming
@@ -816,7 +790,7 @@ const LessonVault0710 = () => {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
 
-                        {/* 5. Handwriting */}
+                        {/* 4. Handwriting */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
                             <BookOpen className="mr-2 h-4 w-4" /> Handwriting
@@ -1044,16 +1018,6 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Basic Logic
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Life Skills
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -1245,35 +1209,6 @@ const LessonVault0710 = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Literacy
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                 <DropdownMenuSub>
-                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
-                     Alphabets
-                   </DropdownMenuSubTrigger>
-                   <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                     <DropdownMenuItem onClick={() => {setSelectedCountingRange("alphabets"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                       A, B, C…
-                     </DropdownMenuItem>
-                     <DropdownMenuItem onClick={() => setFixOrderOpen(true)} className="font-medium text-white hover:bg-white/20">
-                       Fix the Order
-                     </DropdownMenuItem>
-                   </DropdownMenuSubContent>
-                 </DropdownMenuSub>
-                 <DropdownMenuItem onClick={() => setColorsOpen(true)} className="font-medium text-white hover:bg-white/20">
-                   Colors
-                 </DropdownMenuItem>
-                 <DropdownMenuItem onClick={() => {setSelectedCountingRange("vowels"); setCountingOpen(true);}} className="font-medium text-white hover:bg-white/20">
-                   Vowels
-                 </DropdownMenuItem>
-               </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
                   Notes to
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -1353,51 +1288,6 @@ const LessonVault0710 = () => {
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-bold justify-start text-left flex items-center gap-2">
-                  Science & Discovery
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Animals
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setSelectedAnimalType("domestic")} className="font-medium text-white hover:bg-white/20">
-                      Domestic Animals
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      The Young and Old
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedAnimalType("wild")} className="font-medium text-white hover:bg-white/20">
-                      Wild Animals
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <DropdownMenuItem className="font-medium text-white hover:bg-white/20 flex items-center justify-between cursor-pointer">
-                      Human Being
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuItem>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                    <DropdownMenuItem onClick={() => setFiveSensesOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      Five Senses
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setHumanBeingOpen(true)} className="font-medium text-white hover:bg-white/20">
-                      My Body
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-white border-cyan-400/40 hover:bg-cyan-500/30 font-bold justify-start text-left flex items-center gap-2">
                   <Cpu className="h-4 w-4 text-cyan-400" />
                   Tech Skills
@@ -1406,22 +1296,6 @@ const LessonVault0710 = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent style={{ backgroundColor: "#252045" }} className="border border-cyan-400/30 shadow-lg z-50 min-w-[220px]">
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger className="font-medium text-white hover:bg-white/20 data-[state=open]:bg-white/20">
-                    🤖 AI
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent style={{ backgroundColor: "#252045" }} className="border border-gray-200 shadow-lg z-50">
-                      <DropdownMenuItem onClick={() => setSelectedEmojiCategory("Facial Recognition")} className="font-medium text-white hover:bg-white/20">
-                        Facial Recognition
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setObjectCharactersOpen(true)} className="font-medium text-white hover:bg-white/20">
-                        Object Identification
-                      </DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger className="font-medium text-white hover:bg-purple-500/20 data-[state=open]:bg-purple-500/20">
                     💻 Coding
@@ -1454,12 +1328,6 @@ const LessonVault0710 = () => {
                           </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
-                      <DropdownMenuItem
-                        onClick={() => setCodingDialogOpen(true)}
-                        className="font-medium text-white hover:bg-amber-500/20 flex items-center gap-2 cursor-pointer"
-                      >
-                        🔤 Coding in Alphabets
-                      </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
@@ -1552,9 +1420,6 @@ const LessonVault0710 = () => {
                 >
                   💡 Micro:bit Editor
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCodingDialogOpen(true)} className="font-medium text-white hover:bg-white/20">
-                  🔤 Coding in Alphabets
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -1593,37 +1458,6 @@ const LessonVault0710 = () => {
               sport={selectedSport} 
             />
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Object Characters Dialog */}
-      <Dialog open={objectCharactersOpen} onOpenChange={setObjectCharactersOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>The Young and Old</DialogTitle>
-          </DialogHeader>
-          <ObjectCharacters onClose={() => setObjectCharactersOpen(false)} />
-        </DialogContent>
-      </Dialog>
-
-      {/* My Body Dialog with Flip Card */}
-      <Dialog open={humanBeingOpen} onOpenChange={setHumanBeingOpen}>
-        <DialogContent className="max-w-md bg-[#313056] border-none">
-          <DialogHeader>
-            <DialogTitle className="text-white text-center">My Body</DialogTitle>
-            <DialogDescription className="text-white/70 text-center">
-              Click the flip icon to switch between Girl's Body and Boy's Body
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex justify-center py-4">
-            <FlipBodyCard
-              onCardClick={() => {}}
-              onRecordingClick={() => async () => {}}
-              isRecording={false}
-              selectedCardForTest={null}
-              recordingTime={0}
-            />
-          </div>
         </DialogContent>
       </Dialog>
 
@@ -1710,9 +1544,6 @@ const LessonVault0710 = () => {
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Fix the Alphabet Order Puzzle */}
-      <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 
       {/* Cryptogram Secrets Dialog */}
       <Dialog open={cryptogramOpen} onOpenChange={(open) => {
@@ -1870,11 +1701,8 @@ const LessonVault0710 = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Audio elements */}
-      <audio ref={alphabetAudioRef} src={alphabetSong} preload="auto" />
-
       {/* ECD AI Copilot */}
-      <AssistantHub context="My Lesson Vault (Ages 7-10)" />
+      <AssistantHub context="My Lesson Vault (Ages 08-12)" />
 
       <PersonalityVerification
         open={personalityOpen}
