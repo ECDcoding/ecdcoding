@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+
 
 /**
  * Guest access rules for ECD AI:
@@ -11,9 +13,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const WEEK_KEY = "ecd_ai_guest_week";
 const COUNT_KEY = "ecd_ai_guest_week_questions";
 const CREDITS_KEY = "ecd_ai_guest_credits";
+const EXPIRY_KEY = "ecd_ai_guest_credits_expiry";
 export const PENDING_CREDITS_KEY = "ecd_ai_pending_credits";
 export const GUEST_CREDITS_PER_PURCHASE = 50;
 export const FREE_QUESTIONS_PER_WEEK = 1;
+/** Credits expire one month (30 days) after they are added if not used up. */
+export const CREDITS_VALID_DAYS = 30;
+/** Warn the user once credits drop to this level or below. */
+export const LOW_CREDITS_THRESHOLD = 10;
 
 const currentWeek = () => {
   const now = new Date();
@@ -28,18 +35,57 @@ const readNumber = (key: string) => {
   return Number.isFinite(value) && value > 0 ? value : 0;
 };
 
+/** Clears credits when their month has passed. Returns the still-valid balance. */
+const readValidCredits = () => {
+  const credits = readNumber(CREDITS_KEY);
+  const expiry = readNumber(EXPIRY_KEY);
+  if (credits > 0 && expiry > 0 && Date.now() > expiry) {
+    localStorage.setItem(CREDITS_KEY, "0");
+    localStorage.removeItem(EXPIRY_KEY);
+    return 0;
+  }
+  return credits;
+};
+
 export const grantGuestCredits = (amount = GUEST_CREDITS_PER_PURCHASE) => {
-  const next = readNumber(CREDITS_KEY) + amount;
+  const next = readValidCredits() + amount;
   localStorage.setItem(CREDITS_KEY, String(next));
+  localStorage.setItem(
+    EXPIRY_KEY,
+    String(Date.now() + CREDITS_VALID_DAYS * 24 * 60 * 60 * 1000),
+  );
   return next;
 };
+
 
 export const useGuestAiCredits = (enabled: boolean) => {
   const [questionsUsed, setQuestionsUsed] = useState(0);
   const [credits, setCredits] = useState(0);
+  const [expiresAt, setExpiresAt] = useState(0);
   const timerRef = useRef<number | null>(null);
+  const warnedRef = useRef<{ low: boolean; empty: boolean }>({ low: false, empty: false });
 
-  // Load / roll over the week on mount
+  const warn = useCallback((value: number) => {
+    if (value === 0) {
+      if (warnedRef.current.empty) return;
+      warnedRef.current.empty = true;
+      toast.error("Your ECD AI credits are finished", {
+        description:
+          "Refill with R100 for 50 more credits to carry on with Child Behavior questions and the ECDcoding programme.",
+      });
+      return;
+    }
+    if (value <= LOW_CREDITS_THRESHOLD) {
+      if (warnedRef.current.low) return;
+      warnedRef.current.low = true;
+      toast.warning(`Only ${value} ECD AI credits left`, {
+        description:
+          "Refill soon if you want to keep asking about Child Behavior and the ECDcoding programme.",
+      });
+    }
+  }, []);
+
+  // Load / roll over the week on mount, and drop credits that have expired
   useEffect(() => {
     if (!enabled) return;
     const week = currentWeek();
@@ -50,16 +96,28 @@ export const useGuestAiCredits = (enabled: boolean) => {
     } else {
       setQuestionsUsed(readNumber(COUNT_KEY));
     }
-    setCredits(readNumber(CREDITS_KEY));
+    const valid = readValidCredits();
+    setCredits(valid);
+    setExpiresAt(readNumber(EXPIRY_KEY));
+    if (valid === 0 && localStorage.getItem(EXPIRY_KEY) === null && readNumber(COUNT_KEY) > 0) {
+      toast.info("Your ECD AI credits have expired", {
+        description: "Unused credits last one month. Refill with R100 for 50 new credits.",
+      });
+    }
   }, [enabled]);
 
   const refresh = useCallback(() => {
     setQuestionsUsed(readNumber(COUNT_KEY));
-    setCredits(readNumber(CREDITS_KEY));
+    const valid = readValidCredits();
+    setCredits(valid);
+    setExpiresAt(readNumber(EXPIRY_KEY));
+    if (valid > 0) warnedRef.current = { low: false, empty: false };
   }, []);
 
   const freeQuestionsLeft = Math.max(0, FREE_QUESTIONS_PER_WEEK - questionsUsed);
   const canAsk = !enabled || freeQuestionsLeft > 0 || credits > 0;
+  const isLowOnCredits = enabled && credits > 0 && credits <= LOW_CREDITS_THRESHOLD;
+  const creditsExpireAt = expiresAt > 0 ? new Date(expiresAt) : null;
 
   const registerQuestion = useCallback(() => {
     if (!enabled) return;
@@ -67,18 +125,23 @@ export const useGuestAiCredits = (enabled: boolean) => {
       const next = readNumber(COUNT_KEY) + 1;
       localStorage.setItem(COUNT_KEY, String(next));
       setQuestionsUsed(next);
+      return;
     }
-  }, [enabled]);
+    const remaining = readValidCredits();
+    if (remaining > 0) warn(remaining);
+  }, [enabled, warn]);
 
   // Spend 1 credit per minute of active chat while the paid mode is in use
   const startSpending = useCallback(() => {
     if (!enabled || timerRef.current) return;
     timerRef.current = window.setInterval(() => {
-      const remaining = Math.max(0, readNumber(CREDITS_KEY) - 1);
+      const remaining = Math.max(0, readValidCredits() - 1);
       localStorage.setItem(CREDITS_KEY, String(remaining));
+      if (remaining === 0) localStorage.removeItem(EXPIRY_KEY);
       setCredits(remaining);
+      warn(remaining);
     }, 60_000);
-  }, [enabled]);
+  }, [enabled, warn]);
 
   const stopSpending = useCallback(() => {
     if (timerRef.current) {
@@ -93,9 +156,12 @@ export const useGuestAiCredits = (enabled: boolean) => {
     credits,
     freeQuestionsLeft,
     canAsk,
+    isLowOnCredits,
+    creditsExpireAt,
     registerQuestion,
     startSpending,
     stopSpending,
     refresh,
   };
+
 };
