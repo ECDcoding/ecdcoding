@@ -11,9 +11,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const WEEK_KEY = "ecd_ai_guest_week";
 const COUNT_KEY = "ecd_ai_guest_week_questions";
 const CREDITS_KEY = "ecd_ai_guest_credits";
+const EXPIRY_KEY = "ecd_ai_guest_credits_expiry";
 export const PENDING_CREDITS_KEY = "ecd_ai_pending_credits";
 export const GUEST_CREDITS_PER_PURCHASE = 50;
 export const FREE_QUESTIONS_PER_WEEK = 1;
+/** Credits expire one month (30 days) after they are added if not used up. */
+export const CREDITS_VALID_DAYS = 30;
+/** Warn the user once credits drop to this level or below. */
+export const LOW_CREDITS_THRESHOLD = 10;
 
 const currentWeek = () => {
   const now = new Date();
@@ -28,11 +33,28 @@ const readNumber = (key: string) => {
   return Number.isFinite(value) && value > 0 ? value : 0;
 };
 
+/** Clears credits when their month has passed. Returns the still-valid balance. */
+const readValidCredits = () => {
+  const credits = readNumber(CREDITS_KEY);
+  const expiry = readNumber(EXPIRY_KEY);
+  if (credits > 0 && expiry > 0 && Date.now() > expiry) {
+    localStorage.setItem(CREDITS_KEY, "0");
+    localStorage.removeItem(EXPIRY_KEY);
+    return 0;
+  }
+  return credits;
+};
+
 export const grantGuestCredits = (amount = GUEST_CREDITS_PER_PURCHASE) => {
-  const next = readNumber(CREDITS_KEY) + amount;
+  const next = readValidCredits() + amount;
   localStorage.setItem(CREDITS_KEY, String(next));
+  localStorage.setItem(
+    EXPIRY_KEY,
+    String(Date.now() + CREDITS_VALID_DAYS * 24 * 60 * 60 * 1000),
+  );
   return next;
 };
+
 
 export const useGuestAiCredits = (enabled: boolean) => {
   const [questionsUsed, setQuestionsUsed] = useState(0);
