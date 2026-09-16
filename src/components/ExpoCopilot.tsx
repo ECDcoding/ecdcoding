@@ -351,28 +351,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </p>
                   )}
                 </div>
-                <div className="flex rounded-md border border-primary-foreground/30 p-0.5" aria-label="ECD AI language">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    aria-pressed={language === "en"}
-                    onClick={() => setLanguage("en")}
-                    className={`h-6 rounded px-2 text-[10px] ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                  >
-                    English
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    aria-pressed={language === "tn"}
-                    onClick={() => setLanguage("tn")}
-                    className={`h-6 rounded px-2 text-[10px] ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                  >
-                    Setswana
-                  </Button>
-                </div>
               </div>
               <div className="flex items-center gap-1">
                 <Button
@@ -393,6 +371,26 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                 </Button>
               </div>
             </div>
+            {!isMinimized && (
+              <div className="mt-2 grid grid-cols-2 gap-1 rounded-md border border-primary-foreground/30 p-0.5" role="group" aria-label="ECD AI language">
+                <button
+                  type="button"
+                  aria-pressed={language === "en"}
+                  onClick={() => setLanguage("en")}
+                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={language === "tn"}
+                  onClick={() => setLanguage("tn")}
+                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
+                >
+                  Setswana
+                </button>
+              </div>
+            )}
           </CardHeader>
 
           {!isMinimized && (
