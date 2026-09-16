@@ -20,10 +20,14 @@ interface ExpoCopilotProps {
 }
 
 const SUGGESTED_QUESTIONS = [
-  "Why does my 4-year-old act out of bounds?",
-  "What behaviour should I expect at each age?",
-  "Which lessons suit a 5-year-old?",
-  "How does the Verbal Testing Space work?",
+  "What developmental milestones should I expect at my child's age?",
+  "How can I understand my child's individuality and behaviour patterns?",
+  "How can I support healthy eating and sleeping habits?",
+  "Are mood swings normal at my child's age?",
+  "How can I strengthen our parent-child relationship?",
+  "How can I tell if my child is ready for school?",
+  "Do body types affect a child's development?",
+  "Which ECDcoding lessons suit my child's age and needs?",
 ];
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {

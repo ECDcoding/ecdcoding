@@ -5,16 +5,18 @@ import { useAutoFlip } from "@/hooks/useAutoFlip";
 import { Bot, MessageCircle, X } from "lucide-react";
 
 interface AssistantHubProps {
-  /** Context passed to the Ask AI copilot */
+  /** Context passed to the ECD AI copilot */
   context?: string;
   onVoiceModeChange?: (isActive: boolean) => void;
+  /** Reception is available only on the public landing page. */
+  showReception?: boolean;
 }
 
 /**
  * A single flipping launcher that lets users choose between
- * "Reception" (the live voice/text agent) and "Ask AI" (the ECD AI copilot).
+ * "Reception" (the live voice/text agent) and "ECD AI" (the child-development copilot).
  */
-const AssistantHub = ({ context, onVoiceModeChange }: AssistantHubProps) => {
+const AssistantHub = ({ context, onVoiceModeChange, showReception = false }: AssistantHubProps) => {
   const [flipped, setFlipped] = useState(false);
   const [receptionOpen, setReceptionOpen] = useState(false);
   const [copilotOpen, setCopilotOpen] = useState(false);
@@ -41,6 +43,10 @@ const AssistantHub = ({ context, onVoiceModeChange }: AssistantHubProps) => {
     setReceptionOpen(false);
     setCopilotOpen(false);
   };
+
+  if (!showReception) {
+    return <ExpoCopilot context={context} />;
+  }
 
   return (
     <>
@@ -93,10 +99,10 @@ const AssistantHub = ({ context, onVoiceModeChange }: AssistantHubProps) => {
             )}
           </button>
 
-          {/* Back: Ask AI */}
+          {/* Back: ECD AI */}
           <button
             type="button"
-            aria-label={anyOpen ? "Close assistant" : "Ask AI"}
+            aria-label={anyOpen ? "Close assistant" : "ECD AI"}
             onClick={anyOpen ? closeAll : openCopilot}
             className="absolute inset-0 rounded-full bg-black hover:bg-black/80 shadow-xl flex flex-col items-center justify-center gap-0.5"
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
@@ -111,7 +117,7 @@ const AssistantHub = ({ context, onVoiceModeChange }: AssistantHubProps) => {
                     <span className="text-[7px] font-bold text-white">ASK</span>
                   </span>
                 </div>
-                <span className="text-[10px] font-bold text-white">Ask AI</span>
+                <span className="text-[10px] font-bold text-white">ECD AI</span>
               </>
             )}
           </button>

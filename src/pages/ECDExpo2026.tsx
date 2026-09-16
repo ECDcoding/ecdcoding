@@ -1033,22 +1033,8 @@ const ECDExpo2026Content = () => {
         onPaymentComplete={handleSponsorPaymentComplete}
       />
 
-      {/* Expo Copilot — contextually aware of the active tab */}
-      <AssistantHub
-        context={
-          activeTab === "overview"
-            ? "Event Overview & Registration Options"
-            : activeTab === "sponsors"
-            ? "Sponsorship Packages & Application"
-            : activeTab === "exhibitors"
-            ? "Exhibitor Booth Booking"
-            : activeTab === "speakers"
-            ? "Keynote Speaker Applications"
-            : activeTab === "delegates"
-            ? "Delegate Registration"
-            : undefined
-        }
-      />
+      {/* ECD AI focuses on child behaviour and lessons, including on this public event page. */}
+      <AssistantHub context="Child Behavior and ECDcoding Lessons" />
 
       {/* Footer */}
       <footer className="py-6 px-6 border-t border-border bg-card/50 mt-8">

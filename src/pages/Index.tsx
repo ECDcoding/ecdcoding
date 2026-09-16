@@ -46,7 +46,7 @@ const Index = () => {
         <Hero />
         <CallToAction />
       </main>
-      <AssistantHub context="ECDcoding Home" onVoiceModeChange={setIsVoiceModeActive} />
+      <AssistantHub context="ECDcoding Home" onVoiceModeChange={setIsVoiceModeActive} showReception />
 
       <ExpoPhotoCarousel />
 
