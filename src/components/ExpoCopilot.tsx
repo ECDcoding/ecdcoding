@@ -109,6 +109,15 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isOpen, isMinimized]);
 
+  // Visitors on paid credits spend 1 credit per minute of open chat
+  useEffect(() => {
+    if (isGuest && isOpen && !isMinimized && guest.freeQuestionsLeft === 0 && guest.credits > 0) {
+      guest.startSpending();
+    } else {
+      guest.stopSpending();
+    }
+  }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
+
   const copy = COPILOT_COPY[language];
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
