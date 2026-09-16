@@ -127,8 +127,16 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
         // Clear any existing messages when starting voice mode
         setMessages([]);
         await conversation.startSession({
-          agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez'
+          agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez',
+          overrides: {
+            agent: {
+              prompt: { prompt: RECEPTION_SCOPE_PROMPT },
+              firstMessage:
+                "Hello and welcome to ECDcoding reception. I can help with general information about ECDcoding, our lesson age groups, registration, payments, events and contact details. For questions about child behaviour or lesson content, please use ECD AI.",
+            },
+          },
         });
+
         setUseVoiceMode(true);
         onVoiceModeChange?.(true);
       } catch (error) {
