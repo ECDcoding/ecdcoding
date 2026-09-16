@@ -12,6 +12,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 type Message = { role: "user" | "assistant"; content: string };
 type CopilotLanguage = "en" | "tn";
+type CopilotTopic = "behaviour" | "maths" | "lessons";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
