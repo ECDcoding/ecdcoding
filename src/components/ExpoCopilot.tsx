@@ -351,28 +351,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </p>
                   )}
                 </div>
-                <div className="flex rounded-md border border-primary-foreground/30 p-0.5" aria-label="ECD AI language">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    aria-pressed={language === "en"}
-                    onClick={() => setLanguage("en")}
-                    className={`h-6 rounded px-2 text-[10px] ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                  >
-                    English
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    aria-pressed={language === "tn"}
-                    onClick={() => setLanguage("tn")}
-                    className={`h-6 rounded px-2 text-[10px] ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                  >
-                    Setswana
-                  </Button>
-                </div>
               </div>
               <div className="flex items-center gap-1">
                 <Button
