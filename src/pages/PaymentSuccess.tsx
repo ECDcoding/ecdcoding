@@ -38,7 +38,9 @@ const PaymentSuccess = () => {
         </div>
         <h1 className="text-3xl font-bold text-green-800">Payment Successful!</h1>
         <p className="text-gray-600 max-w-md">
-          Thank you for your payment. Your subscription has been activated and you now have full access to ECDcoding.
+          {aiCredits
+            ? `Thank you for your payment. ${aiCredits} ECD AI credits have been added — that's ${aiCredits} minutes of unlimited questions.`
+            : "Thank you for your payment. Your subscription has been activated and you now have full access to ECDcoding."}
         </p>
         <div className="space-y-3">
           <Button asChild className="bg-[#132a13] text-yellow-400 hover:bg-[#132a13]/90">
