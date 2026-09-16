@@ -188,7 +188,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages: userMessages, context: ctx, language }),
+      body: JSON.stringify({ messages: userMessages, context: ctx, language, topic }),
     });
 
     if (!resp.ok || !resp.body) {
