@@ -42,6 +42,7 @@ import FlipAnimalsCard from "@/components/FlipAnimalsCard";
 import FlipMonthsCard from "@/components/FlipMonthsCard";
 import FlipNumbersCard from "@/components/FlipNumbersCard";
 import CardLessonFocus from "@/components/NumbersCarousel";
+import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
@@ -95,6 +96,7 @@ import fiveSensesDiagram from "@/assets/five-senses.jpg";
 import alphabetChart from "@/assets/alphabet-chart.jpg";
 import basicLogicThinking from "@/assets/basic-logic-thinking.jpg";
 import stopSign from "@/assets/stop-sign.png";
+import microbitDevice from "@/assets/microbit-back-annotated.png";
 
 const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const { signOut, user } = useAuth();
@@ -188,6 +190,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
   const [focusFlowIndex, setFocusFlowIndex] = useState(0);
   const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
+  const [microbitAnalysisOpen, setMicrobitAnalysisOpen] = useState(false);
   const [testResults, setTestResults] = useState<{
     subject: string;
     audioUrl: string;
@@ -598,6 +601,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
       { label: "Wild Animals", image: wildAnimalsChart },
     ] },
     "Busy Bee": { image: beeCharacter, title: "Busy Bee", borderColor: "border-blue-500" },
+    "Micro:bit Device": { image: microbitDevice, title: "Micro:bit Device", borderColor: "border-blue-500" },
     "Months of the Year": { title: "Months of the Year", gallery: [
       { label: "Months of the Year", content: monthsOfYearContent },
       { label: "Seasons of the Year", content: seasonsOfYearContent },
@@ -1777,6 +1781,34 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         </Button>
       </Card>
     )},
+    { key: "microbit", category: "basic" as const, tint: "bg-blue-500/15 ring-1 ring-blue-400/40", component: (
+      <Card
+        className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer"
+        onClick={() => {
+          if (!isRecording) {
+            setCarouselPaused(true);
+            setSelectedCardForTest("Micro:bit Device");
+            setFocusedLessonCard("Micro:bit Device");
+            setMicrobitAnalysisOpen(true);
+          }
+        }}
+      >
+        <CardContent className="p-0 relative">
+          <h3 className="text-xl font-bold text-blue-600 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Micro:bit Device</h3>
+          <img src={microbitDevice} alt="BBC Micro:bit device" className="w-full h-52 rounded-lg object-contain" />
+          {isRecording && selectedCardForTest === "Micro:bit Device" && (
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+          )}
+        </CardContent>
+        <Button
+          onClick={createRecordingHandler("Micro:bit Device")}
+          aria-label="Record Micro:bit Device analysis"
+          className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Micro:bit Device" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}
+        >
+          <Mic className="h-5 w-5" />
+        </Button>
+      </Card>
+    )},
     { key: "bee", category: "generic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-blue-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Busy Bee")}>
         <CardContent className="p-0 relative">
@@ -1841,7 +1873,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-amber-500/20 border-amber-400/60 ring-1 ring-amber-400/40",
       badgeClass: "bg-amber-400 text-black",
       items: [
-        "Basic Shapes",
+        "Basic Shapes", "Micro:bit Device",
         ...colorCodingSides.map((s) => s.name),
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
       ],
@@ -2073,7 +2105,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                               <DropdownMenuItem onClick={() => toast({ title: "Basic Logic Analysis", description: "Coming soon." })}>
                                 🧩 Basic Logic Analysis
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => toast({ title: "Micro:bit Analysis", description: "Coming soon." })}>
+                              <DropdownMenuItem onClick={() => setMicrobitAnalysisOpen(true)}>
                                 🔬 Micro:bit Analysis
                               </DropdownMenuItem>
                             </DropdownMenuSubContent>
@@ -2223,7 +2255,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <img src="/lovable-uploads/6f846a04-7251-473a-8a8d-adf8aa1bb9c1.png" alt="ECDcoding Logo" className="w-52 h-36 md:w-60 md:h-40 object-contain cursor-pointer" />
               </Link>
             </div>
-            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Knowledge Base Development" : "Learning the Basics"}</h1>
+            <h1 className="text-2xl font-bold mb-1">{vtsOnly ? "Verbal Testing Space" : "Learning the Basics"}</h1>
           </div>
           <div className="flex flex-col items-end gap-1">
             <ProfileDropdown 
@@ -3689,7 +3721,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   onClick={playNarration}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
                 >
-                  Verbal Testing Space
+                  Knowledge Base Carousel
                 </Button>
                 <p className="text-white/90 text-sm">
                   Put headsets on, click record your analysis
@@ -5957,6 +5989,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         open={personalityOpen}
         onOpenChange={setPersonalityOpen}
         initialTab={personalityTab}
+      />
+
+      <MicrobitAnalysisNarrator
+        isOpen={microbitAnalysisOpen}
+        onClose={() => setMicrobitAnalysisOpen(false)}
       />
 
     </div>

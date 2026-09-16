@@ -10,3 +10,5 @@
 - [x] Keep Reception on the landing page only and show standalone ECD AI elsewhere.
 - [x] Add the attached child-development themes to ECD AI guidance and suggested questions.
 - [x] Deploy and verify the updated ECD AI.
+- [x] Restore the standalone Verbal Testing Space title and blue Knowledge Base Carousel button.
+- [x] Add a Micro:bit Device card with narration and recording to the Verbal Testing Space carousel.
