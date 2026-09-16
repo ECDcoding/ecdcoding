@@ -558,24 +558,31 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                 </div>
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
-                    <span>
+                    <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
                       {guest.freeQuestionsLeft > 0
                         ? "1 free question this week"
                         : guest.credits > 0
-                          ? `${guest.credits} credits left (1 per minute)`
+                          ? `${guest.credits} credits left (1 per minute)${
+                              guest.isLowOnCredits ? " — please refill to carry on" : ""
+                            }${
+                              guest.creditsExpireAt
+                                ? ` · expires ${guest.creditsExpireAt.toLocaleDateString()}`
+                                : ""
+                            }`
                           : "Free question used"}
                     </span>
-                    {guest.freeQuestionsLeft === 0 && guest.credits === 0 && (
+                    {(guest.credits === 0 || guest.isLowOnCredits) && (
                       <button
                         type="button"
                         onClick={() => setPaywallOpen(true)}
-                        className="font-semibold text-primary underline"
+                        className="font-semibold text-primary underline whitespace-nowrap"
                       >
-                        Get {GUEST_CREDITS_PER_PURCHASE} credits — R100
+                        {guest.credits === 0 ? "Get" : "Refill"} {GUEST_CREDITS_PER_PURCHASE} credits — R100
                       </button>
                     )}
                   </div>
                 )}
+
               </div>
             </CardContent>
           )}
