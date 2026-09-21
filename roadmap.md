@@ -18,3 +18,4 @@
 - [x] Add 1–10 Play Index ratings, a live bar graph, and an overall analysis level.
 - [x] Add 1–10 Number Sense ratings, a live bar graph, and an overall analysis level.
 - [x] Add the complete supplied Play Index, Number Sense, evaluation, and connected-learning guidance to ECD AI.
+- [x] Add expandable English and Setswana overviews with follow-up questions to every ECD AI topic.
