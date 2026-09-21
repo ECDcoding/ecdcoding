@@ -2246,6 +2246,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                           <FileText className="mr-2 h-4 w-4" /> Learner Review
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
