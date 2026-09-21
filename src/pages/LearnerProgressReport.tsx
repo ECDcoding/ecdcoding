@@ -100,12 +100,31 @@ const LearnerProgressReport = () => {
   const { user, loading: authLoading } = useAuth();
   const { profile } = useProfile();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const bandParam = searchParams.get("band");
+  const band: AgeBand = isAgeBand(bandParam) ? bandParam : "04-05";
+  const bandLabel = AGE_BAND_LABELS[band];
   const [selected, setSelected] = useState<string[]>([]);
   const [duration, setDuration] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [notes, setNotes] = useState<string>("");
+
+  // Index results recorded in the Learner Play Index for this age group.
+  const assessment = useMemo(() => loadAssessment(band), [band]);
+  const playChartData = PLAY_AREAS.map((area) => ({
+    area: PLAY_LABELS[area],
+    fullArea: area,
+    level: assessment.playLevels[area],
+  }));
+  const numberSenseChartData = NUMBER_SENSE_AREAS.map((area) => ({
+    area: NUMBER_SENSE_LABELS[area],
+    fullArea: area,
+    level: assessment.numberSenseLevels[area],
+  }));
+  const playIndex = average(PLAY_AREAS.map((area) => assessment.playLevels[area]));
+  const numberSenseIndex = average(NUMBER_SENSE_AREAS.map((area) => assessment.numberSenseLevels[area]));
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/sign-in");
@@ -114,19 +133,19 @@ const LearnerProgressReport = () => {
   useEffect(() => {
     const load = async () => {
       if (!user) return;
+      setLoading(true);
       const { data } = await supabase
         .from("lesson_baskets")
         .select("lessons, duration_days")
         .eq("user_id", user.id)
+        .eq("age_band", band)
         .maybeSingle();
-      if (data) {
-        setSelected(data.lessons || []);
-        setDuration(data.duration_days || 30);
-      }
+      setSelected(data?.lessons || []);
+      setDuration(data?.duration_days || 30);
       setLoading(false);
     };
     if (user) load();
-  }, [user]);
+  }, [user, band]);
 
   const toggle = (id: string) => {
     setSelected((prev) =>
@@ -146,13 +165,16 @@ const LearnerProgressReport = () => {
     const titles = LESSON_CATALOG.filter((l) => selected.includes(l.id)).map((l) => `• ${l.title}`);
     const today = new Date().toLocaleDateString();
     return [
-      `Learner Progress Report`,
+      `Learner Progress Report (${bandLabel})`,
       `Learner: ${learnerName}`,
       `Reporting period: ${periodLabel}`,
       `Issued: ${today}`,
       ``,
       `Lessons covered (${titles.length}):`,
       ...titles,
+      ``,
+      `Play Index: ${playIndex.toFixed(1)}/10 — ${getIndexLevelLabel(playIndex)}`,
+      `Number Sense Index: ${numberSenseIndex.toFixed(1)}/10 — ${getIndexLevelLabel(numberSenseIndex)}`,
       ...(notes ? [``, `Notes:`, notes] : []),
       ``,
       `— ECDcoding`,
@@ -171,20 +193,22 @@ const LearnerProgressReport = () => {
     const { error } = await supabase.from("lesson_baskets").upsert(
       {
         user_id: user.id,
+        age_band: band,
         lessons: selected,
         duration_days: duration,
         starts_at: startsAt.toISOString(),
         expires_at: expiresAt.toISOString(),
       },
-      { onConflict: "user_id" }
+      { onConflict: "user_id,age_band" }
     );
     setSaving(false);
     if (error) {
       toast({ title: "Could not save", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Progress report saved", description: `Reporting period: ${periodLabel}.` });
+    toast({ title: `Progress report saved (${bandLabel})`, description: `Reporting period: ${periodLabel}.` });
   };
+
 
   const handleShare = async () => {
     const text = buildShareText();
