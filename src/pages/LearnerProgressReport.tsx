@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
@@ -10,7 +11,21 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useToast } from "@/hooks/use-toast";
+import {
+  AGE_BANDS,
+  AGE_BAND_LABELS,
+  AgeBand,
+  NUMBER_SENSE_AREAS,
+  NUMBER_SENSE_LABELS,
+  PLAY_AREAS,
+  PLAY_LABELS,
+  average,
+  getIndexLevelLabel,
+  isAgeBand,
+  loadAssessment,
+} from "@/lib/playIndex";
 import {
   Sparkles,
   BookOpen,
@@ -20,7 +35,12 @@ import {
   Printer,
   ArrowLeft,
   FileText,
+  BarChart3,
 } from "lucide-react";
+
+const indexChartConfig = {
+  level: { label: "Index level", color: "hsl(var(--primary))" },
+} satisfies ChartConfig;
 
 type LessonOption = { id: string; title: string; category: string };
 
@@ -80,12 +100,31 @@ const LearnerProgressReport = () => {
   const { user, loading: authLoading } = useAuth();
   const { profile } = useProfile();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const bandParam = searchParams.get("band");
+  const band: AgeBand = isAgeBand(bandParam) ? bandParam : "04-05";
+  const bandLabel = AGE_BAND_LABELS[band];
   const [selected, setSelected] = useState<string[]>([]);
   const [duration, setDuration] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [notes, setNotes] = useState<string>("");
+
+  // Index results recorded in the Learner Play Index for this age group.
+  const assessment = useMemo(() => loadAssessment(band), [band]);
+  const playChartData = PLAY_AREAS.map((area) => ({
+    area: PLAY_LABELS[area],
+    fullArea: area,
+    level: assessment.playLevels[area],
+  }));
+  const numberSenseChartData = NUMBER_SENSE_AREAS.map((area) => ({
+    area: NUMBER_SENSE_LABELS[area],
+    fullArea: area,
+    level: assessment.numberSenseLevels[area],
+  }));
+  const playIndex = average(PLAY_AREAS.map((area) => assessment.playLevels[area]));
+  const numberSenseIndex = average(NUMBER_SENSE_AREAS.map((area) => assessment.numberSenseLevels[area]));
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/sign-in");
@@ -94,19 +133,19 @@ const LearnerProgressReport = () => {
   useEffect(() => {
     const load = async () => {
       if (!user) return;
+      setLoading(true);
       const { data } = await supabase
         .from("lesson_baskets")
         .select("lessons, duration_days")
         .eq("user_id", user.id)
+        .eq("age_band", band)
         .maybeSingle();
-      if (data) {
-        setSelected(data.lessons || []);
-        setDuration(data.duration_days || 30);
-      }
+      setSelected(data?.lessons || []);
+      setDuration(data?.duration_days || 30);
       setLoading(false);
     };
     if (user) load();
-  }, [user]);
+  }, [user, band]);
 
   const toggle = (id: string) => {
     setSelected((prev) =>
@@ -126,13 +165,16 @@ const LearnerProgressReport = () => {
     const titles = LESSON_CATALOG.filter((l) => selected.includes(l.id)).map((l) => `• ${l.title}`);
     const today = new Date().toLocaleDateString();
     return [
-      `Learner Progress Report`,
+      `Learner Progress Report (${bandLabel})`,
       `Learner: ${learnerName}`,
       `Reporting period: ${periodLabel}`,
       `Issued: ${today}`,
       ``,
       `Lessons covered (${titles.length}):`,
       ...titles,
+      ``,
+      `Play Index: ${playIndex.toFixed(1)}/10 — ${getIndexLevelLabel(playIndex)}`,
+      `Number Sense Index: ${numberSenseIndex.toFixed(1)}/10 — ${getIndexLevelLabel(numberSenseIndex)}`,
       ...(notes ? [``, `Notes:`, notes] : []),
       ``,
       `— ECDcoding`,
@@ -151,20 +193,22 @@ const LearnerProgressReport = () => {
     const { error } = await supabase.from("lesson_baskets").upsert(
       {
         user_id: user.id,
+        age_band: band,
         lessons: selected,
         duration_days: duration,
         starts_at: startsAt.toISOString(),
         expires_at: expiresAt.toISOString(),
       },
-      { onConflict: "user_id" }
+      { onConflict: "user_id,age_band" }
     );
     setSaving(false);
     if (error) {
       toast({ title: "Could not save", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Progress report saved", description: `Reporting period: ${periodLabel}.` });
+    toast({ title: `Progress report saved (${bandLabel})`, description: `Reporting period: ${periodLabel}.` });
   };
+
 
   const handleShare = async () => {
     const text = buildShareText();
@@ -210,18 +254,86 @@ const LearnerProgressReport = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <FileText className="h-6 w-6 text-lime-500" />
-            <h1 className="text-3xl font-bold text-white">Foundational Learning Competencies</h1>
+            <h1 className="text-3xl font-bold text-white">Learner Progress Report</h1>
             <Sparkles className="h-6 w-6 text-lime-500" />
           </div>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            This is Burner_ Boy Mabaso's Foundational Learning Competencies section; 1. Tick any
-            of the lessons that he has already covered, 2. Set the reporting period, 3. Share the
-            report with whomever - parents, teacher, or sponsor.
+          <p className="text-lg font-semibold text-lime-400">{bandLabel}</p>
+          <p className="mt-2 text-gray-300 max-w-2xl mx-auto">
+            Foundational Learning Competencies for learners aged {bandLabel}; 1. Tick any of the
+            lessons already covered, 2. Set the reporting period, 3. Share the report with whomever -
+            parents, teacher, or sponsor.
           </p>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {AGE_BANDS.map((option) => (
+              <Button
+                key={option}
+                size="sm"
+                onClick={() => setSearchParams({ band: option })}
+                className={band === option
+                  ? "bg-lime-500 hover:bg-lime-600 text-white"
+                  : "bg-[#2a2d34] text-white border border-white/10 hover:bg-[#363a42]"}
+              >
+                {AGE_BAND_LABELS[option]}
+              </Button>
+            ))}
+          </div>
           <Badge className="mt-3 text-base bg-[#2a2d34] text-white border-white/10">
             {selected.length} lessons covered
           </Badge>
         </div>
+
+        <Card className="mb-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <BarChart3 className="h-5 w-5 text-lime-500" />
+              <h2 className="text-lg font-semibold text-white">
+                Play &amp; Number Sense Indexes — {bandLabel}
+              </h2>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {[
+                { title: "Play Index", value: playIndex, data: playChartData, height: 260, width: 82 },
+                { title: "Number Sense Index", value: numberSenseIndex, data: numberSenseChartData, height: 400, width: 102 },
+              ].map((chart) => (
+                <div key={chart.title} className="rounded-md border border-white/10 bg-[#1e2025] p-4">
+                  <div className="mb-3 flex items-end justify-between gap-3">
+                    <div>
+                      <p className="text-sm text-gray-400">{chart.title}</p>
+                      <p className="font-semibold text-white">{getIndexLevelLabel(chart.value)}</p>
+                    </div>
+                    <p className="text-3xl font-bold text-lime-400">
+                      {chart.value.toFixed(1)}<span className="text-base text-gray-400">/10</span>
+                    </p>
+                  </div>
+                  <ChartContainer config={indexChartConfig} className="w-full aspect-auto" style={{ height: chart.height }}>
+                    <BarChart accessibilityLayer data={chart.data} layout="vertical" margin={{ left: 8, right: 28 }}>
+                      <CartesianGrid horizontal={false} />
+                      <XAxis type="number" domain={[0, 10]} ticks={[0, 2, 4, 6, 8, 10]} allowDecimals={false} />
+                      <YAxis dataKey="area" type="category" tickLine={false} axisLine={false} width={chart.width} />
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel formatter={(value, _name, item) => (
+                          <div className="flex min-w-44 items-center justify-between gap-4">
+                            <span className="text-muted-foreground">{item.payload.fullArea}</span>
+                            <span className="font-bold text-foreground">{String(value)}/10</span>
+                          </div>
+                        )} />}
+                      />
+                      <Bar dataKey="level" fill="var(--color-level)" radius={[0, 4, 4, 0]}>
+                        <LabelList dataKey="level" position="right" className="fill-foreground font-semibold" />
+                      </Bar>
+                    </BarChart>
+                  </ChartContainer>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-xs text-gray-400">
+              These levels come from the Learner Play Index for this age group. Update them there and they
+              appear here automatically.
+            </p>
+          </CardContent>
+        </Card>
+
 
         <Card className="mb-6" style={{ backgroundColor: '#2a2d34', borderColor: 'rgba(255,255,255,0.1)' }}>
           <CardContent className="p-6">
