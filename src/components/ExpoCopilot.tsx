@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip } from "lucide-react";
+import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
@@ -35,7 +35,7 @@ const COPILOT_COPY = {
     listenError: "Couldn't hear that — please try again.",
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
-      behaviour: "Child Behavior",
+      behaviour: "Child Behaviour",
       maths: "FP Mathematics",
       lessons: "Lessons",
     },
@@ -43,6 +43,35 @@ const COPILOT_COPY = {
       behaviour: "Ages and stages, individuality, moods, routines and school readiness.",
       maths: "Foundation Phase mathematics teaching, activities and proficiency.",
       lessons: "Literacy, numeracy, coding, road safety, science and life skills.",
+    },
+    overviewAction: "Ask ECD AI about this",
+    topicGuides: {
+      behaviour: [
+        { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
+        { title: "Individuality", summary: "Understand a child's unique temperament, interests, strengths, pace and preferred ways of learning.", question: "How can I understand and support my child's individuality?" },
+        { title: "Body Types", summary: "Explore physical differences respectfully without using body shape to judge ability, health or development.", question: "How should I talk about body types and child development in a respectful way?" },
+        { title: "Eating Habits", summary: "Review routines, food exploration and supportive ways to respond to common eating concerns.", question: "How can I support healthy eating habits without creating pressure?" },
+        { title: "Sleeping", summary: "Consider age-appropriate routines, consistency and environmental factors that may affect sleep.", question: "How can I build a supportive sleeping routine for my child?" },
+        { title: "Parent–Child Relationships", summary: "Strengthen connection through listening, predictable care, play, boundaries and shared routines.", question: "What practical steps can strengthen my relationship with my child?" },
+        { title: "Mood Swings", summary: "Understand changing emotions as observations and learn calm, supportive responses without diagnosing.", question: "How should I respond to my child's mood swings?" },
+        { title: "School Readiness", summary: "Look at physical, emotional, attention, social and early number-sense readiness alongside family and school support.", question: "Please help me understand my child's school readiness and suggest a way forward." },
+      ],
+      maths: [
+        { title: "Learning Through Play", summary: "Use exploratory, construction, creative, physical, fantasy and word play to build mathematical ideas.", question: "How can I use the six kinds of play to support mathematical discovery?" },
+        { title: "Number Sense", summary: "Build counting, number relationships, early operations and confidence before formal procedures.", question: "How can I build and observe my child's number sense?" },
+        { title: "Counting Skills", summary: "Develop number names, one-to-one counting, cardinality and movement from concrete objects to abstract ideas.", question: "What activities can develop my child's counting skills at the right level?" },
+        { title: "Problem Solving", summary: "Give children time, concrete materials and open questions so they can reason, make mistakes and explain strategies.", question: "Please suggest a play-based Foundation Phase mathematics problem-solving activity." },
+        { title: "Five Learning Phases", summary: "Move through engagement, exploration, explanation, elaboration and evaluation in a child-centred lesson.", question: "How can I use the five learning phases in a Foundation Phase mathematics activity?" },
+        { title: "Play and Number Sense Index", summary: "Use 1–10 observations as discussion aids for strengths and next activities, never as a diagnosis.", question: "How should I interpret Play Index and Number Sense Index observations and plan a way forward?" },
+      ],
+      lessons: [
+        { title: "Verbal Testing Space", summary: "Learners describe carousel items to practise observation, communication, confidence and following instructions.", question: "How should my child use the Verbal Testing Space?" },
+        { title: "Assignments", summary: "Age-appropriate tasks help learners apply ideas while parents and ECD managers observe understanding.", question: "How can Assignments help me understand and support my child's learning?" },
+        { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
+        { title: "Coding and Technology", summary: "Coding, Blockly, Scratch and Micro:bit activities develop logic, creativity and future-focused problem solving.", question: "Which ECDcoding technology lesson is appropriate for my child's age?" },
+        { title: "Users' Reviews", summary: "Parents, teachers and the ECD community share observations and constructive guidance around learner progress.", question: "How should I use Users' Reviews to support my child's progress?" },
+        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology.", question: "Which Learning the Basics lesson should my child start with, and why?" },
+      ],
     },
     faqs: {
       behaviour: [
@@ -91,6 +120,35 @@ const COPILOT_COPY = {
       behaviour: "Dingwaga le dikgato, botho, maikutlo, mekgwa le go siamela sekolo.",
       maths: "Go ruta dipalo tsa Foundation Phase le ditiro tsa tsona.",
       lessons: "Go bala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
+    },
+    overviewAction: "Botsa ECD AI ka seno",
+    topicGuides: {
+      behaviour: [
+        { title: "Dingwaga le Dikgato", summary: "Tebokakaretso ya kgolo, puisano, maikutlo le boikemelo go ya ka dingwaga, go dumela gore ngwana mongwe le mongwe o gola ka tsela ya gagwe.", question: "Tsweetswee tlhalosa Dingwaga le Dikgato tsa ngwana wa me le se nka se lemogang." },
+        { title: "Botho jo bo Kgethegileng", summary: "Tlhaloganya botho, dikgatlhego, bokgoni, lebelo le tsela e ngwana a ratang go ithuta ka yone.", question: "Nka tlhaloganya le go tshegetsa jang botho jo bo kgethegileng jwa ngwana wa me?" },
+        { title: "Mefuta ya Mmele", summary: "Bua ka dipharologano tsa mmele ka tlotlo, ntle le go atlhola bokgoni kgotsa kgolo ka sebopego.", question: "Nka bua jang ka mefuta ya mmele le kgolo ya ngwana ka tlotlo?" },
+        { title: "Mekgwa ya go Ja", summary: "Sekaseka mekgwa, go leka dijo le ditsela tse di bonolo tsa go araba matshwenyego a go ja.", question: "Nka tshegetsa jang mekgwa e e siameng ya go ja ntle le go gatelela ngwana?" },
+        { title: "Go Robala", summary: "Akanya ka mekgwa e e maleba ya dingwaga, go tlhomama le tikologo e e ka amang boroko.", question: "Nka aga jang mokgwa o o tshegetsang wa go robala wa ngwana wa me?" },
+        { title: "Kamano ya Motsadi le Ngwana", summary: "Nonotsha kamano ka go reetsa, tlhokomelo e e tlhomameng, motshameko, melelwane le mekgwa e e kopanetsweng.", question: "Ke dikgato dife tse nka di tsayang go nonotsha kamano ya me le ngwana?" },
+        { title: "Go Fetofetoga ga Maikutlo", summary: "Tlhaloganya maikutlo a a fetogang jaaka dilo tse di lemogwang, mme o arabe ka kagiso ntle le go dira tlhatlhobo ya bolwetse.", question: "Ke tshwanetse go araba jang go fetofetoga ga maikutlo ga ngwana wa me?" },
+        { title: "Go Siamela Sekolo", summary: "Leba mmele, maikutlo, tlhokomelo, botsalano le kitso ya dipalo mmogo le tshegetso ya lelapa le sekolo.", question: "Nthuse go tlhaloganya go siamela sekolo ga ngwana wa me le tsela e re ka tswelelang ka yone." },
+      ],
+      maths: [
+        { title: "Go Ithuta ka Motshameko", summary: "Dirisa mefuta e merataro ya motshameko go aga dikakanyo tsa dipalo.", question: "Nka dirisa jang mefuta e merataro ya motshameko go tshegetsa go ribolola dipalo?" },
+        { title: "Kutlwisiso ya Dipalo", summary: "Aga go bala, dikamano tsa dipalo, ditiro tsa ntlha le boitshepo pele ga mekgwa ya semmuso.", question: "Nka aga le go lemoga jang kutlwisiso ya dipalo ya ngwana wa me?" },
+        { title: "Bokgoni jwa go Bala", summary: "Tlhabolola maina a dipalo, go bala selo ka sengwe, palogotlhe le go tswa mo dilong go ya mo kakanyong.", question: "Ke ditiro dife tse di ka godisang bokgoni jwa ngwana wa me jwa go bala?" },
+        { title: "Tharabololo ya Mathata", summary: "Naya bana nako, didiriswa le dipotso tse di bulegileng gore ba akanye, ba dire diphoso le go tlhalosa mekgwa.", question: "Ntsenye tirong ya motshameko ya go rarabolola bothata jwa dipalo tsa Foundation Phase." },
+        { title: "Dikgato tse Tlhano tsa go Ithuta", summary: "Tsamaea ka kgatlhego, patlisiso, tlhaloso, katoloso le tlhatlhobo mo thutong e e tsepameng mo ngwaneng.", question: "Nka dirisa jang dikgato tse tlhano tsa go ithuta mo tirong ya dipalo?" },
+        { title: "Play le Number Sense Index", summary: "Dirisa ditemogo tsa 1–10 go buisana ka bokgoni le tiro e e latelang, e seng jaaka tlhatlhobo ya bolwetse.", question: "Nka tlhaloganya jang Play Index le Number Sense Index le go rulaganya tsela e e yang pele?" },
+      ],
+      lessons: [
+        { title: "Verbal Testing Space", summary: "Baithuti ba tlhalosa ditshwantsho go ikatisa go lemoga, puisano, boitshepo le go latela ditaelo.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
+        { title: "Assignments", summary: "Ditiro tse di maleba tsa dingwaga di thusa bana go dirisa dikakanyo fa bagolo ba lemoga tlhaloganyo.", question: "Assignments di ka nthusa jang go tlhaloganya le go tshegetsa go ithuta ga ngwana?" },
+        { title: "Pego ya FLC", summary: "Sephetho sa 1–10 se sobokanya bosupi jo bo leng teng mme se tshitshinya tsela e e maleba ya go ya pele.", question: "Ke tshwanetse go tlhaloganya le go dirisa jang Pego ya FLC?" },
+        { title: "Khouto le Thekenoloji", summary: "Khouto, Blockly, Scratch le Micro:bit di godisa tlhaloganyo, boitlhamedi le tharabololo ya mathata.", question: "Ke thuto efe ya thekenoloji ya ECDcoding e e siametseng dingwaga tsa ngwana wa me?" },
+        { title: "Users' Reviews", summary: "Batsadi, barutabana le baagi ba ECD ba arolelana ditemogo le kaelo e e agang ka kgatelopele.", question: "Nka dirisa jang Users' Reviews go tshegetsa kgatelopele ya ngwana wa me?" },
+        { title: "Learning the Basics", summary: "Sekaseka go bala, dipalo, pabalesego mo tseleng, dipalangwa, saense, dikgono tsa botshelo le thekenoloji.", question: "Ngwana wa me o tshwanetse go simolola ka thuto efe ya Learning the Basics, mme ka ntlha yang?" },
+      ],
     },
     faqs: {
       behaviour: [
@@ -142,6 +200,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
   const [topic, setTopic] = useState<CopilotTopic>("behaviour");
+  const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>("behaviour");
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -416,8 +475,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       {/* Chat Window */}
       {isOpen && (
         <Card
-          className={`w-80 shadow-2xl border border-primary/20 bg-card transition-all duration-300 ${
-            isMinimized ? "h-14 overflow-hidden" : "h-[480px]"
+          className={`w-[min(24rem,calc(100vw-3rem))] shadow-2xl border border-primary/20 bg-card transition-all duration-300 ${
+            isMinimized ? "h-14 overflow-hidden" : "h-[min(600px,calc(100vh-8rem))]"
           } flex flex-col`}
         >
           {/* Header */}
@@ -480,28 +539,49 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
-              {/* Topic tabs — keeps FAQs and answers focused on one aspect */}
+              {/* Expandable topic guides keep questions focused on one aspect. */}
               <div className="flex-shrink-0 border-b border-border bg-muted/40 px-2 py-2">
-                <div className="grid grid-cols-3 gap-1" role="group" aria-label="ECD AI topic">
+                <div className="space-y-1" aria-label="ECD AI topic guides">
                   {TOPIC_ORDER.map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      aria-pressed={topic === t}
-                      onClick={() => setTopic(t)}
-                      className={`h-7 rounded text-[11px] font-medium transition-colors ${
-                        topic === t
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-background text-muted-foreground hover:bg-primary/10"
-                      }`}
-                    >
-                      {copy.topicLabels[t]}
-                    </button>
+                    <div key={t} className="overflow-hidden rounded-md border border-border bg-background">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        aria-expanded={expandedTopic === t}
+                        onClick={() => {
+                          setTopic(t);
+                          setExpandedTopic((current) => current === t ? null : t);
+                        }}
+                        className={`h-8 w-full justify-between rounded-none px-2 text-[11px] ${topic === t ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground"}`}
+                      >
+                        {copy.topicLabels[t]}
+                        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === t ? "rotate-180" : ""}`} />
+                      </Button>
+                      {expandedTopic === t && (
+                        <div className="max-h-48 space-y-1 overflow-y-auto border-t border-border p-1.5">
+                          <p className="px-1 pb-1 text-[10px] leading-snug text-muted-foreground">{copy.topicHints[t]}</p>
+                          {copy.topicGuides[t].map((guide) => (
+                            <Button
+                              key={guide.title}
+                              type="button"
+                              variant="ghost"
+                              onClick={() => sendMessage(guide.question)}
+                              disabled={isLoading}
+                              className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
+                              title={copy.overviewAction}
+                            >
+                              <span className="block">
+                                <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
+                                <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
+                                <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
+                              </span>
+                            </Button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
-                <p className="mt-1.5 px-1 text-[10px] leading-snug text-muted-foreground">
-                  {copy.topicHints[topic]}
-                </p>
               </div>
 
               {/* Messages */}
@@ -515,17 +595,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <p className="text-xs text-muted-foreground px-1">
                       {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[topic]}</span>
                     </p>
-                    <div className="space-y-2">
-                      {copy.faqs[topic].map((q) => (
-                        <button
-                          key={q}
-                          onClick={() => sendMessage(q)}
-                          className="w-full text-left text-xs bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg px-3 py-2 text-foreground transition-colors"
-                        >
-                          {q}
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                 ) : (
