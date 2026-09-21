@@ -282,6 +282,7 @@ serve(async (req) => {
       tn: "Setswana",
       af: "Afrikaans",
       zu: "isiZulu",
+      xh: "isiXhosa",
       ts: "Xitsonga",
       nso: "Sepedi",
       st: "Sesotho",
