@@ -8,7 +8,7 @@ const RequestSchema = z.object({
     content: z.string().min(1).max(12_000),
   })).min(1).max(30),
   context: z.string().max(200).optional(),
-  language: z.enum(["en", "tn"]).optional(),
+  language: z.enum(["en", "tn", "af", "zu", "ts", "nso", "st", "ve", "nr", "ss"]).optional(),
   topic: z.enum(["behaviour", "maths", "lessons"]).optional(),
 });
 
@@ -277,8 +277,20 @@ serve(async (req) => {
     }
 
     // Build system prompt with optional hover context
-    const responseLanguage = language === "tn" ? "Setswana" : "English";
-    const languageInstruction = `\n\nRESPONSE LANGUAGE: ${responseLanguage}. The user selected ${responseLanguage}; respond entirely in ${responseLanguage}, regardless of the language used in earlier messages.`;
+    const LANGUAGE_NAMES: Record<string, string> = {
+      en: "English",
+      tn: "Setswana",
+      af: "Afrikaans",
+      zu: "isiZulu",
+      ts: "Xitsonga",
+      nso: "Sepedi",
+      st: "Sesotho",
+      ve: "Tshivenda",
+      nr: "IsiNdebele",
+      ss: "siSwati",
+    };
+    const responseLanguage = LANGUAGE_NAMES[language ?? "en"] ?? "English";
+    const languageInstruction = `\n\nRESPONSE LANGUAGE: ${responseLanguage}. The user selected ${responseLanguage}; respond entirely in ${responseLanguage}, regardless of the language used in earlier messages. If the selected language is not English, use natural, respectful ${responseLanguage} suitable for South African parents and ECD managers. Do not mix English into the answer unless an official product name has no clear translation. Understand ${responseLanguage} questions even when spelling or grammar is informal; preserve the intended meaning and respond warmly without correcting the user.`;
 
     const TOPIC_FOCUS: Record<string, string> = {
       behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.

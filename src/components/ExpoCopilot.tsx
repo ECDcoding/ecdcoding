@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,7 +12,20 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 type Message = { role: "user" | "assistant"; content: string };
-type CopilotLanguage = "en" | "tn";
+type CopilotLanguage = "en" | "tn" | "af" | "zu" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
+
+const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
+  { code: "en", label: "English", voiceLang: "en-ZA" },
+  { code: "tn", label: "Setswana", voiceLang: "tn-ZA" },
+  { code: "af", label: "Afrikaans", voiceLang: "af-ZA" },
+  { code: "zu", label: "isiZulu", voiceLang: "zu-ZA" },
+  { code: "ts", label: "Xitsonga", voiceLang: "ts-ZA" },
+  { code: "nso", label: "Sepedi", voiceLang: "nso-ZA" },
+  { code: "st", label: "Sesotho", voiceLang: "st-ZA" },
+  { code: "ve", label: "Tshivenda", voiceLang: "ve-ZA" },
+  { code: "nr", label: "IsiNdebele", voiceLang: "nr-ZA" },
+  { code: "ss", label: "siSwati", voiceLang: "ss-ZA" },
+];
 type CopilotTopic = "behaviour" | "maths" | "lessons";
 
 interface ExpoCopilotProps {
@@ -236,7 +250,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
 
-  const copy = COPILOT_COPY[language];
+  const copy = COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
@@ -340,7 +354,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       return;
     }
     const recognition = new SpeechRecognition();
-    recognition.lang = language === "tn" ? "tn-ZA" : "en-ZA";
+    recognition.lang = LANGUAGES.find((l) => l.code === language)?.voiceLang ?? "en-ZA";
     recognition.interimResults = true;
     recognition.continuous = false;
     recognition.onresult = (event: any) => {
@@ -514,23 +528,19 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               </div>
             </div>
             {!isMinimized && (
-              <div className="mt-2 grid grid-cols-2 gap-1 rounded-md border border-primary-foreground/30 p-0.5" role="group" aria-label="ECD AI language">
-                <button
-                  type="button"
-                  aria-pressed={language === "en"}
-                  onClick={() => setLanguage("en")}
-                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={language === "tn"}
-                  onClick={() => setLanguage("tn")}
-                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                >
-                  Setswana
-                </button>
+              <div className="mt-2">
+                <Select value={language} onValueChange={(v) => setLanguage(v as CopilotLanguage)}>
+                  <SelectTrigger className="h-8 w-full border-primary-foreground/30 bg-primary-foreground/10 text-[11px] text-primary-foreground hover:bg-primary-foreground/20">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-64">
+                    {LANGUAGES.map((l) => (
+                      <SelectItem key={l.code} value={l.code} className="text-xs">
+                        {l.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             )}
           </CardHeader>
