@@ -559,7 +559,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       </Button>
                       {expandedTopic === t && (
                         <div className="max-h-48 space-y-1 overflow-y-auto border-t border-border p-1.5">
-                          <p className="px-1 pb-1 text-[10px] leading-snug text-muted-foreground">{copy.topicHints[t]}</p>
                           {copy.topicGuides[t].map((guide) => (
                             <Button
                               key={guide.title}
