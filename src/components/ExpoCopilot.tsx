@@ -527,23 +527,19 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               </div>
             </div>
             {!isMinimized && (
-              <div className="mt-2 grid grid-cols-2 gap-1 rounded-md border border-primary-foreground/30 p-0.5" role="group" aria-label="ECD AI language">
-                <button
-                  type="button"
-                  aria-pressed={language === "en"}
-                  onClick={() => setLanguage("en")}
-                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "en" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={language === "tn"}
-                  onClick={() => setLanguage("tn")}
-                  className={`h-7 rounded text-[11px] font-medium transition-colors ${language === "tn" ? "bg-primary-foreground text-primary" : "text-primary-foreground hover:bg-primary-foreground/20"}`}
-                >
-                  Setswana
-                </button>
+              <div className="mt-2">
+                <Select value={language} onValueChange={(v) => setLanguage(v as CopilotLanguage)}>
+                  <SelectTrigger className="h-8 w-full border-primary-foreground/30 bg-primary-foreground/10 text-[11px] text-primary-foreground hover:bg-primary-foreground/20">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-64">
+                    {LANGUAGES.map((l) => (
+                      <SelectItem key={l.code} value={l.code} className="text-xs">
+                        {l.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             )}
           </CardHeader>
