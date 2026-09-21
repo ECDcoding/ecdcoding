@@ -353,7 +353,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       return;
     }
     const recognition = new SpeechRecognition();
-    recognition.lang = language === "tn" ? "tn-ZA" : "en-ZA";
+    recognition.lang = LANGUAGES.find((l) => l.code === language)?.voiceLang ?? "en-ZA";
     recognition.interimResults = true;
     recognition.continuous = false;
     recognition.onresult = (event: any) => {
