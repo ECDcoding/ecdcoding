@@ -1721,6 +1721,8 @@ const LessonVault0710 = () => {
         initialTab={personalityTab}
       />
 
+      <LearnerPlayIndex open={learnerPlayIndexOpen} onOpenChange={setLearnerPlayIndexOpen} />
+
       <NumeracyPracticeDialog
         open={numeracyOpen}
         onOpenChange={setNumeracyOpen}

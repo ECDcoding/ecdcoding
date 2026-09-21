@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays, Eye } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays, Eye, ClipboardCheck } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -5489,7 +5489,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
               </div>
             </div>
 
-            {/* User Information — community engagements now live in Users' Media */}
+            {/* User Information — community engagements now live in Users' Reviews */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <Label className="text-sm font-semibold">User Information</Label>
@@ -5523,7 +5523,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   }`}>
                     {profile?.registration_type === 'parent' ? '👨‍👩‍👧 Parent' : '🏫 ECD Manager'}
                   </span>
-                  <p className="text-xs text-muted-foreground text-center">Open Users' Media for community feedback</p>
+                  <p className="text-xs text-muted-foreground text-center">Open Users' Reviews for community feedback</p>
                 </div>
               </div>
             </div>
