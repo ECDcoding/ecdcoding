@@ -1,9 +1,16 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { z } from "npm:zod@3.23.8";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const RequestSchema = z.object({
+  messages: z.array(z.object({
+    role: z.enum(["user", "assistant"]),
+    content: z.string().min(1).max(12_000),
+  })).min(1).max(30),
+  context: z.string().max(200).optional(),
+  language: z.enum(["en", "tn"]).optional(),
+  topic: z.enum(["behaviour", "maths", "lessons"]).optional(),
+});
 
 const EXPO_SYSTEM_PROMPT = `You are ECD AI — a warm, knowledgeable assistant for ECDcoding, helping parents, guardians and ECD managers understand child behaviour and the lessons ECDcoding offers.
 
@@ -193,7 +200,14 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, context, language, topic } = await req.json();
+    const parsed = RequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return new Response(
+        JSON.stringify({ error: "Invalid request", details: parsed.error.flatten().fieldErrors }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    const { messages, context, language, topic } = parsed.data;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
