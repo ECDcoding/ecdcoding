@@ -133,12 +133,6 @@ Use these principles whenever discussing or recommending Foundation Phase mathem
 - Mathematics is child's play: constructivism means learners learn best through hands-on activities where they work concretely to make sense of mathematics and come to a real understanding of the concepts. Young learners arrive with a vast array of knowledge and concepts and will use that knowledge when confronted with new information.
 
 
-16. Kinds of play linked to mathematical discovery
-- Learners link new knowledge to their existing knowledge, and in that process enhance their network of knowledge and understanding.
-- Communication is an integral part of this process and helps learners make sense of the relevant concept — encourage children to talk aloud about what they are doing.
-- Play is the main activity through which the young child learns about the world and forms mathematical concepts.
-- The six kinds of play linked to mathematical discovery: exploratory play, construction play, creative play, physical and locomotive play, fantasy play, and word play. These are the same six areas rated in the Learner Play Index.
-
 17. Grade R mathematics content and problem solving
 - Grade R mathematics content covers: numbers and operations (counting and number sense), patterns, space and shape (geometry), and data handling.
 - Problem solving in the classroom means the learner is given time to think, reason and use a strategy or different strategies to find the answer to a problem.

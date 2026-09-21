@@ -57,7 +57,6 @@ const COPILOT_COPY = {
         { title: "School Readiness", summary: "Look at physical, emotional, attention, social and early number-sense readiness alongside family and school support.", question: "Please help me understand my child's school readiness and suggest a way forward." },
       ],
       maths: [
-        { title: "Learning Through Play", summary: "Use exploratory, construction, creative, physical, fantasy and word play to build mathematical ideas.", question: "How can I use the six kinds of play to support mathematical discovery?" },
         { title: "Number Sense", summary: "Build counting, number relationships, early operations and confidence before formal procedures.", question: "How can I build and observe my child's number sense?" },
         { title: "Counting Skills", summary: "Develop number names, one-to-one counting, cardinality and movement from concrete objects to abstract ideas.", question: "What activities can develop my child's counting skills at the right level?" },
         { title: "Problem Solving", summary: "Give children time, concrete materials and open questions so they can reason, make mistakes and explain strategies.", question: "Please suggest a play-based Foundation Phase mathematics problem-solving activity." },
@@ -134,7 +133,6 @@ const COPILOT_COPY = {
         { title: "Go Siamela Sekolo", summary: "Leba mmele, maikutlo, tlhokomelo, botsalano le kitso ya dipalo mmogo le tshegetso ya lelapa le sekolo.", question: "Nthuse go tlhaloganya go siamela sekolo ga ngwana wa me le tsela e re ka tswelelang ka yone." },
       ],
       maths: [
-        { title: "Go Ithuta ka Motshameko", summary: "Dirisa mefuta e merataro ya motshameko go aga dikakanyo tsa dipalo.", question: "Nka dirisa jang mefuta e merataro ya motshameko go tshegetsa go ribolola dipalo?" },
         { title: "Kutlwisiso ya Dipalo", summary: "Aga go bala, dikamano tsa dipalo, ditiro tsa ntlha le boitshepo pele ga mekgwa ya semmuso.", question: "Nka aga le go lemoga jang kutlwisiso ya dipalo ya ngwana wa me?" },
         { title: "Bokgoni jwa go Bala", summary: "Tlhabolola maina a dipalo, go bala selo ka sengwe, palogotlhe le go tswa mo dilong go ya mo kakanyong.", question: "Ke ditiro dife tse di ka godisang bokgoni jwa ngwana wa me jwa go bala?" },
         { title: "Tharabololo ya Mathata", summary: "Naya bana nako, didiriswa le dipotso tse di bulegileng gore ba akanye, ba dire diphoso le go tlhalosa mekgwa.", question: "Ntsenye tirong ya motshameko ya go rarabolola bothata jwa dipalo tsa Foundation Phase." },
