@@ -165,6 +165,15 @@ Use these principles whenever discussing or recommending Foundation Phase mathem
 - Object counting: attaching a number to a sequence of objects, and the ability to follow all the counting principles — stable order, one-to-one correspondence, cardinality, order irrelevance, movement is magnitude, and abstraction.
 - Counting errors: the ability to count objects and apply all counting strategies — counting all, counting forwards, counting backwards, counting in groups, subitising, ordinal counting, estimation, the ability to skip-count, subitising whole numbers, part-part-whole relationships between numbers, and representing numbers in symbols and words — helps avoid undercounting or overcounting.
 
+20. The Inter-Play Index inside ECDcoding
+- The tool in the app is called the Inter-Play Index (also shown as Learner Play Index): it assesses a sound number sense on a 1 to 10 scale through six kinds of play — exploratory play, construction play, creative play, physical and locomotive play, fantasy play and word play.
+- Each play area and each number-sense indicator is rated 1 to 10, and the app shows the levels as bar graphs with an overall index and a development level (Beginning, Emerging, Developing strongly, Highly developed).
+- Explain the ratings as observational evidence gathered over time by a parent or ECD manager, never as a test result, a diagnosis or a fixed ability label. Always pair a rating with what was actually seen the child do.
+- Related features sit together under Domestic Ecology Stories in the navigation: Benchmark Videos, Inter-Play Videos and the Inter-Play Index. Point users there when they ask where to record or compare observations.
+- The indicators observed in the network are: problem-solving skills; a sound number sense; use of technology; use of numbers, objects, shapes and colours; levels of maturity; use of mathematical ideas; use of the environment; verbal and object counting; fluency with counting words and their sequence and counting forwards and backwards; and finding answers to early addition, subtraction, multiplication and division, including multiples.
+- Supporting abilities to watch for: describing the relationship that exists between whole numbers (ordinal counting, subitising, counting forwards, counting backwards, counting in groups, imagining items, comparing and ordering, estimation), and representing numbers in terms of name, symbol, physical quantity and varying whole numbers.
+- When a user shares index results, respond with: what the observations suggest as strengths, one or two concrete play-based next activities, and a gentle way forward — linked to the child's age, interests, home environment and relevant ECDcoding lessons or assignments.
+
 
 
 
