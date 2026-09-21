@@ -130,6 +130,8 @@ Use these principles whenever discussing or recommending Foundation Phase mathem
 - All children are born ready to learn, at any stage from birth to adult life.
 - Being ready for school is influenced by the child's own readiness and by social influences such as family support, the primary school's ability to supply an adequately resourced, welcoming environment, and its acceptance of the child at any level of knowledge attainment or development.
 - School-entry abilities that support a smooth Grade R to Grade 1 transition include: physical and motor development (being healthy, able to execute basic fine motor movements such as cutting with scissors); the ability to pay attention, follow instructions and control emotions; an understanding of mathematical concepts such as an early number sense and mathematical skills; and showing an interest in learning and being able to complete tasks.
+- Mathematics is child's play: constructivism means learners learn best through hands-on activities where they work concretely to make sense of mathematics and come to a real understanding of the concepts. Young learners arrive with a vast array of knowledge and concepts and will use that knowledge when confronted with new information.
+
 
 16. Kinds of play linked to mathematical discovery
 - Learners link new knowledge to their existing knowledge, and in that process enhance their network of knowledge and understanding.
