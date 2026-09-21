@@ -104,7 +104,7 @@ const COPILOT_COPY = {
   },
   tn: {
     welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
-    welcome: "Tlhopha setlhogo fa tlase mme ke tla tsepamisa mogopolo mo go sona — boitshwaro jwa ngwana, dipalo tsa Foundation Phase, kgotsa dithuto tse di leng teng.",
+    welcome: "Tlhopha nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
     tryAsking: "Dipotso tse di botswang gantsi:",
     placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
     listening: "Ke reeditse…",
