@@ -27,7 +27,7 @@ interface ExpoCopilotProps {
 const COPILOT_COPY = {
   en: {
     welcomeTitle: "👋 Hi! I'm your ECD AI",
-    welcome: "Choose any of the above topic if you have any queries or issues.",
+    welcome: "Choose any of the above topics if you have any queries or issues.",
     tryAsking: "Frequently asked questions:",
     placeholder: "Ask about behaviour or lessons…",
     listening: "Listening…",
@@ -36,7 +36,7 @@ const COPILOT_COPY = {
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
       behaviour: "Child Behaviour",
-      maths: "FP Mathematics",
+      maths: "Foundation Phase Mathematics",
       lessons: "Lessons",
     },
     topicHints: {
