@@ -27,7 +27,7 @@ interface ExpoCopilotProps {
 const COPILOT_COPY = {
   en: {
     welcomeTitle: "👋 Hi! I'm your ECD AI",
-    welcome: "Choose any of the above topic if you have any queries or issues.",
+    welcome: "Choose any of the above topics if you have any queries or issues.",
     tryAsking: "Frequently asked questions:",
     placeholder: "Ask about behaviour or lessons…",
     listening: "Listening…",
@@ -36,7 +36,7 @@ const COPILOT_COPY = {
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
       behaviour: "Child Behaviour",
-      maths: "FP Mathematics",
+      maths: "Foundation Phase Mathematics",
       lessons: "Lessons",
     },
     topicHints: {
@@ -104,7 +104,7 @@ const COPILOT_COPY = {
   },
   tn: {
     welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
-    welcome: "Tlhopha nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
+    welcome: "Tlhopha e nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
     tryAsking: "Dipotso tse di botswang gantsi:",
     placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
     listening: "Ke reeditse…",
@@ -113,7 +113,7 @@ const COPILOT_COPY = {
     voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
     topicLabels: {
       behaviour: "Boitshwaro",
-      maths: "Dipalo (FP)",
+      maths: "Dipalo tsa Foundation Phase",
       lessons: "Dithuto",
     },
     topicHints: {
