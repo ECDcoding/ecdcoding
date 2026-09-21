@@ -27,7 +27,7 @@ interface ExpoCopilotProps {
 const COPILOT_COPY = {
   en: {
     welcomeTitle: "👋 Hi! I'm your ECD AI",
-    welcome: "Choose a topic below and I'll stay focused on it — child behaviour, Foundation Phase mathematics, or the lessons on offer.",
+    welcome: "Choose any of the above topic if you have any queries or issues.",
     tryAsking: "Frequently asked questions:",
     placeholder: "Ask about behaviour or lessons…",
     listening: "Listening…",
