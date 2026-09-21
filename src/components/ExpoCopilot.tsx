@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip, ChevronDown } from "lucide-react";
+import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
+import { Message as AiMessage, MessageContent, MessageResponse } from "@/components/ai-elements/message";
+import { PromptInput, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from "@/components/ai-elements/prompt-input";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
@@ -220,7 +222,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const isGuest = !authLoading && !user;
   const guest = useGuestAiCredits(isGuest);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
 
@@ -449,13 +451,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage(input);
-    }
-  };
-
   const handleCopy = async (idx: number, text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -484,16 +479,16 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   if (!isVisible) return null;
 
   return (
-    <div className={`fixed ${hideLauncher ? "bottom-28" : "bottom-6"} left-6 z-50 flex flex-col items-start gap-3`}>
+    <div className={`fixed ${hideLauncher ? "bottom-24" : "bottom-6"} left-3 z-50 flex flex-col items-start gap-3 sm:left-6`}>
       {/* Chat Window */}
       {isOpen && (
         <Card
-          className={`w-[min(24rem,calc(100vw-3rem))] shadow-2xl border border-primary/20 bg-card transition-all duration-300 ${
-            isMinimized ? "h-14 overflow-hidden" : "h-[min(600px,calc(100vh-8rem))]"
+          className={`w-[min(38rem,calc(100vw-1.5rem))] overflow-hidden border border-primary/20 bg-card shadow-2xl transition-all duration-300 sm:w-[min(38rem,calc(100vw-3rem))] ${
+            isMinimized ? "h-14" : "h-[min(700px,calc(100vh-7rem))]"
           } flex flex-col`}
         >
           {/* Header */}
-          <CardHeader className="py-3 px-4 bg-primary text-primary-foreground rounded-t-lg flex-shrink-0">
+          <CardHeader className="flex-shrink-0 rounded-t-lg bg-primary px-4 py-4 text-primary-foreground">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="relative">
@@ -501,9 +496,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-orange-400 rounded-full border border-primary animate-pulse" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold leading-none">ECD AI</p>
+                  <p className="text-base font-bold leading-none">ECD AI</p>
                   {context && (
-                    <p className="text-xs text-primary-foreground/70 mt-0.5">
+                    <p className="mt-1 text-sm text-primary-foreground/80">
                       Context: {context}
                     </p>
                   )}
@@ -531,7 +526,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
             {!isMinimized && (
               <div className="mt-2">
                 <Select value={language} onValueChange={(v) => setLanguage(v as CopilotLanguage)}>
-                  <SelectTrigger className="h-8 w-full border-primary-foreground/30 bg-primary-foreground/10 text-[11px] text-primary-foreground hover:bg-primary-foreground/20">
+                  <SelectTrigger className="h-12 w-full border-primary-foreground/30 bg-primary-foreground/10 px-4 text-sm text-primary-foreground hover:bg-primary-foreground/20">
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent className="max-h-64">
@@ -549,10 +544,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
               {/* Expandable topic guides keep questions focused on one aspect. */}
-              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-2 py-2">
-                <div className="space-y-1" aria-label="ECD AI topic guides">
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-3">
+                <div className="space-y-2" aria-label="ECD AI topic guides">
                   {TOPIC_ORDER.map((t) => (
-                    <div key={t} className="overflow-hidden rounded-md border border-border bg-background">
+                    <div key={t} className="overflow-hidden rounded-md border border-border bg-muted">
                       <Button
                         type="button"
                         variant="ghost"
@@ -561,7 +556,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           setTopic(t);
                           setExpandedTopic((current) => current === t ? null : t);
                         }}
-                        className={`h-8 w-full justify-between rounded-none px-2 text-[11px] ${topic === t ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground"}`}
+                        className={`h-12 w-full justify-between rounded-none px-3 text-sm ${topic === t ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
                       >
                         {copy.topicLabels[t]}
                         <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === t ? "rotate-180" : ""}`} />
@@ -593,10 +588,11 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              <Conversation className="bg-card">
+                <ConversationContent className="gap-3 p-4">
                 {messages.length === 0 ? (
-                  <div className="space-y-3">
-                    <div className="bg-muted rounded-xl p-3 text-sm text-muted-foreground">
+                    <div className="space-y-4">
+                     <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
@@ -607,24 +603,18 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
                 ) : (
                   messages.map((msg, i) => (
-                    <div
+                    <AiMessage
                       key={i}
-                      className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
+                      from={msg.role}
                     >
-                      <div
-                        className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
-                          msg.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-br-sm"
-                            : "bg-muted text-foreground rounded-bl-sm"
-                        }`}
-                      >
-                        {msg.content || (
+                      <MessageContent className={msg.role === "user" ? "bg-primary text-primary-foreground" : undefined}>
+                        {msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
                             {copy.thinking}
                           </span>
                         )}
-                      </div>
+                      </MessageContent>
                       {msg.role === "assistant" && msg.content && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
@@ -654,14 +644,16 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           </button>
                         </div>
                       )}
-                    </div>
+                    </AiMessage>
                   ))
                 )}
-                <div ref={messagesEndRef} />
-              </div>
+                  <div ref={messagesEndRef} />
+                </ConversationContent>
+                <ConversationScrollButton className="bottom-2" />
+              </Conversation>
 
               {/* Input */}
-              <div className="p-3 border-t border-border space-y-2">
+              <div className="space-y-2 border-t border-border bg-muted/40 p-3">
                 {attachment && (
                   <div className="flex items-center gap-2 text-xs bg-muted rounded-md px-2 py-1">
                     <Paperclip className="h-3 w-3 flex-shrink-0" />
@@ -671,7 +663,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </button>
                   </div>
                 )}
-                <div className="flex gap-2">
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -679,48 +670,47 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  aria-label="Attach file"
-                  className="h-9 w-9 flex-shrink-0"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isLoading}
+                <PromptInput
+                  onSubmit={() => sendMessage(input)}
+                  className="rounded-md border-border bg-card shadow-none"
                 >
-                  <Paperclip className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={isListening ? "default" : "outline"}
-                  size="icon"
-                  aria-label={isListening ? "Stop voice input" : "Start voice input"}
-                  className="h-9 w-9 flex-shrink-0"
-                  onClick={toggleListening}
-                  disabled={isLoading}
-                >
-                  {isListening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
-                </Button>
-                <Input
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                   placeholder={isListening ? copy.listening : copy.placeholder}
-                  className="flex-1 text-sm h-9 min-w-0"
-                  disabled={isLoading}
-                />
-                <Button
-                  size="icon"
-                  className="h-9 w-9 flex-shrink-0"
-                  onClick={() => sendMessage(input)}
-                  disabled={isLoading || (!input.trim() && !attachment)}
-                >
-                  {isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </Button>
-                </div>
+                  <PromptInputTextarea
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder={isListening ? copy.listening : copy.placeholder}
+                    className="min-h-12 text-sm"
+                    disabled={isLoading}
+                  />
+                  <PromptInputFooter>
+                    <PromptInputTools>
+                      <PromptInputButton
+                        aria-label="Attach file"
+                        tooltip="Attach text file"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isLoading}
+                      >
+                        <Paperclip className="h-4 w-4" />
+                      </PromptInputButton>
+                      <PromptInputButton
+                        aria-label={isListening ? "Stop voice input" : "Start voice input"}
+                        tooltip={isListening ? "Stop voice input" : "Start voice input"}
+                        onClick={toggleListening}
+                        disabled={isLoading}
+                        className={isListening ? "bg-primary text-primary-foreground" : undefined}
+                      >
+                        {isListening ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+                      </PromptInputButton>
+                    </PromptInputTools>
+                    <PromptInputSubmit
+                      aria-label="Send message"
+                      status={isLoading ? "streaming" : "ready"}
+                      disabled={isLoading || (!input.trim() && !attachment)}
+                    >
+                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                    </PromptInputSubmit>
+                  </PromptInputFooter>
+                </PromptInput>
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
