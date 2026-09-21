@@ -15,3 +15,4 @@
 - [x] Remove obvious early-years activities from the 08–12 workspace without changing its structure.
 - [x] Add Learner Play Index under Foundational Learning Outcomes in both workspace menus.
 - [x] Rename Users' Media to Users' Reviews.
+- [x] Add 1–10 Play Index ratings, a live bar graph, and an overall analysis level.
