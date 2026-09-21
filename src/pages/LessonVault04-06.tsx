@@ -43,6 +43,7 @@ import FlipMonthsCard from "@/components/FlipMonthsCard";
 import FlipNumbersCard from "@/components/FlipNumbersCard";
 import CardLessonFocus from "@/components/NumbersCarousel";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
+import LearnerPlayIndex from "@/components/LearnerPlayIndex";
 import numbers1to10 from "@/assets/numbers-1-to-10.jpg";
 import numbers11to20 from "@/assets/numbers-11-to-20.jpg";
 import numbers21to30 from "@/assets/numbers-21-to-30.jpg";
@@ -141,6 +142,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [learnerPlayIndexOpen, setLearnerPlayIndexOpen] = useState(false);
   const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
@@ -2185,9 +2187,9 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
 
 
-                  {/* 4. Users' Media */}
+                  {/* 4. Users' Reviews */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
                   </DropdownMenuItem>
 
                   {/* 5. Domestic Ecology Stories */}
@@ -2235,9 +2237,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
-                  <DropdownMenuItem onClick={() => toast({ title: "Foundational Learning Outcomes", description: "Coming soon." })}>
-                    <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
-                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
+                          <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
 
                   {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
@@ -5534,6 +5545,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           </div>
         </DialogContent>
       </Dialog>
+      <LearnerPlayIndex open={learnerPlayIndexOpen} onOpenChange={setLearnerPlayIndexOpen} />
 
       {/* Traffic Lights Dialog */}
       <Dialog open={trafficLightsOpen} onOpenChange={setTrafficLightsOpen}>

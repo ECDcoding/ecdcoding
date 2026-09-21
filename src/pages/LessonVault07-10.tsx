@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays, ClipboardCheck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
@@ -27,6 +27,7 @@ import MusicLabWrapper from "@/components/MusicLabWrapper";
 import FlipBodyCard from "@/components/FlipBodyCard";
 import BlocklyEditor from "@/components/BlocklyEditor";
 import MicrobitAnalysisNarrator from "@/components/MicrobitAnalysisNarrator";
+import LearnerPlayIndex from "@/components/LearnerPlayIndex";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import NumeracyPracticeDialog, { NumeracyOp } from "@/components/NumeracyPracticeDialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -108,6 +109,7 @@ const LessonVault0710 = () => {
   const [objectCharactersOpen, setObjectCharactersOpen] = useState(false);
   const [showProgressDialog, setShowProgressDialog] = useState(false);
   const [personalityOpen, setPersonalityOpen] = useState(false);
+  const [learnerPlayIndexOpen, setLearnerPlayIndexOpen] = useState(false);
   const [personalityTab, setPersonalityTab] = useState<PersonalityTab>("ages");
   const [responseText, setResponseText] = useState('');
   const [understandingLevel, setUnderstandingLevel] = useState<'red' | 'yellow' | 'green' | null>(null);
@@ -811,9 +813,9 @@ const LessonVault0710 = () => {
                   <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
 
 
-                  {/* 4. Users' Media */}
+                  {/* 4. Users' Reviews */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Media
+                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
                   </DropdownMenuItem>
 
                   {/* 5. Domestic Ecology Stories */}
@@ -852,9 +854,18 @@ const LessonVault0710 = () => {
                   </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
-                  <DropdownMenuItem onClick={() => toast({ title: "Foundational Learning Outcomes", description: "Coming soon." })}>
-                    <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
-                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
+                          <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
 
                   {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>

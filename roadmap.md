@@ -13,3 +13,5 @@
 - [x] Restore the standalone Verbal Testing Space title and blue Knowledge Base Carousel button.
 - [x] Add a Micro:bit Device card with narration and recording to the Verbal Testing Space carousel.
 - [x] Remove obvious early-years activities from the 08–12 workspace without changing its structure.
+- [x] Add Learner Play Index under Foundational Learning Outcomes in both workspace menus.
+- [x] Rename Users' Media to Users' Reviews.

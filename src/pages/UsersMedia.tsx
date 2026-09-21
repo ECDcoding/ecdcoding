@@ -17,7 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-/** Users' Media objectives — the seven pillars of the engagement hub. */
+/** Users' Reviews objectives — the seven pillars of the engagement hub. */
 const OBJECTIVES = [
   {
     id: "connect",
@@ -70,7 +70,7 @@ const OBJECTIVES = [
   },
 ] as const;
 
-/** Fourth dashboard page: all user engagements (communities, posts, media). */
+/** Fourth dashboard page: all user reviews and engagements. */
 const UsersMedia = () => {
   const { user, loading: authLoading } = useAuth();
   const { profile } = useProfile();
@@ -104,7 +104,7 @@ const UsersMedia = () => {
         <header className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <Film className="h-6 w-6 text-lime-500" />
-            <h1 className="text-3xl font-bold text-white">Users' Media</h1>
+            <h1 className="text-3xl font-bold text-white">Users' Reviews</h1>
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
             Objectives of this space — connect with other users, follow learner progress, look up
