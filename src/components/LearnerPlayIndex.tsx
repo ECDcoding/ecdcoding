@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BarChart3, ClipboardCheck, Hash, RotateCcw } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { Button } from "@/components/ui/button";
@@ -13,36 +13,29 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import {
+  AGE_BANDS,
+  AGE_BAND_LABELS,
+  AgeBand,
+  NUMBER_SENSE_AREAS,
+  NUMBER_SENSE_LABELS,
+  NumberSenseArea,
+  PLAY_AREAS,
+  PLAY_LABELS,
+  PlayArea,
+  average,
+  getIndexLevelLabel,
+  initialNumberSenseLevels,
+  initialPlayLevels,
+  loadAssessment,
+  saveAssessment,
+} from "@/lib/playIndex";
 
 type LearnerPlayIndexProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-};
-
-const PLAY_AREAS = [
-  "Exploratory Play",
-  "Construction Play",
-  "Creative Play",
-  "Physical & Locomotive Play",
-  "Fantasy Play",
-  "Word Play",
-] as const;
-
-type PlayArea = (typeof PLAY_AREAS)[number];
-
-type NumberSenseArea = (typeof NUMBER_SENSE_AREAS)[number];
-
-const INITIAL_PLAY_LEVELS = Object.fromEntries(
-  PLAY_AREAS.map((area) => [area, 1]),
-) as Record<PlayArea, number>;
-
-const PLAY_LABELS: Record<PlayArea, string> = {
-  "Exploratory Play": "Exploratory",
-  "Construction Play": "Construction",
-  "Creative Play": "Creative",
-  "Physical & Locomotive Play": "Physical",
-  "Fantasy Play": "Fantasy",
-  "Word Play": "Word",
+  /** Age band pre-selected when the dialog opens. */
+  defaultBand?: AgeBand;
 };
 
 const chartConfig = {
@@ -52,55 +45,56 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const getIndexLevelLabel = (average: number) => {
-  if (average >= 8) return "Highly developed";
-  if (average >= 6) return "Developing strongly";
-  if (average >= 4) return "Emerging";
-  return "Beginning";
-};
-
-const NUMBER_SENSE_AREAS = [
-  "Problem-solving skills",
-  "Sound number sense",
-  "Use of technology",
-  "Use of numbers, objects, shapes and colours",
-  "Levels of maturity",
-  "Use of mathematical ideas",
-  "Use of the environment for counting",
-  "Verbal and object counting",
-  "Fluency with counting forwards and backwards",
-  "Finding answers through addition, subtraction, multiplication and division",
-] as const;
-
-const INITIAL_NUMBER_SENSE_LEVELS = Object.fromEntries(
-  NUMBER_SENSE_AREAS.map((area) => [area, 1]),
-) as Record<NumberSenseArea, number>;
-
-const NUMBER_SENSE_LABELS: Record<NumberSenseArea, string> = {
-  "Problem-solving skills": "Problem-solving",
-  "Sound number sense": "Number sense",
-  "Use of technology": "Technology",
-  "Use of numbers, objects, shapes and colours": "Maths resources",
-  "Levels of maturity": "Maturity",
-  "Use of mathematical ideas": "Maths ideas",
-  "Use of the environment for counting": "Environment",
-  "Verbal and object counting": "Counting",
-  "Fluency with counting forwards and backwards": "Counting fluency",
-  "Finding answers through addition, subtraction, multiplication and division": "Operations",
-};
-
-const LearnerPlayIndex = ({ open, onOpenChange }: LearnerPlayIndexProps) => {
+const LearnerPlayIndex = ({ open, onOpenChange, defaultBand = "04-05" }: LearnerPlayIndexProps) => {
+  const [band, setBand] = useState<AgeBand>(defaultBand);
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
-  const [playLevels, setPlayLevels] = useState<Record<PlayArea, number>>(INITIAL_PLAY_LEVELS);
-  const [numberSenseLevels, setNumberSenseLevels] = useState<Record<NumberSenseArea, number>>(INITIAL_NUMBER_SENSE_LEVELS);
+  const [playLevels, setPlayLevels] = useState<Record<PlayArea, number>>(initialPlayLevels);
+  const [numberSenseLevels, setNumberSenseLevels] = useState<Record<NumberSenseArea, number>>(initialNumberSenseLevels);
+
+  // Load the stored assessment for the selected band whenever the dialog opens or the band changes.
+  useEffect(() => {
+    if (!open) return;
+    const stored = loadAssessment(band);
+    setCheckedItems(new Set(stored.observed));
+    setPlayLevels(stored.playLevels);
+    setNumberSenseLevels(stored.numberSenseLevels);
+  }, [open, band]);
+
+  useEffect(() => {
+    if (!open) return;
+    setBand(defaultBand);
+  }, [open, defaultBand]);
+
+  const persist = (next: {
+    observed?: Set<string>;
+    playLevels?: Record<PlayArea, number>;
+    numberSenseLevels?: Record<NumberSenseArea, number>;
+  }) => {
+    saveAssessment(band, {
+      observed: Array.from(next.observed ?? checkedItems),
+      playLevels: next.playLevels ?? playLevels,
+      numberSenseLevels: next.numberSenseLevels ?? numberSenseLevels,
+    });
+  };
 
   const toggleItem = (item: string, checked: boolean) => {
-    setCheckedItems((current) => {
-      const next = new Set(current);
-      if (checked) next.add(item);
-      else next.delete(item);
-      return next;
-    });
+    const next = new Set(checkedItems);
+    if (checked) next.add(item);
+    else next.delete(item);
+    setCheckedItems(next);
+    persist({ observed: next });
+  };
+
+  const setPlayLevel = (area: PlayArea, value: number) => {
+    const next = { ...playLevels, [area]: value };
+    setPlayLevels(next);
+    persist({ playLevels: next });
+  };
+
+  const setNumberSenseLevel = (area: NumberSenseArea, value: number) => {
+    const next = { ...numberSenseLevels, [area]: value };
+    setNumberSenseLevels(next);
+    persist({ numberSenseLevels: next });
   };
 
   const totalItems = PLAY_AREAS.length + NUMBER_SENSE_AREAS.length;
@@ -109,21 +103,21 @@ const LearnerPlayIndex = ({ open, onOpenChange }: LearnerPlayIndexProps) => {
     fullArea: area,
     level: playLevels[area],
   }));
-  const overallPlayIndex = PLAY_AREAS.reduce((sum, area) => sum + playLevels[area], 0) / PLAY_AREAS.length;
+  const overallPlayIndex = average(PLAY_AREAS.map((area) => playLevels[area]));
   const numberSenseChartData = NUMBER_SENSE_AREAS.map((area) => ({
     area: NUMBER_SENSE_LABELS[area],
     fullArea: area,
     level: numberSenseLevels[area],
   }));
-  const overallNumberSenseIndex = NUMBER_SENSE_AREAS.reduce(
-    (sum, area) => sum + numberSenseLevels[area],
-    0,
-  ) / NUMBER_SENSE_AREAS.length;
+  const overallNumberSenseIndex = average(NUMBER_SENSE_AREAS.map((area) => numberSenseLevels[area]));
 
   const clearAssessment = () => {
+    const play = initialPlayLevels();
+    const numbers = initialNumberSenseLevels();
     setCheckedItems(new Set());
-    setPlayLevels(INITIAL_PLAY_LEVELS);
-    setNumberSenseLevels(INITIAL_NUMBER_SENSE_LEVELS);
+    setPlayLevels(play);
+    setNumberSenseLevels(numbers);
+    saveAssessment(band, { observed: [], playLevels: play, numberSenseLevels: numbers });
   };
 
   return (
@@ -138,6 +132,26 @@ const LearnerPlayIndex = ({ open, onOpenChange }: LearnerPlayIndexProps) => {
             Observe the learner through play and record the demonstrated foundational learning outcomes.
           </DialogDescription>
         </DialogHeader>
+
+        <div className="flex flex-wrap items-center gap-2 rounded-md border border-border bg-card p-3">
+          <span className="text-sm font-medium">Age group</span>
+          <div className="flex gap-2">
+            {AGE_BANDS.map((option) => (
+              <Button
+                key={option}
+                type="button"
+                size="sm"
+                variant={band === option ? "default" : "outline"}
+                onClick={() => setBand(option)}
+              >
+                {AGE_BAND_LABELS[option]}
+              </Button>
+            ))}
+          </div>
+          <span className="ml-auto text-xs text-muted-foreground">
+            Each age group keeps its own ratings and progress report.
+          </span>
+        </div>
 
         <div className="flex items-center justify-between border-y border-border py-3 text-sm">
           <span className="font-medium">Assessment progress</span>
@@ -187,7 +201,7 @@ const LearnerPlayIndex = ({ open, onOpenChange }: LearnerPlayIndexProps) => {
                     value={[playLevels[area]]}
                     onValueChange={([value]) => {
                       if (typeof value !== "number") return;
-                      setPlayLevels((current) => ({ ...current, [area]: value }));
+                      setPlayLevel(area, value);
                     }}
                     aria-label={`${area} level from 1 to 10`}
                   />
@@ -264,7 +278,7 @@ const LearnerPlayIndex = ({ open, onOpenChange }: LearnerPlayIndexProps) => {
                       value={[numberSenseLevels[area]]}
                       onValueChange={([value]) => {
                         if (typeof value !== "number") return;
-                        setNumberSenseLevels((current) => ({ ...current, [area]: value }));
+                        setNumberSenseLevel(area, value);
                       }}
                       aria-label={`${area} level from 1 to 10`}
                     />

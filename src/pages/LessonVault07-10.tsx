@@ -863,8 +863,11 @@ const LessonVault0710 = () => {
                         <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
                           <FileText className="mr-2 h-4 w-4" /> Learner Review
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report")}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
