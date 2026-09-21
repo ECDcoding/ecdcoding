@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
@@ -10,7 +11,21 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useToast } from "@/hooks/use-toast";
+import {
+  AGE_BANDS,
+  AGE_BAND_LABELS,
+  AgeBand,
+  NUMBER_SENSE_AREAS,
+  NUMBER_SENSE_LABELS,
+  PLAY_AREAS,
+  PLAY_LABELS,
+  average,
+  getIndexLevelLabel,
+  isAgeBand,
+  loadAssessment,
+} from "@/lib/playIndex";
 import {
   Sparkles,
   BookOpen,
@@ -20,7 +35,12 @@ import {
   Printer,
   ArrowLeft,
   FileText,
+  BarChart3,
 } from "lucide-react";
+
+const indexChartConfig = {
+  level: { label: "Index level", color: "hsl(var(--primary))" },
+} satisfies ChartConfig;
 
 type LessonOption = { id: string; title: string; category: string };
 
