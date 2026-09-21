@@ -104,7 +104,7 @@ const COPILOT_COPY = {
   },
   tn: {
     welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
-    welcome: "Tlhopha nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
+    welcome: "Tlhopha e nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
     tryAsking: "Dipotso tse di botswang gantsi:",
     placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
     listening: "Ke reeditse…",
@@ -113,7 +113,7 @@ const COPILOT_COPY = {
     voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
     topicLabels: {
       behaviour: "Boitshwaro",
-      maths: "Dipalo (FP)",
+      maths: "Dipalo tsa Foundation Phase",
       lessons: "Dithuto",
     },
     topicHints: {
