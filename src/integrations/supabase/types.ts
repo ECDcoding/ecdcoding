@@ -459,6 +459,7 @@ export type Database = {
       }
       lesson_baskets: {
         Row: {
+          age_band: string
           created_at: string
           duration_days: number
           ever_selected: string[]
@@ -472,6 +473,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          age_band?: string
           created_at?: string
           duration_days?: number
           ever_selected?: string[]
@@ -485,6 +487,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          age_band?: string
           created_at?: string
           duration_days?: number
           ever_selected?: string[]
