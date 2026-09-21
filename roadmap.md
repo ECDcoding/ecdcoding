@@ -20,3 +20,4 @@
 - [x] Add the complete supplied Play Index, Number Sense, evaluation, and connected-learning guidance to ECD AI.
 - [x] Add expandable English and Setswana overviews with follow-up questions to every ECD AI topic.
 - [x] Split the Learner Progress Report into 04 - 05 and 06 - 07, aligned with the Play and Number Sense Indexes.
+- [x] Match the open ECD AI window to the supplied compact lime-and-dark reference.
