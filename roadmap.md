@@ -16,3 +16,5 @@
 - [x] Add Learner Play Index under Foundational Learning Outcomes in both workspace menus.
 - [x] Rename Users' Media to Users' Reviews.
 - [x] Add 1–10 Play Index ratings, a live bar graph, and an overall analysis level.
+- [x] Add 1–10 Number Sense ratings, a live bar graph, and an overall analysis level.
+- [x] Add the complete supplied Play Index, Number Sense, evaluation, and connected-learning guidance to ECD AI.
