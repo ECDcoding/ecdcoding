@@ -12,13 +12,14 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 type Message = { role: "user" | "assistant"; content: string };
-type CopilotLanguage = "en" | "tn" | "af" | "zu" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
+type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
   { code: "en", label: "English", voiceLang: "en-ZA" },
   { code: "tn", label: "Setswana", voiceLang: "tn-ZA" },
   { code: "af", label: "Afrikaans", voiceLang: "af-ZA" },
   { code: "zu", label: "isiZulu", voiceLang: "zu-ZA" },
+  { code: "xh", label: "isiXhosa", voiceLang: "xh-ZA" },
   { code: "ts", label: "Xitsonga", voiceLang: "ts-ZA" },
   { code: "nso", label: "Sepedi", voiceLang: "nso-ZA" },
   { code: "st", label: "Sesotho", voiceLang: "st-ZA" },

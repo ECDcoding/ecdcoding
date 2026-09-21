@@ -8,7 +8,7 @@ const RequestSchema = z.object({
     content: z.string().min(1).max(12_000),
   })).min(1).max(30),
   context: z.string().max(200).optional(),
-  language: z.enum(["en", "tn", "af", "zu", "ts", "nso", "st", "ve", "nr", "ss"]).optional(),
+  language: z.enum(["en", "tn", "af", "zu", "xh", "ts", "nso", "st", "ve", "nr", "ss"]).optional(),
   topic: z.enum(["behaviour", "maths", "lessons"]).optional(),
 });
 
@@ -282,6 +282,7 @@ serve(async (req) => {
       tn: "Setswana",
       af: "Afrikaans",
       zu: "isiZulu",
+      xh: "isiXhosa",
       ts: "Xitsonga",
       nso: "Sepedi",
       st: "Sesotho",
