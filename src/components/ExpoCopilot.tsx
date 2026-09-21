@@ -27,7 +27,7 @@ interface ExpoCopilotProps {
 const COPILOT_COPY = {
   en: {
     welcomeTitle: "👋 Hi! I'm your ECD AI",
-    welcome: "Choose a topic below and I'll stay focused on it — child behaviour, Foundation Phase mathematics, or the lessons on offer.",
+    welcome: "Choose any of the above topic if you have any queries or issues.",
     tryAsking: "Frequently asked questions:",
     placeholder: "Ask about behaviour or lessons…",
     listening: "Listening…",
@@ -104,7 +104,7 @@ const COPILOT_COPY = {
   },
   tn: {
     welcomeTitle: "👋 Dumela! Ke ECD AI ya gago",
-    welcome: "Tlhopha setlhogo fa tlase mme ke tla tsepamisa mogopolo mo go sona — boitshwaro jwa ngwana, dipalo tsa Foundation Phase, kgotsa dithuto tse di leng teng.",
+    welcome: "Tlhopha nngwe ya ditlhogo tse di fa godimo fa o na le dipotso kgotsa mathata a mangwe.",
     tryAsking: "Dipotso tse di botswang gantsi:",
     placeholder: "Botsa ka boitshwaro kgotsa dithuto…",
     listening: "Ke reeditse…",
