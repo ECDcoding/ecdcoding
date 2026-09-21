@@ -35,7 +35,7 @@ const COPILOT_COPY = {
     listenError: "Couldn't hear that — please try again.",
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
-      behaviour: "Child Behavior",
+      behaviour: "Child Behaviour",
       maths: "FP Mathematics",
       lessons: "Lessons",
     },
@@ -573,6 +573,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               <span className="block">
                                 <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
                                 <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
+                                <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
                               </span>
                             </Button>
                           ))}
