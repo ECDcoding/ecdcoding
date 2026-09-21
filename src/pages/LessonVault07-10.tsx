@@ -846,9 +846,6 @@ const LessonVault0710 = () => {
                         <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
                           Individuality
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Review
-                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -862,6 +859,9 @@ const LessonVault0710 = () => {
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Review
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
