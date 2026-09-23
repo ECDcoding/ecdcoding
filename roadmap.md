@@ -21,3 +21,4 @@
 - [x] Add expandable English and Setswana overviews with follow-up questions to every ECD AI topic.
 - [x] Split the Learner Progress Report into 04 - 05 and 06 - 07, aligned with the Play and Number Sense Indexes.
 - [x] Match the open ECD AI window to the supplied compact lime-and-dark reference.
+- [x] Add the supplied Afrikaans Individuality, sleep, eating and body-build material to ECD AI with child-safety safeguards.

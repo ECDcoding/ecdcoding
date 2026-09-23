@@ -256,6 +256,42 @@ Instructions:
 - Always be warm, professional, and encouraging.
 - If you don't know something specific, refer them to contact info@ecdcoding.co.za.`;
 
+const AFRIKAANS_INDIVIDUALITY_GUIDANCE = `
+
+AFRIKAANSE KENNISBRON — CHILDHOOD PERSONALITY TALKS: INDIVIDUALITEIT
+Gebruik hierdie inhoud wanneer Afrikaans gekies is en die gebruiker vra oor individualiteit, omgewingsinvloede, slaap, eetgewoontes of die historiese liggaamsbou-teorie. Antwoord in natuurlike, korrekte Suid-Afrikaanse Afrikaans en verbeter ooglopende spel- of taalmengfoute uit die bron sonder om die betekenis te verander.
+
+1. Individualiteit en persoonlikheid
+- Elke kind is 'n individu. Gesigstrekke bepaal nie persoonlikheid nie; kyk eerder na die hele kind, hulle temperament, gedrag, ervarings, behoeftes en omgewing.
+- Die bron beskryf “konstitusionele sielkunde” en beweer dat liggaamsbou gedrag, persoonlikheid en toekomstige optrede kan voorspel. Dit is 'n historiese teorie, nie 'n betroubare diagnostiese metode nie. Moet nooit sê dat 'n kind se liggaamsvorm bewys wie hulle is of wie hulle sal word nie.
+- Ouers kan fisiese ontwikkeling saam met gedrag, eetgewoontes, slaap en sosiale gedrag waarneem, maar moet geen vermoë, karakter, gesondheid of toekoms uit liggaamsbou aflei nie.
+
+2. Omgewingsinvloede
+- Neem ouers en familiegeskiedenis, ouers se gedrag, die kind se gesinstruktuur, lewenstandaard, godsdiens, ligging en sosiale of rasverhoudinge in ag.
+- Verduidelik dat hierdie faktore 'n kind se ervaring kan beïnvloed, maar nie die kind se identiteit of uitkoms vaslê nie. Vermy stereotipering en blaam.
+
+3. Drie historiese liggaamsboutipes in die aanbieding
+- Endomorfie word beskryf as 'n sagter, ronder liggaamsbou met 'n groter spysverteringstelsel; die aanbieding assosieer dit met ontspanning, gemak, geselligheid, kos en toegeneentheid.
+- Mesomorfie word beskryf as groter bene, swaarder spiere, 'n stewige regop bou en fisieke krag; die aanbieding assosieer dit met oefening en mededingendheid.
+- Ektomorfie word beskryf as 'n maer, broser, lineêre bou met lang, slanke ledemate; die aanbieding assosieer dit met terughoudendheid en sensitiwiteit.
+- Wanneer hierdie terme verduidelik word, benoem dit uitdruklik as historiese beskrywings uit die gebruiker se materiaal. Persoonlikheid, gedrag en vermoë kan nie geldig uit hierdie liggaamskategorieë voorspel word nie, en kinders moet nie volgens hulle voorkoms geëtiketteer word nie.
+
+4. Slaappatrone
+- Kinders verskil in hoeveel slaap hulle kry en benodig, hoe diep of rustig hulle slaap, hoe vinnig hulle aan die slaap raak en hoe maklik hulle wakker word.
+- Sommige kinders slaap stil sonder om veel van posisie te verander; ander rol rond en woel die komberse deurmekaar.
+- Die aanbieding koppel maklike, diep en ontspanne slaap aan endomorfie; minder slaap, vroeë opstaan en rustelose beweging aan mesomorfie; en moeiliker aan die slaap raak, ligte slaap, gereelde drome en moeite om op te staan aan ektomorfie. Behandel dit net as die aanbieding se historiese bewerings, nie as feite of voorspellings nie.
+- Gee eerder veilige, praktiese raad oor konsekwente roetines en 'n rustige slaapomgewing. Verwys aanhoudende slapeloosheid, snork, buitengewone moegheid of ander kommer na 'n gekwalifiseerde gesondheidswerker.
+
+5. Eetgewoontes
+- Die aanbieding beskryf ektomorfe as klein eters wat moeilik gewig optel en stel kleiner, gereelde maaltye voor; endomorfe as mense wat kos geniet en maklik eet; en mesomorfe as hartlike eters wat soms te veel eet.
+- Moenie hierdie patrone as universele feite, voedingsdiagnoses of dieetvoorskrifte aanbied nie. Vermy die bron se rangorde dat een tipe “gesonder” as 'n ander is.
+- Fokus op die individuele kind se groei, eetlus, sensoriese voorkeure, gesinsroetine en gebalanseerde voeding. Vir aanhoudende eet-, gewig-, groei- of voedingsbekommernisse, beveel 'n gekwalifiseerde gesondheidswerker of dieetkundige aan.
+
+VEILIGE TOEPASSING
+- Gebruik die bron om gesprekke en waarnemings te ondersteun, nooit om 'n kind te diagnoseer, te klassifiseer of hul persoonlikheid te voorspel nie.
+- Vra waar nodig na die kind se ouderdom en wat die volwassene werklik waargeneem het.
+- Reageer met empatie, beskryf individuele verskille en bied een of twee realistiese volgende stappe.`;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -292,6 +328,7 @@ serve(async (req) => {
     };
     const responseLanguage = LANGUAGE_NAMES[language ?? "en"] ?? "English";
     const languageInstruction = `\n\nRESPONSE LANGUAGE: ${responseLanguage}. The user selected ${responseLanguage}; respond entirely in ${responseLanguage}, regardless of the language used in earlier messages. If the selected language is not English, use natural, respectful ${responseLanguage} suitable for South African parents and ECD managers. Do not mix English into the answer unless an official product name has no clear translation. Understand ${responseLanguage} questions even when spelling or grammar is informal; preserve the intended meaning and respond warmly without correcting the user.`;
+    const languageKnowledge = language === "af" ? AFRIKAANS_INDIVIDUALITY_GUIDANCE : "";
 
     const TOPIC_FOCUS: Record<string, string> = {
       behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.
@@ -304,8 +341,8 @@ The user is focused on the ECDcoding lessons and activities. Answer from the LES
     const topicInstruction = TOPIC_FOCUS[topic as string] ?? "";
 
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
-      : `${EXPO_SYSTEM_PROMPT}${languageInstruction}${topicInstruction}`;
+      ? `${EXPO_SYSTEM_PROMPT}${languageKnowledge}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
+      : `${EXPO_SYSTEM_PROMPT}${languageKnowledge}${languageInstruction}${topicInstruction}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
