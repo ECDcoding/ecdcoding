@@ -4,29 +4,28 @@ import { toast } from "sonner";
 
 /**
  * Guest access rules for ECD AI:
- * - One free question per calendar week.
- * - Beyond that, a once-off R100 PayFast payment grants 50 credits.
+ * - One free question per calendar day.
+ * - Paid credit top-ups (R100 for 50 credits) are temporarily unavailable
+ *   while payment issues are being fixed.
  * - 1 credit is spent per minute of active chat time.
  * Registered (signed-in) users are not limited by this hook.
  */
 
-const WEEK_KEY = "ecd_ai_guest_week";
-const COUNT_KEY = "ecd_ai_guest_week_questions";
+const DAY_KEY = "ecd_ai_guest_day";
+const COUNT_KEY = "ecd_ai_guest_day_questions";
 const CREDITS_KEY = "ecd_ai_guest_credits";
 const EXPIRY_KEY = "ecd_ai_guest_credits_expiry";
 export const PENDING_CREDITS_KEY = "ecd_ai_pending_credits";
 export const GUEST_CREDITS_PER_PURCHASE = 50;
-export const FREE_QUESTIONS_PER_WEEK = 1;
+export const FREE_QUESTIONS_PER_DAY = 1;
 /** Credits expire one month (30 days) after they are added if not used up. */
 export const CREDITS_VALID_DAYS = 30;
 /** Warn the user once credits drop to this level or below. */
 export const LOW_CREDITS_THRESHOLD = 10;
 
-const currentWeek = () => {
+const currentDay = () => {
   const now = new Date();
-  const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
-  const week = Math.floor((now.getTime() - start.getTime()) / (7 * 24 * 60 * 60 * 1000));
-  return `${now.getUTCFullYear()}-W${week}`;
+  return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 };
 
 const readNumber = (key: string) => {
