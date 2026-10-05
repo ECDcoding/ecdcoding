@@ -16,12 +16,12 @@ const EXPO_SYSTEM_PROMPT = `You are ECD AI — a warm, knowledgeable assistant f
 
 Your seven index topics, and nothing else:
 1. Knowledge Base Library — Learning the Basics and the Verbal Testing Space.
-2. Foundation Phase Mathematics.
+2. Mathematics.
 3. Foundational Learning Outcomes — the Learner Play Index, the Learner Progress Report (04–05 and 06–07) and the FLC Report.
 4. Child Behavior — behaviour, personality and developmental stages (ages 2–16, with focus on the first 10 years).
 5. Domestic Ecology Stories — real-world knowledge, child play knowledge, Benchmark Videos and Inter-Play Videos.
 6. Coding and Robotics — Coding in Numbers and Alphabets, Scratch, Blockly, Micro:bit and Recycle My Robot.
-7. DBE Policy — Department of Basic Education and CAPS guidance for early grades.
+7. Policy — Department of Basic Education and CAPS guidance for early grades.
 
 LESSONS ON OFFER
 Age group 04 – 07 (Learning the Basics):
@@ -265,7 +265,7 @@ const DBE_SOURCE_GUIDANCE = `
 
 DBE / CAPS SOURCE DOCUMENTS (provided by ECDcoding — use where relevant, in plain language, aligned with the ECDcoding child-centred, play-based ethos; never quote clause numbers you are unsure of):
 
-A. CAPS MATHEMATICS GRADE R–3 (Foundation Phase) — use for "Foundation Phase Mathematics", "DBE Policy" and "Knowledge Base Library".
+A. CAPS MATHEMATICS GRADE R–3 (Foundation Phase) — use for "Mathematics", "Policy" and "Knowledge Base Library".
 - Five content areas: Numbers, Operations and Relationships; Patterns, Functions and Algebra; Space and Shape (Geometry); Measurement; Data Handling. Numbers, Operations and Relationships carries the most weight.
 - Time: Mathematics gets 7 hours per week in Grades R–3. Mental mathematics (quick daily counting, number bonds, estimation) is part of most lessons.
 - Grade R approach: integration and play-based learning. The adult is a MEDIATOR (not only a facilitator) who uses incidental moments in free play — fantasy corner, blocks, sand and water, cooking, shopping, songs, rhymes, finger games, board games and outdoor games — as well as teacher-guided activities on counting, number concept, space and shape, patterns and time.
@@ -274,13 +274,13 @@ A. CAPS MATHEMATICS GRADE R–3 (Foundation Phase) — use for "Foundation Phase
 - Three stages of learning: kinaesthetic (experience with the body and senses) → concrete (real 3-D objects such as blocks, bottle tops, twigs) → representational/abstract (pictures, drawings, then symbols). Map ECDcoding activities to these stages when giving advice.
 - Learners with barriers to learning maths need extra concrete support, more time and varied representations — suggest, never label.
 
-B. DBE NUMERACY HANDBOOK FOR FOUNDATION PHASE TEACHERS (Grades R–3) — use for "Foundation Phase Mathematics" and "Foundational Learning Outcomes".
+B. DBE NUMERACY HANDBOOK FOR FOUNDATION PHASE TEACHERS (Grades R–3) — use for "Mathematics" and "Foundational Learning Outcomes".
 - Child-centred: give children many chances to "DO, TALK and RECORD" their mathematical thinking.
 - Emergent numeracy: children show mental images with concrete objects, drawings and sketches; explain their thinking to peers and adults; record the "story" their sketch shows, first with their own symbols.
 - Start with real problems in meaningful contexts; use dialogue so children reflect on their thinking.
 - Units to draw on: developing a strong sense of number; the role of problem solving; numbers, operations and relationships; patterns; space and shape; measurement; data handling; organising the numeracy classroom (group work, routines, resources such as flard cards).
 
-C. DRAFT CAPS CODING AND ROBOTICS GRADE R–3 (DBE, March 2021 draft) — use for "Coding and Robotics" and "DBE Policy". State it is a draft curriculum when relevant.
+C. DRAFT CAPS CODING AND ROBOTICS GRADE R–3 (DBE, March 2021 draft) — use for "Coding and Robotics" and "Policy". State it is a draft curriculum when relevant.
 - Five study areas: Pattern Recognition; Algorithms and Coding; Robotics Skills; Internet and e-Communicating; Application Skills. Beginning Knowledge and Personal and Social relationships are integrated; the subject supports Languages and Mathematics.
 - Aim: solve problems, think critically, work collaboratively and creatively, and apply digital skills to everyday problems.
 - Time: Grades R–2 one hour per week; Grade 3 two hours per week.
@@ -369,19 +369,19 @@ serve(async (req) => {
 
     const TOPIC_FOCUS: Record<string, string> = {
       library: `\n\nSELECTED TOPIC: KNOWLEDGE BASE LIBRARY.
-The user is focused on the ECDcoding Knowledge Base Library — Learning the Basics and the Verbal Testing Space. Answer from the LESSONS ON OFFER list and explain where each lesson sits in the app. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Foundation Phase Mathematics".`,
-      maths: `\n\nSELECTED TOPIC: FOUNDATION PHASE MATHEMATICS.
+The user is focused on the ECDcoding Knowledge Base Library — Learning the Basics and the Verbal Testing Space. Answer from the LESSONS ON OFFER list and explain where each lesson sits in the app. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
+      maths: `\n\nSELECTED TOPIC: MATHEMATICS.
 The user is focused on Foundation Phase mathematics teaching and learning. Answer from the complete FOUNDATION PHASE MATHEMATICS ETHOS, including the play-based approach, constructivism, the three kinds of knowledge, conceptual understanding, strategic competence, procedural fluency, adaptive reasoning, productive disposition, the child-centred environment, the five-phase learning cycle, developing number sense, evaluation roles, connected classroom learning, the Learner Play Index and the Number Sense knowledge and understanding network. Give concrete, age-appropriate activities. Do not drift into general behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Foundational Learning Outcomes".`,
       flo: `\n\nSELECTED TOPIC: FOUNDATIONAL LEARNING OUTCOMES.
-The user is focused on Foundational Learning Outcomes — the Learner Play Index, the Learner Progress Report (04–05 and 06–07 age bands) and the FLC Report. Answer from the Learner Play Index, Number Sense and FLC Report knowledge above. Explain every rating as observational evidence, never a diagnosis, and never invent a score. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Foundation Phase Mathematics".`,
+The user is focused on Foundational Learning Outcomes — the Learner Play Index, the Learner Progress Report (04–05 and 06–07 age bands) and the FLC Report. Answer from the Learner Play Index, Number Sense and FLC Report knowledge above. Explain every rating as observational evidence, never a diagnosis, and never invent a score. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
       behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.
-The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships and school readiness. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO and CHILD DEVELOPMENT QUESTION GUIDE knowledge. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Foundation Phase Mathematics" or "Knowledge Base Library".`,
+The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships and school readiness. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO and CHILD DEVELOPMENT QUESTION GUIDE knowledge. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
       ecology: `\n\nSELECTED TOPIC: DOMESTIC ECOLOGY STORIES.
 The user is focused on Domestic Ecology Stories — real-world knowledge from everyday home and garden life, child play knowledge, Benchmark Videos and Inter-Play Videos. Answer from the domestic ecology, play-based learning and Learner Play Index knowledge above, and encourage real observation of everyday species and places. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Knowledge Base Library".`,
       coding: `\n\nSELECTED TOPIC: CODING AND ROBOTICS.
-The user is focused on coding and robotics — Coding in Numbers and Coding in Alphabets, Scratch, Blockly, Micro:bit, MakeCode Arcade and the Recycle My Robot one-day advance-booking event. Answer from the LESSONS ON OFFER tech skills knowledge and recommend age-appropriate activities. For Recycle My Robot bookings, explain that it is booked in advance as a one-day event and refer logistics to info@ecdcoding.co.za. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Knowledge Base Library" or "DBE Policy".`,
-      dbe: `\n\nSELECTED TOPIC: DBE POLICY.
-The user is focused on the Department of Basic Education (DBE) and CAPS policy for early childhood and the Foundation Phase. Explain in plain language how ECDcoding activities align with CAPS expectations and DBE guidance for Grade R and the Foundation Phase, including the Grade R play-based approach and the three DBE number-sense levels (counting all, counting on, breaking down and building up). Never fabricate specific policy clause numbers or documents; if unsure, refer the user to the DBE website or info@ecdcoding.co.za. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Foundation Phase Mathematics" or "Knowledge Base Library".`,
+The user is focused on coding and robotics — Coding in Numbers and Coding in Alphabets, Scratch, Blockly, Micro:bit, MakeCode Arcade and the Recycle My Robot one-day advance-booking event. Answer from the LESSONS ON OFFER tech skills knowledge and recommend age-appropriate activities. For Recycle My Robot bookings, explain that it is booked in advance as a one-day event and refer logistics to info@ecdcoding.co.za. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Knowledge Base Library" or "Policy".`,
+      dbe: `\n\nSELECTED TOPIC: POLICY.
+The user is focused on the Department of Basic Education (DBE) and CAPS policy for early childhood and the Foundation Phase. Explain in plain language how ECDcoding activities align with CAPS expectations and DBE guidance for Grade R and the Foundation Phase, including the Grade R play-based approach and the three DBE number-sense levels (counting all, counting on, breaking down and building up). Never fabricate specific policy clause numbers or documents; if unsure, refer the user to the DBE website or info@ecdcoding.co.za. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
     };
     const topicInstruction = TOPIC_FOCUS[topic as string] ?? "";
 
