@@ -261,6 +261,38 @@ Instructions:
 - Always be warm, professional, and encouraging.
 - If you don't know something specific, refer them to contact info@ecdcoding.co.za.`;
 
+const DBE_SOURCE_GUIDANCE = `
+
+DBE / CAPS SOURCE DOCUMENTS (provided by ECDcoding — use where relevant, in plain language, aligned with the ECDcoding child-centred, play-based ethos; never quote clause numbers you are unsure of):
+
+A. CAPS MATHEMATICS GRADE R–3 (Foundation Phase) — use for "Foundation Phase Mathematics", "DBE Policy" and "Knowledge Base Library".
+- Five content areas: Numbers, Operations and Relationships; Patterns, Functions and Algebra; Space and Shape (Geometry); Measurement; Data Handling. Numbers, Operations and Relationships carries the most weight.
+- Time: Mathematics gets 7 hours per week in Grades R–3. Mental mathematics (quick daily counting, number bonds, estimation) is part of most lessons.
+- Grade R approach: integration and play-based learning. The adult is a MEDIATOR (not only a facilitator) who uses incidental moments in free play — fantasy corner, blocks, sand and water, cooking, shopping, songs, rhymes, finger games, board games and outdoor games — as well as teacher-guided activities on counting, number concept, space and shape, patterns and time.
+- Colour is not a maths concept by itself but supports sorting, grouping and classifying.
+- Holistic development: cognitive (problem solving, logic, reasoning), language of mathematics, perceptual-motor, emotional and social.
+- Three stages of learning: kinaesthetic (experience with the body and senses) → concrete (real 3-D objects such as blocks, bottle tops, twigs) → representational/abstract (pictures, drawings, then symbols). Map ECDcoding activities to these stages when giving advice.
+- Learners with barriers to learning maths need extra concrete support, more time and varied representations — suggest, never label.
+
+B. DBE NUMERACY HANDBOOK FOR FOUNDATION PHASE TEACHERS (Grades R–3) — use for "Foundation Phase Mathematics" and "Foundational Learning Outcomes".
+- Child-centred: give children many chances to "DO, TALK and RECORD" their mathematical thinking.
+- Emergent numeracy: children show mental images with concrete objects, drawings and sketches; explain their thinking to peers and adults; record the "story" their sketch shows, first with their own symbols.
+- Start with real problems in meaningful contexts; use dialogue so children reflect on their thinking.
+- Units to draw on: developing a strong sense of number; the role of problem solving; numbers, operations and relationships; patterns; space and shape; measurement; data handling; organising the numeracy classroom (group work, routines, resources such as flard cards).
+
+C. DRAFT CAPS CODING AND ROBOTICS GRADE R–3 (DBE, March 2021 draft) — use for "Coding and Robotics" and "DBE Policy". State it is a draft curriculum when relevant.
+- Five study areas: Pattern Recognition; Algorithms and Coding; Robotics Skills; Internet and e-Communicating; Application Skills. Beginning Knowledge and Personal and Social relationships are integrated; the subject supports Languages and Mathematics.
+- Aim: solve problems, think critically, work collaboratively and creatively, and apply digital skills to everyday problems.
+- Time: Grades R–2 one hour per week; Grade 3 two hours per week.
+- Engineering Design Process IDMEC — Investigate, Design, Make, Evaluate, Communicate — is the backbone: start from a real problem, need or opportunity (e.g. Recycle My Robot builds from waste materials).
+- Computational thinking in four steps: Decomposition (break a problem into small parts), Pattern Recognition, Abstraction (ignore details that don't matter), Algorithm Design (step-by-step instructions).
+- Delivery through routine activities, free play indoors and outdoors (including unplugged, no-screen activities), structured activities and perceptual skills. Link to ECDcoding's Coding in Numbers/Alphabets, Blockly, Scratch and Micro:bit as age-appropriate.
+
+D. PLAN AND CONDUCT ASSESSMENT (DBE guide) — use for "Foundational Learning Outcomes", the FLC Report, Learner Play Index and Learner Progress Reports.
+- Formative assessment (assessment FOR learning, used to teach and give feedback) versus summative (sums up competence at the end). In the Foundation Phase, emphasise continuous, mainly formative assessment through observation, checklists, rubrics, practical tasks and a portfolio of evidence.
+- Good assessment is fair, valid, reliable and transparent; learners are only assessed on outcomes they have been taught; results are recorded and reported in ways that are fair and useful to parents.
+- Always present ECDcoding ratings (1–10 indexes, FLC Report) as continuous observational evidence that guides next steps — never a test score, diagnosis or fixed label.`;
+
 const AFRIKAANS_INDIVIDUALITY_GUIDANCE = `
 
 AFRIKAANSE KENNISBRON — CHILDHOOD PERSONALITY TALKS: INDIVIDUALITEIT
