@@ -413,7 +413,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const content = attachment
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
-    const userMsg: Message = { role: "user", content };
+    const userMsg: Message = { role: "user", content, topic };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
@@ -426,7 +426,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : "Something went wrong.";
       toast.error(errMsg);
-      setMessages((prev) => [...prev, { role: "assistant", content: `Sorry, I encountered an error: ${errMsg}` }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: `Sorry, I encountered an error: ${errMsg}`, topic }]);
     } finally {
       setIsLoading(false);
     }
