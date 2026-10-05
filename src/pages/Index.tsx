@@ -6,7 +6,7 @@ import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import AssistantHub from "@/components/AssistantHub";
 import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
-import { Copyright, ChevronDown, Calendar, Mail, Phone, Shield } from "lucide-react";
+import { Copyright, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
   DropdownMenu,
@@ -55,24 +55,6 @@ const Index = () => {
               <Copyright className="h-4 w-4 text-lime-400" />
               <span className="text-sm">ECDcoding 2026</span>
             </div>
-            <span className="text-sm">|</span>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-sm font-semibold hover:text-foreground transition-colors cursor-pointer">
-                <Calendar className="mr-1 h-4 w-4 text-lime-400" /> <span>Near Future Projects</span> <ChevronDown className="ml-1 h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="z-50 bg-background border border-border shadow-lg">
-                <DropdownMenuItem asChild>
-                  <Link to="/ecd-expo-2026" className="cursor-pointer">
-                    ECD Coding and Robotics Expo
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/tech-franchise" className="cursor-pointer">
-                    Own an ECDcoding Tech Franchise
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
           <Popover>
             <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
