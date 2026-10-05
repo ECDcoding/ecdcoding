@@ -363,7 +363,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     let done = false;
 
     // Seed assistant message
-    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+    setMessages((prev) => [...prev, { role: "assistant", content: "", topic }]);
 
     while (!done) {
       const { done: streamDone, value } = await reader.read();
@@ -385,7 +385,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
             assistantText += chunk;
             setMessages((prev) => {
               const updated = [...prev];
-              updated[updated.length - 1] = { role: "assistant", content: assistantText };
+              updated[updated.length - 1] = { role: "assistant", content: assistantText, topic };
               return updated;
             });
           }
