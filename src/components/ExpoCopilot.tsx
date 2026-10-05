@@ -100,12 +100,8 @@ const COPILOT_COPY = {
         { title: "Policy and CAPS", summary: "How ECDcoding activities align with Department of Basic Education and CAPS expectations for the early grades.", question: "How does ECDcoding align with DBE and CAPS policy for young learners?" },
       ],
       maths: [
-        { title: "Number Sense", summary: "Build counting, number relationships, early operations and confidence before formal procedures.", question: "How can I build and observe my child's number sense?" },
-        { title: "Counting Skills", summary: "Develop number names, one-to-one counting, cardinality and movement from concrete objects to abstract ideas.", question: "What activities can develop my child's counting skills at the right level?" },
-        { title: "Problem Solving", summary: "Give children time, concrete materials and open questions so they can reason, make mistakes and explain strategies.", question: "Please suggest a play-based Foundation Phase mathematics problem-solving activity." },
-        { title: "Five Learning Phases", summary: "Move through engagement, exploration, explanation, elaboration and evaluation in a child-centred lesson.", question: "How can I use the five learning phases in a Foundation Phase mathematics activity?" },
-        { title: "Developing Number Sense", summary: "Use 1–10 observations as discussion aids for strengths and next activities, never as a diagnosis.", question: "How should I interpret Play Index and Number Sense Index observations and plan a way forward?" },
-        { title: "Play-Based Approach", summary: "Let your child discover mathematics through concrete play, exploration and guided discovery before formal written work.", question: "How can I use a play-based approach to teach my child mathematics?" },
+        { title: "A Play-Based Approach", summary: "Let your child discover mathematics through concrete play, exploration and guided discovery before formal written work.", question: "How can I use a play-based approach to teach my child mathematics?" },
+        { title: "Developing the Number Sense", summary: "Use 1–10 observations as discussion aids for strengths and next activities, never as a diagnosis.", question: "How should I interpret Play Index and Number Sense Index observations and plan a way forward?" },
       ],
       lessons: [
         { title: "Verbal Testing Space", summary: "Learners describe carousel items to practise observation, communication, confidence and following instructions.", question: "How should my child use the Verbal Testing Space?" },
@@ -220,12 +216,8 @@ const COPILOT_COPY = {
         { title: "Melawana le CAPS", summary: "Kamano ya ditiro tsa ECDcoding le melawana ya Lefapha la Thuto ya Motheo le CAPS mo dikeregeng tsa ntlha.", question: "ECDcoding e tsamaisana jang le melawana ya DBE le CAPS mo banneng?" },
       ],
       maths: [
-        { title: "Kutlwisiso ya Dipalo", summary: "Aga go bala, dikamano tsa dipalo, ditiro tsa ntlha le boitshepo pele ga mekgwa ya semmuso.", question: "Nka aga le go lemoga jang kutlwisiso ya dipalo ya ngwana wa me?" },
-        { title: "Bokgoni jwa go Bala", summary: "Tlhabolola maina a dipalo, go bala selo ka sengwe, palogotlhe le go tswa mo dilong go ya mo kakanyong.", question: "Ke ditiro dife tse di ka godisang bokgoni jwa ngwana wa me jwa go bala?" },
-        { title: "Tharabololo ya Mathata", summary: "Naya bana nako, didiriswa le dipotso tse di bulegileng gore ba akanye, ba dire diphoso le go tlhalosa mekgwa.", question: "Ntsenye tirong ya motshameko ya go rarabolola bothata jwa dipalo tsa Foundation Phase." },
-        { title: "Dikgato tse Tlhano tsa go Ithuta", summary: "Tsamaea ka kgatlhego, patlisiso, tlhaloso, katoloso le tlhatlhobo mo thutong e e tsepameng mo ngwaneng.", question: "Nka dirisa jang dikgato tse tlhano tsa go ithuta mo tirong ya dipalo?" },
-        { title: "Tlhabololo ya Kutlwisiso ya Dipalo", summary: "Dirisa ditemogo tsa 1–10 go buisana ka bokgoni le tiro e e latelang, e seng jaaka tlhatlhobo ya bolwetse.", question: "Nka tlhaloganya jang Play Index le Number Sense Index le go rulaganya tsela e e yang pele?" },
         { title: "Tsamaiso ya Motshameko", summary: "Loisenyetsa ngwana dipalo ka motshameko, go batlisisa le go ithuta ka didiriswa tsa diatla pele ga mokgwa wa go kwala.", question: "Nka dirisa jang tsamaiso ya motshameko go ruta ngwana wa me dipalo?" },
+        { title: "Tlhabololo ya Kutlwisiso ya Dipalo", summary: "Dirisa ditemogo tsa 1–10 go buisana ka bokgoni le tiro e e latelang, e seng jaaka tlhatlhobo ya bolwetse.", question: "Nka tlhaloganya jang Play Index le Number Sense Index le go rulaganya tsela e e yang pele?" },
       ],
       lessons: [
         { title: "Verbal Testing Space", summary: "Baithuti ba tlhalosa ditshwantsho go ikatisa go lemoga, puisano, boitshepo le go latela ditaelo.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
