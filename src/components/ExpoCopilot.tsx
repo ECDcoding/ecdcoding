@@ -415,6 +415,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const userMsg: Message = { role: "user", content };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
+    setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
     setIsLoading(true);
@@ -629,7 +630,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
               {/* Expandable topic guides keep questions focused on one aspect. */}
-              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-3">
+              <div className={`flex-shrink-0 overflow-y-auto border-b border-border bg-muted/40 px-3 py-3 ${messages.length > 0 ? "max-h-32" : "max-h-[45%]"}`}>
                 <div className="space-y-2" aria-label="ECD AI topic guides">
                   {TOPIC_ORDER.map((t) => (
                     <div key={t} className="overflow-hidden rounded-md border border-border bg-muted">
