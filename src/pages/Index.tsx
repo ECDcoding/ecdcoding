@@ -8,6 +8,7 @@ import AssistantHub from "@/components/AssistantHub";
 import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
 import { Calendar, Copyright, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
+import { toast } from "sonner";
 import {
   Popover,
   PopoverContent,
