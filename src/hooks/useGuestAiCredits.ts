@@ -4,29 +4,28 @@ import { toast } from "sonner";
 
 /**
  * Guest access rules for ECD AI:
- * - One free question per calendar week.
- * - Beyond that, a once-off R100 PayFast payment grants 50 credits.
+ * - One free question per calendar day.
+ * - Paid credit top-ups (R100 for 50 credits) are temporarily unavailable
+ *   while payment issues are being fixed.
  * - 1 credit is spent per minute of active chat time.
  * Registered (signed-in) users are not limited by this hook.
  */
 
-const WEEK_KEY = "ecd_ai_guest_week";
-const COUNT_KEY = "ecd_ai_guest_week_questions";
+const DAY_KEY = "ecd_ai_guest_day";
+const COUNT_KEY = "ecd_ai_guest_day_questions";
 const CREDITS_KEY = "ecd_ai_guest_credits";
 const EXPIRY_KEY = "ecd_ai_guest_credits_expiry";
 export const PENDING_CREDITS_KEY = "ecd_ai_pending_credits";
 export const GUEST_CREDITS_PER_PURCHASE = 50;
-export const FREE_QUESTIONS_PER_WEEK = 1;
+export const FREE_QUESTIONS_PER_DAY = 1;
 /** Credits expire one month (30 days) after they are added if not used up. */
 export const CREDITS_VALID_DAYS = 30;
 /** Warn the user once credits drop to this level or below. */
 export const LOW_CREDITS_THRESHOLD = 10;
 
-const currentWeek = () => {
+const currentDay = () => {
   const now = new Date();
-  const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
-  const week = Math.floor((now.getTime() - start.getTime()) / (7 * 24 * 60 * 60 * 1000));
-  return `${now.getUTCFullYear()}-W${week}`;
+  return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 };
 
 const readNumber = (key: string) => {
@@ -71,7 +70,7 @@ export const useGuestAiCredits = (enabled: boolean) => {
       warnedRef.current.empty = true;
       toast.error("Your ECD AI credits are finished", {
         description:
-          "Refill with R100 for 50 more credits to carry on with Child Behavior questions and the ECDcoding programme.",
+          "Credit top-ups are paused while we fix payment issues. You still get 1 free question every day.",
       });
       return;
     }
@@ -80,17 +79,17 @@ export const useGuestAiCredits = (enabled: boolean) => {
       warnedRef.current.low = true;
       toast.warning(`Only ${value} ECD AI credits left`, {
         description:
-          "Refill soon if you want to keep asking about Child Behavior and the ECDcoding programme.",
+          "Top-ups are paused while we fix payment issues. You still get 1 free question every day.",
       });
     }
   }, []);
 
-  // Load / roll over the week on mount, and drop credits that have expired
+  // Load / roll over the day on mount, and drop credits that have expired
   useEffect(() => {
     if (!enabled) return;
-    const week = currentWeek();
-    if (localStorage.getItem(WEEK_KEY) !== week) {
-      localStorage.setItem(WEEK_KEY, week);
+    const day = currentDay();
+    if (localStorage.getItem(DAY_KEY) !== day) {
+      localStorage.setItem(DAY_KEY, day);
       localStorage.setItem(COUNT_KEY, "0");
       setQuestionsUsed(0);
     } else {
@@ -101,7 +100,7 @@ export const useGuestAiCredits = (enabled: boolean) => {
     setExpiresAt(readNumber(EXPIRY_KEY));
     if (valid === 0 && localStorage.getItem(EXPIRY_KEY) === null && readNumber(COUNT_KEY) > 0) {
       toast.info("Your ECD AI credits have expired", {
-        description: "Unused credits last one month. Refill with R100 for 50 new credits.",
+        description: "Unused credits last one month.",
       });
     }
   }, [enabled]);
@@ -114,14 +113,14 @@ export const useGuestAiCredits = (enabled: boolean) => {
     if (valid > 0) warnedRef.current = { low: false, empty: false };
   }, []);
 
-  const freeQuestionsLeft = Math.max(0, FREE_QUESTIONS_PER_WEEK - questionsUsed);
+  const freeQuestionsLeft = Math.max(0, FREE_QUESTIONS_PER_DAY - questionsUsed);
   const canAsk = !enabled || freeQuestionsLeft > 0 || credits > 0;
   const isLowOnCredits = enabled && credits > 0 && credits <= LOW_CREDITS_THRESHOLD;
   const creditsExpireAt = expiresAt > 0 ? new Date(expiresAt) : null;
 
   const registerQuestion = useCallback(() => {
     if (!enabled) return;
-    if (readNumber(COUNT_KEY) < FREE_QUESTIONS_PER_WEEK) {
+    if (readNumber(COUNT_KEY) < FREE_QUESTIONS_PER_DAY) {
       const next = readNumber(COUNT_KEY) + 1;
       localStorage.setItem(COUNT_KEY, String(next));
       setQuestionsUsed(next);
