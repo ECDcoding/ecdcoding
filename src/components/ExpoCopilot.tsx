@@ -639,47 +639,65 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
-              {/* Expandable topic guides keep questions focused on one aspect. */}
-              <div className={`flex-shrink-0 overflow-y-auto border-b border-border bg-muted/40 px-3 py-3 ${messages.length > 0 ? "max-h-32" : "max-h-[45%]"}`}>
-                <div className="space-y-2" aria-label="ECD AI topic guides">
-                  {TOPIC_ORDER.map((t) => (
-                    <div key={t} className="overflow-hidden rounded-md border border-border bg-muted">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        aria-expanded={expandedTopic === t}
-                        onClick={() => {
-                          setTopic(t);
-                          setExpandedTopic((current) => current === t ? null : t);
-                        }}
-                        className={`h-12 w-full justify-between rounded-none px-3 text-sm ${topic === t ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
-                      >
-                        {copy.topicLabels[t]}
-                        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === t ? "rotate-180" : ""}`} />
-                      </Button>
-                      {expandedTopic === t && (
-                        <div className="max-h-48 space-y-1 overflow-y-auto border-t border-border p-1.5">
-                          {copy.topicGuides[t].map((guide) => (
-                            <Button
-                              key={guide.title}
-                              type="button"
-                              variant="ghost"
-                              onClick={() => sendMessage(guide.question, true)}
-                              disabled={isLoading}
-                              className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
-                              title={copy.overviewAction}
-                            >
-                              <span className="block">
-                                <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
-                                <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
-                                <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
-                              </span>
-                            </Button>
-                          ))}
-                        </div>
-                      )}
+              {/* Rotating topic picker: one topic at a time, rotated with arrows. */}
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-3">
+                <div aria-label="ECD AI topic guides">
+                  <div className="flex items-stretch gap-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Previous topic"
+                      onClick={() => rotateTopic(-1)}
+                      className="h-12 w-10 shrink-0 rounded-md bg-muted text-foreground hover:bg-muted/80"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      aria-expanded={expandedTopic === displayedTopic}
+                      onClick={() => {
+                        setTopic(displayedTopic);
+                        setExpandedTopic((current) => (current === displayedTopic ? null : displayedTopic));
+                      }}
+                      className={`h-12 flex-1 justify-between rounded-md px-3 text-sm ${topic === displayedTopic ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
+                    >
+                      {copy.topicLabels[displayedTopic]}
+                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === displayedTopic ? "rotate-180" : ""}`} />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Next topic"
+                      onClick={() => rotateTopic(1)}
+                      className="h-12 w-10 shrink-0 rounded-md bg-muted text-foreground hover:bg-muted/80"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {expandedTopic === displayedTopic && (
+                    <div className="mt-2 max-h-48 space-y-1 overflow-y-auto rounded-md border border-border p-1.5">
+                      {copy.topicGuides[displayedTopic].map((guide) => (
+                        <Button
+                          key={guide.title}
+                          type="button"
+                          variant="ghost"
+                          onClick={() => sendMessage(guide.question, true)}
+                          disabled={isLoading}
+                          className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
+                          title={copy.overviewAction}
+                        >
+                          <span className="block">
+                            <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
+                            <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
+                            <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
+                          </span>
+                        </Button>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
