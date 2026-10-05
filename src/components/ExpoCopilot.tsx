@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -296,6 +296,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
   const [topic, setTopic] = useState<CopilotTopic>("behaviour");
+  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("behaviour");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
