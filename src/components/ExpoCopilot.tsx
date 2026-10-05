@@ -69,7 +69,8 @@ const COPILOT_COPY = {
     overviewAction: "Ask ECD AI about this",
     topicGuides: {
       library: [
-        { title: "Learning the Basics", summary: "Learners explore literacy and numeracy.", question: "Which Learning the Basics lesson should my child start with, and why?" },
+        { title: "Numeracy", summary: "Number Counting with counting in sets from 1–10, 11–20, 21–30 and onwards, plus Shapes (circle, rectangle, square, triangle) — what a 04–07 year old explores in Numeracy.", question: "What will my 04–07 year old be exposed to in the Numeracy lessons?" },
+        { title: "Literacy", summary: "Vowels, the alphabet and colours — the early reading and writing building blocks a 04–07 year old explores in Literacy.", question: "What will my 04–07 year old be exposed to in the Literacy lessons?" },
         { title: "Verbal Testing Space", summary: "Learners present what they see verbally to improve their knowledge base.", question: "How should my child use the Verbal Testing Space?" },
       ],
       flo: [
@@ -115,7 +116,7 @@ const COPILOT_COPY = {
     },
     faqs: {
       library: [
-        "Which Learning the Basics lesson suits my child's age?",
+        "What will my 04–07 year old be exposed to in Numeracy and Literacy?",
         "How does the Verbal Testing Space work?",
         "Where do I find the Knowledge Base Carousel?",
       ],
@@ -185,7 +186,8 @@ const COPILOT_COPY = {
     overviewAction: "Botsa ECD AI ka seno",
     topicGuides: {
       library: [
-        { title: "Learning the Basics", summary: "Baithuti ba batlisisa go bala le dipalo.", question: "Ngwana wa me o tshwanetse go simolola ka thuto efe ya Learning the Basics, mme ka ntlha yang?" },
+        { title: "Dipalo (Numeracy)", summary: "Go bala ka ditlhatlhamo go tswa 1–10, 11–20, 21–30 le go ya pele, le Dibopego (sereke, khutlonnetsepa, khutlonthatu, khutlwelo) — se ngwana wa dingwaga 04–07 a tla se bonang mo Dipalong.", question: "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo thutong ya Dipalo?" },
+        { title: "Go Bala le go Kwala (Literacy)", summary: "Melaetsa (vowels), alfhabete le mebala — dipiloto tsa ntlha tsa go bala le go kwala tsa ngwana wa dingwaga 04–07.", question: "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo Go Bala le go Kwala?" },
         { title: "Verbal Testing Space", summary: "Baithuti ba tlhagisa ka molomo se ba se bonang go tokafatsa kitso ya bona.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
       ],
       flo: [
@@ -231,7 +233,7 @@ const COPILOT_COPY = {
     },
     faqs: {
       library: [
-        "Ke thuto efe ya Learning the Basics e e siametseng ngwana wa me?",
+        "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo Dipalong le Go Bala le go Kwala?",
         "Verbal Testing Space e dira jang?",
         "Nka fitlhela Knowledge Base Carousel kae?",
       ],
