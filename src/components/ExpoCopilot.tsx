@@ -116,7 +116,7 @@ const COPILOT_COPY = {
     },
     faqs: {
       library: [
-        "Which Learning the Basics lesson suits my child's age?",
+        "What will my 04–07 year old be exposed to in Numeracy and Literacy?",
         "How does the Verbal Testing Space work?",
         "Where do I find the Knowledge Base Carousel?",
       ],
@@ -233,7 +233,7 @@ const COPILOT_COPY = {
     },
     faqs: {
       library: [
-        "Ke thuto efe ya Learning the Basics e e siametseng ngwana wa me?",
+        "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo Dipalong le Go Bala le go Kwala?",
         "Verbal Testing Space e dira jang?",
         "Nka fitlhela Knowledge Base Carousel kae?",
       ],
