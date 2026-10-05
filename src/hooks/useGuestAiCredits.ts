@@ -70,7 +70,7 @@ export const useGuestAiCredits = (enabled: boolean) => {
       warnedRef.current.empty = true;
       toast.error("Your ECD AI credits are finished", {
         description:
-          "Refill with R100 for 50 more credits to carry on with Child Behavior questions and the ECDcoding programme.",
+          "Credit top-ups are paused while we fix payment issues. You still get 1 free question every day.",
       });
       return;
     }
@@ -79,7 +79,7 @@ export const useGuestAiCredits = (enabled: boolean) => {
       warnedRef.current.low = true;
       toast.warning(`Only ${value} ECD AI credits left`, {
         description:
-          "Refill soon if you want to keep asking about Child Behavior and the ECDcoding programme.",
+          "Top-ups are paused while we fix payment issues. You still get 1 free question every day.",
       });
     }
   }, []);
