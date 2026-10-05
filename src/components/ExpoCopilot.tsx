@@ -8,6 +8,7 @@ import { Message as AiMessage, MessageContent, MessageResponse } from "@/compone
 import { PromptInput, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from "@/components/ai-elements/prompt-input";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
 import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
@@ -299,7 +300,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
-  const isGuest = !authLoading && !user;
+  const { isAdmin } = useIsAdmin();
+  // Admins are never capped, even while their session is still loading.
+  const isGuest = !isAdmin && !authLoading && !user;
   const guest = useGuestAiCredits(isGuest);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
