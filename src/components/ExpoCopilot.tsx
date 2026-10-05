@@ -704,19 +704,19 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
               {/* Messages */}
               <Conversation className="bg-card">
                 <ConversationContent className="gap-3 p-4">
-                {messages.length === 0 ? (
+                {!messages.some((m) => !m.topic || m.topic === displayedTopic) ? (
                     <div className="space-y-4">
                      <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
                     <p className="text-xs text-muted-foreground px-1">
-                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[topic]}</span>
+                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[displayedTopic]}</span>
                     </p>
                   </div>
 
                 ) : (
-                  messages.map((msg, i) => (
+                  messages.map((msg, i) => (msg.topic && msg.topic !== displayedTopic) ? null : (
                     <AiMessage
                       key={i}
                       from={msg.role}
