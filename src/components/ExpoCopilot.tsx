@@ -299,7 +299,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
-  const isGuest = !authLoading && !user;
+  const { isAdmin } = useIsAdmin();
+  // Admins are never capped, even while their session is still loading.
+  const isGuest = !isAdmin && !authLoading && !user;
   const guest = useGuestAiCredits(isGuest);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
