@@ -84,12 +84,12 @@ export const useGuestAiCredits = (enabled: boolean) => {
     }
   }, []);
 
-  // Load / roll over the week on mount, and drop credits that have expired
+  // Load / roll over the day on mount, and drop credits that have expired
   useEffect(() => {
     if (!enabled) return;
-    const week = currentWeek();
-    if (localStorage.getItem(WEEK_KEY) !== week) {
-      localStorage.setItem(WEEK_KEY, week);
+    const day = currentDay();
+    if (localStorage.getItem(DAY_KEY) !== day) {
+      localStorage.setItem(DAY_KEY, day);
       localStorage.setItem(COUNT_KEY, "0");
       setQuestionsUsed(0);
     } else {
@@ -100,7 +100,7 @@ export const useGuestAiCredits = (enabled: boolean) => {
     setExpiresAt(readNumber(EXPIRY_KEY));
     if (valid === 0 && localStorage.getItem(EXPIRY_KEY) === null && readNumber(COUNT_KEY) > 0) {
       toast.info("Your ECD AI credits have expired", {
-        description: "Unused credits last one month. Refill with R100 for 50 new credits.",
+        description: "Unused credits last one month.",
       });
     }
   }, [enabled]);
@@ -113,14 +113,14 @@ export const useGuestAiCredits = (enabled: boolean) => {
     if (valid > 0) warnedRef.current = { low: false, empty: false };
   }, []);
 
-  const freeQuestionsLeft = Math.max(0, FREE_QUESTIONS_PER_WEEK - questionsUsed);
+  const freeQuestionsLeft = Math.max(0, FREE_QUESTIONS_PER_DAY - questionsUsed);
   const canAsk = !enabled || freeQuestionsLeft > 0 || credits > 0;
   const isLowOnCredits = enabled && credits > 0 && credits <= LOW_CREDITS_THRESHOLD;
   const creditsExpireAt = expiresAt > 0 ? new Date(expiresAt) : null;
 
   const registerQuestion = useCallback(() => {
     if (!enabled) return;
-    if (readNumber(COUNT_KEY) < FREE_QUESTIONS_PER_WEEK) {
+    if (readNumber(COUNT_KEY) < FREE_QUESTIONS_PER_DAY) {
       const next = readNumber(COUNT_KEY) + 1;
       localStorage.setItem(COUNT_KEY, String(next));
       setQuestionsUsed(next);
