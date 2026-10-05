@@ -84,9 +84,9 @@ const Index = () => {
             <Shield className="h-5 w-5" />
             <span className="text-sm text-muted-foreground">Privacy Policy</span>
           </Link>
-          <Link to="/ecd-expo-2026" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Events">
+          <Link to="/ecd-expo-2026" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="No Events Yet">
             <Calendar className="h-5 w-5" />
-            <span className="text-sm text-muted-foreground">Events</span>
+            <span className="text-sm text-muted-foreground">No Events Yet</span>
           </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
