@@ -759,7 +759,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                         </div>
                       )}
                     </AiMessage>
-                  ))
+                  )))
                 )}
                   <div ref={messagesEndRef} />
                 </ConversationContent>
