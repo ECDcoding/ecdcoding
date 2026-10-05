@@ -8,6 +8,7 @@ import { Message as AiMessage, MessageContent, MessageResponse } from "@/compone
 import { PromptInput, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from "@/components/ai-elements/prompt-input";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
 import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
