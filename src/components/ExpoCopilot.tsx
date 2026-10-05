@@ -393,15 +393,17 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [language, topic]);
 
-  const sendMessage = useCallback(async (text: string) => {
+  const sendMessage = useCallback(async (text: string, fromGuide = false) => {
     if ((!text.trim() && !attachment) || isLoading) return;
 
-    // Visitors: 1 free question per day (credit top-ups paused while payments are fixed)
-    if (isGuest && !guest.canAsk) {
-      setPaywallOpen(true);
-      return;
+    // Visitors: 1 free typed question per day (sub-topic overviews don't count)
+    if (isGuest && !fromGuide) {
+      if (!guest.canAsk) {
+        setPaywallOpen(true);
+        return;
+      }
+      guest.registerQuestion();
     }
-    if (isGuest) guest.registerQuestion();
 
 
     const content = attachment
@@ -648,7 +650,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               key={guide.title}
                               type="button"
                               variant="ghost"
-                              onClick={() => sendMessage(guide.question)}
+                              onClick={() => sendMessage(guide.question, true)}
                               disabled={isLoading}
                               className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
                               title={copy.overviewAction}
