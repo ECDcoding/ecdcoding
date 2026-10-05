@@ -430,7 +430,16 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest]);
+  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest, topic]);
+
+  // Rotate which single topic is visible in the picker (previous / next).
+  const rotateTopic = useCallback((dir: 1 | -1) => {
+    setDisplayedTopic((current) => {
+      const idx = TOPIC_ORDER.indexOf(current);
+      return TOPIC_ORDER[(idx + dir + TOPIC_ORDER.length) % TOPIC_ORDER.length];
+    });
+    setExpandedTopic(null); // user must click the rotated topic to open its sub-list
+  }, []);
 
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
