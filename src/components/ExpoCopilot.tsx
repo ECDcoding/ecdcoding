@@ -415,6 +415,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const userMsg: Message = { role: "user", content };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
+    setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
     setIsLoading(true);
