@@ -22,3 +22,4 @@
 - [x] Split the Learner Progress Report into 04 - 05 and 06 - 07, aligned with the Play and Number Sense Indexes.
 - [x] Match the open ECD AI window to the supplied compact lime-and-dark reference.
 - [x] Add the supplied Afrikaans Individuality, sleep, eating and body-build material to ECD AI with child-safety safeguards.
+- [x] Re-index the ECD AI topic list into the seven sketch buttons (Knowledge Base Library, Foundation Phase Mathematics, Foundational Learning Outcomes, Child Behavior, Domestic Ecology Stories, Coding and Robotics, DBE Policy) with sub-category guides and FAQs in English and Setswana.

@@ -29,7 +29,7 @@ const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] =
   { code: "nr", label: "IsiNdebele", voiceLang: "nr-ZA" },
   { code: "ss", label: "siSwati", voiceLang: "ss-ZA" },
 ];
-type CopilotTopic = "behaviour" | "maths" | "lessons";
+type CopilotTopic = "library" | "maths" | "flo" | "behaviour" | "ecology" | "coding" | "dbe";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -52,9 +52,13 @@ const COPILOT_COPY = {
     listenError: "Couldn't hear that — please try again.",
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
-      behaviour: "Child Behaviour",
+      library: "Knowledge Base Library",
       maths: "Foundation Phase Mathematics",
-      lessons: "Lessons",
+      flo: "Foundational Learning Outcomes",
+      behaviour: "Child Behavior",
+      ecology: "Domestic Ecology Stories",
+      coding: "Coding and Robotics",
+      dbe: "DBE Policy",
     },
     topicHints: {
       behaviour: "Ages and stages, individuality, moods, routines and school readiness.",
@@ -63,6 +67,15 @@ const COPILOT_COPY = {
     },
     overviewAction: "Ask ECD AI about this",
     topicGuides: {
+      library: [
+        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology.", question: "Which Learning the Basics lesson should my child start with, and why?" },
+        { title: "Verbal Testing Space", summary: "Learners describe carousel items to practise observation, communication, confidence and following instructions.", question: "How should my child use the Verbal Testing Space?" },
+      ],
+      flo: [
+        { title: "Learner Play Index", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Learner Play Index to observe my child?" },
+        { title: "Learner Progress Report", summary: "Age-band reports for 04–05 and 06–07 bring play and number-sense observations together in one view.", question: "How do I read and use my child's Learner Progress Report?" },
+        { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
+      ],
       behaviour: [
         { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
         { title: "Individuality", summary: "Understand a child's unique temperament, interests, strengths, pace and preferred ways of learning.", question: "How can I understand and support my child's individuality?" },
@@ -73,12 +86,26 @@ const COPILOT_COPY = {
         { title: "Mood Swings", summary: "Understand changing emotions as observations and learn calm, supportive responses without diagnosing.", question: "How should I respond to my child's mood swings?" },
         { title: "School Readiness", summary: "Look at physical, emotional, attention, social and early number-sense readiness alongside family and school support.", question: "Please help me understand my child's school readiness and suggest a way forward." },
       ],
+      ecology: [
+        { title: "Real-World Knowledge", summary: "Domestic ecology stories connect everyday species and places to real-world observation and care.", question: "How do Domestic Ecology Stories build my child's real-world knowledge?" },
+        { title: "Child Play Knowledge", summary: "Play stories reveal how your child explores, builds, imagines and solves problems.", question: "What can my child's play tell me about how they learn?" },
+        { title: "Benchmark and Inter-Play Videos", summary: "Watch benchmark videos and share inter-play videos to record and compare observations over time.", question: "How should I use the Benchmark and Inter-Play Videos?" },
+      ],
+      coding: [
+        { title: "Coding in Numbers and Alphabets", summary: "Turn letters and numbers into codes to build pattern recognition and early computational thinking.", question: "How can my child practise coding in numbers and alphabets?" },
+        { title: "Scratch and Blockly", summary: "Visual block coding builds logic, creativity and step-by-step problem solving.", question: "Which Scratch or Blockly activity suits my child's age?" },
+        { title: "Recycle My Robot", summary: "A one-day robotics event booked in advance where children build robots from recycled materials.", question: "How do I book the Recycle My Robot event for my child?" },
+      ],
+      dbe: [
+        { title: "DBE and CAPS Policy", summary: "How ECDcoding activities align with Department of Basic Education and CAPS expectations for the early grades.", question: "How does ECDcoding align with DBE and CAPS policy for young learners?" },
+      ],
       maths: [
         { title: "Number Sense", summary: "Build counting, number relationships, early operations and confidence before formal procedures.", question: "How can I build and observe my child's number sense?" },
         { title: "Counting Skills", summary: "Develop number names, one-to-one counting, cardinality and movement from concrete objects to abstract ideas.", question: "What activities can develop my child's counting skills at the right level?" },
         { title: "Problem Solving", summary: "Give children time, concrete materials and open questions so they can reason, make mistakes and explain strategies.", question: "Please suggest a play-based Foundation Phase mathematics problem-solving activity." },
         { title: "Five Learning Phases", summary: "Move through engagement, exploration, explanation, elaboration and evaluation in a child-centred lesson.", question: "How can I use the five learning phases in a Foundation Phase mathematics activity?" },
         { title: "Play and Number Sense Index", summary: "Use 1–10 observations as discussion aids for strengths and next activities, never as a diagnosis.", question: "How should I interpret Play Index and Number Sense Index observations and plan a way forward?" },
+        { title: "Play-Based Approach", summary: "Let your child discover mathematics through concrete play, exploration and guided discovery before formal written work.", question: "How can I use a play-based approach to teach my child mathematics?" },
       ],
       lessons: [
         { title: "Verbal Testing Space", summary: "Learners describe carousel items to practise observation, communication, confidence and following instructions.", question: "How should my child use the Verbal Testing Space?" },
@@ -90,6 +117,16 @@ const COPILOT_COPY = {
       ],
     },
     faqs: {
+      library: [
+        "Which Learning the Basics lesson suits my child's age?",
+        "How does the Verbal Testing Space work?",
+        "Where do I find the Knowledge Base Carousel?",
+      ],
+      flo: [
+        "What is the Learner Play Index and how do I rate it?",
+        "How do the 04–05 and 06–07 progress reports differ?",
+        "How is the FLC Report put together?",
+      ],
       behaviour: [
         "What developmental milestones should I expect at my child's age?",
         "How can I understand my child's individuality and behaviour patterns?",
@@ -99,6 +136,21 @@ const COPILOT_COPY = {
         "How can I tell if my child is ready for school?",
         "Do body types affect a child's development?",
       ],
+      ecology: [
+        "What are Domestic Ecology Stories?",
+        "How do Benchmark and Inter-Play Videos work?",
+        "What real-world knowledge does domestic ecology build?",
+      ],
+      coding: [
+        "What coding lessons are available for 04–07 and 08–12?",
+        "How does Blockly or Scratch help my child think?",
+        "How do I book Recycle My Robot?",
+      ],
+      dbe: [
+        "Does ECDcoding follow the CAPS curriculum?",
+        "How does the programme prepare children for Grade R and Grade 1?",
+        "Where can I learn more about DBE policy for early childhood?",
+      ],
       maths: [
         "How do young children build mathematical understanding?",
         "What hands-on activities teach counting and number sense?",
@@ -107,14 +159,6 @@ const COPILOT_COPY = {
         "How do I use the five-phase learning cycle in a maths activity?",
         "How do I build my child's confidence in mathematics?",
         "How should I respond when my child makes a maths mistake?",
-      ],
-      lessons: [
-        "Which ECDcoding lessons suit my child's age and needs?",
-        "What is in the Verbal Testing Space and how does it work?",
-        "How does the FLC Report show my child's progress?",
-        "What coding lessons are available for 04–07 and 08–12?",
-        "Which road safety and transport lessons should we start with?",
-        "What does Science Discovery cover?",
       ],
     },
   },
@@ -128,9 +172,13 @@ const COPILOT_COPY = {
     listenError: "Ga ke a go utlwa — tsweetswee leka gape.",
     voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
     topicLabels: {
-      behaviour: "Boitshwaro",
+      library: "Laeborari ya Kitso",
       maths: "Dipalo tsa Foundation Phase",
-      lessons: "Dithuto",
+      flo: "Diphitlhelelo tsa Thuto ya Motheo",
+      behaviour: "Boitshwaro",
+      ecology: "Dinane tsa Ikoekelo ya Selegae",
+      coding: "Khouto le Robotics",
+      dbe: "Melawana ya DBE",
     },
     topicHints: {
       behaviour: "Dingwaga le dikgato, botho, maikutlo, mekgwa le go siamela sekolo.",
@@ -139,6 +187,15 @@ const COPILOT_COPY = {
     },
     overviewAction: "Botsa ECD AI ka seno",
     topicGuides: {
+      library: [
+        { title: "Learning the Basics", summary: "Sekaseka go bala, dipalo, pabalesego mo tseleng, dipalangwa, saense, dikgono tsa botshelo le thekenoloji.", question: "Ngwana wa me o tshwanetse go simolola ka thuto efe ya Learning the Basics, mme ka ntlha yang?" },
+        { title: "Verbal Testing Space", summary: "Baithuti ba tlhalosa ditshwantsho go ikatisa go lemoga, puisano, boitshepo le go latela ditaelo.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
+      ],
+      flo: [
+        { title: "Learner Play Index", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang Learner Play Index go lemoga ngwana wa me?" },
+        { title: "Pego ya Kgatelopele ya Ngwana", summary: "Dipego tsa dingwaga tsa 04–05 le 06–07 di kopanya temogo ya motshameko le kutlwisiso ya dipalo.", question: "Nka buisana jang le Pego ya Kgatelopele ya ngwana wa me?" },
+        { title: "Pego ya FLC", summary: "Sephetho sa 1–10 se sobokanya bosupi jo bo leng teng mme se tshitshinya tsela e e maleba ya go ya pele.", question: "Ke tshwanetse go tlhaloganya le go dirisa jang Pego ya FLC?" },
+      ],
       behaviour: [
         { title: "Dingwaga le Dikgato", summary: "Tebokakaretso ya kgolo, puisano, maikutlo le boikemelo go ya ka dingwaga, go dumela gore ngwana mongwe le mongwe o gola ka tsela ya gagwe.", question: "Tsweetswee tlhalosa Dingwaga le Dikgato tsa ngwana wa me le se nka se lemogang." },
         { title: "Botho jo bo Kgethegileng", summary: "Tlhaloganya botho, dikgatlhego, bokgoni, lebelo le tsela e ngwana a ratang go ithuta ka yone.", question: "Nka tlhaloganya le go tshegetsa jang botho jo bo kgethegileng jwa ngwana wa me?" },
@@ -149,12 +206,26 @@ const COPILOT_COPY = {
         { title: "Go Fetofetoga ga Maikutlo", summary: "Tlhaloganya maikutlo a a fetogang jaaka dilo tse di lemogwang, mme o arabe ka kagiso ntle le go dira tlhatlhobo ya bolwetse.", question: "Ke tshwanetse go araba jang go fetofetoga ga maikutlo ga ngwana wa me?" },
         { title: "Go Siamela Sekolo", summary: "Leba mmele, maikutlo, tlhokomelo, botsalano le kitso ya dipalo mmogo le tshegetso ya lelapa le sekolo.", question: "Nthuse go tlhaloganya go siamela sekolo ga ngwana wa me le tsela e re ka tswelelang ka yone." },
       ],
+      ecology: [
+        { title: "Kitso ya Ntle ya Sekolo", summary: "Dinane tsa ikoekelo ya selegae di golaganya ditshedi le mafelo a a kgaogantsweng le kitso ya mafatshe.", question: "Dinane tsa Ikoekelo ya Selegae di aga jang kitso ya mafatshe ya ngwana wa me?" },
+        { title: "Kitso ya Motshameko wa Ngwana", summary: "Dinane tsa motshameko di bontsha gore ngwana o batlisisa, o aga, o akanya le go rarabolola mathata jang.", question: "Motshameko wa ngwana wa me o mpolelelang eng ka tsela a ithutang ka yona?" },
+        { title: "Ditshwantsho tsa Benchmark le Inter-Play", summary: "Lebelela ditshwantsho tsa benchmark mme lo abolele tsa inter-play go gatisa temogo ka nako.", question: "Nka dirisa jang Ditshwantsho tsa Benchmark le Inter-Play?" },
+      ],
+      coding: [
+        { title: "Khouto mo Dipalong le Makgakgweng", summary: "Fetola makgakgwa le dipalo go nna khouto go aga kutlwisiso ya mekgwa le go akanya ka khouto.", question: "Ngwana wa me a ka ikatisa jang khouto mo dipalong le makgakgweng?" },
+        { title: "Scratch le Blockly", summary: "Khouto ya dibloke e godisa tlhaloganyo, boitlhamedi le go rarabolola mathata.", question: "Ke tiragatso efe ya Scratch kgotsa Blockly e e siametseng ngwana wa me?" },
+        { title: "Recycle My Robot", summary: "Ketsahalo ya letsatsi le le lelwang kwa pele ya go aga maroboto ka dilo tse di recyclesweng.", question: "Nka berekisa jang Recycle My Robot go ngwana wa me?" },
+      ],
+      dbe: [
+        { title: "Melawana ya DBE le CAPS", summary: "Kamano ya ditiro tsa ECDcoding le melawana ya Lefapha la Thuto ya Motheo le CAPS mo dikeregeng tsa ntlha.", question: "ECDcoding e tsamaisana jang le melawana ya DBE le CAPS mo banneng?" },
+      ],
       maths: [
         { title: "Kutlwisiso ya Dipalo", summary: "Aga go bala, dikamano tsa dipalo, ditiro tsa ntlha le boitshepo pele ga mekgwa ya semmuso.", question: "Nka aga le go lemoga jang kutlwisiso ya dipalo ya ngwana wa me?" },
         { title: "Bokgoni jwa go Bala", summary: "Tlhabolola maina a dipalo, go bala selo ka sengwe, palogotlhe le go tswa mo dilong go ya mo kakanyong.", question: "Ke ditiro dife tse di ka godisang bokgoni jwa ngwana wa me jwa go bala?" },
         { title: "Tharabololo ya Mathata", summary: "Naya bana nako, didiriswa le dipotso tse di bulegileng gore ba akanye, ba dire diphoso le go tlhalosa mekgwa.", question: "Ntsenye tirong ya motshameko ya go rarabolola bothata jwa dipalo tsa Foundation Phase." },
         { title: "Dikgato tse Tlhano tsa go Ithuta", summary: "Tsamaea ka kgatlhego, patlisiso, tlhaloso, katoloso le tlhatlhobo mo thutong e e tsepameng mo ngwaneng.", question: "Nka dirisa jang dikgato tse tlhano tsa go ithuta mo tirong ya dipalo?" },
         { title: "Play le Number Sense Index", summary: "Dirisa ditemogo tsa 1–10 go buisana ka bokgoni le tiro e e latelang, e seng jaaka tlhatlhobo ya bolwetse.", question: "Nka tlhaloganya jang Play Index le Number Sense Index le go rulaganya tsela e e yang pele?" },
+        { title: "Tsamaiso ya Motshameko", summary: "Loisenyetsa ngwana dipalo ka motshameko, go batlisisa le go ithuta ka didiriswa tsa diatla pele ga mokgwa wa go kwala.", question: "Nka dirisa jang tsamaiso ya motshameko go ruta ngwana wa me dipalo?" },
       ],
       lessons: [
         { title: "Verbal Testing Space", summary: "Baithuti ba tlhalosa ditshwantsho go ikatisa go lemoga, puisano, boitshepo le go latela ditaelo.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
@@ -166,6 +237,16 @@ const COPILOT_COPY = {
       ],
     },
     faqs: {
+      library: [
+        "Ke thuto efe ya Learning the Basics e e siametseng ngwana wa me?",
+        "Verbal Testing Space e dira jang?",
+        "Nka fitlhela Knowledge Base Carousel kae?",
+      ],
+      flo: [
+        "Learner Play Index ke eng mme nka e tlhoma jang?",
+        "Dipego tsa 04–05 le 06–07 di farologana jang?",
+        "Pego ya FLC e balwa jang?",
+      ],
       behaviour: [
         "Ke dikgato dife tsa kgolo tse ke tshwanetseng go di lebelela mo dingwageng tsa ngwana wa me?",
         "Nka tlhaloganya jang botho le boitshwaro jwa ngwana wa me?",
@@ -174,6 +255,21 @@ const COPILOT_COPY = {
         "Nka nonotsha jang kamano ya me le ngwana wa me?",
         "Nka itse jang gore ngwana wa me o siametse go simolola sekolo?",
         "A mefuta ya mmele e ama kgolo ya ngwana?",
+      ],
+      ecology: [
+        "Dinane tsa Ikoekelo ya Selegae ke eng?",
+        "Ditshwantsho tsa Benchmark le Inter-Play di dira jang?",
+        "Ikoekelo ya selegae e aga kitso efe ya mafatshe?",
+      ],
+      coding: [
+        "Ke dithuto dife tsa khouto mo 04–07 le 08–12?",
+        "Blockly kgotsa Scratch e thusa ngwana jang go akanya?",
+        "Nka berekisa jang Recycle My Robot?",
+      ],
+      dbe: [
+        "A ECDcoding e latela thutopoelelo ya CAPS?",
+        "Porojeke e lokisetsa ngwana jang Grade R le Grade 1?",
+        "Nka ithuta kae gontlhe ka melawana ya DBE ya bongwana jwa thuto?",
       ],
       maths: [
         "Bana ba bannye ba aga jang tlhaloganyo ya dipalo?",
@@ -184,19 +280,11 @@ const COPILOT_COPY = {
         "Nka aga jang boitshepo jwa ngwana wa me mo dipalong?",
         "Ke tshwanetse go arabela jang fa ngwana wa me a dira phoso mo dipalong?",
       ],
-      lessons: [
-        "Ke dithuto dife tsa ECDcoding tse di siametseng dingwaga le ditlhoko tsa ngwana wa me?",
-        "Verbal Testing Space e na le eng mme e dira jang?",
-        "Pego ya FLC e bontsha jang kgatelopele ya ngwana wa me?",
-        "Ke dithuto dife tsa khouto tse di leng teng mo 04–07 le 08–12?",
-        "Re tshwanetse go simolola ka dithuto dife tsa pabalesego mo tseleng le dipalangwa?",
-        "Science Discovery e akaretsa eng?",
-      ],
     },
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["behaviour", "maths", "lessons"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "behaviour", "ecology", "coding", "dbe"];
 
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
