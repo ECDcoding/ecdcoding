@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip, ChevronDown } from "lucide-react";
+import { Bot, X, Send, Loader2, Minimize2, Maximize2, ThumbsUp, ThumbsDown, Copy, Check, Mic, MicOff, Paperclip, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import { Message as AiMessage, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { PromptInput, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from "@/components/ai-elements/prompt-input";
@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -296,6 +296,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
   const [topic, setTopic] = useState<CopilotTopic>("behaviour");
+  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("behaviour");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
@@ -362,7 +363,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     let done = false;
 
     // Seed assistant message
-    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+    setMessages((prev) => [...prev, { role: "assistant", content: "", topic }]);
 
     while (!done) {
       const { done: streamDone, value } = await reader.read();
@@ -384,7 +385,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
             assistantText += chunk;
             setMessages((prev) => {
               const updated = [...prev];
-              updated[updated.length - 1] = { role: "assistant", content: assistantText };
+              updated[updated.length - 1] = { role: "assistant", content: assistantText, topic };
               return updated;
             });
           }
@@ -412,7 +413,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const content = attachment
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
-    const userMsg: Message = { role: "user", content };
+    const userMsg: Message = { role: "user", content, topic };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
@@ -425,11 +426,20 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : "Something went wrong.";
       toast.error(errMsg);
-      setMessages((prev) => [...prev, { role: "assistant", content: `Sorry, I encountered an error: ${errMsg}` }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: `Sorry, I encountered an error: ${errMsg}`, topic }]);
     } finally {
       setIsLoading(false);
     }
-  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest]);
+  }, [messages, context, isLoading, streamChat, attachment, isGuest, guest, topic]);
+
+  // Rotate which single topic is visible in the picker (previous / next).
+  const rotateTopic = useCallback((dir: 1 | -1) => {
+    setDisplayedTopic((current) => {
+      const idx = TOPIC_ORDER.indexOf(current);
+      return TOPIC_ORDER[(idx + dir + TOPIC_ORDER.length) % TOPIC_ORDER.length];
+    });
+    setExpandedTopic(null); // user must click the rotated topic to open its sub-list
+  }, []);
 
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -629,66 +639,84 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
-              {/* Expandable topic guides keep questions focused on one aspect. */}
-              <div className={`flex-shrink-0 overflow-y-auto border-b border-border bg-muted/40 px-3 py-3 ${messages.length > 0 ? "max-h-32" : "max-h-[45%]"}`}>
-                <div className="space-y-2" aria-label="ECD AI topic guides">
-                  {TOPIC_ORDER.map((t) => (
-                    <div key={t} className="overflow-hidden rounded-md border border-border bg-muted">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        aria-expanded={expandedTopic === t}
-                        onClick={() => {
-                          setTopic(t);
-                          setExpandedTopic((current) => current === t ? null : t);
-                        }}
-                        className={`h-12 w-full justify-between rounded-none px-3 text-sm ${topic === t ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
-                      >
-                        {copy.topicLabels[t]}
-                        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === t ? "rotate-180" : ""}`} />
-                      </Button>
-                      {expandedTopic === t && (
-                        <div className="max-h-48 space-y-1 overflow-y-auto border-t border-border p-1.5">
-                          {copy.topicGuides[t].map((guide) => (
-                            <Button
-                              key={guide.title}
-                              type="button"
-                              variant="ghost"
-                              onClick={() => sendMessage(guide.question, true)}
-                              disabled={isLoading}
-                              className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
-                              title={copy.overviewAction}
-                            >
-                              <span className="block">
-                                <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
-                                <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
-                                <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
-                              </span>
-                            </Button>
-                          ))}
-                        </div>
-                      )}
+              {/* Rotating topic picker: one topic at a time, rotated with arrows. */}
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-3">
+                <div aria-label="ECD AI topic guides">
+                  <div className="flex items-stretch gap-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Previous topic"
+                      onClick={() => rotateTopic(-1)}
+                      className="h-12 w-10 shrink-0 rounded-md bg-muted text-foreground hover:bg-muted/80"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      aria-expanded={expandedTopic === displayedTopic}
+                      onClick={() => {
+                        setTopic(displayedTopic);
+                        setExpandedTopic((current) => (current === displayedTopic ? null : displayedTopic));
+                      }}
+                      className={`h-12 flex-1 justify-between rounded-md px-3 text-sm ${topic === displayedTopic ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
+                    >
+                      {copy.topicLabels[displayedTopic]}
+                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expandedTopic === displayedTopic ? "rotate-180" : ""}`} />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Next topic"
+                      onClick={() => rotateTopic(1)}
+                      className="h-12 w-10 shrink-0 rounded-md bg-muted text-foreground hover:bg-muted/80"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {expandedTopic === displayedTopic && (
+                    <div className="mt-2 max-h-48 space-y-1 overflow-y-auto rounded-md border border-border p-1.5">
+                      {copy.topicGuides[displayedTopic].map((guide) => (
+                        <Button
+                          key={guide.title}
+                          type="button"
+                          variant="ghost"
+                          onClick={() => sendMessage(guide.question, true)}
+                          disabled={isLoading}
+                          className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
+                          title={copy.overviewAction}
+                        >
+                          <span className="block">
+                            <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
+                            <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
+                            <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
+                          </span>
+                        </Button>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
               {/* Messages */}
               <Conversation className="bg-card">
                 <ConversationContent className="gap-3 p-4">
-                {messages.length === 0 ? (
+                {!messages.some((m) => !m.topic || m.topic === displayedTopic) ? (
                     <div className="space-y-4">
                      <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
                     <p className="text-xs text-muted-foreground px-1">
-                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[topic]}</span>
+                      {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[displayedTopic]}</span>
                     </p>
                   </div>
 
                 ) : (
-                  messages.map((msg, i) => (
+                  messages.map((msg, i) => (msg.topic && msg.topic !== displayedTopic) ? null : (
                     <AiMessage
                       key={i}
                       from={msg.role}
