@@ -6,7 +6,7 @@ import Hero from "@/components/Hero";
 import CallToAction from "@/components/CallToAction";
 import AssistantHub from "@/components/AssistantHub";
 import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
-import { Copyright, Mail, Phone, Shield } from "lucide-react";
+import { Calendar, Copyright, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
   Popover,
@@ -83,6 +83,10 @@ const Index = () => {
           <Link to="/privacy-policy" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Privacy Policy">
             <Shield className="h-5 w-5" />
             <span className="text-sm text-muted-foreground">Privacy Policy</span>
+          </Link>
+          <Link to="/ecd-expo-2026" className="text-lime-400 hover:text-lime-300 transition-colors flex items-center gap-1" title="Events">
+            <Calendar className="h-5 w-5" />
+            <span className="text-sm text-muted-foreground">Events</span>
           </Link>
           {isAdmin && (
             <Link to="/admin" className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
