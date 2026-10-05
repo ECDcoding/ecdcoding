@@ -9,12 +9,6 @@ import ExpoPhotoCarousel from "@/components/ExpoPhotoCarousel";
 import { Copyright, Mail, Phone, Shield } from "lucide-react";
 import { FaWhatsapp, FaFacebook } from "react-icons/fa";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
