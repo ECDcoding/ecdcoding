@@ -396,7 +396,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const sendMessage = useCallback(async (text: string) => {
     if ((!text.trim() && !attachment) || isLoading) return;
 
-    // Visitors: 1 free question per week, then R100 once off for 50 credits
+    // Visitors: 1 free question per day (credit top-ups paused while payments are fixed)
     if (isGuest && !guest.canAsk) {
       setPaywallOpen(true);
       return;
@@ -795,24 +795,22 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
                       {guest.freeQuestionsLeft > 0
-                        ? "1 free question this week"
+                        ? "1 free question today"
                         : guest.credits > 0
                           ? `${guest.credits} credits left (1 per minute)${
-                              guest.isLowOnCredits ? " — please refill to carry on" : ""
-                            }${
                               guest.creditsExpireAt
                                 ? ` · expires ${guest.creditsExpireAt.toLocaleDateString()}`
                                 : ""
                             }`
-                          : "Free question used"}
+                          : "Free question used today — back tomorrow"}
                     </span>
-                    {(guest.credits === 0 || guest.isLowOnCredits) && (
+                    {guest.freeQuestionsLeft === 0 && (
                       <button
                         type="button"
                         onClick={() => setPaywallOpen(true)}
                         className="font-semibold text-primary underline whitespace-nowrap"
                       >
-                        {guest.credits === 0 ? "Get" : "Refill"} {GUEST_CREDITS_PER_PURCHASE} credits — R100
+                        About credits
                       </button>
                     )}
                   </div>
