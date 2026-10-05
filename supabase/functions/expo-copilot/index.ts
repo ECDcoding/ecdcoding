@@ -369,7 +369,11 @@ serve(async (req) => {
 
     const TOPIC_FOCUS: Record<string, string> = {
       library: `\n\nSELECTED TOPIC: KNOWLEDGE BASE LIBRARY.
-The user is focused on the ECDcoding Knowledge Base Library — Learning the Basics and the Verbal Testing Space. Answer from the LESSONS ON OFFER list and explain where each lesson sits in the app. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
+The user is focused on the ECDcoding Knowledge Base Library — the Numeracy and Literacy lessons inside Learning the Basics, and the Verbal Testing Space. Answer from the LESSONS ON OFFER list and explain where each lesson sits in the app.
+LEARNING THE BASICS (ages 04–07) content:
+- NUMERACY: Number Counting with counting in sets from 1–10, then 11–20, 21–30, 31–40, 41–50, 51–60, 61–70, 71–80, 81–90 and 91–100 (each set is its own counting activity); and Shapes — circle, rectangle, square and triangle.
+- LITERACY: vowels, the alphabet and colours.
+Explain what a 04–07 year old is exposed to when they open Numeracy or Literacy, and suggest a sensible starting set for the child's age. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
       maths: `\n\nSELECTED TOPIC: MATHEMATICS.
 The user is focused on Foundation Phase mathematics teaching and learning. Answer from the complete FOUNDATION PHASE MATHEMATICS ETHOS, including the play-based approach, constructivism, the three kinds of knowledge, conceptual understanding, strategic competence, procedural fluency, adaptive reasoning, productive disposition, the child-centred environment, the five-phase learning cycle, developing number sense, evaluation roles, connected classroom learning, the Learner Play Index and the Number Sense knowledge and understanding network. Give concrete, age-appropriate activities. Do not drift into general behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Foundational Learning Outcomes".`,
       flo: `\n\nSELECTED TOPIC: FOUNDATIONAL LEARNING OUTCOMES.
