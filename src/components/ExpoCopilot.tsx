@@ -346,9 +346,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
-  const [followUpSecondsLeft, setFollowUpSecondsLeft] = useState<number | null>(null);
-  const [sessionEnded, setSessionEnded] = useState(false);
-  const followUpTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Animate in after mount
   useEffect(() => {
@@ -387,32 +384,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
-  // 45-second live window: after a lesson invitation, the user has 45s to
-  // respond (typing counts as activity). If it lapses, end the conversation.
-  useEffect(() => {
-    const last = messages[messages.length - 1];
-    if (last?.followUp && !sessionEnded) {
-      setFollowUpSecondsLeft((current) => current ?? 45);
-      followUpTimerRef.current = setInterval(() => {
-        setFollowUpSecondsLeft((current) => {
-          if (current === null) return null;
-          if (current <= 1) {
-            if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-            followUpTimerRef.current = null;
-            setSessionEnded(true);
-            setMessages((previous) => previous.filter((message) => !message.followUp));
-            return null;
-          }
-          return current - 1;
-        });
-      }, 1000);
-      return () => {
-        if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-        followUpTimerRef.current = null;
-      };
-    }
-    setFollowUpSecondsLeft(null);
-  }, [messages, sessionEnded]);
 
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
@@ -492,8 +463,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const userMsg: Message = { role: "user", content, topic };
     const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
     setMessages(newMessages);
-    setSessionEnded(false);
-    setFollowUpSecondsLeft(null);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
@@ -670,18 +639,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-orange-400 rounded-full border border-primary animate-pulse" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-3">
-                    <p className="text-base font-bold leading-none">ECD AI</p>
-                    {followUpSecondsLeft !== null && !sessionEnded && (
-                      <span
-                        role="timer"
-                        aria-label="ECD AI conversation countdown"
-                        className="inline-flex w-14 shrink-0 items-center justify-center rounded-md border border-primary-foreground/30 bg-primary-foreground/10 py-1 text-base font-bold tabular-nums text-primary-foreground"
-                      >
-                        0:{String(followUpSecondsLeft).padStart(2, "0")}
-                      </span>
-                    )}
-                  </div>
+                  <p className="text-base font-bold leading-none">ECD AI</p>
                   {context && (
                     <p className="mt-1 text-sm text-primary-foreground/80">
                       Context: {context}
@@ -776,8 +734,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           onClick={() => {
                             if (displayedTopic === "library") {
                               setTopic("library");
-                              setSessionEnded(false);
-                              setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
                                 ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
@@ -912,21 +868,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                {sessionEnded ? (
-                  <div className="flex justify-center py-1">
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={() => {
-                        setSessionEnded(false);
-                        setFollowUpSecondsLeft(null);
-                        inputRef.current?.focus();
-                      }}
-                    >
-                      {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
-                    </Button>
-                  </div>
-                ) : (
                 <PromptInput
 
                   onSubmit={() => sendMessage(input)}
@@ -935,13 +876,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <PromptInputTextarea
                     ref={inputRef}
                     value={input}
-                    onChange={(e) => {
-                      setInput(e.target.value);
-                       if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(45); // typing counts as activity
-                    }}
+                    onChange={(e) => setInput(e.target.value)}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
-                    disabled={isLoading || sessionEnded}
+                    disabled={isLoading}
                   />
                   <PromptInputFooter>
                     <PromptInputTools>
@@ -966,13 +904,13 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <PromptInputSubmit
                       aria-label="Send message"
                       status={isLoading ? "streaming" : "ready"}
-                      disabled={isLoading || sessionEnded || (!input.trim() && !attachment)}
+                      disabled={isLoading || (!input.trim() && !attachment)}
                     >
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                     </PromptInputSubmit>
                   </PromptInputFooter>
                 </PromptInput>
-                )}
+
 
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
