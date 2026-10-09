@@ -402,10 +402,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
             if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
             followUpTimerRef.current = null;
             setSessionEnded(true);
-            setMessages((previous) => [
-              ...previous.filter((message) => !message.followUp),
-              { role: "assistant", content: copy.endedMessage ?? COPILOT_COPY.en.endedMessage, topic: last.topic, ended: true },
-            ]);
+            setMessages((previous) => previous.filter((message) => !message.followUp));
             return null;
           }
           return current - 1;
@@ -417,7 +414,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       };
     }
     setFollowUpSecondsLeft(null);
-  }, [messages, sessionEnded, copy.endedMessage]);
+  }, [messages, sessionEnded]);
+
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
@@ -848,22 +846,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               {msg.content}
                             </p>
                           </div>
-                        ) : msg.ended ? (
-                          <div className="rounded-lg border border-border bg-muted px-3 py-2">
-                            <p className="text-sm leading-relaxed text-muted-foreground">{msg.content}</p>
-                            <Button
-                              type="button"
-                              size="sm"
-                              className="mt-2"
-                              onClick={() => {
-                                setSessionEnded(false);
-                                setMessages((previous) => previous.filter((message) => !message.ended));
-                                inputRef.current?.focus();
-                              }}
-                            >
-                              {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
-                            </Button>
-                          </div>
                         ) : msg.summaryTitle ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
@@ -932,7 +914,23 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   className="hidden"
                   onChange={handleFileChange}
                 />
+                {sessionEnded ? (
+                  <div className="flex justify-center py-1">
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        setSessionEnded(false);
+                        setFollowUpSecondsLeft(null);
+                        inputRef.current?.focus();
+                      }}
+                    >
+                      {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
+                    </Button>
+                  </div>
+                ) : (
                 <PromptInput
+
                   onSubmit={() => sendMessage(input)}
                   className="rounded-md border-border bg-card shadow-none"
                 >
@@ -976,6 +974,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </PromptInputSubmit>
                   </PromptInputFooter>
                 </PromptInput>
+                )}
+
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
