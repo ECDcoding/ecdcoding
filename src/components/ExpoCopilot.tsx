@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -722,15 +722,29 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           key={guide.title}
                           type="button"
                           variant="ghost"
-                          onClick={() => sendMessage(guide.question, true)}
+                          onClick={() => {
+                            if (displayedTopic === "library") {
+                              setTopic("library");
+                              setMessages((previous) => [...previous, {
+                                role: "assistant",
+                                content: guide.summary,
+                                topic: "library",
+                                summaryTitle: guide.title,
+                              }]);
+                              setExpandedTopic(null);
+                              inputRef.current?.focus();
+                              return;
+                            }
+                            sendMessage(guide.question, true);
+                          }}
                           disabled={isLoading}
                           className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
-                          title={copy.overviewAction}
+                          title={displayedTopic === "library" ? guide.title : copy.overviewAction}
                         >
                           <span className="block">
                             <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
                             <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
-                            <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>
+                            {displayedTopic !== "library" && <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>}
                           </span>
                         </Button>
                       ))}
@@ -760,14 +774,19 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       from={msg.role}
                     >
                       <MessageContent className={msg.role === "user" ? "bg-primary text-primary-foreground" : undefined}>
-                        {msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
+                        {msg.summaryTitle ? (
+                          <div className="text-xs leading-relaxed text-muted-foreground">
+                            <p className="mb-1 font-semibold text-foreground">{msg.summaryTitle}</p>
+                            <p>{msg.content}</p>
+                          </div>
+                        ) : msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
                             {copy.thinking}
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
