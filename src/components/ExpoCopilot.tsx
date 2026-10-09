@@ -53,7 +53,7 @@ const COPILOT_COPY = {
     listenError: "Couldn't hear that — please try again.",
     voiceUnsupported: "Voice input isn't supported in this browser.",
     topicLabels: {
-      library: "Knowledge Base Library",
+      library: "Lessons Library",
       maths: "Mathematics",
       flo: "Foundational Learning Outcomes",
       behaviour: "Child Behavior",
@@ -69,9 +69,11 @@ const COPILOT_COPY = {
     overviewAction: "Ask ECD AI about this",
     topicGuides: {
       library: [
-        { title: "Numeracy", summary: "Number Counting with counting in sets from 1–10, 11–20, 21–30 and onwards, plus Shapes (circle, rectangle, square, triangle) — what a 04–07 year old explores in Numeracy.", question: "What will my 04–07 year old be exposed to in the Numeracy lessons?" },
-        { title: "Literacy", summary: "Vowels, the alphabet and colours — the early reading and writing building blocks a 04–07 year old explores in Literacy.", question: "What will my 04–07 year old be exposed to in the Literacy lessons?" },
+        { title: "Learning the Basics", summary: "Learners explore literacy and numeracy: vowels, the alphabet and colours, number counting in sets from 1–10, 11–20 and onwards, and basic shapes.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
         { title: "Verbal Testing Space", summary: "Learners present what they see verbally to improve their knowledge base.", question: "How should my child use the Verbal Testing Space?" },
+        { title: "Coding", summary: "Explore coding with alphabets and numbers to develop pattern recognition and step-by-step thinking.", question: "How can my child explore Coding with alphabets and numbers in ECDcoding?" },
+        { title: "Programming", summary: "Explore age-appropriate visual programming with Blockly and Scratch.", question: "How can my child get started with Programming using Blockly or Scratch?" },
+        { title: "Handwriting", summary: "Explore handwriting and drawing activities, including Google Docs Draw.", question: "How can Handwriting and Google Docs Draw support my child's learning?" },
       ],
       flo: [
         { title: "Learner Play Index", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Learner Play Index to observe my child?" },
@@ -173,7 +175,7 @@ const COPILOT_COPY = {
     listenError: "Ga ke a go utlwa — tsweetswee leka gape.",
     voiceUnsupported: "Go bua ka lentswe ga go tshegediwe mo sebatling seno.",
     topicLabels: {
-      library: "Laeborari ya Kitso",
+      library: "Laeborari ya Dithuto",
       maths: "Dipalo",
       flo: "Diphitlhelelo tsa Thuto ya Motheo",
       behaviour: "Boitshwaro",
@@ -189,9 +191,11 @@ const COPILOT_COPY = {
     overviewAction: "Botsa ECD AI ka seno",
     topicGuides: {
       library: [
-        { title: "Dipalo (Numeracy)", summary: "Go bala ka ditlhatlhamo go tswa 1–10, 11–20, 21–30 le go ya pele, le Dibopego (sereke, khutlonnetsepa, khutlonthatu, khutlwelo) — se ngwana wa dingwaga 04–07 a tla se bonang mo Dipalong.", question: "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo thutong ya Dipalo?" },
-        { title: "Go Bala le go Kwala (Literacy)", summary: "Melaetsa (vowels), alfhabete le mebala — dipiloto tsa ntlha tsa go bala le go kwala tsa ngwana wa dingwaga 04–07.", question: "Ngwana wa me wa dingwaga 04–07 o tla tlhaganediwa ka eng mo Go Bala le go Kwala?" },
+        { title: "Learning the Basics", summary: "Baithuti ba ithuta go bala, go kwala le dipalo: ditumanosi, alfhabete, mebala, go bala ka ditlhopha tsa 1–10, 11–20 le go ya pele, le dibopego.", question: "Ngwana wa me wa dingwaga 04–07 o tla ithuta eng mo Learning the Basics? Tsweetswee tlhalosa go bala le go kwala le dipalo ka go farologana." },
         { title: "Verbal Testing Space", summary: "Baithuti ba tlhagisa ka molomo se ba se bonang go tokafatsa kitso ya bona.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
+        { title: "Khouto (Coding)", summary: "Dirisa ditlhaka le dipalo go ithuta mekgwa le go akanya kgato ka kgato.", question: "Ngwana wa me a ka ithuta jang khouto ka ditlhaka le dipalo mo ECDcoding?" },
+        { title: "Programming", summary: "Ithute go dira mananeo ka dibloke tsa Blockly le Scratch go ya ka dingwaga tsa ngwana.", question: "Ngwana wa me a ka simolola jang Programming ka Blockly kgotsa Scratch?" },
+        { title: "Go Kwala ka Seatla (Handwriting)", summary: "Ithute go kwala ka seatla le go thala, go akaretsa Google Docs Draw.", question: "Go kwala ka seatla le Google Docs Draw di ka tshegetsa jang thuto ya ngwana wa me?" },
       ],
       flo: [
         { title: "Learner Play Index", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang Learner Play Index go lemoga ngwana wa me?" },
@@ -285,7 +289,7 @@ const COPILOT_COPY = {
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "behaviour", "ecology", "coding", "dbe"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "coding", "dbe", "behaviour"];
 
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
@@ -321,8 +325,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
-  const [topic, setTopic] = useState<CopilotTopic>("behaviour");
-  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("behaviour");
+  const [topic, setTopic] = useState<CopilotTopic>("library");
+  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("library");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
@@ -348,6 +352,14 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   }, [messages]);
 
   // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTopic("library");
+      setDisplayedTopic("library");
+      setExpandedTopic(null);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen && !isMinimized) {
       setTimeout(() => inputRef.current?.focus(), 100);
