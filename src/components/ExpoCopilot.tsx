@@ -346,9 +346,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
-  const [followUpSecondsLeft, setFollowUpSecondsLeft] = useState<number | null>(null);
-  const [sessionEnded, setSessionEnded] = useState(false);
-  const followUpTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Animate in after mount
   useEffect(() => {
@@ -387,32 +384,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
-  // 45-second live window: after a lesson invitation, the user has 45s to
-  // respond (typing counts as activity). If it lapses, end the conversation.
-  useEffect(() => {
-    const last = messages[messages.length - 1];
-    if (last?.followUp && !sessionEnded) {
-      setFollowUpSecondsLeft((current) => current ?? 45);
-      followUpTimerRef.current = setInterval(() => {
-        setFollowUpSecondsLeft((current) => {
-          if (current === null) return null;
-          if (current <= 1) {
-            if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-            followUpTimerRef.current = null;
-            setSessionEnded(true);
-            setMessages((previous) => previous.filter((message) => !message.followUp));
-            return null;
-          }
-          return current - 1;
-        });
-      }, 1000);
-      return () => {
-        if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-        followUpTimerRef.current = null;
-      };
-    }
-    setFollowUpSecondsLeft(null);
-  }, [messages, sessionEnded]);
 
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
