@@ -38,3 +38,4 @@
 - [x] Add a "Literacy" sub-category group (ABC Chart + Colour Coding cards)
 - [x] Start a 180-second countdown the moment a Verbal Testing Space card launches, and stop the recording when it reaches zero.
 - [x] Make ECD AI Lessons Library answers open with "In Lessons Library..." instead of "In Knowledge Base Library...".
+- [x] Show existing brief summaries on every ECD AI Lessons Library lesson click, without automatic questions; verify all five summaries preserve the guest allowance.
