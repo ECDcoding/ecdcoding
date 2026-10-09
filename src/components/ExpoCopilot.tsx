@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; ended?: boolean };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -68,6 +68,9 @@ const COPILOT_COPY = {
     },
     overviewAction: "Ask ECD AI about this",
     summaryFollowUp: "Do you have any further questions about this lesson? Type them below and I'll gladly help.",
+    replyWithin: "Reply within",
+    endedMessage: "I didn't hear back from you, so I've ended this conversation for now. ECD AI is always live — tap below or pick a lesson whenever you're ready to chat again.",
+    restartLabel: "Ask a new question",
     topicGuides: {
       library: [
         { title: "Learning the Basics", summary: "Learners explore literacy and numeracy: vowels, the alphabet and colours, number counting in sets from 1–10, 11–20 and onwards, and basic shapes.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
@@ -191,6 +194,9 @@ const COPILOT_COPY = {
     },
     overviewAction: "Botsa ECD AI ka seno",
     summaryFollowUp: "A o na le dipotso tse dingwe ka thuto eno? Di kwale fa tlase mme ke tla go thusa ka mabogo a mabedi.",
+    replyWithin: "Araba mo metsotsoaneng e",
+    endedMessage: "Ga ke a utlwa karabo ya gago, ka jalo ke tswaletswe puisano eno ga jaana. ECD AI e tshela ka metlha — tobetsa fa tlase kgotsa tlhopha thuto fa o ipaakanyeditse go bua gape.",
+    restartLabel: "Botsa potso e ntšha",
     topicGuides: {
       library: [
         { title: "Learning the Basics", summary: "Baithuti ba ithuta go bala, go kwala le dipalo: ditumanosi, alfhabete, mebala, go bala ka ditlhopha tsa 1–10, 11–20 le go ya pele, le dibopego.", question: "Ngwana wa me wa dingwaga 04–07 o tla ithuta eng mo Learning the Basics? Tsweetswee tlhalosa go bala le go kwala le dipalo ka go farologana." },
@@ -342,6 +348,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
+  const [followUpSecondsLeft, setFollowUpSecondsLeft] = useState<number | null>(null);
+  const [sessionEnded, setSessionEnded] = useState(false);
+  const followUpTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Animate in after mount
   useEffect(() => {
@@ -379,6 +388,36 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
 
   const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
+
+  // 15-second live window: after a lesson invitation, the user has 15s to
+  // respond (typing counts as activity). If it lapses, end the conversation.
+  useEffect(() => {
+    const last = messages[messages.length - 1];
+    if (last?.followUp && !sessionEnded) {
+      setFollowUpSecondsLeft((current) => current ?? 15);
+      followUpTimerRef.current = setInterval(() => {
+        setFollowUpSecondsLeft((current) => {
+          if (current === null) return null;
+          if (current <= 1) {
+            if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
+            followUpTimerRef.current = null;
+            setSessionEnded(true);
+            setMessages((previous) => [
+              ...previous.filter((message) => !message.followUp),
+              { role: "assistant", content: copy.endedMessage ?? COPILOT_COPY.en.endedMessage, topic: last.topic, ended: true },
+            ]);
+            return null;
+          }
+          return current - 1;
+        });
+      }, 1000);
+      return () => {
+        if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
+        followUpTimerRef.current = null;
+      };
+    }
+    setFollowUpSecondsLeft(null);
+  }, [messages, sessionEnded, copy.endedMessage]);
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
@@ -455,8 +494,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
     const userMsg: Message = { role: "user", content, topic };
-    const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
+    const newMessages = [...messages.filter((m) => !m.followUp && !m.ended), userMsg];
     setMessages(newMessages);
+    setSessionEnded(false);
+    setFollowUpSecondsLeft(null);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
@@ -728,8 +769,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           onClick={() => {
                             if (displayedTopic === "library") {
                               setTopic("library");
+                              setSessionEnded(false);
+                              setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.ended),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
@@ -790,7 +833,30 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                         {msg.followUp ? (
                           <div className="flex items-start gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2">
                             <span className="mt-[6px] h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary-bright" />
-                            <p className="text-sm font-medium leading-relaxed text-primary-bright">{msg.content}</p>
+                            <p className="text-sm font-medium leading-relaxed text-primary-bright">
+                              {msg.content}
+                              {followUpSecondsLeft !== null && (
+                                <span className="mt-1 block text-[13px] font-semibold text-primary-bright">
+                                  {copy.replyWithin ?? COPILOT_COPY.en.replyWithin} {followUpSecondsLeft}s…
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                        ) : msg.ended ? (
+                          <div className="rounded-lg border border-border bg-muted px-3 py-2">
+                            <p className="text-sm leading-relaxed text-muted-foreground">{msg.content}</p>
+                            <Button
+                              type="button"
+                              size="sm"
+                              className="mt-2"
+                              onClick={() => {
+                                setSessionEnded(false);
+                                setMessages((previous) => previous.filter((message) => !message.ended));
+                                inputRef.current?.focus();
+                              }}
+                            >
+                              {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
+                            </Button>
                           </div>
                         ) : msg.summaryTitle ? (
                           <div className="text-sm leading-relaxed text-foreground">
@@ -805,7 +871,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && !msg.ended && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
@@ -867,10 +933,13 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <PromptInputTextarea
                     ref={inputRef}
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(15); // typing counts as activity
+                    }}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
-                    disabled={isLoading}
+                    disabled={isLoading || sessionEnded}
                   />
                   <PromptInputFooter>
                     <PromptInputTools>
@@ -895,7 +964,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <PromptInputSubmit
                       aria-label="Send message"
                       status={isLoading ? "streaming" : "ready"}
-                      disabled={isLoading || (!input.trim() && !attachment)}
+                      disabled={isLoading || sessionEnded || (!input.trim() && !attachment)}
                     >
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                     </PromptInputSubmit>
