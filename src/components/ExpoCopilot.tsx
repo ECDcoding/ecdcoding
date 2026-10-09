@@ -742,13 +742,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                                   topic: "library",
                                   summaryTitle: guide.title,
                                 },
-                                {
-                                  role: "assistant",
-                                  content: copy.summaryFollowUp,
-                                  topic: "library",
-                                  followUp: true,
-                                },
-
                               ]);
                               setExpandedTopic(null);
                               inputRef.current?.focus();
