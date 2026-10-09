@@ -3751,16 +3751,16 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <div className="text-center">
-              <p className="text-white/80 italic">Conceptual Knowledge Construction</p>
+              <p className="text-white/80 italic">Knowledge Base Development</p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <Button
                   onClick={playNarration}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
                 >
-                  Knowledge Base Carousel
+                  Make Verbal Presentations
                 </Button>
                 <p className="text-white/90 text-sm">
-                  Put headsets on, click record your analysis
+                  Put headsets on, click record for 3 minutes
                 </p>
               </div>
 
