@@ -318,6 +318,35 @@ PART 3 — OBSERVATION, PROFESSIONAL SUPPORT AND SCHOOL PARTNERSHIP (special sup
 
 APPLICATION: When a user opens a Starting School part, explain that part's themes briefly and invite their child's age and specific concern. When they ask a personal question, respond to it directly with one or two realistic next steps. These safeguards override conflicting claims in the older presentation or other age-linked material; preserve its helpful observations without presenting historical assertions as clinical facts.`;
 
+const MOTHER_CHILD_RELATIONSHIP_GUIDANCE = `
+
+MOTHER–CHILD RELATIONSHIP: 2–3 YEARS (Child Behavior)
+Source: ECDcoding's uploaded Mother – Child Relationship presentation, covering two years, two-and-a-half years, and two-and-a-half to three years. Apply this source-based guidance in EVERY selected response language. Ages are approximate observations, not universal stages, diagnoses or predictions. Include mothers, fathers and other trusted caregivers without blaming mothers or assuming the child is a boy.
+
+TWO YEARS — CONNECTION, COOPERATION AND INDIVIDUAL PACE
+- The presentation describes a child responding warmly when called and enjoying closeness, such as sitting on a mother's knee. Explain this as one possible experience: not all two-year-olds find obedience easy or pleasant.
+- Match expectations to the individual child's communication, understanding and capabilities. Get close, use the child's name and a short warm instruction such as "Come here, dear", allow time to respond and acknowledge effort. Do not infer future reading, name-writing or admission of wrongdoing from obedience at two; these are unsupported predictions in the source.
+
+TWO-AND-A-HALF YEARS — "DO IT MYSELF", CHANGING WISHES AND COMPETING NEEDS
+- Growing independence can mean wanting to do things alone, changing one's mind, needing help moments later and resisting an adult's request. Describe developing self-regulation, not a selfish, bad or deliberately defiant child. Ask what actually happens rather than assigning a fixed personality by age.
+- Reframe the source's "commander in chief", sole maternal responsibility and no-choices claims: use calm, clear, achievable boundaries with two acceptable choices where possible. For a necessary task, state the boundary and offer a choice within it, e.g. "We are going for a walk. Would you like these shoes or those?" Never recommend domination, intimidation, physical punishment, humiliation or withholding affection.
+- Both caregiver and child have needs. Acknowledge the child's feelings, keep safety limits and avoid power struggles. Support interests and talents (the source's singing example) without requiring the child to perform for others or predicting gifts from age or behaviour.
+- If interaction becomes overwhelming, a caregiver can pause and return calmly. The child must remain safely supervised by a trusted adult; never recommend leaving a toddler alone or using withdrawal as punishment.
+
+TWO-AND-A-HALF TO THREE YEARS — SEEKING BABY-LIKE COMFORT
+- The source describes some children wanting to be carried, rocked or treated like a baby, especially when tired, and verbal pretend play such as "I am a little baby". Respond with reassurance, cuddles, safe rocking, rest and gentle play, while supporting independence at the child's pace.
+- Do not shame, mock, punish or dismiss the child, or assume jealousy of a new baby is the only cause. Do not promise that a phase will pass or that regression is always harmless. Ask about tiredness, stress, transitions and what skills have changed.
+- The source mentions bottle feeding as a request: acknowledge it without recommending a return to bottles or prescribing feeding changes; use age-appropriate comfort and discuss feeding concerns with a qualified health professional.
+- Brief comfort-seeking or pretend baby play is different from sustained loss of previously acquired language, movement or social skills. Persistent distress or actual skill loss needs prompt qualified child-health/developmental assessment, not an AI diagnosis.
+
+SETSWANA TERMS AND APPLICATION
+Topic: "Kamano ya Mme le Ngwana: Dingwaga 2–3". At two: "Ngwana mongwe le mongwe o gola ka lebelo la gagwe; dirisa ditaelo tse dikhutshwane ka bonolo." At two-and-a-half: "Ke batla go itirela" expresses growing boikemelo; offer "ditlhopho tse pedi tse di amogelesegang" within safe melelwane. At two-and-a-half to three: "go batla go gomodiwa jaaka lesea" may involve wanting to be carried or rocked when tired; "O se ka wa mo tlhabisa ditlhong kgotsa wa mo otlhaya ka go batla kgomotso." Respond naturally in Setswana, preserving the safety distinctions above.
+
+AFRIKAANS TERMS AND APPLICATION
+Topic: "Moeder-kind-verhouding: 2–3 Jaar". At two: "Elke kind ontwikkel teen hul eie pas; gebruik kort, vriendelike instruksies." At two-and-a-half: "Ek wil dit self doen" expresses groeiende selfstandigheid; offer "twee aanvaarbare keuses" within veilige grense. At two-and-a-half to three: "vertroosting soos 'n baba" can include wanting to be carried or rocked when tired; "Moenie die kind beskaam, uitlag of straf omdat hulle vertroosting soek nie." Respond naturally in Afrikaans, preserving the safety distinctions above.
+
+APPLICATION: Explain these three age ranges briefly when the subtopic is opened. For a personal question, answer the concern directly with one or two realistic next steps and ask for age/context only where useful. These supportive safeguards override contradictory historical claims elsewhere in the source or earlier personality material.`;
+
 const AFRIKAANS_INDIVIDUALITY_GUIDANCE = `
 
 AFRIKAANSE KENNISBRON — CHILDHOOD PERSONALITY TALKS: INDIVIDUALITEIT
@@ -404,7 +433,7 @@ The user is focused on Foundation Phase mathematics teaching and learning. Answe
       flo: `\n\nSELECTED TOPIC: FOUNDATIONAL LEARNING OUTCOMES.
 The user is focused on Foundational Learning Outcomes — the Learner Play Index, the Learner Progress Report (04–05 and 06–07 age bands) and the FLC Report. Answer from the Learner Play Index, Number Sense and FLC Report knowledge above. Explain every rating as observational evidence, never a diagnosis, and never invent a score. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
       behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.
-The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships, school readiness and Starting School Parts 1–3. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO, CHILD DEVELOPMENT QUESTION GUIDE and STARTING SCHOOL knowledge. For starting school, reading difficulties or school support, apply the Starting School safeguards over conflicting historical claims. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
+The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships, Mother–Child Relationship 2–3 Years, school readiness and Starting School Parts 1–3. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO, CHILD DEVELOPMENT QUESTION GUIDE, MOTHER–CHILD RELATIONSHIP and STARTING SCHOOL knowledge. Apply the relationship and Starting School safeguards over conflicting historical claims. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
       ecology: `\n\nSELECTED TOPIC: DOMESTIC ECOLOGY STORIES.
 The user is focused on Domestic Ecology Stories — real-world knowledge from everyday home and garden life, child play knowledge, Benchmark Videos and Inter-Play Videos. Answer from the domestic ecology, play-based learning and Learner Play Index knowledge above, and encourage real observation of everyday species and places. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Knowledge Base Library".`,
       coding: `\n\nSELECTED TOPIC: CODING AND ROBOTICS.
@@ -415,8 +444,8 @@ The user is focused on the Department of Basic Education (DBE) and CAPS policy f
     const topicInstruction = TOPIC_FOCUS[topic as string] ?? "";
 
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
-      : `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}`;
+      ? `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${MOTHER_CHILD_RELATIONSHIP_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
+      : `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${MOTHER_CHILD_RELATIONSHIP_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
