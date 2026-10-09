@@ -191,7 +191,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
   const [focusFlowIndex, setFocusFlowIndex] = useState(0);
-  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
+  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic' | 'math'>('all');
   const [microbitAnalysisOpen, setMicrobitAnalysisOpen] = useState(false);
   const [testResults, setTestResults] = useState<{
     subject: string;
