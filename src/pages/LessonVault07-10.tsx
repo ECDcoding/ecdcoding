@@ -717,18 +717,16 @@ const LessonVault0710 = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64 bg-background z-50">
-                  {/* 1. Learning the Basics */}
-                  <DropdownMenuItem onClick={() => navigate("/lesson-vault-07-10")}>
-                    <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
-                  </DropdownMenuItem>
-
-                  {/* 2. Knowledge Base Library */}
+                  {/* Lessons Library */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                      <BookOpen className="mr-2 h-4 w-4" /> Knowledge Base Library
+                      <BookOpen className="mr-2 h-4 w-4" /> Lessons Library
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-72 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/lesson-vault-07-10")}>
+                          <BookOpen className="mr-2 h-4 w-4" /> Learning the Basics
+                        </DropdownMenuItem>
                         {/* 1. Verbal Testing Space */}
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger>
