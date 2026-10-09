@@ -728,12 +728,20 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           onClick={() => {
                             if (displayedTopic === "library") {
                               setTopic("library");
-                              setMessages((previous) => [...previous, {
-                                role: "assistant",
-                                content: guide.summary,
-                                topic: "library",
-                                summaryTitle: guide.title,
-                              }]);
+                              setMessages((previous) => [
+                                ...previous.filter((message) => !message.summaryTitle),
+                                {
+                                  role: "assistant",
+                                  content: guide.summary,
+                                  topic: "library",
+                                  summaryTitle: guide.title,
+                                },
+                                {
+                                  role: "assistant",
+                                  content: copy.summaryFollowUp,
+                                  topic: "library",
+                                },
+                              ]);
                               setExpandedTopic(null);
                               inputRef.current?.focus();
                               return;
