@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Add Mother–Child Relationship 2–3 Years under Child Behavior in English, Setswana and Afrikaans; deploy and verify its guidance.
+
 - [x] Add and verify Starting School Parts 1–3 under ECD AI Child Behavior using the uploaded school-management material.
 - [x] Translate Starting School Parts 1–3 into Setswana and Afrikaans and verify selected-language answers.
 
