@@ -186,6 +186,47 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
+  const RECORDING_LIMIT_SECONDS = 180; // 3 minutes
+  const formatClock = (secs: number) =>
+    `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
+  const [countdown, setCountdown] = useState<number | null>(null);
+
+  const stopCountdown = () => {
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+    setCountdown(null);
+  };
+
+  const startCountdown = () => {
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    setCountdown(RECORDING_LIMIT_SECONDS);
+    let remaining = RECORDING_LIMIT_SECONDS;
+    countdownIntervalRef.current = setInterval(() => {
+      remaining -= 1;
+      setCountdown(remaining);
+      if (remaining <= 0) {
+        if (countdownIntervalRef.current) {
+          clearInterval(countdownIntervalRef.current);
+          countdownIntervalRef.current = null;
+        }
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
+          mediaRecorderRef.current.stop();
+        }
+        setIsRecording(false);
+        setRecordingTime(0);
+        toast({
+          title: "Time is up",
+          description: "The 3 minute verbal presentation has finished.",
+        });
+      }
+    }, 1000);
+  };
+
+  useEffect(() => () => {
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+  }, []);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
@@ -208,6 +249,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const verbalTestingRef = useRef<HTMLDivElement>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const cardAutoResumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
   const [emojiDialogOpen, setEmojiDialogOpen] = useState(false);
   const [capsOpen, setCapsOpen] = useState(false);
@@ -453,16 +496,18 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
             description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
           });
           stream.getTracks().forEach(track => track.stop());
+          mediaRecorderRef.current = null;
         };
         
         recorder.start();
+        mediaRecorderRef.current = recorder;
         setMediaRecorder(recorder);
         setIsRecording(true);
         setRecordingTime(0);
         
         const timer = setInterval(() => {
           setRecordingTime(prev => {
-            if (prev >= 30) {
+            if (prev >= RECORDING_LIMIT_SECONDS) {
               clearInterval(timer);
               if (recorder.state === 'recording') {
                 recorder.stop();
@@ -680,6 +725,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
           name: cardName,
           ...cardData
         });
+        startCountdown();
       }
     }
   };
@@ -687,6 +733,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   // Function to close full-screen card and resume carousel
   const closeFullScreenCard = () => {
     setFullScreenCard(null);
+    stopCountdown();
     if (carouselRef.current) {
       carouselRef.current.style.animationPlayState = 'running';
     }
@@ -696,7 +743,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   
   // Function to play narration on demand using Web Speech API
   const playNarration = () => {
-    const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 30 seconds verbal recording to be successful and saved in the relevant lesson archive. And if the 30 seconds is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
+    const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 3 minutes verbal recording to be successful and saved in the relevant lesson archive. And if the 3 minutes is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
     
     if ('speechSynthesis' in window) {
       // Cancel any ongoing speech
@@ -1745,7 +1792,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
           <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
           {isRecording && selectedCardForTest === "ABC Chart" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("ABC Chart")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABC Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1758,7 +1805,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         <CardContent className="p-0 relative">
           <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
           {isRecording && selectedCardForTest === "Basic Shapes" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Basic Shapes")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1775,7 +1822,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
           <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
           {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Basic Logic Thinking")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Logic Thinking" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1799,7 +1846,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-blue-600 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Micro:bit Device</h3>
           <img src={microbitDevice} alt="BBC Micro:bit device" className="w-full h-52 rounded-lg object-contain" />
           {isRecording && selectedCardForTest === "Micro:bit Device" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button
@@ -1817,7 +1864,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
           <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
           {isRecording && selectedCardForTest === "Busy Bee" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Busy Bee")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -3757,10 +3804,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   onClick={playNarration}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
                 >
-                  Make Verbal Presentations
+                  3 Minutes Verbal Presentation
                 </Button>
                 <p className="text-white/90 text-sm">
-                  Put headsets on, click record for 3 minutes
+                  Put Headsets On, Click Card &amp; Record
                 </p>
               </div>
 
@@ -4929,13 +4976,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
                   </Button>
+                  {countdown !== null && (
+                    <span className={`text-2xl font-bold tabular-nums px-5 py-2 rounded-full shadow-md ${countdown <= 30 ? 'bg-red-600 text-white animate-pulse' : 'bg-[#395B50] text-white'}`}>
+                      {formatClock(countdown)}
+                    </span>
+                  )}
                   {isRecording && selectedCardForTest === fullScreenCard.name && (
                     <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
-                      Recording: {recordingTime}s / 30s
+                      Recording: {formatClock(recordingTime)} / 3:00
                     </span>
                   )}
                   {!isRecording && (
-                    <span className="text-gray-600 text-lg">Put headsets on, click record for 3 minutes</span>
+                    <span className="text-gray-600 text-lg">Put Headsets On, Click Card &amp; Record</span>
                   )}
                 </div>
               </div>

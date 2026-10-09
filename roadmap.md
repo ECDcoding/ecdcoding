@@ -33,3 +33,4 @@
 ## Verbal Testing Space categories (Oct 9, 2026)
 - [x] Move all Numbers cards into a new "Mathematics" sub-category group
 - [x] Add a "Literacy" sub-category group (ABC Chart + Colour Coding cards)
+- [x] Start a 180-second countdown the moment a Verbal Testing Space card launches, and stop the recording when it reaches zero.
