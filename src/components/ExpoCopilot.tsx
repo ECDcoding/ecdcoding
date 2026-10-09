@@ -85,6 +85,7 @@ const COPILOT_COPY = {
         { title: "Eating Habits", summary: "Review routines, food exploration and supportive ways to respond to common eating concerns.", question: "How can I support healthy eating habits without creating pressure?" },
         { title: "Sleeping", summary: "Consider age-appropriate routines, consistency and environmental factors that may affect sleep.", question: "How can I build a supportive sleeping routine for my child?" },
         { title: "Parent–Child Relationships", summary: "Strengthen connection through listening, predictable care, play, boundaries and shared routines.", question: "What practical steps can strengthen my relationship with my child?" },
+        { title: "Mother–Child Relationship: 2–3 Years", summary: "Understand cooperation, growing independence, changing wishes and the need for comfort at ages 2–3, with gentle boundaries and care at each child's pace.", question: "Please explain Mother–Child Relationship at 2–3 years: how can I support cooperation, independence and my child's wish to be comforted like a baby?" },
         { title: "Mood Swings", summary: "Understand changing emotions as observations and learn calm, supportive responses without diagnosing.", question: "How should I respond to my child's mood swings?" },
         { title: "School Readiness", summary: "Look at physical, emotional, attention, social and early number-sense readiness alongside family and school support.", question: "Please help me understand my child's school readiness and suggest a way forward." },
         { title: "Starting School — Part 1", summary: "Settling into school: behaviour, preferred play, reassuring routines and working with the teacher when a child struggles.", question: "Please explain Starting School Part 1: how can parents and teachers support a child who struggles with behaviour and settling into school?" },
@@ -205,6 +206,7 @@ const COPILOT_COPY = {
         { title: "Mekgwa ya go Ja", summary: "Sekaseka mekgwa, go leka dijo le ditsela tse di bonolo tsa go araba matshwenyego a go ja.", question: "Nka tshegetsa jang mekgwa e e siameng ya go ja ntle le go gatelela ngwana?" },
         { title: "Go Robala", summary: "Akanya ka mekgwa e e maleba ya dingwaga, go tlhomama le tikologo e e ka amang boroko.", question: "Nka aga jang mokgwa o o tshegetsang wa go robala wa ngwana wa me?" },
         { title: "Kamano ya Motsadi le Ngwana", summary: "Nonotsha kamano ka go reetsa, tlhokomelo e e tlhomameng, motshameko, melelwane le mekgwa e e kopanetsweng.", question: "Ke dikgato dife tse nka di tsayang go nonotsha kamano ya me le ngwana?" },
+        { title: "Kamano ya Mme le Ngwana: Dingwaga 2–3", summary: "Tlhaloganya tirisanommogo, boikemelo jo bo golang, dikeletso tse di fetogang le go tlhoka kgomotso mo dingwageng di le 2–3, ka melelwane e e bonolo le tlhokomelo go ya ka kgolo ya ngwana.", question: "Tsweetswee tlhalosa Kamano ya Mme le Ngwana mo dingwageng di le 2–3: nka tshegetsa jang tirisanommogo, boikemelo le keletso ya ngwana ya go gomodiwa jaaka lesea?" },
         { title: "Go Fetofetoga ga Maikutlo", summary: "Tlhaloganya maikutlo a a fetogang jaaka dilo tse di lemogwang, mme o arabe ka kagiso ntle le go dira tlhatlhobo ya bolwetse.", question: "Ke tshwanetse go araba jang go fetofetoga ga maikutlo ga ngwana wa me?" },
         { title: "Go Siamela Sekolo", summary: "Leba mmele, maikutlo, tlhokomelo, botsalano le kitso ya dipalo mmogo le tshegetso ya lelapa le sekolo.", question: "Nthuse go tlhaloganya go siamela sekolo ga ngwana wa me le tsela e re ka tswelelang ka yone." },
         { title: "Go Simolola Sekolo — Karolo 1", summary: "Go tlwaela sekolo: boitshwaro, motshameko, mekgwa e e gomotsang le go dirisana le morutabana.", question: "Tsweetswee tlhalosa Go Simolola Sekolo Karolo 1: batsadi le barutabana ba ka tshegetsa jang ngwana yo o sokolang ka boitshwaro le go tlwaela sekolo?" },
@@ -294,7 +296,11 @@ const AFRIKAANS_STARTING_SCHOOL_COPY = {
   topicGuides: {
     ...COPILOT_COPY.en.topicGuides,
     behaviour: [
-      ...COPILOT_COPY.en.topicGuides.behaviour.filter((guide) => !guide.title.startsWith("Starting School")),
+      ...COPILOT_COPY.en.topicGuides.behaviour.filter((guide) => !guide.title.startsWith("Starting School")).map((guide) => guide.title === "Mother–Child Relationship: 2–3 Years" ? {
+        title: "Moeder-kind-verhouding: 2–3 Jaar",
+        summary: "Verstaan samewerking, groeiende selfstandigheid, veranderende wense en die behoefte aan vertroosting op 2–3 jaar, met sagte grense en sorg teen elke kind se eie pas.",
+        question: "Verduidelik asseblief die moeder-kind-verhouding op 2–3 jaar: hoe kan ek samewerking, selfstandigheid en my kind se behoefte om soos 'n baba vertroos te word, ondersteun?",
+      } : guide),
       { title: "Skoolbegin — Deel 1", summary: "Aanpassing by die skool: gedrag, gunsteling-speletjies, gerusstellende roetines en samewerking met die onderwyser.", question: "Verduidelik asseblief Skoolbegin Deel 1: hoe kan ouers en onderwysers 'n kind ondersteun wat met gedrag en skoolaanpassing sukkel?" },
       { title: "Skoolbegin — Deel 2", summary: "Leesgereedheid: taal, stories, letters, teken en speelse oefening teen die kind se eie pas, sonder etikette of druk.", question: "Verduidelik asseblief Skoolbegin Deel 2: hoe kan ek my kind se leesgereedheid ondersteun en op leesprobleme reageer?" },
       { title: "Skoolbegin — Deel 3", summary: "Gepaste ondersteuning: let op aanhoudende leer-, emosionele, sig- of gehoorprobleme en werk saam met die skool en gekwalifiseerde kundiges.", question: "Verduidelik asseblief Skoolbegin Deel 3: wat moet ouers en onderwysers waarneem, en wanneer moet hulle professionele hulp vir skoolprobleme kry?" },
