@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; ended?: boolean };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -69,7 +69,6 @@ const COPILOT_COPY = {
     overviewAction: "Ask ECD AI about this",
     summaryFollowUp: "Do you have any further questions about this lesson? Type them below and I'll gladly help.",
     replyWithin: "Reply within",
-    endedMessage: "I didn't hear back from you, so I've ended this conversation for now. ECD AI is always live — tap below or pick a lesson whenever you're ready to chat again.",
     restartLabel: "Ask a new question",
     topicGuides: {
       library: [
@@ -195,7 +194,6 @@ const COPILOT_COPY = {
     overviewAction: "Botsa ECD AI ka seno",
     summaryFollowUp: "A o na le dipotso tse dingwe ka thuto eno? Di kwale fa tlase mme ke tla go thusa ka mabogo a mabedi.",
     replyWithin: "Araba mo metsotsoaneng e",
-    endedMessage: "Ga ke a utlwa karabo ya gago, ka jalo ke tswaletswe puisano eno ga jaana. ECD AI e tshela ka metlha — tobetsa fa tlase kgotsa tlhopha thuto fa o ipaakanyeditse go bua gape.",
     restartLabel: "Botsa potso e ntšha",
     topicGuides: {
       library: [
@@ -402,10 +400,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
             if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
             followUpTimerRef.current = null;
             setSessionEnded(true);
-            setMessages((previous) => [
-              ...previous.filter((message) => !message.followUp),
-              { role: "assistant", content: copy.endedMessage ?? COPILOT_COPY.en.endedMessage, topic: last.topic, ended: true },
-            ]);
+            setMessages((previous) => previous.filter((message) => !message.followUp));
             return null;
           }
           return current - 1;
@@ -417,7 +412,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       };
     }
     setFollowUpSecondsLeft(null);
-  }, [messages, sessionEnded, copy.endedMessage]);
+  }, [messages, sessionEnded]);
+
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
@@ -494,7 +490,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
     const userMsg: Message = { role: "user", content, topic };
-    const newMessages = [...messages.filter((m) => !m.followUp && !m.ended), userMsg];
+    const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
     setMessages(newMessages);
     setSessionEnded(false);
     setFollowUpSecondsLeft(null);
@@ -783,7 +779,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               setSessionEnded(false);
                               setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.ended),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
@@ -848,22 +844,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               {msg.content}
                             </p>
                           </div>
-                        ) : msg.ended ? (
-                          <div className="rounded-lg border border-border bg-muted px-3 py-2">
-                            <p className="text-sm leading-relaxed text-muted-foreground">{msg.content}</p>
-                            <Button
-                              type="button"
-                              size="sm"
-                              className="mt-2"
-                              onClick={() => {
-                                setSessionEnded(false);
-                                setMessages((previous) => previous.filter((message) => !message.ended));
-                                inputRef.current?.focus();
-                              }}
-                            >
-                              {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
-                            </Button>
-                          </div>
                         ) : msg.summaryTitle ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
@@ -877,7 +857,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && !msg.ended && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
@@ -932,7 +912,23 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   className="hidden"
                   onChange={handleFileChange}
                 />
+                {sessionEnded ? (
+                  <div className="flex justify-center py-1">
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        setSessionEnded(false);
+                        setFollowUpSecondsLeft(null);
+                        inputRef.current?.focus();
+                      }}
+                    >
+                      {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
+                    </Button>
+                  </div>
+                ) : (
                 <PromptInput
+
                   onSubmit={() => sendMessage(input)}
                   className="rounded-md border-border bg-card shadow-none"
                 >
@@ -976,6 +972,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </PromptInputSubmit>
                   </PromptInputFooter>
                 </PromptInput>
+                )}
+
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
