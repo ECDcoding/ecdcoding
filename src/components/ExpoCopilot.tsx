@@ -869,7 +869,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && !msg.ended && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
@@ -931,7 +931,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <PromptInputTextarea
                     ref={inputRef}
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(15); // typing counts as activity
+                    }}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
                     disabled={isLoading}
