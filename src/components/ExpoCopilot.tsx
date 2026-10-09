@@ -908,7 +908,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <PromptInputSubmit
                       aria-label="Send message"
                       status={isLoading ? "streaming" : "ready"}
-                      disabled={isLoading || sessionEnded || (!input.trim() && !attachment)}
+                      disabled={isLoading || (!input.trim() && !attachment)}
                     >
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                     </PromptInputSubmit>
