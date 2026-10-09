@@ -389,6 +389,36 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
+  // 15-second live window: after a lesson invitation, the user has 15s to
+  // respond (typing counts as activity). If it lapses, end the conversation.
+  useEffect(() => {
+    const last = messages[messages.length - 1];
+    if (last?.followUp && !sessionEnded) {
+      setFollowUpSecondsLeft((current) => current ?? 15);
+      followUpTimerRef.current = setInterval(() => {
+        setFollowUpSecondsLeft((current) => {
+          if (current === null) return null;
+          if (current <= 1) {
+            if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
+            followUpTimerRef.current = null;
+            setSessionEnded(true);
+            setMessages((previous) => [
+              ...previous.filter((message) => !message.followUp),
+              { role: "assistant", content: copy.endedMessage ?? COPILOT_COPY.en.endedMessage, topic: last.topic, ended: true },
+            ]);
+            return null;
+          }
+          return current - 1;
+        });
+      }, 1000);
+      return () => {
+        if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
+        followUpTimerRef.current = null;
+      };
+    }
+    setFollowUpSecondsLeft(null);
+  }, [messages, sessionEnded, copy.endedMessage]);
+
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
       method: "POST",
