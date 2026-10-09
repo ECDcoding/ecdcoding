@@ -4976,6 +4976,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
                   </Button>
+                  {countdown !== null && (
+                    <span className={`text-2xl font-bold tabular-nums px-5 py-2 rounded-full shadow-md ${countdown <= 30 ? 'bg-red-600 text-white animate-pulse' : 'bg-[#395B50] text-white'}`}>
+                      {formatClock(countdown)}
+                    </span>
+                  )}
                   {isRecording && selectedCardForTest === fullScreenCard.name && (
                     <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
                       Recording: {formatClock(recordingTime)} / 3:00
