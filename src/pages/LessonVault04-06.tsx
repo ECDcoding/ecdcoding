@@ -1735,7 +1735,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   ];
 
-  const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic'; tint?: string; component: React.ReactNode }> = [
+  const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic' | 'math'; tint?: string; component: React.ReactNode }> = [
     { key: "body", category: "generic" as const, tint: "bg-fuchsia-500/15 ring-1 ring-fuchsia-400/40", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
