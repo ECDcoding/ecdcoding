@@ -189,6 +189,44 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const RECORDING_LIMIT_SECONDS = 180; // 3 minutes
   const formatClock = (secs: number) =>
     `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
+  const [countdown, setCountdown] = useState<number | null>(null);
+
+  const stopCountdown = () => {
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+    setCountdown(null);
+  };
+
+  const startCountdown = () => {
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    setCountdown(RECORDING_LIMIT_SECONDS);
+    let remaining = RECORDING_LIMIT_SECONDS;
+    countdownIntervalRef.current = setInterval(() => {
+      remaining -= 1;
+      setCountdown(remaining);
+      if (remaining <= 0) {
+        if (countdownIntervalRef.current) {
+          clearInterval(countdownIntervalRef.current);
+          countdownIntervalRef.current = null;
+        }
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
+          mediaRecorderRef.current.stop();
+        }
+        setIsRecording(false);
+        setRecordingTime(0);
+        toast({
+          title: "Time is up",
+          description: "The 3 minute verbal presentation has finished.",
+        });
+      }
+    }, 1000);
+  };
+
+  useEffect(() => () => {
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+  }, []);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
@@ -211,6 +249,8 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const verbalTestingRef = useRef<HTMLDivElement>(null);
   const narrationAudioRef = useRef<HTMLAudioElement | null>(null);
   const cardAutoResumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
   const [emojiDialogOpen, setEmojiDialogOpen] = useState(false);
   const [capsOpen, setCapsOpen] = useState(false);
@@ -456,9 +496,11 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
             description: `Your answer has been recorded. Score: ${score}/10 (${grade})`,
           });
           stream.getTracks().forEach(track => track.stop());
+          mediaRecorderRef.current = null;
         };
         
         recorder.start();
+        mediaRecorderRef.current = recorder;
         setMediaRecorder(recorder);
         setIsRecording(true);
         setRecordingTime(0);
