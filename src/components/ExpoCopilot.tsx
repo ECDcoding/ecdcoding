@@ -769,8 +769,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           onClick={() => {
                             if (displayedTopic === "library") {
                               setTopic("library");
+                              setSessionEnded(false);
+                              setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.ended),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
@@ -937,7 +939,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     }}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
-                    disabled={isLoading}
+                    disabled={isLoading || sessionEnded}
                   />
                   <PromptInputFooter>
                     <PromptInputTools>
@@ -962,7 +964,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     <PromptInputSubmit
                       aria-label="Send message"
                       status={isLoading ? "streaming" : "ready"}
-                      disabled={isLoading || (!input.trim() && !attachment)}
+                      disabled={isLoading || sessionEnded || (!input.trim() && !attachment)}
                     >
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                     </PromptInputSubmit>
