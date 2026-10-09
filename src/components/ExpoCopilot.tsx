@@ -378,36 +378,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isOpen, isMinimized]);
 
-  // 15-second live window: after a lesson invitation, the user has 15s to
-  // respond (typing counts as activity). If it lapses, end the conversation.
-  useEffect(() => {
-    const last = messages[messages.length - 1];
-    if (last?.followUp && !sessionEnded) {
-      setFollowUpSecondsLeft((current) => current ?? 15);
-      followUpTimerRef.current = setInterval(() => {
-        setFollowUpSecondsLeft((current) => {
-          if (current === null) return null;
-          if (current <= 1) {
-            if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-            followUpTimerRef.current = null;
-            setSessionEnded(true);
-            setMessages((previous) => [
-              ...previous.filter((message) => !message.followUp),
-              { role: "assistant", content: copy.endedMessage ?? COPILOT_COPY.en.endedMessage, topic: last.topic, ended: true },
-            ]);
-            return null;
-          }
-          return current - 1;
-        });
-      }, 1000);
-      return () => {
-        if (followUpTimerRef.current) clearInterval(followUpTimerRef.current);
-        followUpTimerRef.current = null;
-      };
-    }
-    setFollowUpSecondsLeft(null);
-  }, [messages, sessionEnded, copy.endedMessage]);
-
   // Visitors on paid credits spend 1 credit per minute of open chat
   useEffect(() => {
     if (isGuest && isOpen && !isMinimized && guest.freeQuestionsLeft === 0 && guest.credits > 0) {
