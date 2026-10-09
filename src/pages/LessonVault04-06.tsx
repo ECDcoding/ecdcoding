@@ -1855,7 +1855,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40",
       badgeClass: "bg-lime-500 text-black",
       items: [
-        "My Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
+        "My Body", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
         "Months of the Year", "Seasons of the Year", "Transportation",
       ],
