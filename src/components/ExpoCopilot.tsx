@@ -914,7 +914,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </PromptInputSubmit>
                   </PromptInputFooter>
                 </PromptInput>
-                )}
+
 
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
