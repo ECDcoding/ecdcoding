@@ -678,7 +678,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
           {!isMinimized && (
             <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
               {/* Rotating topic picker: one topic at a time, rotated with arrows. */}
-              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-3">
+              <div className="flex-shrink-0 border-b border-border bg-muted/40 px-3 py-2.5">
                 <div aria-label="ECD AI topic guides">
                   <div className="flex items-stretch gap-1">
                     <Button
@@ -716,7 +716,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </Button>
                   </div>
                   {expandedTopic === displayedTopic && (
-                    <div className="mt-2 max-h-72 space-y-1 overflow-y-auto rounded-md border border-border p-2">
+                    <div className="mt-2 max-h-60 space-y-1 overflow-y-auto rounded-md border border-border p-2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)]">
                       {copy.topicGuides[displayedTopic].map((guide) => (
                         <Button
                           key={guide.title}
