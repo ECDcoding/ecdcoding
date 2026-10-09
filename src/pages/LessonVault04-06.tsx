@@ -186,6 +186,9 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
+  const RECORDING_LIMIT_SECONDS = 180; // 3 minutes
+  const formatClock = (secs: number) =>
+    `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
@@ -462,7 +465,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
         
         const timer = setInterval(() => {
           setRecordingTime(prev => {
-            if (prev >= 30) {
+            if (prev >= RECORDING_LIMIT_SECONDS) {
               clearInterval(timer);
               if (recorder.state === 'recording') {
                 recorder.stop();
@@ -696,7 +699,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   
   // Function to play narration on demand using Web Speech API
   const playNarration = () => {
-    const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 30 seconds verbal recording to be successful and saved in the relevant lesson archive. And if the 30 seconds is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
+    const narrationText = "Welcome to the Verbal Testing Space for your kid. Here your kid is expected to click on any of the carousel card of their choice when they are ready to present a verbal description of what they already learned and understand. Upon clicking a card, the card will stop the carousel flow, and then they will be required to also click on the microphone, assuming that they already have headsets on with their mic enabled, for the 3 minutes verbal recording to be successful and saved in the relevant lesson archive. And if the 3 minutes is finished before the full description is made, the parent or teacher may or must assume that the kid does not understand fully and may be required to relearn the lesson until they are ready to try again.";
     
     if ('speechSynthesis' in window) {
       // Cancel any ongoing speech
@@ -3757,10 +3760,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   onClick={playNarration}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg"
                 >
-                  Make Verbal Presentations
+                  3 Minutes Verbal Presentation
                 </Button>
                 <p className="text-white/90 text-sm">
-                  Put headsets on, click record for 3 minutes
+                  Put Headsets On, Click Card &amp; Record
                 </p>
               </div>
 
@@ -4931,11 +4934,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </Button>
                   {isRecording && selectedCardForTest === fullScreenCard.name && (
                     <span className="text-lg font-bold bg-red-500 text-white px-4 py-2 rounded-full animate-pulse">
-                      Recording: {recordingTime}s / 30s
+                      Recording: {formatClock(recordingTime)} / 3:00
                     </span>
                   )}
                   {!isRecording && (
-                    <span className="text-gray-600 text-lg">Put headsets on, click record for 3 minutes</span>
+                    <span className="text-gray-600 text-lg">Put Headsets On, Click Card &amp; Record</span>
                   )}
                 </div>
               </div>
