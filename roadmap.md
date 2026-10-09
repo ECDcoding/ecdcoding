@@ -31,5 +31,5 @@
 - [x] Hide Near Future Projects from the footer; show an Events entry that says "No Events Yet" when clicked (ECD Expo page unlinked from footer, awaiting decision on full removal).
 
 ## Verbal Testing Space categories (Oct 9, 2026)
-- [x] Move all Numbers cards into a new "Mathematics" sub-category group (in progress: type fix)
-- [ ] Add a "Literacy" sub-category group the same way
+- [x] Move all Numbers cards into a new "Mathematics" sub-category group
+- [x] Add a "Literacy" sub-category group (ABC Chart + Colour Coding cards)
