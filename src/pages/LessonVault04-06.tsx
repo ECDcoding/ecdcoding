@@ -1826,16 +1826,17 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Card>
     )},
     { key: "months", category: "generic" as const, component: <FlipMonthsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={(cardName) => createRecordingHandler(cardName)} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "numbers", category: "basic" as const, component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "numbers", category: "math" as const, component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
   ];
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
 
   // Visual set tint per category so each carousel set is isolated at a glance
-  const categorySetStyles: Record<'generic' | 'road' | 'basic', string> = {
+  const categorySetStyles: Record<'generic' | 'road' | 'basic' | 'math', string> = {
     generic: "bg-lime-500/15 ring-1 ring-lime-400/40",
     road: "bg-sky-500/15 ring-1 ring-sky-400/40",
     basic: "bg-amber-500/15 ring-1 ring-amber-400/40",
+    math: "bg-violet-500/15 ring-1 ring-violet-400/40",
   };
 
   // Sets that encompass multiple flip sides get their own unique colour chip
@@ -1877,6 +1878,15 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       items: [
         "Basic Shapes", "Micro:bit Device",
         ...colorCodingSides.map((s) => s.name),
+      ],
+    },
+    {
+      heading: "Mathematics",
+      filter: "math" as const,
+      accent: "text-violet-400",
+      activeClass: "bg-violet-500/20 border-violet-400/60 ring-1 ring-violet-400/40",
+      badgeClass: "bg-violet-400 text-black",
+      items: [
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
       ],
     },
@@ -3780,6 +3790,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[2])}</nav>
+            <nav aria-label="Mathematics lessons">{renderLessonGroup(lessonGroups[3])}</nav>
           </div>
 
         </div>
