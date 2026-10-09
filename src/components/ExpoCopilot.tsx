@@ -494,8 +494,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
     const userMsg: Message = { role: "user", content, topic };
-    const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
+    const newMessages = [...messages.filter((m) => !m.followUp && !m.ended), userMsg];
     setMessages(newMessages);
+    setSessionEnded(false);
+    setFollowUpSecondsLeft(null);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
@@ -829,7 +831,30 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                         {msg.followUp ? (
                           <div className="flex items-start gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2">
                             <span className="mt-[6px] h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary-bright" />
-                            <p className="text-sm font-medium leading-relaxed text-primary-bright">{msg.content}</p>
+                            <p className="text-sm font-medium leading-relaxed text-primary-bright">
+                              {msg.content}
+                              {followUpSecondsLeft !== null && (
+                                <span className="mt-1 block text-[13px] font-semibold text-primary-bright">
+                                  {copy.replyWithin ?? COPILOT_COPY.en.replyWithin} {followUpSecondsLeft}s…
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                        ) : msg.ended ? (
+                          <div className="rounded-lg border border-border bg-muted px-3 py-2">
+                            <p className="text-sm leading-relaxed text-muted-foreground">{msg.content}</p>
+                            <Button
+                              type="button"
+                              size="sm"
+                              className="mt-2"
+                              onClick={() => {
+                                setSessionEnded(false);
+                                setMessages((previous) => previous.filter((message) => !message.ended));
+                                inputRef.current?.focus();
+                              }}
+                            >
+                              {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
+                            </Button>
                           </div>
                         ) : msg.summaryTitle ? (
                           <div className="text-sm leading-relaxed text-foreground">
