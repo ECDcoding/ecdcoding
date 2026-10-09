@@ -641,18 +641,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-orange-400 rounded-full border border-primary animate-pulse" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-3">
-                    <p className="text-base font-bold leading-none">ECD AI</p>
-                    {followUpSecondsLeft !== null && !sessionEnded && (
-                      <span
-                        role="timer"
-                        aria-label="ECD AI conversation countdown"
-                        className="inline-flex w-14 shrink-0 items-center justify-center rounded-md border border-primary-foreground/30 bg-primary-foreground/10 py-1 text-base font-bold tabular-nums text-primary-foreground"
-                      >
-                        0:{String(followUpSecondsLeft).padStart(2, "0")}
-                      </span>
-                    )}
-                  </div>
+                  <p className="text-base font-bold leading-none">ECD AI</p>
                   {context && (
                     <p className="mt-1 text-sm text-primary-foreground/80">
                       Context: {context}
@@ -883,21 +872,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                {sessionEnded ? (
-                  <div className="flex justify-center py-1">
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={() => {
-                        setSessionEnded(false);
-                        setFollowUpSecondsLeft(null);
-                        inputRef.current?.focus();
-                      }}
-                    >
-                      {copy.restartLabel ?? COPILOT_COPY.en.restartLabel}
-                    </Button>
-                  </div>
-                ) : (
                 <PromptInput
 
                   onSubmit={() => sendMessage(input)}
@@ -906,13 +880,10 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <PromptInputTextarea
                     ref={inputRef}
                     value={input}
-                    onChange={(e) => {
-                      setInput(e.target.value);
-                       if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(45); // typing counts as activity
-                    }}
+                    onChange={(e) => setInput(e.target.value)}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
-                    disabled={isLoading || sessionEnded}
+                    disabled={isLoading}
                   />
                   <PromptInputFooter>
                     <PromptInputTools>
