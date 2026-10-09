@@ -3802,6 +3802,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
             <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[2])}</nav>
             <nav aria-label="Mathematics lessons">{renderLessonGroup(lessonGroups[3])}</nav>
+            <nav aria-label="Literacy lessons">{renderLessonGroup(lessonGroups[4])}</nav>
           </div>
 
         </div>
