@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -455,7 +455,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
     const userMsg: Message = { role: "user", content, topic };
-    const newMessages = [...messages, userMsg];
+    const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
     setMessages(newMessages);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
@@ -729,7 +729,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                             if (displayedTopic === "library") {
                               setTopic("library");
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
@@ -740,7 +740,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                                   role: "assistant",
                                   content: copy.summaryFollowUp,
                                   topic: "library",
+                                  followUp: true,
                                 },
+
                               ]);
                               setExpandedTopic(null);
                               inputRef.current?.focus();
@@ -785,19 +787,25 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       from={msg.role}
                     >
                       <MessageContent className={msg.role === "user" ? "bg-primary text-primary-foreground" : undefined}>
-                        {msg.summaryTitle ? (
+                        {msg.followUp ? (
+                          <div className="flex items-start gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2">
+                            <span className="mt-[6px] h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary-bright" />
+                            <p className="text-sm font-medium leading-relaxed text-primary-bright">{msg.content}</p>
+                          </div>
+                        ) : msg.summaryTitle ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
                             <p>{msg.content}</p>
                           </div>
                         ) : msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
+
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
                             {copy.thinking}
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
