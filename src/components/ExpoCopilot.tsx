@@ -729,7 +729,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                             if (displayedTopic === "library") {
                               setTopic("library");
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
