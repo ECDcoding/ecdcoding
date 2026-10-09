@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Rename ECD AI Lessons Library and list Learning the Basics, Verbal Testing Space, Coding, Programming and Handwriting.
+- [ ] Show Lessons Library first whenever ECD AI opens and place Child Behavior last in the rotating list.
+
 - [x] Add Mother–Child Relationship 2–3 Years under Child Behavior in English, Setswana and Afrikaans; deploy and verify its guidance.
 
 - [x] Add and verify Starting School Parts 1–3 under ECD AI Child Behavior using the uploaded school-management material.

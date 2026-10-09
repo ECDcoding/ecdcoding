@@ -289,7 +289,7 @@ const COPILOT_COPY = {
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "behaviour", "ecology", "coding", "dbe"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "coding", "dbe", "behaviour"];
 
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
@@ -325,8 +325,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState<CopilotLanguage>("en");
-  const [topic, setTopic] = useState<CopilotTopic>("behaviour");
-  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("behaviour");
+  const [topic, setTopic] = useState<CopilotTopic>("library");
+  const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("library");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
@@ -352,6 +352,14 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   }, [messages]);
 
   // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTopic("library");
+      setDisplayedTopic("library");
+      setExpandedTopic(null);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen && !isMinimized) {
       setTimeout(() => inputRef.current?.focus(), 100);
