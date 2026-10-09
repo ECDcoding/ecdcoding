@@ -43,3 +43,4 @@
 - [x] Open each clicked lesson on its own, replacing the previous summary instead of stacking them.
 - [x] Make the follow-up invitation bright lime with a pulsing dot so the copilot looks live and active.
 
+- [ ] Remove 'further questions' invitations from ECD AI lesson/subtopic clicks in ExpoCopilot.tsx (user: no questions in any response).
