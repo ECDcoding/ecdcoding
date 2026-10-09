@@ -67,6 +67,7 @@ const COPILOT_COPY = {
       lessons: "Literacy, numeracy, coding, road safety, science and life skills.",
     },
     overviewAction: "Ask ECD AI about this",
+    summaryFollowUp: "Do you have any further questions about this lesson? Type them below and I'll gladly help.",
     topicGuides: {
       library: [
         { title: "Learning the Basics", summary: "Learners explore literacy and numeracy: vowels, the alphabet and colours, number counting in sets from 1–10, 11–20 and onwards, and basic shapes.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
@@ -189,6 +190,7 @@ const COPILOT_COPY = {
       lessons: "Go bala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
     },
     overviewAction: "Botsa ECD AI ka seno",
+    summaryFollowUp: "A o na le dipotso tse dingwe ka thuto eno? Di kwale fa tlase mme ke tla go thusa ka mabogo a mabedi.",
     topicGuides: {
       library: [
         { title: "Learning the Basics", summary: "Baithuti ba ithuta go bala, go kwala le dipalo: ditumanosi, alfhabete, mebala, go bala ka ditlhopha tsa 1–10, 11–20 le go ya pele, le dibopego.", question: "Ngwana wa me wa dingwaga 04–07 o tla ithuta eng mo Learning the Basics? Tsweetswee tlhalosa go bala le go kwala le dipalo ka go farologana." },
@@ -294,6 +296,7 @@ const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "codi
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
   overviewAction: "Vra ECD AI hieroor",
+  summaryFollowUp: "Het jy enige verdere vrae oor hierdie les? Tik dit hieronder en ek help graag.",
   topicLabels: { ...COPILOT_COPY.en.topicLabels, behaviour: "Kindergedrag" },
   topicGuides: {
     ...COPILOT_COPY.en.topicGuides,
