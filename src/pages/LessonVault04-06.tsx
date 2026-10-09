@@ -4935,7 +4935,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </span>
                   )}
                   {!isRecording && (
-                    <span className="text-gray-600 text-lg">Put headsets on, click record your analysis</span>
+                    <span className="text-gray-600 text-lg">Put headsets on, click record for 3 minutes</span>
                   )}
                 </div>
               </div>
