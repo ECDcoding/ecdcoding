@@ -287,6 +287,20 @@ const COPILOT_COPY = {
 
 const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "behaviour", "ecology", "coding", "dbe"];
 
+const AFRIKAANS_STARTING_SCHOOL_COPY = {
+  ...COPILOT_COPY.en,
+  overviewAction: "Vra ECD AI hieroor",
+  topicLabels: { ...COPILOT_COPY.en.topicLabels, behaviour: "Kindergedrag" },
+  topicGuides: {
+    ...COPILOT_COPY.en.topicGuides,
+    behaviour: [
+      ...COPILOT_COPY.en.topicGuides.behaviour.filter((guide) => !guide.title.startsWith("Starting School")),
+      { title: "Skoolbegin — Deel 1", summary: "Aanpassing by die skool: gedrag, gunsteling-speletjies, gerusstellende roetines en samewerking met die onderwyser.", question: "Verduidelik asseblief Skoolbegin Deel 1: hoe kan ouers en onderwysers 'n kind ondersteun wat met gedrag en skoolaanpassing sukkel?" },
+      { title: "Skoolbegin — Deel 2", summary: "Leesgereedheid: taal, stories, letters, teken en speelse oefening teen die kind se eie pas, sonder etikette of druk.", question: "Verduidelik asseblief Skoolbegin Deel 2: hoe kan ek my kind se leesgereedheid ondersteun en op leesprobleme reageer?" },
+      { title: "Skoolbegin — Deel 3", summary: "Gepaste ondersteuning: let op aanhoudende leer-, emosionele, sig- of gehoorprobleme en werk saam met die skool en gekwalifiseerde kundiges.", question: "Verduidelik asseblief Skoolbegin Deel 3: wat moet ouers en onderwysers waarneem, en wanneer moet hulle professionele hulp vir skoolprobleme kry?" },
+    ],
+  },
+};
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -345,7 +359,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
 
-  const copy = COPILOT_COPY[language] ?? COPILOT_COPY.en;
+  const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {
