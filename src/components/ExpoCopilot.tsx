@@ -389,12 +389,12 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
-  // 15-second live window: after a lesson invitation, the user has 15s to
+  // 45-second live window: after a lesson invitation, the user has 45s to
   // respond (typing counts as activity). If it lapses, end the conversation.
   useEffect(() => {
     const last = messages[messages.length - 1];
     if (last?.followUp && !sessionEnded) {
-      setFollowUpSecondsLeft((current) => current ?? 15);
+      setFollowUpSecondsLeft((current) => current ?? 45);
       followUpTimerRef.current = setInterval(() => {
         setFollowUpSecondsLeft((current) => {
           if (current === null) return null;
@@ -674,7 +674,18 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-orange-400 rounded-full border border-primary animate-pulse" />
                 </div>
                 <div>
-                  <p className="text-base font-bold leading-none">ECD AI</p>
+                  <div className="flex items-center gap-3">
+                    <p className="text-base font-bold leading-none">ECD AI</p>
+                    {followUpSecondsLeft !== null && !sessionEnded && (
+                      <span
+                        role="timer"
+                        aria-label="ECD AI conversation countdown"
+                        className="inline-flex w-14 shrink-0 items-center justify-center rounded-md border border-primary-foreground/30 bg-primary-foreground/10 py-1 text-base font-bold tabular-nums text-primary-foreground"
+                      >
+                        0:{String(followUpSecondsLeft).padStart(2, "0")}
+                      </span>
+                    )}
+                  </div>
                   {context && (
                     <p className="mt-1 text-sm text-primary-foreground/80">
                       Context: {context}
@@ -835,11 +846,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                             <span className="mt-[6px] h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary-bright" />
                             <p className="text-sm font-medium leading-relaxed text-primary-bright">
                               {msg.content}
-                              {followUpSecondsLeft !== null && (
-                                <span className="mt-1 block text-[13px] font-semibold text-primary-bright">
-                                  {copy.replyWithin ?? COPILOT_COPY.en.replyWithin} {followUpSecondsLeft}s…
-                                </span>
-                              )}
                             </p>
                           </div>
                         ) : msg.ended ? (
@@ -935,7 +941,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     value={input}
                     onChange={(e) => {
                       setInput(e.target.value);
-                      if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(15); // typing counts as activity
+                       if (followUpSecondsLeft !== null) setFollowUpSecondsLeft(45); // typing counts as activity
                     }}
                     placeholder={isListening ? copy.listening : copy.placeholder}
                     className="min-h-12 text-sm"
