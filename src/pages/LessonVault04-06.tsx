@@ -725,6 +725,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
           name: cardName,
           ...cardData
         });
+        startCountdown();
       }
     }
   };
@@ -732,6 +733,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   // Function to close full-screen card and resume carousel
   const closeFullScreenCard = () => {
     setFullScreenCard(null);
+    stopCountdown();
     if (carouselRef.current) {
       carouselRef.current.style.animationPlayState = 'running';
     }
