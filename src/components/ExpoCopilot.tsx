@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; ended?: boolean };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -69,7 +69,6 @@ const COPILOT_COPY = {
     overviewAction: "Ask ECD AI about this",
     summaryFollowUp: "Do you have any further questions about this lesson? Type them below and I'll gladly help.",
     replyWithin: "Reply within",
-    endedMessage: "I didn't hear back from you, so I've ended this conversation for now. ECD AI is always live — tap below or pick a lesson whenever you're ready to chat again.",
     restartLabel: "Ask a new question",
     topicGuides: {
       library: [
@@ -195,7 +194,6 @@ const COPILOT_COPY = {
     overviewAction: "Botsa ECD AI ka seno",
     summaryFollowUp: "A o na le dipotso tse dingwe ka thuto eno? Di kwale fa tlase mme ke tla go thusa ka mabogo a mabedi.",
     replyWithin: "Araba mo metsotsoaneng e",
-    endedMessage: "Ga ke a utlwa karabo ya gago, ka jalo ke tswaletswe puisano eno ga jaana. ECD AI e tshela ka metlha — tobetsa fa tlase kgotsa tlhopha thuto fa o ipaakanyeditse go bua gape.",
     restartLabel: "Botsa potso e ntšha",
     topicGuides: {
       library: [
@@ -492,7 +490,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       ? `${text.trim()}\n\n[Attached file: ${attachment.name}]\n${attachment.text}`.trim()
       : text;
     const userMsg: Message = { role: "user", content, topic };
-    const newMessages = [...messages.filter((m) => !m.followUp && !m.ended), userMsg];
+    const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
     setMessages(newMessages);
     setSessionEnded(false);
     setFollowUpSecondsLeft(null);
@@ -781,7 +779,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               setSessionEnded(false);
                               setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.ended),
+                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
                                   role: "assistant",
                                   content: guide.summary,
@@ -859,7 +857,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           </span>
                         )}
                       </MessageContent>
-                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && !msg.ended && (
+                      {msg.role === "assistant" && msg.content && !msg.summaryTitle && !msg.followUp && (
                         <div className="flex items-center gap-1 mt-1 ml-1">
                           <button
                             aria-label="Helpful"
