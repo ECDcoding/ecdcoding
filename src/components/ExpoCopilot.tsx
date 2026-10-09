@@ -463,8 +463,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     const userMsg: Message = { role: "user", content, topic };
     const newMessages = [...messages.filter((m) => !m.followUp), userMsg];
     setMessages(newMessages);
-    setSessionEnded(false);
-    setFollowUpSecondsLeft(null);
     setExpandedTopic(null); // collapse topic list so the chat (and answer) is visible
     setInput("");
     setAttachment(null);
@@ -736,8 +734,6 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           onClick={() => {
                             if (displayedTopic === "library") {
                               setTopic("library");
-                              setSessionEnded(false);
-                              setFollowUpSecondsLeft(null);
                               setMessages((previous) => [
                                 ...previous.filter((message) => !message.summaryTitle && !message.followUp),
                                 {
