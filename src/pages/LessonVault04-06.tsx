@@ -1748,7 +1748,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
           <img src={alphabetChart} alt="Alphabet Chart for Kids" className="w-full h-auto rounded-lg" />
           {isRecording && selectedCardForTest === "ABC Chart" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("ABC Chart")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "ABC Chart" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1761,7 +1761,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
         <CardContent className="p-0 relative">
           <img src={shapesBasicColor} alt="Basic Shapes" className="w-full h-auto" />
           {isRecording && selectedCardForTest === "Basic Shapes" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Basic Shapes")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Shapes" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1778,7 +1778,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-amber-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Basic Logic Thinking</h3>
           <img src={basicLogicThinking} alt="Basic Logic Thinking" className="w-full h-auto rounded-lg mt-8" />
           {isRecording && selectedCardForTest === "Basic Logic Thinking" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Basic Logic Thinking")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Basic Logic Thinking" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
@@ -1802,7 +1802,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-blue-600 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Micro:bit Device</h3>
           <img src={microbitDevice} alt="BBC Micro:bit device" className="w-full h-52 rounded-lg object-contain" />
           {isRecording && selectedCardForTest === "Micro:bit Device" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button
@@ -1820,7 +1820,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
           <h3 className="text-xl font-bold text-blue-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>Busy Bee</h3>
           <img src={beeCharacter} alt="Busy Bee" className="w-full h-auto" />
           {isRecording && selectedCardForTest === "Busy Bee" && (
-            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{recordingTime}s / 30s</div>
+            <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-bold">{formatClock(recordingTime)} / 3:00</div>
           )}
         </CardContent>
         <Button onClick={createRecordingHandler("Busy Bee")} className={`absolute bottom-2 left-2 ${isRecording && selectedCardForTest === "Busy Bee" ? 'bg-red-500 hover:bg-red-600' : 'bg-lime-500 hover:bg-lime-600'} text-white rounded-full p-2 shadow-lg z-10`}>
