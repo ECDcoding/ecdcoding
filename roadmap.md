@@ -29,3 +29,7 @@
 - [x] Add the supplied Afrikaans Individuality, sleep, eating and body-build material to ECD AI with child-safety safeguards.
 - [x] Re-index the ECD AI topic list into the seven sketch buttons (Knowledge Base Library, Foundation Phase Mathematics, Foundational Learning Outcomes, Child Behavior, Domestic Ecology Stories, Coding and Robotics, DBE Policy) with sub-category guides and FAQs in English and Setswana.
 - [x] Hide Near Future Projects from the footer; show an Events entry that says "No Events Yet" when clicked (ECD Expo page unlinked from footer, awaiting decision on full removal).
+
+## Verbal Testing Space categories (Oct 9, 2026)
+- [x] Move all Numbers cards into a new "Mathematics" sub-category group
+- [x] Add a "Literacy" sub-category group (ABC Chart + Colour Coding cards)

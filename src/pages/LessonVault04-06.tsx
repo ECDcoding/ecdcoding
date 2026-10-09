@@ -191,7 +191,7 @@ const LessonVault0406 = ({ vtsOnly = false }: { vtsOnly?: boolean }) => {
   const [selectedCardForTest, setSelectedCardForTest] = useState<string | null>(null);
   const [focusedLessonCard, setFocusedLessonCard] = useState<string | null>(null);
   const [focusFlowIndex, setFocusFlowIndex] = useState(0);
-  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic'>('all');
+  const [carouselFilter, setCarouselFilter] = useState<'all' | 'generic' | 'road' | 'basic' | 'math' | 'literacy'>('all');
   const [microbitAnalysisOpen, setMicrobitAnalysisOpen] = useState(false);
   const [testResults, setTestResults] = useState<{
     subject: string;
@@ -1735,11 +1735,11 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
     }
   ];
 
-  const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic'; tint?: string; component: React.ReactNode }> = [
+  const carouselItems: Array<{ key: string; category: 'generic' | 'road' | 'basic' | 'math' | 'literacy'; tint?: string; component: React.ReactNode }> = [
     { key: "body", category: "generic" as const, tint: "bg-fuchsia-500/15 ring-1 ring-fuchsia-400/40", component: <FlipBodyCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "traffic", category: "road" as const, component: <FlipTrafficCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "transport", category: "road" as const, component: <FlipTransportCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "abc", category: "generic" as const, component: (
+    { key: "abc", category: "literacy" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-purple-500 shadow-lg transform rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("ABC Chart")}>
         <CardContent className="p-0 relative">
           <h3 className="text-xl font-bold text-purple-500 mb-2 text-center" style={{ fontFamily: '"Bungee Shade", cursive' }}>ABC Chart</h3>
@@ -1767,7 +1767,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Card>
     )},
     { key: "produce", category: "generic" as const, component: <FlipProduceCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "color", category: "basic" as const, component: <FlipColorCodingCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "color", category: "literacy" as const, component: <FlipColorCodingCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "animals", category: "generic" as const, component: <FlipAnimalsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
     { key: "logic", category: "basic" as const, component: (
       <Card className="bg-white p-4 w-80 border-4 border-dashed border-amber-500 shadow-lg transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all flex-shrink-0 relative cursor-pointer" onClick={handleCardClick("Basic Logic Thinking")}>
@@ -1826,16 +1826,18 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Card>
     )},
     { key: "months", category: "generic" as const, component: <FlipMonthsCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={(cardName) => createRecordingHandler(cardName)} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
-    { key: "numbers", category: "basic" as const, component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
+    { key: "numbers", category: "math" as const, component: <FlipNumbersCard onCardClick={(cardName) => handleCardClick(cardName)()} onRecordingClick={createRecordingHandler} isRecording={isRecording} selectedCardForTest={selectedCardForTest} recordingTime={recordingTime} /> },
   ];
   const filteredItems = carouselItems.filter((item) => carouselFilter === 'all' || item.category === carouselFilter);
   const animationDuration = 40 * (filteredItems.length / carouselItems.length);
 
   // Visual set tint per category so each carousel set is isolated at a glance
-  const categorySetStyles: Record<'generic' | 'road' | 'basic', string> = {
+  const categorySetStyles: Record<'generic' | 'road' | 'basic' | 'math' | 'literacy', string> = {
     generic: "bg-lime-500/15 ring-1 ring-lime-400/40",
     road: "bg-sky-500/15 ring-1 ring-sky-400/40",
     basic: "bg-amber-500/15 ring-1 ring-amber-400/40",
+    math: "bg-violet-500/15 ring-1 ring-violet-400/40",
+    literacy: "bg-pink-500/15 ring-1 ring-pink-400/40",
   };
 
   // Sets that encompass multiple flip sides get their own unique colour chip
@@ -1853,7 +1855,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       activeClass: "bg-lime-500/20 border-lime-400/60 ring-1 ring-lime-400/40",
       badgeClass: "bg-lime-500 text-black",
       items: [
-        "My Body", "ABC Chart", "Fruits Chart", "Vegetables Chart",
+        "My Body", "Fruits Chart", "Vegetables Chart",
         "Wild Animals", "Domestic Animals", "Busy Bee",
         "Months of the Year", "Seasons of the Year", "Transportation",
       ],
@@ -1876,8 +1878,27 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       badgeClass: "bg-amber-400 text-black",
       items: [
         "Basic Shapes", "Micro:bit Device",
-        ...colorCodingSides.map((s) => s.name),
+      ],
+    },
+    {
+      heading: "Mathematics",
+      filter: "math" as const,
+      accent: "text-violet-400",
+      activeClass: "bg-violet-500/20 border-violet-400/60 ring-1 ring-violet-400/40",
+      badgeClass: "bg-violet-400 text-black",
+      items: [
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
+      ],
+    },
+    {
+      heading: "Literacy",
+      filter: "literacy" as const,
+      accent: "text-pink-400",
+      activeClass: "bg-pink-500/20 border-pink-400/60 ring-1 ring-pink-400/40",
+      badgeClass: "bg-pink-400 text-black",
+      items: [
+        "ABC Chart",
+        ...colorCodingSides.map((s) => s.name),
       ],
     },
   ];
@@ -3780,6 +3801,8 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
             </div>
 
             <nav aria-label="Basic logic lessons">{renderLessonGroup(lessonGroups[2])}</nav>
+            <nav aria-label="Mathematics lessons">{renderLessonGroup(lessonGroups[3])}</nav>
+            <nav aria-label="Literacy lessons">{renderLessonGroup(lessonGroups[4])}</nav>
           </div>
 
         </div>
