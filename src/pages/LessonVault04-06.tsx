@@ -1878,7 +1878,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       badgeClass: "bg-amber-400 text-black",
       items: [
         "Basic Shapes", "Micro:bit Device",
-        ...colorCodingSides.map((s) => s.name),
       ],
     },
     {
@@ -1889,6 +1888,17 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       badgeClass: "bg-violet-400 text-black",
       items: [
         "Numbers 1-10", "Numbers 11-20", "Numbers 21-30", "Numbers 31-40",
+      ],
+    },
+    {
+      heading: "Literacy",
+      filter: "literacy" as const,
+      accent: "text-pink-400",
+      activeClass: "bg-pink-500/20 border-pink-400/60 ring-1 ring-pink-400/40",
+      badgeClass: "bg-pink-400 text-black",
+      items: [
+        "ABC Chart",
+        ...colorCodingSides.map((s) => s.name),
       ],
     },
   ];
