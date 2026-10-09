@@ -716,7 +716,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     </Button>
                   </div>
                   {expandedTopic === displayedTopic && (
-                    <div className="mt-2 max-h-48 space-y-1 overflow-y-auto rounded-md border border-border p-1.5">
+                    <div className="mt-2 max-h-72 space-y-1 overflow-y-auto rounded-md border border-border p-2">
                       {copy.topicGuides[displayedTopic].map((guide) => (
                         <Button
                           key={guide.title}
@@ -742,9 +742,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           title={displayedTopic === "library" ? guide.title : copy.overviewAction}
                         >
                           <span className="block">
-                            <span className="block text-[11px] font-semibold text-foreground">{guide.title}</span>
-                            <span className="mt-0.5 block text-[10px] font-normal leading-snug text-muted-foreground">{guide.summary}</span>
-                            {displayedTopic !== "library" && <span className="mt-1 block text-[10px] font-semibold text-primary">{copy.overviewAction} →</span>}
+                            <span className="block text-sm font-semibold text-foreground">{guide.title}</span>
+                            <span className="mt-1 block text-[13px] font-normal leading-relaxed text-muted-foreground">{guide.summary}</span>
+                            {displayedTopic !== "library" && <span className="mt-1.5 block text-[13px] font-semibold text-primary">{copy.overviewAction} →</span>}
                           </span>
                         </Button>
                       ))}
@@ -762,7 +762,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                       <p className="font-medium text-foreground mb-1">{copy.welcomeTitle}</p>
                       <p>{copy.welcome}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground px-1">
+                    <p className="text-[13px] text-muted-foreground px-1">
                       {copy.tryAsking} <span className="font-medium text-foreground">{copy.topicLabels[displayedTopic]}</span>
                     </p>
                   </div>
@@ -775,8 +775,8 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                     >
                       <MessageContent className={msg.role === "user" ? "bg-primary text-primary-foreground" : undefined}>
                         {msg.summaryTitle ? (
-                          <div className="text-xs leading-relaxed text-muted-foreground">
-                            <p className="mb-1 font-semibold text-foreground">{msg.summaryTitle}</p>
+                          <div className="text-sm leading-relaxed text-foreground">
+                            <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
                             <p>{msg.content}</p>
                           </div>
                         ) : msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
