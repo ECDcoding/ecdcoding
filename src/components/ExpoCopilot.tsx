@@ -87,6 +87,9 @@ const COPILOT_COPY = {
         { title: "Parent–Child Relationships", summary: "Strengthen connection through listening, predictable care, play, boundaries and shared routines.", question: "What practical steps can strengthen my relationship with my child?" },
         { title: "Mood Swings", summary: "Understand changing emotions as observations and learn calm, supportive responses without diagnosing.", question: "How should I respond to my child's mood swings?" },
         { title: "School Readiness", summary: "Look at physical, emotional, attention, social and early number-sense readiness alongside family and school support.", question: "Please help me understand my child's school readiness and suggest a way forward." },
+        { title: "Starting School — Part 1", summary: "Settling into school: behaviour, preferred play, reassuring routines and working with the teacher when a child struggles.", question: "Please explain Starting School Part 1: how can parents and teachers support a child who struggles with behaviour and settling into school?" },
+        { title: "Starting School — Part 2", summary: "Reading readiness: language, stories, letters, drawing and playful practice at the child's pace, without labels or pressure.", question: "Please explain Starting School Part 2: how can I support my child's reading readiness and respond to reading difficulties?" },
+        { title: "Starting School — Part 3", summary: "Getting the right support: notice persistent learning, emotional, vision or hearing concerns and agree next steps with the school and qualified professionals.", question: "Please explain Starting School Part 3: what should parents and teachers observe, and when should they seek professional support for school difficulties?" },
       ],
       ecology: [
         { title: "Real-World Knowledge", summary: "Domestic ecology stories connect everyday species and places to real-world observation and care.", question: "How do Domestic Ecology Stories build my child's real-world knowledge?" },
@@ -204,6 +207,9 @@ const COPILOT_COPY = {
         { title: "Kamano ya Motsadi le Ngwana", summary: "Nonotsha kamano ka go reetsa, tlhokomelo e e tlhomameng, motshameko, melelwane le mekgwa e e kopanetsweng.", question: "Ke dikgato dife tse nka di tsayang go nonotsha kamano ya me le ngwana?" },
         { title: "Go Fetofetoga ga Maikutlo", summary: "Tlhaloganya maikutlo a a fetogang jaaka dilo tse di lemogwang, mme o arabe ka kagiso ntle le go dira tlhatlhobo ya bolwetse.", question: "Ke tshwanetse go araba jang go fetofetoga ga maikutlo ga ngwana wa me?" },
         { title: "Go Siamela Sekolo", summary: "Leba mmele, maikutlo, tlhokomelo, botsalano le kitso ya dipalo mmogo le tshegetso ya lelapa le sekolo.", question: "Nthuse go tlhaloganya go siamela sekolo ga ngwana wa me le tsela e re ka tswelelang ka yone." },
+        { title: "Go Simolola Sekolo — Karolo 1", summary: "Go tlwaela sekolo: boitshwaro, motshameko, mekgwa e e gomotsang le go dirisana le morutabana.", question: "Tsweetswee tlhalosa Go Simolola Sekolo Karolo 1: batsadi le barutabana ba ka tshegetsa jang ngwana yo o sokolang ka boitshwaro le go tlwaela sekolo?" },
+        { title: "Go Simolola Sekolo — Karolo 2", summary: "Go siamela go bala: puo, mainane, ditlhaka, go thala le go ikatisa ka motshameko ntle le kgatelelo.", question: "Tsweetswee tlhalosa Go Simolola Sekolo Karolo 2: nka thusa jang ngwana wa me go siamela go bala le fa a sokola go bala?" },
+        { title: "Go Simolola Sekolo — Karolo 3", summary: "Tshegetso e e maleba: lemoga matshwenyego a thuto, maikutlo, pono kgotsa kutlo mme o dirisane le sekolo le baitseanape.", question: "Tsweetswee tlhalosa Go Simolola Sekolo Karolo 3: batsadi le barutabana ba tshwanetse go lemoga eng, mme ba batle thuso ya baitseanape leng?" },
       ],
       ecology: [
         { title: "Kitso ya Ntle ya Sekolo", summary: "Dinane tsa ikoekelo ya selegae di golaganya ditshedi le mafelo a a kgaogantsweng le kitso ya mafatshe.", question: "Dinane tsa Ikoekelo ya Selegae di aga jang kitso ya mafatshe ya ngwana wa me?" },
@@ -281,6 +287,20 @@ const COPILOT_COPY = {
 
 const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "behaviour", "ecology", "coding", "dbe"];
 
+const AFRIKAANS_STARTING_SCHOOL_COPY = {
+  ...COPILOT_COPY.en,
+  overviewAction: "Vra ECD AI hieroor",
+  topicLabels: { ...COPILOT_COPY.en.topicLabels, behaviour: "Kindergedrag" },
+  topicGuides: {
+    ...COPILOT_COPY.en.topicGuides,
+    behaviour: [
+      ...COPILOT_COPY.en.topicGuides.behaviour.filter((guide) => !guide.title.startsWith("Starting School")),
+      { title: "Skoolbegin — Deel 1", summary: "Aanpassing by die skool: gedrag, gunsteling-speletjies, gerusstellende roetines en samewerking met die onderwyser.", question: "Verduidelik asseblief Skoolbegin Deel 1: hoe kan ouers en onderwysers 'n kind ondersteun wat met gedrag en skoolaanpassing sukkel?" },
+      { title: "Skoolbegin — Deel 2", summary: "Leesgereedheid: taal, stories, letters, teken en speelse oefening teen die kind se eie pas, sonder etikette of druk.", question: "Verduidelik asseblief Skoolbegin Deel 2: hoe kan ek my kind se leesgereedheid ondersteun en op leesprobleme reageer?" },
+      { title: "Skoolbegin — Deel 3", summary: "Gepaste ondersteuning: let op aanhoudende leer-, emosionele, sig- of gehoorprobleme en werk saam met die skool en gekwalifiseerde kundiges.", question: "Verduidelik asseblief Skoolbegin Deel 3: wat moet ouers en onderwysers waarneem, en wanneer moet hulle professionele hulp vir skoolprobleme kry?" },
+    ],
+  },
+};
 
 const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -339,7 +359,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
     }
   }, [isGuest, isOpen, isMinimized, guest.freeQuestionsLeft, guest.credits, guest.startSpending, guest.stopSpending]);
 
-  const copy = COPILOT_COPY[language] ?? COPILOT_COPY.en;
+  const copy = language === "af" ? AFRIKAANS_STARTING_SCHOOL_COPY : COPILOT_COPY[language] ?? COPILOT_COPY.en;
 
   const streamChat = useCallback(async (userMessages: Message[], ctx?: string) => {
     const resp = await fetch(`${SUPABASE_URL}/functions/v1/expo-copilot`, {

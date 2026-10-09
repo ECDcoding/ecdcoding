@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add and verify Starting School Parts 1–3 under ECD AI Child Behavior using the uploaded school-management material.
+- [x] Translate Starting School Parts 1–3 into Setswana and Afrikaans and verify selected-language answers.
+
 - [x] Replace the Assignments submenu with a direct navigation item.
 - [x] Add the Users' Media-style Assignments page and attached numeracy activities.
 - [x] Add secure admin publishing and per-user completion records.

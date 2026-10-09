@@ -293,6 +293,31 @@ D. PLAN AND CONDUCT ASSESSMENT (DBE guide) — use for "Foundational Learning Ou
 - Good assessment is fair, valid, reliable and transparent; learners are only assessed on outcomes they have been taught; results are recorded and reported in ways that are fair and useful to parents.
 - Always present ECDcoding ratings (1–10 indexes, FLC Report) as continuous observational evidence that guides next steps — never a test score, diagnosis or fixed label.`;
 
+const STARTING_SCHOOL_GUIDANCE = `
+
+STARTING SCHOOL — PARTS 1–3 (Child Behavior)
+Source: ECDcoding's uploaded CHILD MANAGEMENT AT SCHOOL presentation, dated 17 March 2018. The source does not label three parts; the following is an editorial grouping of its themes, not three separately supplied documents. Use in all selected languages, aligned with ECDcoding's supportive, child-centred ethos.
+
+PART 1 — SETTLING INTO SCHOOL AND BEHAVIOUR (school management and play patterns)
+- Recognise that difficult behaviour can signal unmet needs or difficulty adjusting, not a bad child. Ask about age, grade, what happens, when and where, and what the parent and teacher have observed.
+- Parents and teachers should agree a supportive plan with predictable routines, calm morning reassurance, clear achievable expectations, praise for specific progress and play the child enjoys, including supervised outdoor ball play where appropriate.
+- For persistent difficulties, involve the school's support team, guidance teacher or qualified child psychologist. The source recommends reducing attendance and making full-time attendance something a child must earn: do NOT recommend this as punishment or routine advice. Access to education is not a reward for good behaviour. Any attendance adjustment must be individually agreed with the school and qualified support professionals, consistent with applicable education requirements and continued learning access.
+
+PART 2 — READING READINESS AND SUPPORT (remedial reading, preschool history and parent activities)
+- A child struggling with reading at 7 or 8 is not necessarily unintelligent, lazy or developmentally immature. Do not assign a developmental age, predict that they will catch up or outperform peers, or diagnose from behaviour. Ask about language of instruction, learning opportunities, progress and the teacher's observations.
+- Explore language history, combining words, interest in books and stories, recognising letters and one's name, and opportunities for reading practice. These are observations, not a mandatory checklist proving a child can or cannot start school.
+- Follow the child's interests (for example stories about trains, cars or trucks). Offer shared reading, conversation, playful letter/name activities, familiar words, drawing letters/numbers/shapes, colouring, supervised age-appropriate scissors and picture work, and noticing familiar print on packaging. Give time and suitable materials without forcing mastery or comparing children.
+- Emotional distress and barriers involving language, hearing or vision can affect participation; taste, smell and touch are not automatic explanations for reading difficulties. Persistent struggles deserve timely teacher-led support and appropriate professional assessment, not simply waiting until age nine.
+- The source suggests delaying school by one year for a six-year-old who cannot read. Do NOT give blanket postponement advice or require reading fluency before school entry. Discuss readiness and placement with the school and relevant qualified professionals under current local admission requirements.
+
+PART 3 — OBSERVATION, PROFESSIONAL SUPPORT AND SCHOOL PARTNERSHIP (special support, vision and conclusion)
+- Parents and teachers can record concrete examples of reading, writing, attention, emotional responses, seeing classroom material and hand-eye coordination. Notice reported blurred vision, difficulty seeing print/board, or apparent hearing difficulty without diagnosing a cause.
+- Recommend a qualified eye-care professional for vision concerns, appropriate hearing/language assessment where relevant, and school support or a child psychologist for persistent emotional or learning concerns. Do not prescribe glasses, visual training, eye exercises or grade placement; these require appropriate professional assessment. Do not promise glasses prevent future problems or that school difficulty can be prevented entirely.
+- Avoid criticism and labels such as lazy. Collaborate on appropriate teaching, classroom adjustments and review of progress. Grade placement or admission decisions belong with the school and relevant professionals, not an AI assessment.
+- Link suitable practice to ECDcoding Literacy and Verbal Testing Space, and record actual observations in the FLC Report or relevant Learner Progress Report; never fabricate scores or treat indexes as diagnostic tests.
+
+APPLICATION: When a user opens a Starting School part, explain that part's themes briefly and invite their child's age and specific concern. When they ask a personal question, respond to it directly with one or two realistic next steps. These safeguards override conflicting claims in the older presentation or other age-linked material; preserve its helpful observations without presenting historical assertions as clinical facts.`;
+
 const AFRIKAANS_INDIVIDUALITY_GUIDANCE = `
 
 AFRIKAANSE KENNISBRON — CHILDHOOD PERSONALITY TALKS: INDIVIDUALITEIT
@@ -379,7 +404,7 @@ The user is focused on Foundation Phase mathematics teaching and learning. Answe
       flo: `\n\nSELECTED TOPIC: FOUNDATIONAL LEARNING OUTCOMES.
 The user is focused on Foundational Learning Outcomes — the Learner Play Index, the Learner Progress Report (04–05 and 06–07 age bands) and the FLC Report. Answer from the Learner Play Index, Number Sense and FLC Report knowledge above. Explain every rating as observational evidence, never a diagnosis, and never invent a score. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics".`,
       behaviour: `\n\nSELECTED TOPIC: CHILD BEHAVIOR.
-The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships and school readiness. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO and CHILD DEVELOPMENT QUESTION GUIDE knowledge. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
+The user is focused on child behaviour, personality, ages and stages, individuality, moods, eating and sleeping routines, parent-child relationships, school readiness and Starting School Parts 1–3. Answer from the CHILDHOOD PERSONALITY TALKS / DITSHEKELETSA TSA BOITSHWARO, CHILD DEVELOPMENT QUESTION GUIDE and STARTING SCHOOL knowledge. For starting school, reading difficulties or school support, apply the Starting School safeguards over conflicting historical claims. Do not drift into Foundation Phase mathematics theory or lesson catalogues unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Mathematics" or "Knowledge Base Library".`,
       ecology: `\n\nSELECTED TOPIC: DOMESTIC ECOLOGY STORIES.
 The user is focused on Domestic Ecology Stories — real-world knowledge from everyday home and garden life, child play knowledge, Benchmark Videos and Inter-Play Videos. Answer from the domestic ecology, play-based learning and Learner Play Index knowledge above, and encourage real observation of everyday species and places. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Knowledge Base Library".`,
       coding: `\n\nSELECTED TOPIC: CODING AND ROBOTICS.
@@ -390,8 +415,8 @@ The user is focused on the Department of Basic Education (DBE) and CAPS policy f
     const topicInstruction = TOPIC_FOCUS[topic as string] ?? "";
 
     const systemContent = context
-      ? `${EXPO_SYSTEM_PROMPT}${languageKnowledge}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
-      : `${EXPO_SYSTEM_PROMPT}${languageKnowledge}${languageInstruction}${topicInstruction}`;
+      ? `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}\n\nThe user is currently in the "${context}" area of the app. Tailor your response to child behaviour and the lessons relevant to that area.`
+      : `${EXPO_SYSTEM_PROMPT}${STARTING_SCHOOL_GUIDANCE}${languageKnowledge}${languageInstruction}${topicInstruction}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
