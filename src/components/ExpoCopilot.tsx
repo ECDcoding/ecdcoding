@@ -75,7 +75,7 @@ const COPILOT_COPY = {
     restartLabel: "Ask a new question",
     topicGuides: {
       library: [
-        { title: "Learning the Basics", summary: "Learners explore literacy and numeracy: vowels, the alphabet and colours, number counting in sets from 1–10, 11–20 and onwards, and basic shapes.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
+        { title: "Learning the Basics", summary: "Under Numeracy, learners explore (a) verbal counting sequence practice and repetition, (b) writing cardinal numbers 1–10, 11–20 and 21–30, (c) writing the symbols + − × % and =, and (d) drawing the basic shapes: circle, rectangle, square and triangle. Under Literacy, learners explore (a) verbal practice and repetition of vowels and the alphabet, and (b) writing and repetition of vowels and the alphabet.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
         { title: "Verbal Testing Space", summary: "Learners present what they see verbally to improve their knowledge base. Learners are required to put on their (a) ear phones (b) turn on the mic (c) and verbally record what they see in the carousel card in front of them.", question: "How should my child use the Verbal Testing Space?" },
         { title: "Coding", summary: "Learners explore (a) Coding in Alphabets, (b) Coding in Numbers. Here we provide a relationship that numbers have with letters and vice versa, and the long term goal is to enable learners to be able to perform encryption of sensitive information through cryptography and creating one time passwords (OTPs).", question: "How can my child explore Coding with alphabets and numbers in ECDcoding?" },
         { title: "Programming", summary: "Explore age-appropriate visual programming with Blockly and Scratch.", question: "How can my child get started with Programming using Blockly or Scratch?" },
@@ -122,7 +122,7 @@ const COPILOT_COPY = {
         { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
         { title: "Coding and Technology", summary: "Coding, Blockly, Scratch and Micro:bit activities develop logic, creativity and future-focused problem solving.", question: "Which ECDcoding technology lesson is appropriate for my child's age?" },
         { title: "Users' Reviews", summary: "Parents, teachers and the ECD community share observations and constructive guidance around learner progress.", question: "How should I use Users' Reviews to support my child's progress?" },
-        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology.", question: "Which Learning the Basics lesson should my child start with, and why?" },
+        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology. For 08–12 learners, Numeracy covers the Verbal Testing Space for addition, subtraction, multiplication and division, plus solving number-word exercises; Literacy covers reading and writing.", question: "Which Learning the Basics lesson should my child start with, and why?" },
       ],
     },
     faqs: {
@@ -200,7 +200,7 @@ const COPILOT_COPY = {
     restartLabel: "Botsa potso e ntšha",
     topicGuides: {
       library: [
-        { title: "Learning the Basics", summary: "Baithuti ba ithuta go bala, go kwala le dipalo: ditumanosi, alfhabete, mebala, go bala ka ditlhopha tsa 1–10, 11–20 le go ya pele, le dibopego.", question: "Ngwana wa me wa dingwaga 04–07 o tla ithuta eng mo Learning the Basics? Tsweetswee tlhalosa go bala le go kwala le dipalo ka go farologana." },
+        { title: "Learning the Basics", summary: "Ka Numeracy, baithuti ba ithuta (a) go bala dipalo ka molomo le go ikatisa gape, (b) go kwala dipalo tsa motheo 1–10, 11–20 le 21–30, (c) go kwala ditshupetso + − × % le =, le (d) go thala dibopego tsa motheo: sediko, khutlonnetsepa, khutlonnetshethata le khutlotharo. Ka Literacy, baithuti ba ithuta (a) go bala ka molomo le go ikatisa gape ditumanosi le alfhabete, le (b) go kwala le go ikatisa gape ditumanosi le alfhabete.", question: "Ngwana wa me wa dingwaga 04–07 o tla ithuta eng mo Learning the Basics? Tsweetswee tlhalosa go bala le go kwala le dipalo ka go farologana." },
         { title: "Verbal Testing Space", summary: "Baithuti ba tlhagisa ka molomo se ba se bonang go tokafatsa kitso ya bona. Baithuti ba tshwanetse go apara (a) di-ear phones (b) go bulela mic (c) mme ba rekote ka molomo se ba se bonang mo carousel card e ba e lebeletsegeng.", question: "Ngwana wa me o tshwanetse go dirisa jang Verbal Testing Space?" },
         { title: "Khouto (Coding)", summary: "Baithuti ba ithuta (a) Khouto ka Ditlhaka (b) Khouto ka Dipalo. Mo re tshwarela kamano e dipalo di nang le yona le ditlhaka le go farologana, mme maikaelelo a nako e telele ke go naya baithuti bokgoni jwa go fitlhelela tshedimosetso e e botlhokwa ka cryptography le go dira one time passwords (OTPs).", question: "Ngwana wa me a ka ithuta jang khouto ka ditlhaka le dipalo mo ECDcoding?" },
         { title: "Programming", summary: "Ithute go dira mananeo ka dibloke tsa Blockly le Scratch go ya ka dingwaga tsa ngwana.", question: "Ngwana wa me a ka simolola jang Programming ka Blockly kgotsa Scratch?" },
@@ -247,7 +247,7 @@ const COPILOT_COPY = {
         { title: "Pego ya FLC", summary: "Sephetho sa 1–10 se sobokanya bosupi jo bo leng teng mme se tshitshinya tsela e e maleba ya go ya pele.", question: "Ke tshwanetse go tlhaloganya le go dirisa jang Pego ya FLC?" },
         { title: "Khouto le Thekenoloji", summary: "Khouto, Blockly, Scratch le Micro:bit di godisa tlhaloganyo, boitlhamedi le tharabololo ya mathata.", question: "Ke thuto efe ya thekenoloji ya ECDcoding e e siametseng dingwaga tsa ngwana wa me?" },
         { title: "Users' Reviews", summary: "Batsadi, barutabana le baagi ba ECD ba arolelana ditemogo le kaelo e e agang ka kgatelopele.", question: "Nka dirisa jang Users' Reviews go tshegetsa kgatelopele ya ngwana wa me?" },
-        { title: "Learning the Basics", summary: "Sekaseka go bala, dipalo, pabalesego mo tseleng, dipalangwa, saense, dikgono tsa botshelo le thekenoloji.", question: "Ngwana wa me o tshwanetse go simolola ka thuto efe ya Learning the Basics, mme ka ntlha yang?" },
+        { title: "Learning the Basics", summary: "Sekaseka go bala, dipalo, pabalesego mo tseleng, dipalangwa, saense, dikgono tsa botshelo le thekenoloji. Go bana ba dingwaga 08–12, Numeracy e akaretsa Verbal Testing Space ya go tlhakanya, go ntsha, go atisa le go kgaoganya dipalo, le go rarabolola mafoko a dipalo (number words); Literacy e akaretsa go bala le go kwala.", question: "Ngwana wa me o tshwanetse go simolola ka thuto efe ya Learning the Basics, mme ka ntlha yang?" },
       ],
     },
     faqs: {
