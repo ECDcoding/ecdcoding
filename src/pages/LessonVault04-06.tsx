@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays, Eye, ClipboardCheck } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import { SiFacebook, SiX, SiTiktok, SiLinkedin, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
+import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
@@ -3809,6 +3809,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <p className="text-white/90 text-sm">
                   Put Headsets On, Click Card &amp; Record
                 </p>
+                <p className="text-white/80 text-sm max-w-md">
+                  Learners present what they see verbally to improve their knowledge base. Learners are required to put on their (a) ear phones (b) turn on the mic (c) and verbally record what they see in the carousel card in front of them.
+                </p>
+
               </div>
 
               {/* Picture — identical flowing carousel to the original one */}
