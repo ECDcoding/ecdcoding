@@ -3809,6 +3809,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                 <p className="text-white/90 text-sm">
                   Put Headsets On, Click Card &amp; Record
                 </p>
+                <p className="text-white/80 text-sm max-w-md">
+                  Learners present what they see verbally to improve their knowledge base. Learners are required to put on their (a) ear phones (b) turn on the mic (c) and verbally record what they see in the carousel card in front of them.
+                </p>
+
               </div>
 
               {/* Picture — identical flowing carousel to the original one */}
