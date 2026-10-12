@@ -57,6 +57,12 @@ All colors MUST be HSL.
     --profile-text: 60 100% 50%;
 
     --radius: 0.5rem;
+    --example-red: 0 85% 65%;
+    --example-blue: 205 95% 65%;
+    --example-green: 135 65% 55%;
+    --example-yellow: 48 100% 62%;
+    --example-orange: 25 100% 65%;
+    --example-purple: 285 85% 72%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -288,3 +294,10 @@ All colors MUST be HSL.
   color: #2b6cb0;
   text-decoration: underline;
 }
+
+.ecd-visual-red { color: hsl(var(--example-red)); }
+.ecd-visual-blue { color: hsl(var(--example-blue)); }
+.ecd-visual-green { color: hsl(var(--example-green)); }
+.ecd-visual-yellow { color: hsl(var(--example-yellow)); }
+.ecd-visual-orange { color: hsl(var(--example-orange)); }
+.ecd-visual-purple { color: hsl(var(--example-purple)); }
