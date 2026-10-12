@@ -14,7 +14,7 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -732,31 +732,29 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           type="button"
                           variant="ghost"
                           onClick={() => {
-                            if (displayedTopic === "library") {
-                              setTopic("library");
-                              setMessages((previous) => [
-                                ...previous.filter((message) => !message.summaryTitle && !message.followUp),
-                                {
-                                  role: "assistant",
-                                  content: guide.summary,
-                                  topic: "library",
-                                  summaryTitle: guide.title,
-                                },
-                              ]);
-                              setExpandedTopic(null);
+                            const t = displayedTopic;
+                            setTopic(t);
+                            setMessages((previous) => [
+                              ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor),
+                              { role: "user", content: guide.title, topic: t, promptFor: guide.title },
+                              { role: "assistant", content: "", topic: t, summaryTitle: guide.title },
+                            ]);
+                            setExpandedTopic(null);
+                            window.setTimeout(() => {
+                              setMessages((previous) =>
+                                previous.map((m) =>
+                                  m.summaryTitle === guide.title && !m.content ? { ...m, content: guide.summary } : m,
+                                ),
+                              );
                               inputRef.current?.focus();
-                              return;
-                            }
-                            sendMessage(guide.question, true);
+                            }, 1200);
                           }}
                           disabled={isLoading}
                           className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
-                          title={displayedTopic === "library" ? guide.title : copy.overviewAction}
+                          title={guide.title}
                         >
                           <span className="block">
                             <span className="block text-sm font-semibold text-foreground">{guide.title}</span>
-                            <span className="mt-1 block text-[13px] font-normal leading-relaxed text-muted-foreground">{guide.summary}</span>
-                            {displayedTopic !== "library" && <span className="mt-1.5 block text-[13px] font-semibold text-primary">{copy.overviewAction} →</span>}
                           </span>
                         </Button>
                       ))}
@@ -793,7 +791,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                               {msg.content}
                             </p>
                           </div>
-                        ) : msg.summaryTitle ? (
+                        ) : msg.summaryTitle && msg.content ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
                             <p>{msg.content}</p>
