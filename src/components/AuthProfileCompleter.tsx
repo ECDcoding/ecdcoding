@@ -54,7 +54,6 @@ export const AuthProfileCompleter = () => {
         first_name: pending.firstName.trim(),
         last_name: pending.lastName.trim(),
         username,
-        phone: "",
         state: "",
         country: "",
         registration_type: pending.registrationType,
