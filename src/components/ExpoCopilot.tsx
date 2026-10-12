@@ -14,6 +14,8 @@ import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
+const WELCOME_BONUS = 5;
+
 type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string };
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
@@ -342,6 +344,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   // Admins are never capped, even while their session is still loading.
   const isGuest = !isAdmin && !authLoading && !user;
   const guest = useGuestAiCredits(isGuest);
+  const [bonusLeft, setBonusLeft] = useState(() => {
+    try { return Math.max(0, WELCOME_BONUS - JSON.parse(localStorage.getItem("ecd_ai_welcome_topics") || "[]").length); } catch { return WELCOME_BONUS; }
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -449,11 +454,17 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
     // Visitors: 1 free typed question per day (sub-topic overviews don't count)
     if (isGuest && !fromGuide) {
-      if (!guest.canAsk) {
+      // Welcome bonus: 5 free questions for new visitors, one per topic
+      const bonusUsed: string[] = JSON.parse(localStorage.getItem("ecd_ai_welcome_topics") || "[]");
+      if (bonusUsed.length < WELCOME_BONUS && !bonusUsed.includes(topic)) {
+        localStorage.setItem("ecd_ai_welcome_topics", JSON.stringify([...bonusUsed, topic]));
+        setBonusLeft(WELCOME_BONUS - bonusUsed.length - 1);
+      } else if (!guest.canAsk) {
         setPaywallOpen(true);
         return;
+      } else {
+        guest.registerQuestion();
       }
-      guest.registerQuestion();
     }
 
 
@@ -906,7 +917,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                 {isGuest && (
                   <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                     <span className={guest.isLowOnCredits ? "font-semibold text-destructive" : undefined}>
-                      {guest.freeQuestionsLeft > 0
+                      {bonusLeft > 0
+                        ? `Welcome bonus: ${bonusLeft} free question${bonusLeft === 1 ? "" : "s"} — one per topic`
+                        : guest.freeQuestionsLeft > 0
                         ? "1 free question today"
                         : guest.credits > 0
                           ? `${guest.credits} credits left (1 per minute)${
