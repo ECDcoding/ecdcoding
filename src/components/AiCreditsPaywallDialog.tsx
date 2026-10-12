@@ -28,9 +28,9 @@ const AiCreditsPaywallDialog = ({ open, onOpenChange }: AiCreditsPaywallDialogPr
           </p>
           <p className="text-muted-foreground">
             We are fixing a payment issue, so credit top-ups cannot be purchased right now. Once
-            payments are working again, you will be able to add credits to engage ECD AI without
-            limits. Until then, please enjoy your 1 free question per day — or sign in for
-            unlimited access.
+            payments are working again, you will be able to pay to add credits that allow you to
+            engage ECD AI without limits at R100.00 for 50 credits. Until then, please enjoy your 1
+            free question per day — or sign in for unlimited access.
           </p>
         </div>
 
