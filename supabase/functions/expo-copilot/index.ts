@@ -40,8 +40,8 @@ Use accurate geometry: a rectangle must be wider than it is tall. For an unsuppo
 
 LESSONS ON OFFER
 Age group 04 – 07 (Learning the Basics):
-- Literacy: alphabet (uppercase and lowercase), vowels with sing-along music, months of the year, days, shapes and handwriting.
-- Numeracy: counting and cardinality 1–30, counting forward and backward, breaking down and building up numbers, ordinal position (1st–3rd).
+- Literacy: (a) verbal practice and repetition of vowels and the alphabet, (b) writing and repetition of vowels and the alphabet. Also months, colours and handwriting.
+- Numeracy: (a) verbal counting sequence practice and repetition, (b) writing cardinal numbers 1–10, 11–20 and 21–30, (c) writing the symbols + − × % and =, (d) drawing the basic shapes circle, rectangle, square and triangle. Also counting forward and backward, breaking down and building up numbers, and ordinal position (1st–3rd).
 - Tech skills / Coding: Coding in Alphabets, Coding in Numbers, Coding in Colour, emojis and basic icons.
 - Basic Logic Thinking: facial-recognition and pattern activities, colour coding, fruits and vegetables charts.
 - Road Safety: traffic robot (stop, ready, cross), ABC road poster, modes of transport (road, water, air, rail).
@@ -49,7 +49,9 @@ Age group 04 – 07 (Learning the Basics):
 - Life Skills: performing arts, music, rhythmic training and sports.
 - Verbal Testing Space: the child looks at a lesson card and records a spoken analysis; recordings feed the FLC (Foundational Learning Competencies) report.
 
-Age group 08 – 12:
+Age group 08 – 12 (Learning the Basics):
+- Numeracy: (a) Verbal Testing Space for addition, subtraction, multiplication and division, (b) solving number-word exercises.
+- Literacy: reading and writing.
 - Coding and robotics with Blockly, Micro:bit and MakeCode Arcade, cryptography, multiplication activities and AI basics, plus the same Verbal Testing Space and behaviour tools.
 
 Across the app: Assignments checklist with alerts, Learner Review, Child Behavior (Ages and Stages | Individuality), Domestic Ecology Stories, Users' Reviews community wall, the Learner Play Index under Foundational Learning Outcomes, and the FLC Report parents can share with teachers or sponsors.
