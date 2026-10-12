@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useGuestAiCredits, GUEST_CREDITS_PER_PURCHASE } from "@/hooks/useGuestAiCredits";
 import AiCreditsPaywallDialog from "@/components/AiCreditsPaywallDialog";
+import EcdVisualResponse from "@/components/EcdVisualResponse";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -807,7 +808,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
                             <p>{msg.content}</p>
                           </div>
-                        ) : msg.content ? <MessageResponse>{msg.content}</MessageResponse> : (
+                        ) : msg.content ? (msg.role === "assistant" ? <EcdVisualResponse content={msg.content} streaming={isLoading && i === messages.length - 1} /> : <MessageResponse>{msg.content}</MessageResponse>) : (
 
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />

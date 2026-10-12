@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Add and verify colourful ECD AI illustrations for requested shapes and symbols, preserving existing chat and credits.
 
 - [x] Rename ECD AI Lessons Library and list Learning the Basics, Verbal Testing Space, Coding, Programming and Handwriting.
 - [x] Show Lessons Library first whenever ECD AI opens and place Child Behavior last in the rotating list.
