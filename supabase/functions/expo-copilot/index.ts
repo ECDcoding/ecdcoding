@@ -441,10 +441,12 @@ serve(async (req) => {
     const TOPIC_FOCUS: Record<string, string> = {
       library: `\n\nSELECTED TOPIC: LESSONS LIBRARY.
 The user is focused on the ECDcoding Lessons Library — the Numeracy and Literacy lessons inside Learning the Basics, and the Verbal Testing Space. Answer from the LESSONS ON OFFER list and explain where each lesson sits in the app.
-LEARNING THE BASICS (ages 04–07) content:
-- NUMERACY: Number Counting with counting in sets from 1–10, then 11–20, 21–30, 31–40, 41–50, 51–60, 61–70, 71–80, 81–90 and 91–100 (each set is its own counting activity); and Shapes — circle, rectangle, square and triangle.
-- LITERACY: vowels, the alphabet and colours.
-Explain what a 04–07 year old is exposed to when they open Numeracy or Literacy, and suggest a sensible starting set for the child's age. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics". Do not end answers with questions.`,
+LEARNING THE BASICS content by age group:
+- Ages 04–07 NUMERACY: (a) verbal counting sequence practice and repetition, (b) writing cardinal numbers 1–10, 11–20 and 21–30, (c) writing the symbols + − × % and =, (d) drawing the basic shapes circle, rectangle, square and triangle. Number Counting runs in sets 1–10, 11–20, 21–30, 31–40, 41–50, 51–60, 61–70, 71–80, 81–90 and 91–100 (each set is its own counting activity).
+- Ages 04–07 LITERACY: (a) verbal practice and repetition of vowels and the alphabet, (b) writing and repetition of vowels and the alphabet. Also months and colours.
+- Ages 08–12 NUMERACY: (a) Verbal Testing Space for addition, subtraction, multiplication and division, (b) solving number-word exercises.
+- Ages 08–12 LITERACY: reading and writing.
+Explain what a 04–07 year old or an 08–12 year old is exposed to when they open Numeracy or Literacy, using the age-group lists above for the relevant age. Suggest a sensible starting set for the child's age. Do not drift into behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Mathematics". Do not end answers with questions.`,
       maths: `\n\nSELECTED TOPIC: MATHEMATICS.
 The user is focused on Foundation Phase mathematics teaching and learning. Answer from the complete FOUNDATION PHASE MATHEMATICS ETHOS, including the play-based approach, constructivism, the three kinds of knowledge, conceptual understanding, strategic competence, procedural fluency, adaptive reasoning, productive disposition, the child-centred environment, the five-phase learning cycle, developing number sense, evaluation roles, connected classroom learning, the Learner Play Index and the Number Sense knowledge and understanding network. Give concrete, age-appropriate activities. Do not drift into general behaviour guidance unless the user explicitly asks. If the question clearly belongs to another topic, answer briefly and invite them to switch the topic button to "Child Behavior" or "Foundational Learning Outcomes". Do not end answers with questions.`,
       flo: `\n\nSELECTED TOPIC: FOUNDATIONAL LEARNING OUTCOMES.
