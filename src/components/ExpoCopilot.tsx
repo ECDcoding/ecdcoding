@@ -75,7 +75,7 @@ const COPILOT_COPY = {
     restartLabel: "Ask a new question",
     topicGuides: {
       library: [
-        { title: "Learning the Basics", summary: "Learners explore literacy and numeracy: vowels, the alphabet and colours, number counting in sets from 1–10, 11–20 and onwards, and basic shapes.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
+        { title: "Learning the Basics", summary: "Under Numeracy, learners explore (a) verbal counting sequence practice and repetition, (b) writing cardinal numbers 1–10, 11–20 and 21–30, (c) writing the symbols + − × % and =, and (d) drawing the basic shapes: circle, rectangle, square and triangle. Under Literacy, learners explore (a) verbal practice and repetition of vowels and the alphabet, and (b) writing and repetition of vowels and the alphabet.", question: "What will my 04–07 year old explore in Learning the Basics? Please explain Literacy and Numeracy separately." },
         { title: "Verbal Testing Space", summary: "Learners present what they see verbally to improve their knowledge base. Learners are required to put on their (a) ear phones (b) turn on the mic (c) and verbally record what they see in the carousel card in front of them.", question: "How should my child use the Verbal Testing Space?" },
         { title: "Coding", summary: "Learners explore (a) Coding in Alphabets, (b) Coding in Numbers. Here we provide a relationship that numbers have with letters and vice versa, and the long term goal is to enable learners to be able to perform encryption of sensitive information through cryptography and creating one time passwords (OTPs).", question: "How can my child explore Coding with alphabets and numbers in ECDcoding?" },
         { title: "Programming", summary: "Explore age-appropriate visual programming with Blockly and Scratch.", question: "How can my child get started with Programming using Blockly or Scratch?" },
@@ -122,7 +122,7 @@ const COPILOT_COPY = {
         { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
         { title: "Coding and Technology", summary: "Coding, Blockly, Scratch and Micro:bit activities develop logic, creativity and future-focused problem solving.", question: "Which ECDcoding technology lesson is appropriate for my child's age?" },
         { title: "Users' Reviews", summary: "Parents, teachers and the ECD community share observations and constructive guidance around learner progress.", question: "How should I use Users' Reviews to support my child's progress?" },
-        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology.", question: "Which Learning the Basics lesson should my child start with, and why?" },
+        { title: "Learning the Basics", summary: "Explore literacy, numeracy, road safety, transport, science, life skills and age-appropriate technology. For 08–12 learners, Numeracy covers the Verbal Testing Space for addition, subtraction, multiplication and division, plus solving number-word exercises; Literacy covers reading and writing.", question: "Which Learning the Basics lesson should my child start with, and why?" },
       ],
     },
     faqs: {
