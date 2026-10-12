@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import { oauthReturnPath } from "@/lib/oauth-return-path";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
@@ -15,10 +16,12 @@ const SignInPage = () => {
   const [isResetting, setIsResetting] = useState(false);
   const { signIn, resetPassword, user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const nextPath = oauthReturnPath(searchParams.get("next"));
 
   useEffect(() => {
-    if (user) navigate("/");
-  }, [user, navigate]);
+    if (user) navigate(nextPath);
+  }, [user, navigate, nextPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ const SignInPage = () => {
     try {
       const { data, error } = await signIn(email, password);
       if (data && !error) {
-        navigate("/");
+        navigate(nextPath);
 
       } else if (error) {
         setShowForgotPassword(true);
@@ -56,11 +59,11 @@ const SignInPage = () => {
   const handleGoogle = async () => {
     const isInIframe = window.self !== window.top;
     if (isInIframe) {
-      window.open(`${window.location.origin}/sign-in`, "_blank");
+      window.open(`${window.location.origin}/sign-in${window.location.search}`, "_blank");
       return;
     }
     await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/`,
+      redirect_uri: new URL(nextPath, window.location.origin).href,
       extraParams: {
         prompt: "select_account",
       },

@@ -31,6 +31,7 @@ import RoboticsDesignCraftEvent from "./pages/RoboticsDesignCraftEvent";
 import LearnerProgressReport from "./pages/LearnerProgressReport";
 import UsersMedia from "./pages/UsersMedia";
 import Assignments from "./pages/Assignments";
+import OAuthConsent from "./pages/OAuthConsent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProfileCompleter } from "./components/AuthProfileCompleter";
 import { AnnualPaymentPrompt } from "./components/AnnualPaymentPrompt";
@@ -52,6 +53,7 @@ const AppRoutes = () => (
     <Routes>
       {/* Public routes */}
       <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/data-deletion" element={<DataDeletion />} />
