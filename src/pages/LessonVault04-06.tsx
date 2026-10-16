@@ -2276,24 +2276,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        {/* Domestic Ecology Stories */}
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
-                          <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>
-                          Kids' Conceptual Stories
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
-                          Garden Species
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
-                          Grass Species
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
-                          Water Pond Species
-                        </DropdownMenuItem>
-
-
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
                         </DropdownMenuItem>
@@ -2306,6 +2288,22 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                         <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
                           <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
                         </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* Domestic Ecology Stories — its own dropdown, below Foundational Learning Outcomes */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
