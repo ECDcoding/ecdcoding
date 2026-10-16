@@ -951,17 +951,20 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
         onClick={() => { setIsOpen(!isOpen); setIsMinimized(false); }}
         aria-label={isOpen ? "Close ECD AI" : "ECD AI"}
         title={isOpen ? "Close ECD AI" : "ECD AI"}
-        className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative"
+        className="h-20 w-20 rounded-full shadow-xl bg-black hover:bg-black/80 relative flex flex-col items-center justify-center gap-0.5"
         size="icon"
       >
         {isOpen ? (
           <X className="h-8 w-8 text-white" />
         ) : (
           <>
-            <Bot className="h-14 w-14 text-white" />
-            <span className="absolute -top-1 -right-1 h-6 w-6 bg-orange-400 rounded-full flex items-center justify-center">
-              <span className="text-[8px] font-bold text-white">ASK</span>
-            </span>
+            <div className="relative">
+              <Bot className="h-8 w-8 text-white" />
+              <span className="absolute -top-2 -right-4 h-5 w-5 bg-orange-400 rounded-full flex items-center justify-center">
+                <span className="text-[7px] font-bold text-white">ASK</span>
+              </span>
+            </div>
+            <span className="text-[10px] font-bold text-white">ECD AI</span>
           </>
         )}
       </Button>
