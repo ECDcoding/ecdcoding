@@ -807,14 +807,6 @@ const LessonVault0710 = () => {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 3. Assignments — direct page with red alert */}
-                  <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
-
-
-                  {/* 4. Users' Reviews */}
-                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
-                  </DropdownMenuItem>
 
                   {/* 5. Domestic Ecology Stories */}
                   <DropdownMenuSub>

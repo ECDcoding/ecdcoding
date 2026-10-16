@@ -2249,14 +2249,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
 
-                  {/* 3. Assignments — direct page with red alert */}
-                  <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
-
-
-                  {/* 4. Users' Reviews */}
-                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
-                  </DropdownMenuItem>
 
                   {/* 5. Domestic Ecology Stories */}
                   <DropdownMenuSub>
