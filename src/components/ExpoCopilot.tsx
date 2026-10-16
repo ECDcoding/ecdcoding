@@ -70,7 +70,6 @@ const COPILOT_COPY = {
       lessons: "Literacy, numeracy, coding, road safety, science and life skills.",
     },
     overviewAction: "Ask ECD AI about this",
-    summaryFollowUp: "Do you have any further questions about this lesson? Type them below and I'll gladly help.",
     replyWithin: "Reply within",
     restartLabel: "Ask a new question",
     topicGuides: {
@@ -195,7 +194,6 @@ const COPILOT_COPY = {
       lessons: "Go bala, dipalo, khouto, pabalesego mo tseleng, saense le dikgono tsa botshelo.",
     },
     overviewAction: "Botsa ECD AI ka seno",
-    summaryFollowUp: "A o na le dipotso tse dingwe ka thuto eno? Di kwale fa tlase mme ke tla go thusa ka mabogo a mabedi.",
     replyWithin: "Araba mo metsotsoaneng e",
     restartLabel: "Botsa potso e ntšha",
     topicGuides: {
@@ -303,7 +301,6 @@ const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "codi
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
   overviewAction: "Vra ECD AI hieroor",
-  summaryFollowUp: "Het jy enige verdere vrae oor hierdie les? Tik dit hieronder en ek help graag.",
   topicLabels: { ...COPILOT_COPY.en.topicLabels, behaviour: "Kindergedrag" },
   topicGuides: {
     ...COPILOT_COPY.en.topicGuides,
