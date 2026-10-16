@@ -13,7 +13,7 @@ import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useAuth } from "@/hooks/useAuth";
@@ -2292,28 +2292,35 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuLabel className="flex items-center gap-2 whitespace-nowrap px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/75">
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
                       <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
-                    </DropdownMenuLabel>
-                    <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
-                    <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                      <Film className="mr-2 h-4 w-4" /> Users' Reviews
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
-                      <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                      <FileText className="mr-2 h-4 w-4" /> Learner Review
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
-                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
-                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
+                          <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Review
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
+                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* Assignments — direct page with red alert */}
+                  <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
+
+                  {/* Users' Reviews */}
+                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
+                  </DropdownMenuItem>
 
                   {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
