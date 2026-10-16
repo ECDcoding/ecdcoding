@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Newspaper, CalendarDays, Eye, ClipboardCheck } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ChevronRight, ChevronLeft, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, FileText, Plus, UserPlus, Check, Send, MessageSquare, Reply, Inbox, Menu, Mic, PenLine, UserCheck, Eye, ClipboardCheck } from "lucide-react";
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
@@ -2250,28 +2250,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
 
 
-                  {/* 5. Domestic Ecology Stories */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>
-                          Kids' Conceptual Stories
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
-                          Garden Species
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
-                          Grass Species
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
-                          Water Pond Species
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
 
 
                   {/* 6. Child Behavior */}
@@ -2298,6 +2276,29 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        {/* Domestic Ecology Stories */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>
+                                Kids' Conceptual Stories
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>
+                                Garden Species
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>
+                                Grass Species
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>
+                                Water Pond Species
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
                         </DropdownMenuItem>
@@ -2322,15 +2323,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                     <Film className="mr-2 h-4 w-4" /> Users' Reviews
                   </DropdownMenuItem>
 
-                  {/* 8. News */}
-                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
-                    <Newspaper className="mr-2 h-4 w-4" /> News
-                  </DropdownMenuItem>
-
-                  {/* 8. Events */}
-                  <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>
-                    <CalendarDays className="mr-2 h-4 w-4" /> Events
-                  </DropdownMenuItem>
                 </DropdownMenuContent>
 
               </DropdownMenu>
