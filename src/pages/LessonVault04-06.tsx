@@ -2292,35 +2292,28 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                       <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        {/* Assignments — direct page with red alert */}
-                        <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
-
-                        {/* Users' Reviews */}
-                        <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                          <Film className="mr-2 h-4 w-4" /> Users' Reviews
-                        </DropdownMenuItem>
-
-                        <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
-                          <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Review
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                    </DropdownMenuLabel>
+                    <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
+                    <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                      <Film className="mr-2 h-4 w-4" /> Users' Reviews
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
+                      <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Review
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
                   {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
