@@ -33,7 +33,7 @@ const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] =
   { code: "nr", label: "IsiNdebele", voiceLang: "nr-ZA" },
   { code: "ss", label: "siSwati", voiceLang: "ss-ZA" },
 ];
-type CopilotTopic = "library" | "maths" | "flo" | "behaviour" | "ecology" | "coding" | "dbe";
+type CopilotTopic = "library" | "maths" | "flo" | "behaviour" | "ecology" | "dbe";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -61,7 +61,6 @@ const COPILOT_COPY = {
       flo: "Foundational Learning Outcomes",
       behaviour: "Child Behavior",
       ecology: "Domestic Ecology Stories",
-      coding: "Coding and Robotics",
       dbe: "Policy",
     },
     topicHints: {
@@ -102,11 +101,6 @@ const COPILOT_COPY = {
         { title: "Real-World Knowledge", summary: "Domestic ecology stories connect everyday species and places to real-world observation and care.", question: "How do Domestic Ecology Stories build my child's real-world knowledge?" },
         { title: "Child Play Knowledge", summary: "Play stories reveal how your child explores, builds, imagines and solves problems.", question: "What can my child's play tell me about how they learn?" },
         { title: "Benchmark and Inter-Play Videos", summary: "Watch benchmark videos and share inter-play videos to record and compare observations over time.", question: "How should I use the Benchmark and Inter-Play Videos?" },
-      ],
-      coding: [
-        { title: "Coding in Numbers and Alphabets", summary: "Turn letters and numbers into codes to build pattern recognition and early computational thinking.", question: "How can my child practise coding in numbers and alphabets?" },
-        { title: "Scratch and Blockly", summary: "Visual block coding builds logic, creativity and step-by-step problem solving.", question: "Which Scratch or Blockly activity suits my child's age?" },
-        { title: "Recycle My Robot", summary: "A one-day robotics event booked in advance where children build robots from recycled materials.", question: "How do I book the Recycle My Robot event for my child?" },
       ],
       dbe: [
         { title: "Policy and CAPS", summary: "How ECDcoding activities align with Department of Basic Education and CAPS expectations for the early grades.", question: "How does ECDcoding align with DBE and CAPS policy for young learners?" },
@@ -150,11 +144,6 @@ const COPILOT_COPY = {
         "How do Benchmark and Inter-Play Videos work?",
         "What real-world knowledge does domestic ecology build?",
       ],
-      coding: [
-        "What coding lessons are available for 04–07 and 08–12?",
-        "How does Blockly or Scratch help my child think?",
-        "How do I book Recycle My Robot?",
-      ],
       dbe: [
         "Does ECDcoding follow the CAPS curriculum?",
         "How does the programme prepare children for Grade R and Grade 1?",
@@ -185,7 +174,6 @@ const COPILOT_COPY = {
       flo: "Diphitlhelelo tsa Thuto ya Motheo",
       behaviour: "Boitshwaro",
       ecology: "Dinane tsa Ikoekelo ya Selegae",
-      coding: "Khouto le Robotics",
       dbe: "Melawana",
     },
     topicHints: {
@@ -226,11 +214,6 @@ const COPILOT_COPY = {
         { title: "Kitso ya Ntle ya Sekolo", summary: "Dinane tsa ikoekelo ya selegae di golaganya ditshedi le mafelo a a kgaogantsweng le kitso ya mafatshe.", question: "Dinane tsa Ikoekelo ya Selegae di aga jang kitso ya mafatshe ya ngwana wa me?" },
         { title: "Kitso ya Motshameko wa Ngwana", summary: "Dinane tsa motshameko di bontsha gore ngwana o batlisisa, o aga, o akanya le go rarabolola mathata jang.", question: "Motshameko wa ngwana wa me o mpolelelang eng ka tsela a ithutang ka yona?" },
         { title: "Ditshwantsho tsa Benchmark le Inter-Play", summary: "Lebelela ditshwantsho tsa benchmark mme lo abolele tsa inter-play go gatisa temogo ka nako.", question: "Nka dirisa jang Ditshwantsho tsa Benchmark le Inter-Play?" },
-      ],
-      coding: [
-        { title: "Khouto mo Dipalong le Makgakgweng", summary: "Fetola makgakgwa le dipalo go nna khouto go aga kutlwisiso ya mekgwa le go akanya ka khouto.", question: "Ngwana wa me a ka ikatisa jang khouto mo dipalong le makgakgweng?" },
-        { title: "Scratch le Blockly", summary: "Khouto ya dibloke e godisa tlhaloganyo, boitlhamedi le go rarabolola mathata.", question: "Ke tiragatso efe ya Scratch kgotsa Blockly e e siametseng ngwana wa me?" },
-        { title: "Recycle My Robot", summary: "Ketsahalo ya letsatsi le le lelwang kwa pele ya go aga maroboto ka dilo tse di recyclesweng.", question: "Nka berekisa jang Recycle My Robot go ngwana wa me?" },
       ],
       dbe: [
         { title: "Melawana le CAPS", summary: "Kamano ya ditiro tsa ECDcoding le melawana ya Lefapha la Thuto ya Motheo le CAPS mo dikeregeng tsa ntlha.", question: "ECDcoding e tsamaisana jang le melawana ya DBE le CAPS mo banneng?" },
@@ -274,11 +257,6 @@ const COPILOT_COPY = {
         "Ditshwantsho tsa Benchmark le Inter-Play di dira jang?",
         "Ikoekelo ya selegae e aga kitso efe ya mafatshe?",
       ],
-      coding: [
-        "Ke dithuto dife tsa khouto mo 04–07 le 08–12?",
-        "Blockly kgotsa Scratch e thusa ngwana jang go akanya?",
-        "Nka berekisa jang Recycle My Robot?",
-      ],
       dbe: [
         "A ECDcoding e latela thutopoelelo ya CAPS?",
         "Porojeke e lokisetsa ngwana jang Grade R le Grade 1?",
@@ -296,7 +274,7 @@ const COPILOT_COPY = {
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "coding", "dbe", "behaviour"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "behaviour", "dbe"];
 
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
