@@ -468,12 +468,12 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   // Rotate which single topic is visible in the picker (previous / next).
   const rotateTopic = useCallback((dir: 1 | -1) => {
-    setDisplayedTopic((current) => {
-      const idx = TOPIC_ORDER.indexOf(current);
-      return TOPIC_ORDER[(idx + dir + TOPIC_ORDER.length) % TOPIC_ORDER.length];
-    });
+    const idx = TOPIC_ORDER.indexOf(displayedTopic);
+    const next = TOPIC_ORDER[(idx + dir + TOPIC_ORDER.length) % TOPIC_ORDER.length];
+    setDisplayedTopic(next);
+    setTopic(next); // keep the selected topic in sync so questions use the right guidance
     setExpandedTopic(null); // user must click the rotated topic to open its sub-list
-  }, []);
+  }, [displayedTopic]);
 
   const toggleListening = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
