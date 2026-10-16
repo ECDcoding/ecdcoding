@@ -855,6 +855,14 @@ const LessonVault0710 = () => {
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        {/* Assignments — direct page with red alert */}
+                        <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
+
+                        {/* Users' Reviews */}
+                        <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                          <Film className="mr-2 h-4 w-4" /> Users' Reviews
+                        </DropdownMenuItem>
+
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
                         </DropdownMenuItem>
