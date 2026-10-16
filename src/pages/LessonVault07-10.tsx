@@ -834,19 +834,14 @@ const LessonVault0710 = () => {
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
                         {/* Domestic Ecology Stories */}
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent className="w-60 bg-background z-50">
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>
+                          <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
+
 
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
