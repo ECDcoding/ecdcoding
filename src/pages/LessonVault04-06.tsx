@@ -2252,22 +2252,6 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
 
 
 
-                  {/* 6. Child Behavior */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <UserCheck className="mr-2 h-4 w-4" /> Child Behavior
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => { setPersonalityTab("ages"); setPersonalityOpen(true); }}>
-                          Ages and Stages
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => { setPersonalityTab("individuality"); setPersonalityOpen(true); }}>
-                          Individuality
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
                   <DropdownMenuSub>
