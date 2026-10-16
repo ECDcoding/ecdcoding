@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays, ClipboardCheck } from "lucide-react";
+import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, ClipboardCheck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
@@ -808,20 +808,6 @@ const LessonVault0710 = () => {
                   </DropdownMenuSub>
 
 
-                  {/* 5. Domestic Ecology Stories */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
 
                   {/* 6. Child Behavior */}
                   <DropdownMenuSub>
@@ -847,6 +833,21 @@ const LessonVault0710 = () => {
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        {/* Domestic Ecology Stories */}
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="w-60 bg-background z-50">
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+
                         <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
                           <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
                         </DropdownMenuItem>
@@ -871,15 +872,6 @@ const LessonVault0710 = () => {
                     <Film className="mr-2 h-4 w-4" /> Users' Reviews
                   </DropdownMenuItem>
 
-                  {/* 8. News */}
-                  <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
-                    <Newspaper className="mr-2 h-4 w-4" /> News
-                  </DropdownMenuItem>
-
-                  {/* 9. Events */}
-                  <DropdownMenuItem onClick={() => navigate("/ecd-expo-2026")}>
-                    <CalendarDays className="mr-2 h-4 w-4" /> Events
-                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <Link to="/" aria-label="Home" className="hover:opacity-80 transition-opacity">
