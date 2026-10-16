@@ -13,7 +13,7 @@ import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown
 import { MiniTrafficRobot } from "@/components/MiniTrafficRobot";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import FixAlphabetOrderPuzzle from "@/components/FixAlphabetOrderPuzzle";
 import PersonalityVerification, { type PersonalityTab } from "@/components/PersonalityVerification";
 import { useAuth } from "@/hooks/useAuth";
