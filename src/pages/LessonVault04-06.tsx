@@ -2294,7 +2294,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
                   {/* 7. Foundational Learning Outcomes */}
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-foreground/75">
+                    <DropdownMenuLabel className="flex items-center gap-2 whitespace-nowrap px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/75">
                       <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
                     </DropdownMenuLabel>
                     <AssignmentsNavItem ageGroup="04-07" onOpen={() => navigate("/assignments?age=04-07")} />
