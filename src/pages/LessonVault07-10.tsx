@@ -843,7 +843,7 @@ const LessonVault0710 = () => {
                   {/* 7. Foundational Learning Outcomes */}
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuLabel className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-foreground/75">
                       <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
                     </DropdownMenuLabel>
                     <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
