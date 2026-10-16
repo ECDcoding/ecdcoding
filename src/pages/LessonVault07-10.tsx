@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Home, BookOpen, Code, Calculator, Beaker, Gamepad2, ChevronDown, ArrowLeft, Upload, User, Key, Phone, Settings, X, Volume2, Play, Image as ImageIcon, Film, TreePine, Microscope, Users, Share2, Heart, Coins, Bot, Construction, Cpu, Menu, Mic, Eye, PenLine, UserCheck, FileText, Newspaper, CalendarDays, ClipboardCheck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { SiFacebook, SiX, SiTiktok, SiBluesky, SiInstagram, SiWhatsapp } from "react-icons/si";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -807,14 +807,6 @@ const LessonVault0710 = () => {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
 
-                  {/* 3. Assignments — direct page with red alert */}
-                  <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
-
-
-                  {/* 4. Users' Reviews */}
-                  <DropdownMenuItem onClick={() => navigate("/users-media")}>
-                    <Film className="mr-2 h-4 w-4" /> Users' Reviews
-                  </DropdownMenuItem>
 
                   {/* 5. Domestic Ecology Stories */}
                   <DropdownMenuSub>
@@ -849,27 +841,28 @@ const LessonVault0710 = () => {
                   </DropdownMenuSub>
 
                   {/* 7. Foundational Learning Outcomes */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="flex items-center gap-2 whitespace-nowrap px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-foreground/75">
                       <FileText className="mr-2 h-4 w-4" /> Foundational Learning Outcomes
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
-                          <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Review
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
-                          <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                    </DropdownMenuLabel>
+                    <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
+                    <DropdownMenuItem onClick={() => navigate("/users-media")}>
+                      <Film className="mr-2 h-4 w-4" /> Users' Reviews
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLearnerPlayIndexOpen(true)}>
+                      <ClipboardCheck className="mr-2 h-4 w-4" /> Learner Play Index
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setShowProgressDialog(true)}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Review
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=04-05")}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (04 - 05)
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/learner-progress-report?band=06-07")}>
+                      <FileText className="mr-2 h-4 w-4" /> Learner Progress Report (06 - 07)
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
                   {/* 8. News */}
                   <DropdownMenuItem onClick={() => toast({ title: "News", description: "Coming soon." })}>
