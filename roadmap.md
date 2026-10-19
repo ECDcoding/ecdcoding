@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Correct the Kids Learning to Code in the Age of AI statement and add the uploaded paper's supporting arguments to ECD AI; deploy and verify.
+- [x] Correct the Kids Learning to Code in the Age of AI statement and add the uploaded paper's supporting arguments to ECD AI; deploy and verify.
 - [x] Add and verify colourful ECD AI illustrations for requested shapes and symbols, preserving existing chat and credits.
 
 - [x] Rename ECD AI Lessons Library and list Learning the Basics, Verbal Testing Space, Coding, Programming and Handwriting.
