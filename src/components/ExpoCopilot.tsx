@@ -105,6 +105,7 @@ const COPILOT_COPY = {
       ],
       dbe: [
         { title: "Policy and CAPS", summary: "How ECDcoding activities align with Department of Basic Education and CAPS expectations for the early grades.", question: "How does ECDcoding align with DBE and CAPS policy for young learners?" },
+        { title: "Coding and Robotics for Grade R - 3", summary: "The policy governing Information Technology, Coding, and Robotics for Grades R – 3 in South Africa is structured under the Foundation Phase of the Curriculum and Assessment Policy Statement (CAPS) managed by the Department of Basic Education.", question: "What policy governs Information Technology, Coding and Robotics for Grades R – 3 in South Africa?" },
       ],
       maths: [
         { title: "Physical Knowledge", summary: "Where kids (a) engage their senses by touching, feeling or seeing, (b) manipulate objects to achieve their desired objectives, and (c) use play activities to gain constructive knowledge.", question: "Please explain Physical Knowledge in Knowledge Base Construction — how do kids engage their senses, manipulate objects and use play activities to gain constructive knowledge?" },
@@ -219,6 +220,7 @@ const COPILOT_COPY = {
       ],
       dbe: [
         { title: "Melawana le CAPS", summary: "Kamano ya ditiro tsa ECDcoding le melawana ya Lefapha la Thuto ya Motheo le CAPS mo dikeregeng tsa ntlha.", question: "ECDcoding e tsamaisana jang le melawana ya DBE le CAPS mo banneng?" },
+        { title: "Khouto le Robotiki ya Grade R – 3", summary: "Melawana e e laolang Information Technology, Coding le Robotics ya Grade R – 3 mo Aforika Borwa e rulagantswe ka fa tlase ga Foundation Phase ya Curriculum and Assessment Policy Statement (CAPS) e e tsamaywang ke Lefapha la Thuto ya Motheo.", question: "Ke melawana efe e e laolang Information Technology, Coding le Robotics ya Grade R – 3 mo Aforika Borwa?" },
       ],
       maths: [
         { title: "Kitso ya Mmele", summary: "Fa bana (a) ba dirisa dikeledi tsa bona ka go theetla, go gakolola kgotsa go bona, (b) ba berekisa dilo go fitlhelela maikaelelo a tsone, mme (c) ba dirisa ditirwana tsa motshameko go bona kitso e e agilweng.", question: "Totsa ntlhalosa Kitso ya Mmele mo Kago ya Kitso ya Motheo — bana ba dirisa jang dikeledi tsa bona, dilo le motshameko go aga kitso?" },
