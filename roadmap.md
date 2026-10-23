@@ -48,3 +48,4 @@
 - [x] Remove 'further questions' invitations from ECD AI lesson/subtopic clicks in ExpoCopilot.tsx (user: no questions in any response).
 - [x] Relocate Assignments and Users' Reviews under Foundational Learning Outcomes in both workspace nav bars, listed directly so they show when the nav opens.
 - [x] Remove Coding and Robotics from the ECD AI topic list and place Policy at the end, after Child Behavior.
+- [x] Add 'Coding and Robotics for Grade R - 3' sub-list under ECD AI Policy with the CAPS Foundation Phase statement; deploy.
