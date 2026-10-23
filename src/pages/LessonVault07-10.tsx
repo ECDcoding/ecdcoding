@@ -810,6 +810,39 @@ const LessonVault0710 = () => {
 
 
 
+                  {/* Cryptography */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      🔐 Cryptography
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => setCryptogramOpen(true)}>
+                          🔑 Creating Crypto Secrets
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* Domestic Ecology Stories — its own dropdown */}
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-60 bg-background z-50">
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  {/* Assignments — direct page with red alert */}
+                  <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
+
                   {/* 7. Foundational Learning Outcomes */}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
@@ -832,25 +865,6 @@ const LessonVault0710 = () => {
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-
-                  {/* Domestic Ecology Stories — its own dropdown, below Foundational Learning Outcomes */}
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <TreePine className="mr-2 h-4 w-4" /> Domestic Ecology Stories
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-60 bg-background z-50">
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology")}>All Stories</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=kids-conceptual-stories")}>Kids' Conceptual Stories</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=garden-species")}>Garden Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=grass-species")}>Grass Species</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/domestic-ecology?category=water-pond-species")}>Water Pond Species</DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-
-                  {/* Assignments — direct page with red alert */}
-                  <AssignmentsNavItem ageGroup="08-12" onOpen={() => navigate("/assignments?age=08-12")} />
 
                   {/* Users' Reviews */}
                   <DropdownMenuItem onClick={() => navigate("/users-media")}>
