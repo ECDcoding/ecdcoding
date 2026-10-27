@@ -33,7 +33,7 @@ const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] =
   { code: "nr", label: "IsiNdebele", voiceLang: "nr-ZA" },
   { code: "ss", label: "siSwati", voiceLang: "ss-ZA" },
 ];
-type CopilotTopic = "library" | "maths" | "flo" | "behaviour" | "ecology" | "dbe";
+type CopilotTopic = "library" | "maths" | "flo" | "gli" | "behaviour" | "ecology" | "dbe";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -59,6 +59,7 @@ const COPILOT_COPY = {
       library: "Lessons Library",
       maths: "Knowledge Base Construction",
       flo: "Foundational Learning Outcomes",
+      gli: "General Learner Index",
       behaviour: "Child Behavior",
       ecology: "Domestic Ecology Stories",
       dbe: "Policy",
@@ -81,9 +82,20 @@ const COPILOT_COPY = {
         { title: "Handwriting", summary: "Explore handwriting and drawing activities, including Google Docs Draw.", question: "How can Handwriting and Google Docs Draw support my child's learning?" },
       ],
       flo: [
-        { title: "Learner Play Index", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Learner Play Index to observe my child?" },
         { title: "Learner Progress Report", summary: "Age-band reports for 04–05 and 06–07 bring play and number-sense observations together in one view.", question: "How do I read and use my child's Learner Progress Report?" },
         { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
+      ],
+      gli: [
+        { title: "Coding", summary: "Tracks how learners explore Coding in Alphabets and Coding in Numbers — the relationship numbers have with letters and vice versa, towards encryption, cryptography and one-time passwords (OTPs).", question: "What does the Coding index track for my child?" },
+        { title: "Counting", summary: "Tracks verbal counting sequence practice and repetition, and writing cardinal numbers 1–10, 11–20 and 21–30.", question: "What does the Counting index track for my child?" },
+        { title: "Decoding", summary: "Tracks how learners break words and symbols into meaning — sounding out vowels, letters and the alphabet.", question: "What does the Decoding index track for my child?" },
+        { title: "DomEco", summary: "Tracks real-world knowledge gained from Domestic Ecology Stories — everyday species, places, observation and care.", question: "What does the DomEco index track for my child?" },
+        { title: "Inter-Play", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Inter-Play index to observe my child?" },
+        { title: "Inquiry", summary: "The overall process of coming up with ideas about the natural world and testing ideas through experimentation — or \"Science in Practice\". In the early years, children should be involved with investigation about science inquiry.", question: "What is the Inquiry index and how does science inquiry work in the early years?" },
+        { title: "Reading", summary: "Tracks reading growth — from verbal practice of vowels and the alphabet to reading and writing for 08–12 learners.", question: "What does the Reading index track for my child?" },
+        { title: "Spelling", summary: "Tracks writing and repetition of vowels, the alphabet and number words.", question: "What does the Spelling index track for my child?" },
+        { title: "Child Behavior", summary: "Links each learner's index to child behaviour observations — ages and stages, individuality, moods and school readiness.", question: "How does the Child Behavior index link to my child's behaviour observations?" },
+        { title: "Programming", summary: "We are tracking kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc.", question: "What does the Programming index track for my child?" },
       ],
       behaviour: [
         { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
@@ -128,9 +140,13 @@ const COPILOT_COPY = {
         "Where do I find the Knowledge Base Carousel?",
       ],
       flo: [
-        "What is the Learner Play Index and how do I rate it?",
         "How do the 04–05 and 06–07 progress reports differ?",
         "How is the FLC Report put together?",
+      ],
+      gli: [
+        "What does the General Learner Index track?",
+        "How do I use the Inter-Play index to observe my child?",
+        "What is the Inquiry index and why does science inquiry matter in the early years?",
       ],
       behaviour: [
         "What developmental milestones should I expect at my child's age?",
@@ -174,6 +190,7 @@ const COPILOT_COPY = {
       library: "Laeborari ya Dithuto",
       maths: "Kago ya Kitso ya Motheo",
       flo: "Diphitlhelelo tsa Thuto ya Motheo",
+      gli: "Sekekanyi sa Kakaretso sa Moithuti",
       behaviour: "Boitshwaro",
       ecology: "Dinane tsa Ikoekelo ya Selegae",
       dbe: "Melawana",
@@ -196,9 +213,20 @@ const COPILOT_COPY = {
         { title: "Go Kwala ka Seatla (Handwriting)", summary: "Ithute go kwala ka seatla le go thala, go akaretsa Google Docs Draw.", question: "Go kwala ka seatla le Google Docs Draw di ka tshegetsa jang thuto ya ngwana wa me?" },
       ],
       flo: [
-        { title: "Learner Play Index", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang Learner Play Index go lemoga ngwana wa me?" },
         { title: "Pego ya Kgatelopele ya Ngwana", summary: "Dipego tsa dingwaga tsa 04–05 le 06–07 di kopanya temogo ya motshameko le kutlwisiso ya dipalo.", question: "Nka buisana jang le Pego ya Kgatelopele ya ngwana wa me?" },
         { title: "Pego ya FLC", summary: "Sephetho sa 1–10 se sobokanya bosupi jo bo leng teng mme se tshitshinya tsela e e maleba ya go ya pele.", question: "Ke tshwanetse go tlhaloganya le go dirisa jang Pego ya FLC?" },
+      ],
+      gli: [
+        { title: "Khouto (Coding)", summary: "E latela gore baithuti ba ithuta jang Khouto ka Ditlhaka le Khouto ka Dipalo — kamano ya dipalo le ditlhaka, go ya kwa go encryption, cryptography le one-time passwords (OTPs).", question: "Sekekanyi sa Khouto se latela eng mo ngwaneng wa me?" },
+        { title: "Go Bala (Counting)", summary: "E latela go bala dipalo ka molomo le go ikatisa gape, le go kwala dipalo tsa motheo 1–10, 11–20 le 21–30.", question: "Sekekanyi sa Go Bala se latela eng mo ngwaneng wa me?" },
+        { title: "Go Tharabolola (Decoding)", summary: "E latela gore baithuti ba kgaoganya jang mafoko le matshwao go bona bokao — go buisa ditumanosi, ditlhaka le alfhabete.", question: "Sekekanyi sa Go Tharabolola se latela eng mo ngwaneng wa me?" },
+        { title: "DomEco", summary: "E latela kitso ya mafatshe e e bonwang mo Dinaneng tsa Ikoekelo ya Selegae — ditshedi, mafelo, temogo le tlhokomelo.", question: "Sekekanyi sa DomEco se latela eng mo ngwaneng wa me?" },
+        { title: "Inter-Play", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang sekekanyi sa Inter-Play go lemoga ngwana wa me?" },
+        { title: "Patlisiso (Inquiry)", summary: "Tsamaiso ya kakaretso ya go tla ka dikakanyo ka lefatshe la tlholego le go leka dikakanyo ka diteko — kgotsa \"Saense mo Tirong\". Mo bongwaneng, bana ba tshwanetse go akarediwa mo dipatlisisong tsa saense.", question: "Sekekanyi sa Patlisiso ke eng, mme patlisiso ya saense e dira jang mo bongwaneng?" },
+        { title: "Go Bala (Reading)", summary: "E latela kgolo ya go bala — go tswa go go ikatisa ditumanosi le alfhabete ka molomo go ya go go bala le go kwala ga ba dingwaga 08–12.", question: "Sekekanyi sa Go Bala se latela eng mo ngwaneng wa me?" },
+        { title: "Go Mopela (Spelling)", summary: "E latela go kwala le go ikatisa gape ditumanosi, alfhabete le mafoko a dipalo.", question: "Sekekanyi sa Go Mopela se latela eng mo ngwaneng wa me?" },
+        { title: "Boitshwaro jwa Ngwana", summary: "E golaganya sekekanyi sa moithuti le ditemogo tsa boitshwaro — dingwaga le dikgato, botho, maikutlo le go siamela sekolo.", question: "Sekekanyi sa Boitshwaro jwa Ngwana se golaganyang jang le ditemogo tsa boitshwaro jwa ngwana wa me?" },
+        { title: "Programming", summary: "Re latela tiriso e e nonofileng ya Blockly, Scratch, Micro:bit, le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa.", question: "Sekekanyi sa Programming se latela eng mo ngwaneng wa me?" },
       ],
       behaviour: [
         { title: "Dingwaga le Dikgato", summary: "Tebokakaretso ya kgolo, puisano, maikutlo le boikemelo go ya ka dingwaga, go dumela gore ngwana mongwe le mongwe o gola ka tsela ya gagwe.", question: "Tsweetswee tlhalosa Dingwaga le Dikgato tsa ngwana wa me le se nka se lemogang." },
@@ -243,9 +271,13 @@ const COPILOT_COPY = {
         "Nka fitlhela Knowledge Base Carousel kae?",
       ],
       flo: [
-        "Learner Play Index ke eng mme nka e tlhoma jang?",
         "Dipego tsa 04–05 le 06–07 di farologana jang?",
         "Pego ya FLC e balwa jang?",
+      ],
+      gli: [
+        "Sekekanyi sa Kakaretso sa Moithuti se latela eng?",
+        "Nka dirisa jang sekekanyi sa Inter-Play go lemoga ngwana wa me?",
+        "Sekekanyi sa Patlisiso ke eng, mme ke neng fa patlisiso ya saense e le botlhokwa mo bongwaneng?",
       ],
       behaviour: [
         "Ke dikgato dife tsa kgolo tse ke tshwanetseng go di lebelela mo dingwageng tsa ngwana wa me?",
@@ -278,7 +310,7 @@ const COPILOT_COPY = {
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "behaviour", "dbe"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "gli", "ecology", "behaviour", "dbe"];
 
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
