@@ -33,7 +33,7 @@ const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] =
   { code: "nr", label: "IsiNdebele", voiceLang: "nr-ZA" },
   { code: "ss", label: "siSwati", voiceLang: "ss-ZA" },
 ];
-type CopilotTopic = "library" | "maths" | "flo" | "behaviour" | "ecology" | "dbe";
+type CopilotTopic = "library" | "maths" | "flo" | "gli" | "behaviour" | "ecology" | "dbe";
 
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
@@ -59,6 +59,7 @@ const COPILOT_COPY = {
       library: "Lessons Library",
       maths: "Knowledge Base Construction",
       flo: "Foundational Learning Outcomes",
+      gli: "General Learner Index",
       behaviour: "Child Behavior",
       ecology: "Domestic Ecology Stories",
       dbe: "Policy",
@@ -81,9 +82,20 @@ const COPILOT_COPY = {
         { title: "Handwriting", summary: "Explore handwriting and drawing activities, including Google Docs Draw.", question: "How can Handwriting and Google Docs Draw support my child's learning?" },
       ],
       flo: [
-        { title: "Learner Play Index", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Learner Play Index to observe my child?" },
         { title: "Learner Progress Report", summary: "Age-band reports for 04–05 and 06–07 bring play and number-sense observations together in one view.", question: "How do I read and use my child's Learner Progress Report?" },
         { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
+      ],
+      gli: [
+        { title: "Coding", summary: "Tracks how learners explore Coding in Alphabets and Coding in Numbers — the relationship numbers have with letters and vice versa, towards encryption, cryptography and one-time passwords (OTPs).", question: "What does the Coding index track for my child?" },
+        { title: "Counting", summary: "Tracks verbal counting sequence practice and repetition, and writing cardinal numbers 1–10, 11–20 and 21–30.", question: "What does the Counting index track for my child?" },
+        { title: "Decoding", summary: "Tracks how learners break words and symbols into meaning — sounding out vowels, letters and the alphabet.", question: "What does the Decoding index track for my child?" },
+        { title: "DomEco", summary: "Tracks real-world knowledge gained from Domestic Ecology Stories — everyday species, places, observation and care.", question: "What does the DomEco index track for my child?" },
+        { title: "Inter-Play", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Inter-Play index to observe my child?" },
+        { title: "Inquiry", summary: "The overall process of coming up with ideas about the natural world and testing ideas through experimentation — or \"Science in Practice\". In the early years, children should be involved with investigation about science inquiry.", question: "What is the Inquiry index and how does science inquiry work in the early years?" },
+        { title: "Reading", summary: "Tracks reading growth — from verbal practice of vowels and the alphabet to reading and writing for 08–12 learners.", question: "What does the Reading index track for my child?" },
+        { title: "Spelling", summary: "Tracks writing and repetition of vowels, the alphabet and number words.", question: "What does the Spelling index track for my child?" },
+        { title: "Child Behavior", summary: "Links each learner's index to child behaviour observations — ages and stages, individuality, moods and school readiness.", question: "How does the Child Behavior index link to my child's behaviour observations?" },
+        { title: "Programming", summary: "We are tracking kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc.", question: "What does the Programming index track for my child?" },
       ],
       behaviour: [
         { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
@@ -278,7 +290,7 @@ const COPILOT_COPY = {
   },
 } as const;
 
-const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "ecology", "behaviour", "dbe"];
+const TOPIC_ORDER: CopilotTopic[] = ["library", "maths", "flo", "gli", "ecology", "behaviour", "dbe"];
 
 const AFRIKAANS_STARTING_SCHOOL_COPY = {
   ...COPILOT_COPY.en,
