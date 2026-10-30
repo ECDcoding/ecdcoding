@@ -36,7 +36,7 @@ Deno.serve(async (req) => {
     }
     const buf = await res.arrayBuffer();
     const result = await mammoth.convertToHtml(
-      { buffer: new Uint8Array(buf) },
+      { buffer: new Uint8Array(buf) as unknown as Buffer },
       {
         styleMap: [
           "p[style-name='Title'] => h1.doc-title:fresh",
