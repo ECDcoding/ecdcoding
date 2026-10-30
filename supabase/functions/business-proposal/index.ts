@@ -1,4 +1,5 @@
 import mammoth from "npm:mammoth@1.8.0";
+import type { Buffer as NodeBuffer } from "node:buffer";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -36,7 +37,7 @@ Deno.serve(async (req) => {
     }
     const buf = await res.arrayBuffer();
     const result = await mammoth.convertToHtml(
-      { buffer: new Uint8Array(buf) },
+      { buffer: new Uint8Array(buf) as unknown as NodeBuffer },
       {
         styleMap: [
           "p[style-name='Title'] => h1.doc-title:fresh",
