@@ -183,7 +183,7 @@ Deno.serve(async (req) => {
     const corsHeaders = getCorsHeaders(req);
     console.error('Error in send-otp:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to send OTP' }),
+      JSON.stringify({ error: (error as Error).message || 'Failed to send OTP' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

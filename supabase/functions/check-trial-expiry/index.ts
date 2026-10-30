@@ -1,5 +1,4 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
-import { verify } from "https://deno.land/std@0.208.0/crypto/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGIN') || 'http://localhost:3000',
@@ -158,7 +157,7 @@ Deno.serve(async (req) => {
 
         } catch (err) {
           console.error(`Error processing trial ${trial.id}:`, err);
-          errors.push(`${trial.phone_number}: ${err.message}`);
+          errors.push(`${trial.phone_number}: ${(err as Error).message}`);
         }
       }
 
@@ -181,7 +180,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Error in check-trial-expiry:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to check trial expiry' }),
+      JSON.stringify({ error: (error as Error).message || 'Failed to check trial expiry' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

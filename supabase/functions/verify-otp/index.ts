@@ -132,7 +132,7 @@ Deno.serve(async (req) => {
     const corsHeaders = getCorsHeaders(req);
     console.error('Error in verify-otp:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to verify OTP' }),
+      JSON.stringify({ error: (error as Error).message || 'Failed to verify OTP' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

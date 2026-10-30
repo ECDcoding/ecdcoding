@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
     const corsHeaders = getCorsHeaders(req);
     console.error('Error in check-trial-status:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to check trial status' }),
+      JSON.stringify({ error: (error as Error).message || 'Failed to check trial status' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
