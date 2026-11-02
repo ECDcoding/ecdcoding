@@ -87,7 +87,7 @@ const COPILOT_COPY = {
       ],
       gli: [
         { title: "Coding", summary: "Tracks how learners explore Coding in Alphabets and Coding in Numbers — the relationship numbers have with letters and vice versa, towards encryption, cryptography and one-time passwords (OTPs).", question: "What does the Coding index track for my child?" },
-        { title: "Counting", summary: "Tracks verbal counting sequence practice and repetition, and writing cardinal numbers 1–10, 11–20 and 21–30.", question: "What does the Counting index track for my child?" },
+        { title: "Counting", summary: "Tracks verbal counting sequence practice and repetition, and writing cardinal numbers 1–10, 11–20 and 21–30. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting.", question: "What does the Counting index track for my child?" },
         { title: "Decoding", summary: "Tracks how learners break words and symbols into meaning — sounding out vowels, letters and the alphabet.", question: "What does the Decoding index track for my child?" },
         { title: "DomEco", summary: "Tracks real-world knowledge gained from Domestic Ecology Stories — everyday species, places, observation and care.", question: "What does the DomEco index track for my child?" },
         { title: "Inter-Play", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Inter-Play index to observe my child?" },
@@ -218,7 +218,7 @@ const COPILOT_COPY = {
       ],
       gli: [
         { title: "Khouto (Coding)", summary: "E latela gore baithuti ba ithuta jang Khouto ka Ditlhaka le Khouto ka Dipalo — kamano ya dipalo le ditlhaka, go ya kwa go encryption, cryptography le one-time passwords (OTPs).", question: "Sekekanyi sa Khouto se latela eng mo ngwaneng wa me?" },
-        { title: "Go Bala (Counting)", summary: "E latela go bala dipalo ka molomo le go ikatisa gape, le go kwala dipalo tsa motheo 1–10, 11–20 le 21–30.", question: "Sekekanyi sa Go Bala se latela eng mo ngwaneng wa me?" },
+        { title: "Go Bala (Counting)", summary: "E latela go bala dipalo ka molomo le go ikatisa gape, le go kwala dipalo tsa motheo 1–10, 11–20 le 21–30. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting.", question: "Sekekanyi sa Go Bala se latela eng mo ngwaneng wa me?" },
         { title: "Go Tharabolola (Decoding)", summary: "E latela gore baithuti ba kgaoganya jang mafoko le matshwao go bona bokao — go buisa ditumanosi, ditlhaka le alfhabete.", question: "Sekekanyi sa Go Tharabolola se latela eng mo ngwaneng wa me?" },
         { title: "DomEco", summary: "E latela kitso ya mafatshe e e bonwang mo Dinaneng tsa Ikoekelo ya Selegae — ditshedi, mafelo, temogo le tlhokomelo.", question: "Sekekanyi sa DomEco se latela eng mo ngwaneng wa me?" },
         { title: "Inter-Play", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang sekekanyi sa Inter-Play go lemoga ngwana wa me?" },
