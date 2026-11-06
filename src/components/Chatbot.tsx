@@ -167,7 +167,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
         // Voice chat as usual; if the mic is blocked, still let the user chat by typing.
         await conversation.startSession({
           agentId,
-          connectionType: micReady ? 'webrtc' : 'websocket',
+          connectionType: 'websocket',
           textOnly: !micReady,
           // Use the agent's configured greeting and reception knowledge base.
           // This public agent rejects client-side prompt and greeting overrides.
