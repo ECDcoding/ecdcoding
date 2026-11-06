@@ -38,6 +38,8 @@ type CopilotTopic = "library" | "maths" | "flo" | "gli" | "behaviour" | "ecology
 interface ExpoCopilotProps {
   /** The currently hovered/active section context, e.g. "Sponsorship", "Speakers" */
   context?: string;
+  /** Optional header text shown under the ECD AI title instead of "Context: …" */
+  contextLabel?: string;
   /** Hide the built-in floating launcher (when an external launcher controls it) */
   hideLauncher?: boolean;
   /** Controlled open state */
@@ -327,7 +329,7 @@ const AFRIKAANS_STARTING_SCHOOL_COPY = {
   },
 };
 
-const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
+const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }: ExpoCopilotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = open ?? internalOpen;
   const setIsOpen = (value: boolean) => {
@@ -679,9 +681,9 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                 </div>
                 <div>
                   <p className="text-base font-bold leading-none">ECD AI</p>
-                  {context && (
-                    <p className="mt-1 text-sm text-primary-foreground/80">
-                      Context: {context}
+                  {(contextLabel || context) && (
+                    <p className="mt-1 text-sm leading-snug text-primary-foreground/80">
+                      {contextLabel ?? `Context: ${context}`}
                     </p>
                   )}
                 </div>
