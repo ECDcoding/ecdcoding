@@ -48,7 +48,9 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
     onOpenChange ? onOpenChange(value) : setInternalOpen(value);
   };
   const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<{ role: 'bot' | 'user'; content: string }[]>([]);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [voiceError, setVoiceError] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [showTerms, setShowTerms] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -89,23 +91,42 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   const conversation = useConversation({
     onConnect: () => {
-      console.log('Voice agent connected');
+      setUseVoiceMode(true);
+      setIsConnecting(false);
+      onVoiceModeChange?.(true);
     },
-    onDisconnect: () => {
-      console.log('Voice agent disconnected');
+    onDisconnect: (details) => {
+      setUseVoiceMode(false);
+      setIsConnecting(false);
+      onVoiceModeChange?.(false);
+      if (details.reason === 'error') {
+        setVoiceError(details.message || 'Reception disconnected. Please try again.');
+      }
     },
     onError: (error) => {
       console.error('Voice agent error:', error);
-      setMessages(prev => [...prev, { role: 'bot', content: 'Sorry, there was an error with the voice connection.' }]);
+      setUseVoiceMode(false);
+      setIsConnecting(false);
+      onVoiceModeChange?.(false);
+      setVoiceError(typeof error === 'string' ? error : 'Reception could not connect. Please try again.');
     },
     onMessage: (message) => {
-      console.log('Received message from voice agent:', message);
       // Add voice messages to the chat - both transcriptions and responses
       if (message.message && message.message.trim()) {
-        setMessages(prev => [...prev, { role: 'bot', content: message.message }]);
+        setMessages(prev => [...prev, { role: message.source === 'user' ? 'user' : 'bot', content: message.message }]);
       }
     }
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      void conversation.endSession().catch(() => undefined);
+      setUseVoiceMode(false);
+      onVoiceModeChange?.(false);
+    }
+    // The SDK owns session cleanup; closing Reception must also release the mic.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const languages = [
     "English", "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
@@ -143,12 +164,19 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   const toggleVoiceMode = async () => {
     if (useVoiceMode) {
-      await conversation.endSession();
-      setUseVoiceMode(false);
-      onVoiceModeChange?.(false);
-    } else {
       try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        await conversation.endSession();
+      } finally {
+        setUseVoiceMode(false);
+        onVoiceModeChange?.(false);
+      }
+    } else {
+      setVoiceError('');
+      setIsConnecting(true);
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error('Microphone access is unavailable in this browser. Please use a supported browser on HTTPS.');
+        }
         // Clear any existing messages when starting voice mode
         setMessages([]);
         await conversation.startSession({
@@ -156,17 +184,20 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
           overrides: {
             agent: {
               prompt: { prompt: RECEPTION_SCOPE_PROMPT },
-              firstMessage:
-                "Hello and welcome to ECDcoding reception. I can help with general information about ECDcoding, our lesson age groups, registration, payments, events and contact details. For questions about child behaviour or lesson content, please use ECD AI.",
             },
           },
         });
 
-        setUseVoiceMode(true);
-        onVoiceModeChange?.(true);
+        await conversation.setVolume({ volume: 1 });
       } catch (error) {
         console.error('Failed to start voice conversation:', error);
-        alert('Please allow microphone access to use voice mode.');
+        setUseVoiceMode(false);
+        onVoiceModeChange?.(false);
+        setVoiceError(error instanceof DOMException && error.name === 'NotAllowedError'
+          ? 'Please allow microphone access to speak with Reception.'
+          : error instanceof Error ? error.message : 'Reception could not connect. Please try again.');
+      } finally {
+        setIsConnecting(false);
       }
     }
   };
@@ -210,6 +241,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
+                aria-label="Close Reception"
                 className="h-8 w-8"
               >
                 <X className="h-4 w-4" />
@@ -224,7 +256,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 onClick={toggleVoiceMode}
                 variant={useVoiceMode ? "destructive" : "secondary"}
                 className="w-full"
-                disabled={conversation.status === 'connecting'}
+                disabled={isConnecting || conversation.status === 'connecting'}
               >
                 {useVoiceMode ? (
                   <>
@@ -234,10 +266,14 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 ) : (
                   <>
                     <Mic className="h-4 w-4 mr-2" />
-                    Start Voice Chat
+                    {isConnecting ? 'Connecting...' : 'Start Voice Chat'}
                   </>
                 )}
               </Button>
+              {!useVoiceMode && !isConnecting && !voiceError && (
+                <p className="mt-2 text-center text-sm text-muted-foreground">Reception needs microphone access for voice chat.</p>
+              )}
+              {voiceError && <p role="alert" className="mt-2 text-sm text-destructive">{voiceError}</p>}
               
               {useVoiceMode && (
                 <div className="text-center text-sm text-muted-foreground">
@@ -273,9 +309,10 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
+                disabled={!useVoiceMode}
                 className="flex-1"
               />
-              <Button onClick={sendMessage} size="icon" variant="default">
+              <Button onClick={sendMessage} size="icon" variant="default" disabled={!useVoiceMode || !inputMessage.trim()} aria-label="Send to Reception">
                 <Send className="h-4 w-4" />
               </Button>
             </div>
