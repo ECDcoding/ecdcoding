@@ -111,9 +111,7 @@ const COPILOT_COPY = {
         { title: "Starting School — Part 3", summary: "Getting the right support: notice persistent learning, emotional, vision or hearing concerns and agree next steps with the school and qualified professionals.", question: "Please explain Starting School Part 3: what should parents and teachers observe, and when should they seek professional support for school difficulties?" },
       ],
       ecology: [
-        { title: "Real-World Knowledge", summary: "Domestic ecology stories connect everyday species and places to real-world observation and care.", question: "How do Domestic Ecology Stories build my child's real-world knowledge?" },
-        { title: "Child Play Knowledge", summary: "Play stories reveal how your child explores, builds, imagines and solves problems.", question: "What can my child's play tell me about how they learn?" },
-        { title: "Benchmark and Inter-Play Videos", summary: "Watch benchmark videos and share inter-play videos to record and compare observations over time.", question: "How should I use the Benchmark and Inter-Play Videos?" },
+        { title: "Real-World Play Based Experience", summary: "Kids' construction skills development where:\n\na) They select all the play items by themselves.\n\nb) They agree on the theme arrangement of the entire event.\n\nc) Including the mutual understanding in terms of the role players.\n\nd) A clear number sense in terms of how long the event will take.\n\ne) The core objective they all want to achieve in the end.\n\nf) Instinctively, the general number sense cultivated from the entire experience from start to finish.", question: "How does Real-World Play Based Experience develop kids' construction skills?" },
       ],
       dbe: [
         { title: "Policy and CAPS", summary: "How ECDcoding activities align with Department of Basic Education and CAPS expectations for the early grades.", question: "How does ECDcoding align with DBE and CAPS policy for young learners?" },
@@ -159,8 +157,8 @@ const COPILOT_COPY = {
       ],
       ecology: [
         "What are Domestic Ecology Stories?",
-        "How do Benchmark and Inter-Play Videos work?",
-        "What real-world knowledge does domestic ecology build?",
+        "How does Real-World Play Based Experience develop construction skills?",
+        "How does planning a play event cultivate number sense?",
       ],
       dbe: [
         "Does ECDcoding follow the CAPS curriculum?",
@@ -242,9 +240,7 @@ const COPILOT_COPY = {
         { title: "Go Simolola Sekolo — Karolo 3", summary: "Tshegetso e e maleba: lemoga matshwenyego a thuto, maikutlo, pono kgotsa kutlo mme o dirisane le sekolo le baitseanape.", question: "Tsweetswee tlhalosa Go Simolola Sekolo Karolo 3: batsadi le barutabana ba tshwanetse go lemoga eng, mme ba batle thuso ya baitseanape leng?" },
       ],
       ecology: [
-        { title: "Kitso ya Ntle ya Sekolo", summary: "Dinane tsa ikoekelo ya selegae di golaganya ditshedi le mafelo a a kgaogantsweng le kitso ya mafatshe.", question: "Dinane tsa Ikoekelo ya Selegae di aga jang kitso ya mafatshe ya ngwana wa me?" },
-        { title: "Kitso ya Motshameko wa Ngwana", summary: "Dinane tsa motshameko di bontsha gore ngwana o batlisisa, o aga, o akanya le go rarabolola mathata jang.", question: "Motshameko wa ngwana wa me o mpolelelang eng ka tsela a ithutang ka yona?" },
-        { title: "Ditshwantsho tsa Benchmark le Inter-Play", summary: "Lebelela ditshwantsho tsa benchmark mme lo abolele tsa inter-play go gatisa temogo ka nako.", question: "Nka dirisa jang Ditshwantsho tsa Benchmark le Inter-Play?" },
+        { title: "Maitemogelo a Motshameko mo Botshelong jwa Nnete", summary: "Kgolo ya dikgono tsa bana tsa go aga, fa:\n\na) Ba itlhophela dilo tsotlhe tsa motshameko.\n\nb) Ba dumalana ka thulaganyo ya setlhogo sa tiragalo yotlhe.\n\nc) Ba tlhaloganya mmogo dikarolo tsa ba ba tsayang karolo.\n\nd) Ba na le kutlwisiso e e bonalang ya dipalo malebana le nako e tiragalo e tla e tsayang.\n\ne) Ba itse maikaelelo a konokono a botlhe ba batlang go a fitlhelela kwa bokhutlong.\n\nf) Kutlwisiso ya kakaretso ya dipalo e gola ka tlholego go tswa mo maitemogelong otlhe, go simolola go fitlha kwa bokhutlong.", question: "Maitemogelo a Motshameko mo Botshelong jwa Nnete a godisa jang dikgono tsa bana tsa go aga?" },
       ],
       dbe: [
         { title: "Melawana le CAPS", summary: "Kamano ya ditiro tsa ECDcoding le melawana ya Lefapha la Thuto ya Motheo le CAPS mo dikeregeng tsa ntlha.", question: "ECDcoding e tsamaisana jang le melawana ya DBE le CAPS mo banneng?" },
@@ -290,8 +286,8 @@ const COPILOT_COPY = {
       ],
       ecology: [
         "Dinane tsa Ikoekelo ya Selegae ke eng?",
-        "Ditshwantsho tsa Benchmark le Inter-Play di dira jang?",
-        "Ikoekelo ya selegae e aga kitso efe ya mafatshe?",
+        "Maitemogelo a Motshameko mo Botshelong jwa Nnete a godisa jang dikgono tsa go aga?",
+        "Go rulaganya tiragalo ya motshameko go godisa jang kutlwisiso ya dipalo?",
       ],
       dbe: [
         "A ECDcoding e latela thutopoelelo ya CAPS?",
