@@ -194,7 +194,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
+        <Card className="fixed bottom-24 right-6 w-80 max-w-[calc(100vw-3rem)] h-96 shadow-xl z-50 flex flex-col overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
@@ -221,7 +221,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
           </CardHeader>
           
-          <CardContent className="flex-1 flex flex-col p-4">
+          <CardContent className="min-h-0 flex-1 flex flex-col p-4">
             {/* Voice Toggle */}
             <div className="mb-4">
               <Button
@@ -255,7 +255,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
 
             {/* Messages - Now visible in voice mode too */}
-            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+            <div className="min-h-0 flex-1 overflow-y-auto space-y-3 mb-4">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -275,7 +275,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
 
             {/* Text Input */}
-            <div className="flex gap-2">
+            <div className="flex shrink-0 gap-2">
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
