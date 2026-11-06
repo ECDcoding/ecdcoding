@@ -17,7 +17,11 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const WELCOME_BONUS = 5;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string; headingless?: boolean };
+
+const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
+const GRADE_LESSONS =
+  "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week";
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -644,13 +648,13 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
 
   if (!isVisible) return null;
 
-  const showLocalGuide = (guide: { title: string; summary: string }) => {
+  const showLocalGuide = (guide: { title: string; summary: string; headingless?: boolean }) => {
     const t = displayedTopic;
     setTopic(t);
     setMessages((previous) => [
       ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor),
       { role: "user", content: guide.title, topic: t, promptFor: guide.title },
-      { role: "assistant", content: "", topic: t, summaryTitle: guide.title },
+      { role: "assistant", content: "", topic: t, summaryTitle: guide.title, headingless: guide.headingless },
     ]);
     setExpandedTopic(null);
     setBasicsExpanded(false);
@@ -792,19 +796,23 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                           )}
                         </Button>
                         {displayedTopic === "library" && guide.title === "Learning the Basics" && basicsExpanded && (
-                          <div className="ml-4 border-l border-border pl-2">
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              className="h-auto w-full justify-start px-2 py-2 text-sm text-foreground"
-                              disabled={isLoading}
-                              onClick={() => showLocalGuide({
-                                title: "Grade R",
-                                summary: "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week",
-                              })}
-                            >
-                              Grade R
-                            </Button>
+                          <div className="ml-4 space-y-1 border-l border-border pl-2">
+                            {GRADE_TITLES.map((grade) => (
+                              <Button
+                                key={grade}
+                                type="button"
+                                variant="ghost"
+                                className={`h-auto w-full justify-start px-2 py-2 text-sm ${
+                                  grade === "Grade R" ? "bg-black text-white hover:bg-black/85" : "text-foreground"
+                                }`}
+                                disabled={isLoading}
+                                onClick={() =>
+                                  showLocalGuide({ title: grade, summary: GRADE_LESSONS, headingless: true })
+                                }
+                              >
+                                {grade}
+                              </Button>
+                            ))}
                           </div>
                         )}
                         </div>
@@ -844,7 +852,9 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                           </div>
                         ) : msg.summaryTitle && msg.content ? (
                           <div className="text-sm leading-relaxed text-foreground">
-                            <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
+                            {!msg.headingless && (
+                              <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
+                            )}
                             <p className="whitespace-pre-line">{msg.content}</p>
                           </div>
                         ) : msg.content ? (msg.role === "assistant" ? <EcdVisualResponse content={msg.content} streaming={isLoading && i === messages.length - 1} /> : <MessageResponse>{msg.content}</MessageResponse>) : (
