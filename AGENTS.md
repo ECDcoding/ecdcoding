@@ -1,6 +1,7 @@
 # Architecture rules
 
 - Reception uses the public ElevenLabs agent's configured prompt and greeting without client overrides because the agent rejects them and closes the voice session.
+- Reception connects over websocket (WebRTC fails on some networks) and falls back to a text-only session when the microphone is blocked, so Start Voice Chat always connects.
 
 - Render ECD AI educational diagrams through an allowlisted `ecd-visual` JSON fence in the existing chat, using local SVG primitives and semantic colour tokens; this provides safe colourful examples without extra image-generation requests or changed credit flows.
 
