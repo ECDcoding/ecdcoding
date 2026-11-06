@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useConversation } from '@11labs/react';
+import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -26,6 +26,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
   const [messages, setMessages] = useState<{ role: 'bot' | 'user'; content: string }[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
   const [voiceError, setVoiceError] = useState('');
+  const [textOnlyMode, setTextOnlyMode] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [showTerms, setShowTerms] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -95,7 +96,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   useEffect(() => {
     if (!isOpen) {
-      void conversation.endSession().catch(() => undefined);
+      try { conversation.endSession(); } catch { /* already closed */ }
       setUseVoiceMode(false);
       onVoiceModeChange?.(false);
     }
@@ -149,18 +150,28 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
       setVoiceError('');
       setIsConnecting(true);
       try {
-        if (!navigator.mediaDevices?.getUserMedia) {
-          throw new Error('Microphone access is unavailable in this browser. Please use a supported browser on HTTPS.');
-        }
         // Clear any existing messages when starting voice mode
         setMessages([]);
+        const agentId = 'agent_6301k2pnhhvyf5dak5nh4bnzxpez';
+        let micReady = false;
+        try {
+          if (navigator.mediaDevices?.getUserMedia) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach((t) => t.stop());
+            micReady = true;
+          }
+        } catch {
+          micReady = false;
+        }
+        setTextOnlyMode(!micReady);
+        // Voice chat as usual; if the mic is blocked, still let the user chat by typing.
         await conversation.startSession({
-          agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez',
+          agentId,
+          connectionType: 'websocket',
+          textOnly: !micReady,
           // Use the agent's configured greeting and reception knowledge base.
           // This public agent rejects client-side prompt and greeting overrides.
         });
-
-        await conversation.setVolume({ volume: 1 });
       } catch (error) {
         console.error('Failed to start voice conversation:', error);
         setUseVoiceMode(false);
@@ -243,13 +254,13 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 )}
               </Button>
               {!useVoiceMode && !isConnecting && !voiceError && (
-                <p className="mt-2 text-center text-sm text-muted-foreground">Reception needs microphone access for voice chat.</p>
+                <p className="mt-2 text-center text-sm text-muted-foreground">Allow the microphone to talk, or skip it and type instead.</p>
               )}
               {voiceError && <p role="alert" className="mt-2 text-sm text-destructive">{voiceError}</p>}
               
               {useVoiceMode && (
                 <div className="text-center text-sm text-muted-foreground">
-                  {conversation.isSpeaking ? '🗣️ Agent is speaking...' : '🎤 Listening...'}
+                  {textOnlyMode ? 'Microphone off — type your message below.' : conversation.isSpeaking ? '🗣️ Agent is speaking...' : '🎤 Listening...'}
                 </div>
               )}
             </div>
@@ -325,4 +336,10 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
   );
 };
 
-export default Chatbot;
+const ChatbotWithProvider = (props: ChatbotProps) => (
+  <ConversationProvider>
+    <Chatbot {...props} />
+  </ConversationProvider>
+);
+
+export default ChatbotWithProvider;
