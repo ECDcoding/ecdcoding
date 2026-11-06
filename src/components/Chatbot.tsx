@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useConversation } from '@11labs/react';
+import { useConversation } from '@elevenlabs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -149,18 +149,16 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
       setVoiceError('');
       setIsConnecting(true);
       try {
-        if (!navigator.mediaDevices?.getUserMedia) {
-          throw new Error('Microphone access is unavailable in this browser. Please use a supported browser on HTTPS.');
-        }
         // Clear any existing messages when starting voice mode
         setMessages([]);
         await conversation.startSession({
           agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez',
+          connectionType: 'websocket',
+          // Text session: starts immediately without asking for the microphone.
+          textOnly: true,
           // Use the agent's configured greeting and reception knowledge base.
           // This public agent rejects client-side prompt and greeting overrides.
         });
-
-        await conversation.setVolume({ volume: 1 });
       } catch (error) {
         console.error('Failed to start voice conversation:', error);
         setUseVoiceMode(false);
@@ -243,13 +241,13 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 )}
               </Button>
               {!useVoiceMode && !isConnecting && !voiceError && (
-                <p className="mt-2 text-center text-sm text-muted-foreground">Reception needs microphone access for voice chat.</p>
+                <p className="mt-2 text-center text-sm text-muted-foreground">Start chatting instantly — no microphone needed.</p>
               )}
               {voiceError && <p role="alert" className="mt-2 text-sm text-destructive">{voiceError}</p>}
               
               {useVoiceMode && (
                 <div className="text-center text-sm text-muted-foreground">
-                  {conversation.isSpeaking ? '🗣️ Agent is speaking...' : '🎤 Listening...'}
+                  Reception is ready — type your message below.
                 </div>
               )}
             </div>
