@@ -7,6 +7,8 @@ import { Bot, MessageCircle, X } from "lucide-react";
 interface AssistantHubProps {
   /** Context passed to the ECD AI copilot */
   context?: string;
+  /** Optional text shown under the ECD AI title instead of "Context: …" */
+  contextLabel?: string;
   onVoiceModeChange?: (isActive: boolean) => void;
   /** Reception is available only on the public landing page. */
   showReception?: boolean;
@@ -16,7 +18,7 @@ interface AssistantHubProps {
  * A single flipping launcher that lets users choose between
  * "Reception" (the live voice/text agent) and "ECD AI" (the child-development copilot).
  */
-const AssistantHub = ({ context, onVoiceModeChange, showReception = false }: AssistantHubProps) => {
+const AssistantHub = ({ context, contextLabel, onVoiceModeChange, showReception = false }: AssistantHubProps) => {
   const [flipped, setFlipped] = useState(false);
   const [receptionOpen, setReceptionOpen] = useState(false);
   const [copilotOpen, setCopilotOpen] = useState(false);
@@ -45,7 +47,7 @@ const AssistantHub = ({ context, onVoiceModeChange, showReception = false }: Ass
   };
 
   if (!showReception) {
-    return <ExpoCopilot context={context} />;
+    return <ExpoCopilot context={context} contextLabel={contextLabel} />;
   }
 
   return (
@@ -58,6 +60,7 @@ const AssistantHub = ({ context, onVoiceModeChange, showReception = false }: Ass
       />
       <ExpoCopilot
         context={context}
+        contextLabel={contextLabel}
         hideLauncher
         open={copilotOpen}
         onOpenChange={setCopilotOpen}

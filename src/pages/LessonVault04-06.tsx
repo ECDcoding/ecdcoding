@@ -6047,7 +6047,10 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       </Dialog>
       
       {/* ECD AI Copilot */}
-      <AssistantHub context="Learning the Basic (4-7)" />
+      <AssistantHub
+        context="Learning the Basic (4-7)"
+        contextLabel="To Get started Immediately, send us your gmail email via Whatsapp"
+      />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
 
