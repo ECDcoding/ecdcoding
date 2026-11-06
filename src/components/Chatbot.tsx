@@ -26,6 +26,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
   const [messages, setMessages] = useState<{ role: 'bot' | 'user'; content: string }[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
   const [voiceError, setVoiceError] = useState('');
+  const [textOnlyMode, setTextOnlyMode] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [showTerms, setShowTerms] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -151,11 +152,23 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
       try {
         // Clear any existing messages when starting voice mode
         setMessages([]);
+        const agentId = 'agent_6301k2pnhhvyf5dak5nh4bnzxpez';
+        let micReady = false;
+        try {
+          if (navigator.mediaDevices?.getUserMedia) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach((t) => t.stop());
+            micReady = true;
+          }
+        } catch {
+          micReady = false;
+        }
+        setTextOnlyMode(!micReady);
+        // Voice chat as usual; if the mic is blocked, still let the user chat by typing.
         await conversation.startSession({
-          agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez',
-          connectionType: 'websocket',
-          // Text session: starts immediately without asking for the microphone.
-          textOnly: true,
+          agentId,
+          connectionType: micReady ? 'webrtc' : 'websocket',
+          textOnly: !micReady,
           // Use the agent's configured greeting and reception knowledge base.
           // This public agent rejects client-side prompt and greeting overrides.
         });
@@ -241,13 +254,13 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 )}
               </Button>
               {!useVoiceMode && !isConnecting && !voiceError && (
-                <p className="mt-2 text-center text-sm text-muted-foreground">Start chatting instantly — no microphone needed.</p>
+                <p className="mt-2 text-center text-sm text-muted-foreground">Allow the microphone to talk, or skip it and type instead.</p>
               )}
               {voiceError && <p role="alert" className="mt-2 text-sm text-destructive">{voiceError}</p>}
               
               {useVoiceMode && (
                 <div className="text-center text-sm text-muted-foreground">
-                  Reception is ready — type your message below.
+                  {textOnlyMode ? 'Microphone off — type your message below.' : conversation.isSpeaking ? '🗣️ Agent is speaking...' : '🎤 Listening...'}
                 </div>
               )}
             </div>
