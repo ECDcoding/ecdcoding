@@ -6049,7 +6049,7 @@ const alphabetAudioRef = useRef<HTMLAudioElement | null>(null);
       {/* ECD AI Copilot */}
       <AssistantHub
         context="Learning the Basic (4-7)"
-        contextLabel="To Get started Immediately, send us your gmail email via Whatsapp"
+        contextLabel="Get started, just say 'Hello Add Me' on the ECDcoding Whatsapp"
       />
 
       <FixAlphabetOrderPuzzle isOpen={fixOrderOpen} onClose={() => setFixOrderOpen(false)} />
