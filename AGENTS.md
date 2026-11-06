@@ -1,5 +1,7 @@
 # Architecture rules
 
+- Reception uses the public ElevenLabs agent's configured prompt and greeting without client overrides because the agent rejects them and closes the voice session.
+
 - Render ECD AI educational diagrams through an allowlisted `ecd-visual` JSON fence in the existing chat, using local SVG primitives and semantic colour tokens; this provides safe colourful examples without extra image-generation requests or changed credit flows.
 
 - Keep ECD AI topic guides in the existing shared chat and inject source-based educational guidance into its existing edge function for every selected language; this preserves the current topic, credit and conversation flows.

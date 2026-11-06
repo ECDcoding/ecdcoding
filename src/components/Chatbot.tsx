@@ -16,31 +16,6 @@ interface ChatbotProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-/**
- * Hard scope for the reception voice agent. Anything outside the reception
- * knowledge base must be redirected to ECD AI.
- */
-const RECEPTION_SCOPE_PROMPT = `You are the ECDcoding reception agent. You answer ONLY from the ECDcoding reception knowledge base configured for this agent.
-
-You may ONLY help with:
-- General information about ECDcoding and what it offers.
-- The two age groups (04 - 07 and 08 - 12) at a high level.
-- Registration, sign-in, free trial, subscription and payment questions.
-- Events and news enquiries at a high level.
-- Contact details: info@ecdcoding.co.za, +27 73 063 9622, www.ecdcoding.co.za.
-- Directing the visitor to the right place in the website or app.
-
-You must REFUSE and redirect everything else, including:
-- Child behaviour, personality, moods, ages and stages, sleeping, eating, school readiness or parenting advice.
-- Lesson content, teaching guidance, literacy, numeracy, coding, robotics or any curriculum detail.
-- Homework help, general knowledge, coding help, medical, legal or financial questions.
-- Anything not present in your knowledge base.
-
-When a question falls outside your scope, reply briefly with: "I am reception, so I only handle general ECDcoding information. Please ask ECD AI — the black ASK button — for child behaviour and lesson questions, or email info@ecdcoding.co.za."
-
-Never guess, never invent information, and never answer from general knowledge. If your knowledge base does not contain the answer, say so and refer the visitor to info@ecdcoding.co.za. Keep replies to one or two short sentences.`;
-
-
 const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: ChatbotProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = open ?? internalOpen;
@@ -48,7 +23,9 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
     onOpenChange ? onOpenChange(value) : setInternalOpen(value);
   };
   const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<{ role: 'bot' | 'user'; content: string }[]>([]);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [voiceError, setVoiceError] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [showTerms, setShowTerms] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -89,23 +66,42 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   const conversation = useConversation({
     onConnect: () => {
-      console.log('Voice agent connected');
+      setUseVoiceMode(true);
+      setIsConnecting(false);
+      onVoiceModeChange?.(true);
     },
-    onDisconnect: () => {
-      console.log('Voice agent disconnected');
+    onDisconnect: (details) => {
+      setUseVoiceMode(false);
+      setIsConnecting(false);
+      onVoiceModeChange?.(false);
+      if (details.reason === 'error') {
+        setVoiceError(details.message || 'Reception disconnected. Please try again.');
+      }
     },
     onError: (error) => {
       console.error('Voice agent error:', error);
-      setMessages(prev => [...prev, { role: 'bot', content: 'Sorry, there was an error with the voice connection.' }]);
+      setUseVoiceMode(false);
+      setIsConnecting(false);
+      onVoiceModeChange?.(false);
+      setVoiceError(typeof error === 'string' ? error : 'Reception could not connect. Please try again.');
     },
     onMessage: (message) => {
-      console.log('Received message from voice agent:', message);
       // Add voice messages to the chat - both transcriptions and responses
       if (message.message && message.message.trim()) {
-        setMessages(prev => [...prev, { role: 'bot', content: message.message }]);
+        setMessages(prev => [...prev, { role: message.source === 'user' ? 'user' : 'bot', content: message.message }]);
       }
     }
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      void conversation.endSession().catch(() => undefined);
+      setUseVoiceMode(false);
+      onVoiceModeChange?.(false);
+    }
+    // The SDK owns session cleanup; closing Reception must also release the mic.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const languages = [
     "English", "Afrikaans", "isiZulu", "isiXhosa", "isiSwati", 
@@ -143,30 +139,37 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   const toggleVoiceMode = async () => {
     if (useVoiceMode) {
-      await conversation.endSession();
-      setUseVoiceMode(false);
-      onVoiceModeChange?.(false);
-    } else {
       try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        await conversation.endSession();
+      } finally {
+        setUseVoiceMode(false);
+        onVoiceModeChange?.(false);
+      }
+    } else {
+      setVoiceError('');
+      setIsConnecting(true);
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error('Microphone access is unavailable in this browser. Please use a supported browser on HTTPS.');
+        }
         // Clear any existing messages when starting voice mode
         setMessages([]);
         await conversation.startSession({
           agentId: 'agent_6301k2pnhhvyf5dak5nh4bnzxpez',
-          overrides: {
-            agent: {
-              prompt: { prompt: RECEPTION_SCOPE_PROMPT },
-              firstMessage:
-                "Hello and welcome to ECDcoding reception. I can help with general information about ECDcoding, our lesson age groups, registration, payments, events and contact details. For questions about child behaviour or lesson content, please use ECD AI.",
-            },
-          },
+          // Use the agent's configured greeting and reception knowledge base.
+          // This public agent rejects client-side prompt and greeting overrides.
         });
 
-        setUseVoiceMode(true);
-        onVoiceModeChange?.(true);
+        await conversation.setVolume({ volume: 1 });
       } catch (error) {
         console.error('Failed to start voice conversation:', error);
-        alert('Please allow microphone access to use voice mode.');
+        setUseVoiceMode(false);
+        onVoiceModeChange?.(false);
+        setVoiceError(error instanceof DOMException && error.name === 'NotAllowedError'
+          ? 'Please allow microphone access to speak with Reception.'
+          : error instanceof Error ? error.message : 'Reception could not connect. Please try again.');
+      } finally {
+        setIsConnecting(false);
       }
     }
   };
@@ -191,7 +194,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-80 h-96 shadow-xl z-50 flex flex-col">
+        <Card className="fixed bottom-24 right-6 w-80 max-w-[calc(100vw-3rem)] h-96 shadow-xl z-50 flex flex-col overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
@@ -210,6 +213,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
+                aria-label="Close Reception"
                 className="h-8 w-8"
               >
                 <X className="h-4 w-4" />
@@ -217,14 +221,14 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
           </CardHeader>
           
-          <CardContent className="flex-1 flex flex-col p-4">
+          <CardContent className="min-h-0 flex-1 flex flex-col p-4">
             {/* Voice Toggle */}
             <div className="mb-4">
               <Button
                 onClick={toggleVoiceMode}
                 variant={useVoiceMode ? "destructive" : "secondary"}
                 className="w-full"
-                disabled={conversation.status === 'connecting'}
+                disabled={isConnecting || conversation.status === 'connecting'}
               >
                 {useVoiceMode ? (
                   <>
@@ -234,10 +238,14 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
                 ) : (
                   <>
                     <Mic className="h-4 w-4 mr-2" />
-                    Start Voice Chat
+                    {isConnecting ? 'Connecting...' : 'Start Voice Chat'}
                   </>
                 )}
               </Button>
+              {!useVoiceMode && !isConnecting && !voiceError && (
+                <p className="mt-2 text-center text-sm text-muted-foreground">Reception needs microphone access for voice chat.</p>
+              )}
+              {voiceError && <p role="alert" className="mt-2 text-sm text-destructive">{voiceError}</p>}
               
               {useVoiceMode && (
                 <div className="text-center text-sm text-muted-foreground">
@@ -247,7 +255,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
 
             {/* Messages - Now visible in voice mode too */}
-            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+            <div className="min-h-0 flex-1 overflow-y-auto space-y-3 mb-4">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -267,15 +275,16 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
             </div>
 
             {/* Text Input */}
-            <div className="flex gap-2">
+            <div className="flex shrink-0 gap-2">
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
+                disabled={!useVoiceMode}
                 className="flex-1"
               />
-              <Button onClick={sendMessage} size="icon" variant="default">
+              <Button onClick={sendMessage} size="icon" variant="default" disabled={!useVoiceMode || !inputMessage.trim()} aria-label="Send to Reception">
                 <Send className="h-4 w-4" />
               </Button>
             </div>
