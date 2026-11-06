@@ -345,6 +345,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
   const [topic, setTopic] = useState<CopilotTopic>("library");
   const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("library");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
+  const [basicsExpanded, setBasicsExpanded] = useState(false);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -377,6 +378,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
       setTopic("library");
       setDisplayedTopic("library");
       setExpandedTopic(null);
+      setBasicsExpanded(false);
     }
   }, [isOpen]);
 
@@ -640,6 +642,24 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
 
   if (!isVisible) return null;
 
+  const showLocalGuide = (guide: { title: string; summary: string }) => {
+    const t = displayedTopic;
+    setTopic(t);
+    setMessages((previous) => [
+      ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor),
+      { role: "user", content: guide.title, topic: t, promptFor: guide.title },
+      { role: "assistant", content: "", topic: t, summaryTitle: guide.title },
+    ]);
+    setExpandedTopic(null);
+    setBasicsExpanded(false);
+    window.setTimeout(() => {
+      setMessages((previous) => previous.map((m) =>
+        m.summaryTitle === guide.title && !m.content ? { ...m, content: guide.summary } : m,
+      ));
+      inputRef.current?.focus();
+    }, 1200);
+  };
+
   return (
     <div className={`fixed ${hideLauncher ? "bottom-24" : "bottom-6"} left-3 z-50 flex flex-col items-start gap-3 sm:left-6`}>
       {/* Chat Window */}
@@ -746,27 +766,17 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                   {expandedTopic === displayedTopic && (
                     <div className="mt-2 max-h-60 space-y-1 overflow-y-auto rounded-md border border-border p-2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)]">
                       {copy.topicGuides[displayedTopic].map((guide) => (
+                        <div key={guide.title}>
                         <Button
-                          key={guide.title}
                           type="button"
                           variant="ghost"
+                          aria-expanded={displayedTopic === "library" && guide.title === "Learning the Basics" ? basicsExpanded : undefined}
                           onClick={() => {
-                            const t = displayedTopic;
-                            setTopic(t);
-                            setMessages((previous) => [
-                              ...previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor),
-                              { role: "user", content: guide.title, topic: t, promptFor: guide.title },
-                              { role: "assistant", content: "", topic: t, summaryTitle: guide.title },
-                            ]);
-                            setExpandedTopic(null);
-                            window.setTimeout(() => {
-                              setMessages((previous) =>
-                                previous.map((m) =>
-                                  m.summaryTitle === guide.title && !m.content ? { ...m, content: guide.summary } : m,
-                                ),
-                              );
-                              inputRef.current?.focus();
-                            }, 1200);
+                            if (displayedTopic === "library" && guide.title === "Learning the Basics") {
+                              setBasicsExpanded((current) => !current);
+                              return;
+                            }
+                            showLocalGuide(guide);
                           }}
                           disabled={isLoading}
                           className="h-auto w-full items-start justify-start whitespace-normal rounded px-2 py-2 text-left"
@@ -775,7 +785,27 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                           <span className="block">
                             <span className="block text-sm font-semibold text-foreground">{guide.title}</span>
                           </span>
+                          {displayedTopic === "library" && guide.title === "Learning the Basics" && (
+                            <ChevronDown className={`ml-auto mt-1 h-3.5 w-3.5 shrink-0 ${basicsExpanded ? "rotate-180" : ""}`} />
+                          )}
                         </Button>
+                        {displayedTopic === "library" && guide.title === "Learning the Basics" && basicsExpanded && (
+                          <div className="ml-4 border-l border-border pl-2">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              className="h-auto w-full justify-start px-2 py-2 text-sm text-foreground"
+                              disabled={isLoading}
+                              onClick={() => showLocalGuide({
+                                title: "Grade R",
+                                summary: "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week",
+                              })}
+                            >
+                              Grade R
+                            </Button>
+                          </div>
+                        )}
+                        </div>
                       ))}
                     </div>
                   )}
@@ -813,7 +843,7 @@ const ExpoCopilot = ({ context, hideLauncher, open, onOpenChange }: ExpoCopilotP
                         ) : msg.summaryTitle && msg.content ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
-                            <p>{msg.content}</p>
+                            <p className="whitespace-pre-line">{msg.content}</p>
                           </div>
                         ) : msg.content ? (msg.role === "assistant" ? <EcdVisualResponse content={msg.content} streaming={isLoading && i === messages.length - 1} /> : <MessageResponse>{msg.content}</MessageResponse>) : (
 
