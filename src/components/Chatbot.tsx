@@ -96,7 +96,7 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
 
   useEffect(() => {
     if (!isOpen) {
-      void conversation.endSession().catch(() => undefined);
+      try { conversation.endSession(); } catch { /* already closed */ }
       setUseVoiceMode(false);
       onVoiceModeChange?.(false);
     }
