@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useConversation } from '@elevenlabs/react';
+import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -336,4 +336,10 @@ const Chatbot = ({ onVoiceModeChange, hideLauncher, open, onOpenChange }: Chatbo
   );
 };
 
-export default Chatbot;
+const ChatbotWithProvider = (props: ChatbotProps) => (
+  <ConversationProvider>
+    <Chatbot {...props} />
+  </ConversationProvider>
+);
+
+export default ChatbotWithProvider;
