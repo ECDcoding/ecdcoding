@@ -20,6 +20,11 @@ const WELCOME_BONUS = 5;
 type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string; headingless?: boolean; items?: GuideItem[] };
 type GuideItem = { title: string; detail?: string };
 
+/** Dark green panel behind ECD AI definitions/sub-topic explanations for easier reading */
+const GUIDE_PANEL_CLASS = "rounded-lg bg-[#3c6e71] px-3 py-2.5 text-sm leading-relaxed text-white";
+/** Slightly darker green surface for an opened sub-topic definition inside the panel */
+const GUIDE_DETAIL_CLASS = "whitespace-pre-line rounded-lg bg-black/20 px-3 py-2 text-white";
+
 const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
 const GRADE_LESSONS =
   "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week";
@@ -898,9 +903,9 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                             </p>
                           </div>
                         ) : msg.summaryTitle && (msg.content || msg.items) ? (
-                          <div className="text-sm leading-relaxed text-foreground">
+                          <div className={GUIDE_PANEL_CLASS}>
                             {!msg.headingless && (
-                              <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
+                              <p className="mb-1.5 text-base font-semibold text-white">{msg.summaryTitle}</p>
                             )}
                             {msg.content && <p className="whitespace-pre-line">{msg.content}</p>}
                             {msg.items && (
@@ -915,16 +920,16 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                           type="button"
                                           aria-expanded={isItemOpen}
                                           onClick={() => setOpenGuideItem(isItemOpen ? null : key)}
-                                          className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-foreground hover:bg-muted"
+                                          className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
                                         >
                                           <span className="flex-1">{item.title}</span>
                                           <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isItemOpen ? "rotate-180" : ""}`} />
                                         </button>
                                       ) : (
-                                        <p className="px-2 py-1.5 font-medium text-foreground">{item.title}</p>
+                                        <p className="px-2 py-1.5 font-medium text-white">{item.title}</p>
                                       )}
                                       {isItemOpen && item.detail && (
-                                        <p className="whitespace-pre-line px-2 pb-2 pt-0.5 text-foreground">{item.detail}</p>
+                                        <p className={`mx-1 mb-2 mt-1 ${GUIDE_DETAIL_CLASS}`}>{item.detail}</p>
                                       )}
                                     </li>
                                   );
