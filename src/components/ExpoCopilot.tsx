@@ -17,7 +17,8 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const WELCOME_BONUS = 5;
 
-type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string; headingless?: boolean };
+type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string; headingless?: boolean; items?: GuideItem[] };
+type GuideItem = { title: string; detail?: string };
 
 const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
 const GRADE_LESSONS =
@@ -92,12 +93,38 @@ const COPILOT_COPY = {
         { title: "FLC Report", summary: "A 1–10 learning outcome summarises available evidence and suggests an appropriate way forward.", question: "How should I understand and use the FLC Report?" },
       ],
       gli: [
-        { title: "Inter-Play", summary: "Observe six kinds of play on a 1–10 scale to understand strengths and choose the next playful activity.", question: "How should I use the Inter-Play index to observe my child?" },
-        { title: "Styles of Learning", summary: "Visual | Auditory | Kinaesthetic\n\n• Visual — learns best by seeing pictures, colours, shapes and demonstrations.\n• Auditory — learns best by listening, talking, songs and rhymes.\n• Kinaesthetic — learns best by touching, moving, building and doing.", question: "How can I tell which style of learning suits my child best?" },
-        { title: "Multiple-Intelligences", summary: "A. Understanding of Technology Processes\n• Tools — using tools to accomplish tasks more easily and quickly.\n• Energy & Control — Electricity: the ability to generate energy wherever it can be found around us. Mechanism: the ability to make machines move in order to do work for us.\n\nB. Literacy — the ability to fix the order of the alphabets and numbers, and the ability to read and write.\n\nC. Number Sense (Counting) — the ability to add, subtract, multiply and divide numbers. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting.\n\nD. Coding (Cryptography) — Decoding Alphabets from Numbers and Decoding Numbers from Alphabets. We also track kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc.\n\nE. Problem Solving — the ability to apply technological processes and skills ethically and responsibly, using appropriate information and communication strategies, which leads into Inquiry.", question: "How does the Multiple-Intelligences index describe my child's strengths?" },
-        { title: "Smart Skills", summary: "• Picture Smart — the ability to paint a picture through storytelling.\n• Body Smart — the ability to use and control one's hand or body to express meaning.\n• Music Smart — the ability to enjoy and replicate music, recognise musical patterns, remember them and transform them, compose songs, sing and play instruments.\n• Word Smart — the ability to use language effectively, either in oral or written form, or to express ideas to others.\n• Number Smart\n• Self Smart\n• People Smart\n• Nature Smart", question: "How can I recognise and support my child's Smart Skills?" },
-        { title: "Inquiry", summary: "The overall process of coming up with ideas about the natural world and testing ideas through experimentation — or \"Science in Practice\". In the early years, children should be involved with investigation about science inquiry.", question: "What is the Inquiry index and how does science inquiry work in the early years?" },
-        { title: "Child Behavior", summary: "Links each learner's index to child behaviour observations — ages and stages, individuality, moods and school readiness.", question: "How does the Child Behavior index link to my child's behaviour observations?" },
+        { title: "Inter-Play", summary: "", headingless: true, question: "How should I use the Inter-Play index to observe my child?", items: [
+          { title: "Exploratory Play", detail: "Children use their senses to touch, look, listen and handle objects to find out what they are and how they work. Watch how they sort, compare and count what they discover." },
+          { title: "Construction Play", detail: "Children build with blocks, boxes, shapes and reusable materials. It shows how they use shape, size, balance, measuring and counting to plan and make structures." },
+          { title: "Creative Play", detail: "Children draw, paint, model, sing and make things in their own way. It shows how they use colour, pattern, shape and number to express their ideas." },
+          { title: "Physical & Locomotive Play", detail: "Children run, jump, hop, climb, kick and throw. Counting steps, jumps or kicks — for example in multiples of 2 — builds rhythm, sequence and number sense through movement." },
+          { title: "Fantasy Play", detail: "Children pretend and take on roles, such as running a small shop or a house. It shows how they use quantities, money, time and turn-taking in everyday situations." },
+          { title: "Word Play", detail: "Children play with sounds, rhymes, songs and number words. It shows how fluently they use counting words, number sequences and the language of mathematics." },
+        ] },
+        { title: "Styles of Learning", summary: "", headingless: true, question: "How can I tell which style of learning suits my child best?", items: [
+          { title: "Visual", detail: "Learns best by seeing pictures, colours, shapes and demonstrations." },
+          { title: "Auditory", detail: "Learns best by listening, talking, songs and rhymes." },
+          { title: "Kinaesthetic", detail: "Learns best by touching, moving, building and doing." },
+        ] },
+        { title: "Multiple-Intelligences", summary: "", headingless: true, question: "How does the Multiple-Intelligences index describe my child's strengths?", items: [
+          { title: "A. Understanding of Technology Processes", detail: "• Tools — using tools to accomplish tasks more easily and quickly.\n• Energy & Control — Electricity: the ability to generate energy wherever it can be found around us. Mechanism: the ability to make machines move in order to do work for us." },
+          { title: "B. Literacy", detail: "The ability to fix the order of the alphabets and numbers, and the ability to read and write." },
+          { title: "C. Number Sense (Counting)", detail: "The ability to add, subtract, multiply and divide numbers. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting." },
+          { title: "D. Coding (Cryptography)", detail: "Decoding Alphabets from Numbers and Decoding Numbers from Alphabets. We also track kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc." },
+          { title: "E. Problem Solving", detail: "The ability to apply technological processes and skills ethically and responsibly, using appropriate information and communication strategies, which leads into Inquiry." },
+        ] },
+        { title: "Smart Skills", summary: "", headingless: true, question: "How can I recognise and support my child's Smart Skills?", items: [
+          { title: "Picture Smart", detail: "The ability to paint a picture through storytelling." },
+          { title: "Body Smart", detail: "The ability to use and control one's hand or body to express meaning." },
+          { title: "Music Smart", detail: "The ability to enjoy and replicate music, recognise musical patterns, remember them and transform them, compose songs, sing and play instruments." },
+          { title: "Word Smart", detail: "The ability to use language effectively, either in oral or written form, or to express ideas to others." },
+          { title: "Number Smart" },
+          { title: "Self Smart" },
+          { title: "People Smart" },
+          { title: "Nature Smart" },
+        ] },
+        { title: "Inquiry", summary: "The overall process of coming up with ideas about the natural world and testing ideas through experimentation — or \"Science in Practice\". In the early years, children should be involved with investigation about science inquiry.", headingless: true, question: "What is the Inquiry index and how does science inquiry work in the early years?" },
+        { title: "Child Behavior", summary: "Links each learner's index to child behaviour observations — ages and stages, individuality, moods and school readiness.", headingless: true, question: "How does the Child Behavior index link to my child's behaviour observations?" },
       ],
       behaviour: [
         { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
@@ -217,12 +244,38 @@ const COPILOT_COPY = {
         { title: "Pego ya FLC", summary: "Sephetho sa 1–10 se sobokanya bosupi jo bo leng teng mme se tshitshinya tsela e e maleba ya go ya pele.", question: "Ke tshwanetse go tlhaloganya le go dirisa jang Pego ya FLC?" },
       ],
       gli: [
-        { title: "Inter-Play", summary: "Lemoga mofuta wa motshameko wa 1–10 go tlhaloganya bokgoni le tiro e e latelang.", question: "Nka dirisa jang sekekanyi sa Inter-Play go lemoga ngwana wa me?" },
-        { title: "Mekgwa ya go Ithuta (Styles of Learning)", summary: "Visual | Auditory | Kinaesthetic\n\n• Visual — o ithuta botoka ka go bona ditshwantsho, mebala, dibopego le dipontsho.\n• Auditory — o ithuta botoka ka go reetsa, go bua, dipina le diraeme.\n• Kinaesthetic — o ithuta botoka ka go ama, go tsamaya, go aga le go dira.", question: "Nka itse jang mokgwa wa go ithuta o o tshwanelang ngwana wa me?" },
-        { title: "Botlhale jo bo Farologaneng (Multiple-Intelligences)", summary: "A. Kutlwisiso ya Ditsamaiso tsa Thekenoloji\n• Didiriswa (Tools) — go dirisa didiriswa go fetsa ditiro bonolo le ka bonako.\n• Maatla le Taolo (Energy & Control) — Motlakase: bokgoni jwa go tlhagisa maatla gongwe le gongwe fa a ka bonwang gone mo go rona. Mechanism: bokgoni jwa go tsamaisa metšhini gore e re direle tiro.\n\nB. Go Bala le go Kwala (Literacy) — bokgoni jwa go baakanya tatelano ya ditlhaka le dipalo, le bokgoni jwa go bala le go kwala.\n\nC. Kutlwisiso ya Dipalo (Counting) — bokgoni jwa go oketsa, go ntsha, go atisa le go kgaoganya dipalo. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting.\n\nD. Khouto (Cryptography) — Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng. Re latela gape tiriso ya Blockly, Scratch, Micro:bit le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa.\n\nE. Go Rarabolola Mathata (Problem Solving) — bokgoni jwa go dirisa ditsamaiso le bokgoni jwa thekenoloji ka maitsholo le boikarabelo, ka maano a a maleba a tshedimosetso le puisano, mme seno se isa kwa Patlisisong (Inquiry).", question: "Sekekanyi sa Botlhale jo bo Farologaneng se tlhalosa jang bokgoni jwa ngwana wa me?" },
-        { title: "Bokgoni jwa Botlhale (Smart Skills)", summary: "• Picture Smart — bokgoni jwa go taka setshwantsho ka go anela dinaane.\n• Body Smart — bokgoni jwa go dirisa le go laola seatla kgotsa mmele go tlhalosa bokao.\n• Music Smart — bokgoni jwa go itumelela le go etsisa mmino, go lemoga dipaterone tsa mmino, go di gopola le go di fetola, go kwala dipina, go opela le go letsa diletso.\n• Word Smart — bokgoni jwa go dirisa puo sentle, ka molomo kgotsa ka go kwala, kgotsa go tlhalosetsa ba bangwe dikakanyo.\n• Number Smart\n• Self Smart\n• People Smart\n• Nature Smart", question: "Nka lemoga le go tshegetsa jang Bokgoni jwa Botlhale jwa ngwana wa me?" },
-        { title: "Patlisiso (Inquiry)", summary: "Tsamaiso ya kakaretso ya go tla ka dikakanyo ka lefatshe la tlholego le go leka dikakanyo ka diteko — kgotsa \"Saense mo Tirong\". Mo bongwaneng, bana ba tshwanetse go akarediwa mo dipatlisisong tsa saense.", question: "Sekekanyi sa Patlisiso ke eng, mme patlisiso ya saense e dira jang mo bongwaneng?" },
-        { title: "Boitshwaro jwa Ngwana", summary: "E golaganya sekekanyi sa moithuti le ditemogo tsa boitshwaro — dingwaga le dikgato, botho, maikutlo le go siamela sekolo.", question: "Sekekanyi sa Boitshwaro jwa Ngwana se golaganyang jang le ditemogo tsa boitshwaro jwa ngwana wa me?" },
+        { title: "Inter-Play", summary: "", headingless: true, question: "Nka dirisa jang sekekanyi sa Inter-Play go lemoga ngwana wa me?", items: [
+          { title: "Exploratory Play", detail: "Bana ba dirisa dikutlo tsa bone go ama, go leba, go reetsa le go tshwara dilo go itse gore ke eng le gore di dira jang. Lemoga ka fa ba rulaganyang, ba bapisang le ba balang se ba se fitlhelang ka teng." },
+          { title: "Construction Play", detail: "Bana ba aga ka dibloke, mabokose, dibopego le didiriswa tse di dirisiwang gape. Go bontsha ka fa ba dirisang sebopego, bogolo, tekatekano, go lekanya le go bala ka teng go rulaganya le go aga." },
+          { title: "Creative Play", detail: "Bana ba thala, ba penta, ba bopa, ba opela mme ba dira dilo ka tsela ya bone. Go bontsha ka fa ba dirisang mebala, dipaterone, dibopego le dipalo go tlhalosa dikakanyo tsa bone ka teng." },
+          { title: "Physical & Locomotive Play", detail: "Bana ba taboga, ba tlola, ba palama, ba raga mme ba latlhela. Go bala dikgato, ditlolo kgotsa diraga — sekai ka bobedi — go aga morethetho, tatelano le kutlwisiso ya dipalo ka go tsamaya." },
+          { title: "Fantasy Play", detail: "Bana ba itira mme ba tsaya dikarolo, jaaka go tsamaisa lebenkele le lennye kgotsa ntlo. Go bontsha ka fa ba dirisang bontsi, madi, nako le go emela ditshono ka teng mo botshelong jwa letsatsi le letsatsi." },
+          { title: "Word Play", detail: "Bana ba tshameka ka medumo, diraeme, dipina le maina a dipalo. Go bontsha ka fa ba dirisang mafoko a go bala, tatelano ya dipalo le puo ya dipalo ka bonolo ka teng." },
+        ] },
+        { title: "Mekgwa ya go Ithuta (Styles of Learning)", summary: "", headingless: true, question: "Nka itse jang mokgwa wa go ithuta o o tshwanelang ngwana wa me?", items: [
+          { title: "Visual", detail: "O ithuta botoka ka go bona ditshwantsho, mebala, dibopego le dipontsho." },
+          { title: "Auditory", detail: "O ithuta botoka ka go reetsa, go bua, dipina le diraeme." },
+          { title: "Kinaesthetic", detail: "O ithuta botoka ka go ama, go tsamaya, go aga le go dira." },
+        ] },
+        { title: "Botlhale jo bo Farologaneng (Multiple-Intelligences)", summary: "", headingless: true, question: "Sekekanyi sa Botlhale jo bo Farologaneng se tlhalosa jang bokgoni jwa ngwana wa me?", items: [
+          { title: "A. Kutlwisiso ya Ditsamaiso tsa Thekenoloji", detail: "• Didiriswa (Tools) — go dirisa didiriswa go fetsa ditiro bonolo le ka bonako.\n• Maatla le Taolo (Energy & Control) — Motlakase: bokgoni jwa go tlhagisa maatla gongwe le gongwe fa a ka bonwang gone mo go rona. Mechanism: bokgoni jwa go tsamaisa metšhini gore e re direle tiro." },
+          { title: "B. Go Bala le go Kwala (Literacy)", detail: "Bokgoni jwa go baakanya tatelano ya ditlhaka le dipalo, le bokgoni jwa go bala le go kwala." },
+          { title: "C. Kutlwisiso ya Dipalo (Counting)", detail: "Bokgoni jwa go oketsa, go ntsha, go atisa le go kgaoganya dipalo. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting." },
+          { title: "D. Khouto (Cryptography)", detail: "Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng. Re latela gape tiriso ya Blockly, Scratch, Micro:bit le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa." },
+          { title: "E. Go Rarabolola Mathata (Problem Solving)", detail: "Bokgoni jwa go dirisa ditsamaiso le bokgoni jwa thekenoloji ka maitsholo le boikarabelo, ka maano a a maleba a tshedimosetso le puisano, mme seno se isa kwa Patlisisong (Inquiry)." },
+        ] },
+        { title: "Bokgoni jwa Botlhale (Smart Skills)", summary: "", headingless: true, question: "Nka lemoga le go tshegetsa jang Bokgoni jwa Botlhale jwa ngwana wa me?", items: [
+          { title: "Picture Smart", detail: "Bokgoni jwa go taka setshwantsho ka go anela dinaane." },
+          { title: "Body Smart", detail: "Bokgoni jwa go dirisa le go laola seatla kgotsa mmele go tlhalosa bokao." },
+          { title: "Music Smart", detail: "Bokgoni jwa go itumelela le go etsisa mmino, go lemoga dipaterone tsa mmino, go di gopola le go di fetola, go kwala dipina, go opela le go letsa diletso." },
+          { title: "Word Smart", detail: "Bokgoni jwa go dirisa puo sentle, ka molomo kgotsa ka go kwala, kgotsa go tlhalosetsa ba bangwe dikakanyo." },
+          { title: "Number Smart" },
+          { title: "Self Smart" },
+          { title: "People Smart" },
+          { title: "Nature Smart" },
+        ] },
+        { title: "Patlisiso (Inquiry)", summary: "Tsamaiso ya kakaretso ya go tla ka dikakanyo ka lefatshe la tlholego le go leka dikakanyo ka diteko — kgotsa \"Saense mo Tirong\". Mo bongwaneng, bana ba tshwanetse go akarediwa mo dipatlisisong tsa saense.", headingless: true, question: "Sekekanyi sa Patlisiso ke eng, mme patlisiso ya saense e dira jang mo bongwaneng?" },
+        { title: "Boitshwaro jwa Ngwana", summary: "E golaganya sekekanyi sa moithuti le ditemogo tsa boitshwaro — dingwaga le dikgato, botho, maikutlo le go siamela sekolo.", headingless: true, question: "Sekekanyi sa Boitshwaro jwa Ngwana se golaganyang jang le ditemogo tsa boitshwaro jwa ngwana wa me?" },
       ],
       behaviour: [
         { title: "Dingwaga le Dikgato", summary: "Tebokakaretso ya kgolo, puisano, maikutlo le boikemelo go ya ka dingwaga, go dumela gore ngwana mongwe le mongwe o gola ka tsela ya gagwe.", question: "Tsweetswee tlhalosa Dingwaga le Dikgato tsa ngwana wa me le se nka se lemogang." },
@@ -344,6 +397,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
   const [displayedTopic, setDisplayedTopic] = useState<CopilotTopic>("library");
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [basicsExpanded, setBasicsExpanded] = useState(false);
+  const [openGuideItem, setOpenGuideItem] = useState<string | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -640,7 +694,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
 
   if (!isVisible) return null;
 
-  const showLocalGuide = (guide: { title: string; summary: string; headingless?: boolean }) => {
+  const showLocalGuide = (guide: { title: string; summary: string; headingless?: boolean; items?: GuideItem[] }) => {
     const t = displayedTopic;
     setTopic(t);
     setMessages((previous) => [
@@ -650,9 +704,10 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
     ]);
     setExpandedTopic(null);
     setBasicsExpanded(false);
+    setOpenGuideItem(null);
     window.setTimeout(() => {
       setMessages((previous) => previous.map((m) =>
-        m.summaryTitle === guide.title && !m.content ? { ...m, content: guide.summary } : m,
+        m.summaryTitle === guide.title && !m.content && !m.items ? { ...m, content: guide.summary, items: guide.items } : m,
       ));
       inputRef.current?.focus();
     }, 1200);
@@ -842,12 +897,40 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                               {msg.content}
                             </p>
                           </div>
-                        ) : msg.summaryTitle && msg.content ? (
+                        ) : msg.summaryTitle && (msg.content || msg.items) ? (
                           <div className="text-sm leading-relaxed text-foreground">
                             {!msg.headingless && (
                               <p className="mb-1.5 text-base font-semibold text-foreground">{msg.summaryTitle}</p>
                             )}
-                            <p className="whitespace-pre-line">{msg.content}</p>
+                            {msg.content && <p className="whitespace-pre-line">{msg.content}</p>}
+                            {msg.items && (
+                              <ul className="space-y-1">
+                                {msg.items.map((item) => {
+                                  const key = `${i}:${item.title}`;
+                                  const isItemOpen = openGuideItem === key;
+                                  return (
+                                    <li key={item.title}>
+                                      {item.detail ? (
+                                        <button
+                                          type="button"
+                                          aria-expanded={isItemOpen}
+                                          onClick={() => setOpenGuideItem(isItemOpen ? null : key)}
+                                          className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-foreground hover:bg-muted"
+                                        >
+                                          <span className="flex-1">{item.title}</span>
+                                          <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isItemOpen ? "rotate-180" : ""}`} />
+                                        </button>
+                                      ) : (
+                                        <p className="px-2 py-1.5 font-medium text-foreground">{item.title}</p>
+                                      )}
+                                      {isItemOpen && item.detail && (
+                                        <p className="whitespace-pre-line px-2 pb-2 pt-0.5 text-foreground">{item.detail}</p>
+                                      )}
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            )}
                           </div>
                         ) : msg.content ? (msg.role === "assistant" ? <EcdVisualResponse content={msg.content} streaming={isLoading && i === messages.length - 1} /> : <MessageResponse>{msg.content}</MessageResponse>) : (
 
