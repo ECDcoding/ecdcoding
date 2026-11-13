@@ -1,7 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
+import { md5Signature } from "../_shared/payfast.ts";
 
 const allowedOrigins = [
+  'https://ecdcoding.co.za',
+  'https://www.ecdcoding.co.za',
   'https://ecdcoding.lovable.app',
   'https://id-preview--9ad76001-6b51-460f-a9da-27a8c4599f5e.lovable.app',
   'http://localhost:5173',
@@ -53,26 +55,6 @@ const VALID_AMOUNTS = [
 
 const PAYFAST_URL = 'https://www.payfast.co.za/eng/process';
 
-async function generateSignature(data: Record<string, string>, passphrase?: string): Promise<string> {
-  let pfOutput = '';
-  for (const key of Object.keys(data)) {
-    if (data[key] !== '' && key !== 'signature') {
-      pfOutput += `${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, '+')}&`;
-    }
-  }
-  let getString = pfOutput.slice(0, -1);
-
-  if (passphrase) {
-    getString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
-  }
-
-  const encoder = new TextEncoder();
-  const hashBuffer = await crypto.subtle.digest('MD5', encoder.encode(getString));
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
 Deno.serve(async (req) => {
   const corsHeaders = getCorsHeaders(req);
 
@@ -94,7 +76,6 @@ Deno.serve(async (req) => {
       payment_type,
       return_url,
       cancel_url,
-      notify_url
     } = await req.json();
 
     // Check for authorization header - but allow guest payments for expo registrations
@@ -165,12 +146,13 @@ Deno.serve(async (req) => {
       );
     }
 
-    const paymentData: Record<string, string> = {
+    const allFields: Record<string, string> = {
       merchant_id: PAYFAST_MERCHANT_ID,
       merchant_key: PAYFAST_MERCHANT_KEY,
       return_url: return_url || `${req.headers.get('origin')}/payment-success`,
       cancel_url: cancel_url || `${req.headers.get('origin')}/payment-cancelled`,
-      notify_url: notify_url || `${supabaseUrl}/functions/v1/payfast-itn`,
+      // Always confirm payments through our own handler.
+      notify_url: `${supabaseUrl}/functions/v1/payfast-itn`,
       name_first: name_first || '',
       name_last: name_last || '',
       email_address: email_address || '',
@@ -181,7 +163,13 @@ Deno.serve(async (req) => {
       custom_str2: payment_type || 'subscription',
     };
 
-    const signature = await generateSignature(paymentData, PAYFAST_PASSPHRASE || undefined);
+    // PayFast rejects the signature if blank fields are posted, so leave them out.
+    const paymentData: Record<string, string> = {};
+    for (const [key, value] of Object.entries(allFields)) {
+      if (value.trim() !== '') paymentData[key] = value.trim();
+    }
+
+    const signature = await md5Signature(paymentData, PAYFAST_PASSPHRASE || undefined);
     paymentData.signature = signature;
     console.log('Signature generated successfully');
 

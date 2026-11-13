@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
+import { buildParamString, md5Signature } from "../_shared/payfast.ts";
 import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
@@ -21,8 +21,11 @@ async function sendPaymentConfirmationEmail(
   paymentId: string
 ) {
   try {
-    const subscriptionType = paymentType === 'credits' ? 'Credit Purchase' : 
-                             amount === 1200 ? 'Annual Subscription' : 'Monthly Subscription';
+    const subscriptionType = paymentType === 'credits' ? 'Credit Purchase' :
+                             amount === 600 ? 'ECDcoding Annual Usage' :
+                             amount === 500 ? 'Tech Teacher Mentorship' :
+                             amount === 1200 ? 'Annual Subscription' :
+                             amount === 100 ? 'Monthly Subscription' : 'ECDcoding Payment';
     
     const emailResponse = await resend.emails.send({
       from: "ECDcoding <info@ecdcoding.co.za>",
@@ -66,7 +69,7 @@ async function sendPaymentConfirmationEmail(
             <p>You can now access all the features included in your subscription. If you have any questions, please don't hesitate to contact us.</p>
             
             <div style="text-align: center; margin-top: 30px;">
-              <a href="https://ecdcoding.lovable.app" style="background: #132a13; color: #fbbf24; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Go to Dashboard</a>
+              <a href="https://ecdcoding.co.za" style="background: #132a13; color: #fbbf24; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Go to Dashboard</a>
             </div>
           </div>
           
@@ -94,7 +97,11 @@ const PAYFAST_IP_RANGES = [
   '41.74.179.192/27',   // 41.74.179.192 - 41.74.179.223
   '102.216.36.0/24',    // 102.216.36.0 - 102.216.36.255
   '102.216.37.0/24',    // 102.216.37.0 - 102.216.37.255
+  '144.126.193.139/32', // PayFast notification server
 ];
+
+const VALID_AMOUNTS = [100, 200, 500, 600, 1200, 2500, 5000, 15000, 30000, 50000, 75000, 100000];
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Helper function to check if IP is in CIDR range
 function isIpInRange(ip: string, cidr: string): boolean {
@@ -131,35 +138,6 @@ function isPayFastIp(ip: string): boolean {
   return false;
 }
 
-// Generate MD5 signature for validation
-async function generateSignature(data: Record<string, string>, passphrase?: string): Promise<string> {
-  // Sort keys and build parameter string (excluding signature)
-  const sortedKeys = Object.keys(data).filter(key => key !== 'signature').sort();
-  const params: string[] = [];
-  
-  for (const key of sortedKeys) {
-    if (data[key] !== undefined && data[key] !== '') {
-      params.push(`${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, '+')}`);
-    }
-  }
-  
-  let paramString = params.join('&');
-  
-  // Append passphrase if provided
-  if (passphrase) {
-    paramString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
-  }
-  
-  // Generate MD5 hash
-  const encoder = new TextEncoder();
-  const dataBuffer = encoder.encode(paramString);
-  const hashBuffer = await crypto.subtle.digest('MD5', dataBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  
-  return hashHex;
-}
-
 // Verify the signature from PayFast
 async function verifySignature(itnData: Record<string, string>): Promise<boolean> {
   const receivedSignature = itnData.signature;
@@ -168,7 +146,7 @@ async function verifySignature(itnData: Record<string, string>): Promise<boolean
     return false;
   }
   
-  const calculatedSignature = await generateSignature(itnData, PAYFAST_PASSPHRASE || undefined);
+  const calculatedSignature = await md5Signature(itnData, PAYFAST_PASSPHRASE || undefined);
   
   console.log('Signature validation - Received:', receivedSignature, 'Calculated:', calculatedSignature);
   
@@ -202,10 +180,7 @@ async function validateWithPayFast(itnData: Record<string, string>): Promise<boo
   try {
     const validationUrl = 'https://www.payfast.co.za/eng/query/validate';
     
-    // Build form data for validation request
-    const formBody = Object.entries(itnData)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&');
+    const formBody = buildParamString(itnData);
     
     const response = await fetch(validationUrl, {
       method: 'POST',
@@ -221,8 +196,8 @@ async function validateWithPayFast(itnData: Record<string, string>): Promise<boo
     return result.trim() === 'VALID';
   } catch (error) {
     console.error('Error validating with PayFast:', error);
-    // In case of network error, we'll rely on other validations
-    return true; // Fail open for server validation only
+    // Fail closed: PayFast retries the notification later.
+    return false;
   }
 }
 
@@ -280,6 +255,12 @@ serve(async (req) => {
     const paymentStatus = itnData.payment_status;
     const amount = parseFloat(itnData.amount_gross);
     const paymentId = itnData.pf_payment_id;
+    const isMember = UUID_RE.test(userId || '');
+
+    if (!VALID_AMOUNTS.includes(amount)) {
+      console.error('Unexpected payment amount in ITN:', itnData.amount_gross);
+      return new Response('Invalid amount', { status: 400 });
+    }
 
     // Step 4: Replay Attack Protection - Check if payment already processed
     const alreadyProcessed = await isPaymentAlreadyProcessed(supabase, paymentId);
@@ -304,7 +285,13 @@ serve(async (req) => {
       const firstName = itnData.name_first || '';
       
       // Payment successful - update database
-      if (paymentType === 'credits') {
+      if (!isMember) {
+        // Guest payments (e.g. Expo registrations) have no account to update.
+        console.log('Guest payment completed:', paymentId, 'type:', paymentType, 'amount:', amount);
+        if (userEmail) {
+          await sendPaymentConfirmationEmail(userEmail, firstName, amount, paymentType, paymentId);
+        }
+      } else if (paymentType === 'credits') {
         // Credit purchase
         const creditsAmount = amount === 100 ? 100 : amount === 200 ? 200 : amount === 600 ? 300 : 100;
         
@@ -338,7 +325,7 @@ serve(async (req) => {
             user_id: userId,
             credits: newCredits,
             updated_at: new Date().toISOString()
-          });
+          }, { onConflict: 'user_id' });
 
         if (updateError) {
           console.error('Error updating credits:', updateError);
@@ -353,7 +340,8 @@ serve(async (req) => {
 
       } else {
         // Subscription payment
-        const subscriptionType = amount === 100 ? 'monthly' : amount === 1200 ? 'annual' : 'monthly';
+        // R500 Tech Teacher, R600 Annual Usage and R1200 are yearly; R100 is monthly.
+        const subscriptionType = [500, 600, 1200].includes(amount) ? 'annual' : 'monthly';
         const nextPaymentDue = new Date();
         nextPaymentDue.setMonth(nextPaymentDue.getMonth() + (subscriptionType === 'annual' ? 12 : 1));
 
@@ -363,7 +351,7 @@ serve(async (req) => {
             user_id: userId,
             subscription_type: subscriptionType,
             amount: amount,
-            payment_status: 'paid',
+            payment_status: 'completed',
             last_payment_date: new Date().toISOString(),
             next_payment_due: nextPaymentDue.toISOString(),
             payment_method: 'payfast',
