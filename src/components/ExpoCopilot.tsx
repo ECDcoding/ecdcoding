@@ -18,7 +18,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const WELCOME_BONUS = 5;
 
 type Message = { role: "user" | "assistant"; content: string; topic?: CopilotTopic; summaryTitle?: string; followUp?: boolean; promptFor?: string; headingless?: boolean; items?: GuideItem[] };
-type GuideItem = { title: string; detail?: string };
+type GuideItem = { title: string; detail?: string; children?: GuideItem[] };
 
 /** Dark green panel behind ECD AI definitions/sub-topic explanations for easier reading */
 const GUIDE_PANEL_CLASS = "rounded-lg bg-[#3c6e71] px-3 py-2.5 text-sm leading-relaxed text-white";
@@ -113,10 +113,19 @@ const COPILOT_COPY = {
         ] },
         { title: "Multiple-Intelligences", summary: "", headingless: true, question: "How does the Multiple-Intelligences index describe my child's strengths?", items: [
           { title: "A. Understanding of Technology Processes", detail: "• Tools — using tools to accomplish tasks more easily and quickly.\n• Energy & Control — Electricity: the ability to generate energy wherever it can be found around us. Mechanism: the ability to make machines move in order to do work for us." },
-          { title: "B. Literacy", detail: "The ability to fix the order of the alphabets and numbers, and the ability to read and write." },
-          { title: "C. Number Sense (Counting)", detail: "The ability to add, subtract, multiply and divide numbers. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting." },
-          { title: "D. Coding (Cryptography)", detail: "Decoding Alphabets from Numbers and Decoding Numbers from Alphabets. We also track kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc." },
-          { title: "E. Problem Solving", detail: "The ability to apply technological processes and skills ethically and responsibly, using appropriate information and communication strategies, which leads into Inquiry." },
+          { title: "B. Literacy", children: [
+            { title: "Fix the Order of Alphabets", detail: "The ability to fix the order of the alphabets and numbers." },
+            { title: "Ability to Read and Write", detail: "The ability to read and write." },
+          ] },
+          { title: "C. Number Sense", children: [
+            { title: "Counting", detail: "The ability to add, subtract, multiply and divide numbers. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting." },
+          ] },
+          { title: "D. Coding", children: [
+            { title: "Cryptography", detail: "Decoding Alphabets from Numbers and Decoding Numbers from Alphabets. We also track kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc." },
+          ] },
+          { title: "E. Problem Solving", children: [
+            { title: "Inquiry", detail: "The ability to apply technological processes and skills ethically and responsibly, using appropriate information and communication strategies." },
+          ] },
         ] },
         { title: "Smart Skills", summary: "", headingless: true, question: "How can I recognise and support my child's Smart Skills?", items: [
           { title: "Picture Smart", detail: "The ability to paint a picture through storytelling." },
@@ -264,10 +273,19 @@ const COPILOT_COPY = {
         ] },
         { title: "Botlhale jo bo Farologaneng (Multiple-Intelligences)", summary: "", headingless: true, question: "Sekekanyi sa Botlhale jo bo Farologaneng se tlhalosa jang bokgoni jwa ngwana wa me?", items: [
           { title: "A. Kutlwisiso ya Ditsamaiso tsa Thekenoloji", detail: "• Didiriswa (Tools) — go dirisa didiriswa go fetsa ditiro bonolo le ka bonako.\n• Maatla le Taolo (Energy & Control) — Motlakase: bokgoni jwa go tlhagisa maatla gongwe le gongwe fa a ka bonwang gone mo go rona. Mechanism: bokgoni jwa go tsamaisa metšhini gore e re direle tiro." },
-          { title: "B. Go Bala le go Kwala (Literacy)", detail: "Bokgoni jwa go baakanya tatelano ya ditlhaka le dipalo, le bokgoni jwa go bala le go kwala." },
-          { title: "C. Kutlwisiso ya Dipalo (Counting)", detail: "Bokgoni jwa go oketsa, go ntsha, go atisa le go kgaoganya dipalo. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting." },
-          { title: "D. Khouto (Cryptography)", detail: "Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng. Re latela gape tiriso ya Blockly, Scratch, Micro:bit le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa." },
-          { title: "E. Go Rarabolola Mathata (Problem Solving)", detail: "Bokgoni jwa go dirisa ditsamaiso le bokgoni jwa thekenoloji ka maitsholo le boikarabelo, ka maano a a maleba a tshedimosetso le puisano, mme seno se isa kwa Patlisisong (Inquiry)." },
+          { title: "B. Go Bala le go Kwala (Literacy)", children: [
+            { title: "Go Baakanya Tatelano ya Ditlhaka (Fix the Order of Alphabets)", detail: "Bokgoni jwa go baakanya tatelano ya ditlhaka le dipalo." },
+            { title: "Bokgoni jwa go Bala le go Kwala (Ability to Read and Write)", detail: "Bokgoni jwa go bala le go kwala." },
+          ] },
+          { title: "C. Kutlwisiso ya Dipalo (Number Sense)", children: [
+            { title: "Go Bala Dipalo (Counting)", detail: "Bokgoni jwa go oketsa, go ntsha, go atisa le go kgaoganya dipalo. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting." },
+          ] },
+          { title: "D. Khouto (Coding)", children: [
+            { title: "Cryptography", detail: "Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng. Re latela gape tiriso ya Blockly, Scratch, Micro:bit le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa." },
+          ] },
+          { title: "E. Go Rarabolola Mathata (Problem Solving)", children: [
+            { title: "Patlisiso (Inquiry)", detail: "Bokgoni jwa go dirisa ditsamaiso le bokgoni jwa thekenoloji ka maitsholo le boikarabelo, ka maano a a maleba a tshedimosetso le puisano." },
+          ] },
         ] },
         { title: "Bokgoni jwa Botlhale (Smart Skills)", summary: "", headingless: true, question: "Nka lemoga le go tshegetsa jang Bokgoni jwa Botlhale jwa ngwana wa me?", items: [
           { title: "Picture Smart", detail: "Bokgoni jwa go taka setshwantsho ka go anela dinaane." },
@@ -403,6 +421,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
   const [expandedTopic, setExpandedTopic] = useState<CopilotTopic | null>(null);
   const [basicsExpanded, setBasicsExpanded] = useState(false);
   const [openGuideItem, setOpenGuideItem] = useState<string | null>(null);
+  const [openGuideSubItem, setOpenGuideSubItem] = useState<string | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -710,6 +729,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
     setExpandedTopic(null);
     setBasicsExpanded(false);
     setOpenGuideItem(null);
+    setOpenGuideSubItem(null);
     window.setTimeout(() => {
       setMessages((previous) => previous.map((m) =>
         m.summaryTitle === guide.title && !m.content && !m.items ? { ...m, content: guide.summary, items: guide.items } : m,
@@ -915,11 +935,14 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                   const isItemOpen = openGuideItem === key;
                                   return (
                                     <li key={item.title}>
-                                      {item.detail ? (
+                                      {item.detail || item.children ? (
                                         <button
                                           type="button"
                                           aria-expanded={isItemOpen}
-                                          onClick={() => setOpenGuideItem(isItemOpen ? null : key)}
+                                          onClick={() => {
+                                            setOpenGuideItem(isItemOpen ? null : key);
+                                            setOpenGuideSubItem(null);
+                                          }}
                                           className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
                                         >
                                           <span className="flex-1">{item.title}</span>
@@ -930,6 +953,30 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                       )}
                                       {isItemOpen && item.detail && (
                                         <p className={`mx-1 mb-2 mt-1 ${GUIDE_DETAIL_CLASS}`}>{item.detail}</p>
+                                      )}
+                                      {isItemOpen && item.children && (
+                                        <ul className="mb-2 ml-4 mt-1 space-y-1 border-l border-white/30 pl-2">
+                                          {item.children.map((child) => {
+                                            const childKey = `${key}:${child.title}`;
+                                            const isChildOpen = openGuideSubItem === childKey;
+                                            return (
+                                              <li key={child.title}>
+                                                <button
+                                                  type="button"
+                                                  aria-expanded={isChildOpen}
+                                                  onClick={() => setOpenGuideSubItem(isChildOpen ? null : childKey)}
+                                                  className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
+                                                >
+                                                  <span className="flex-1">{child.title}</span>
+                                                  <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isChildOpen ? "rotate-180" : ""}`} />
+                                                </button>
+                                                {isChildOpen && child.detail && (
+                                                  <p className={`mx-1 mb-2 mt-1 ${GUIDE_DETAIL_CLASS}`}>{child.detail}</p>
+                                                )}
+                                              </li>
+                                            );
+                                          })}
+                                        </ul>
                                       )}
                                     </li>
                                   );
