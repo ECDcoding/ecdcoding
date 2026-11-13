@@ -120,8 +120,11 @@ const COPILOT_COPY = {
           { title: "C. Number Sense", children: [
             { title: "Counting", detail: "The ability to add, subtract, multiply and divide numbers. Counting herein refers to: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising, and Ordinal Counting." },
           ] },
-          { title: "D. Coding", children: [
-            { title: "Cryptography", detail: "Decoding Alphabets from Numbers and Decoding Numbers from Alphabets. We also track kids' effective use of Blockly, Scratch, Micro:bit, among others — how often they apply Loops, Variables, Functions, Math, etc." },
+          { title: "D. Coding", detail: "We track learners' effective use of Scratch, Blockly, Cryptography and Micro:bit — how often they apply Loops, Variables, Functions, Math and other coding ideas.", children: [
+            { title: "Coding with Scratch", detail: "A block-based coding environment where learners snap coloured instruction blocks together to create stories, games and animations. It builds sequencing, events and loops without typing code." },
+            { title: "Coding with Blockly", detail: "A block-based coding editor where learners drag and snap blocks to build a program — the built-in editor needs no internet. It makes sequences, loops, variables and functions visible so learners can read, change and explain their program." },
+            { title: "Cryptography", detail: "Decoding Alphabets from Numbers and Decoding Numbers from Alphabets — the relationship numbers have with letters and vice versa. The long-term goal is to enable learners to encrypt sensitive information and create one-time passwords (OTPs)." },
+            { title: "Using a Micro:bit", detail: "The BBC micro:bit is a pocket-sized computer learners program with blocks or JavaScript. Its 5×5 LED grid, buttons A and B, microphone, speaker, sensors and radio let learners see their code control real hardware." },
           ] },
           { title: "E. Problem Solving", children: [
             { title: "Inquiry", detail: "The ability to apply technological processes and skills ethically and responsibly, using appropriate information and communication strategies." },
@@ -280,8 +283,11 @@ const COPILOT_COPY = {
           { title: "C. Kutlwisiso ya Dipalo (Number Sense)", children: [
             { title: "Go Bala Dipalo (Counting)", detail: "Bokgoni jwa go oketsa, go ntsha, go atisa le go kgaoganya dipalo. 'Go bala' mo go kaya: Verbal Counting, Object Counting, Counting All, Counting On, Counting Backwards, Counting in Groups, Subitising le Ordinal Counting." },
           ] },
-          { title: "D. Khouto (Coding)", children: [
-            { title: "Cryptography", detail: "Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng. Re latela gape tiriso ya Blockly, Scratch, Micro:bit le tse dingwe — le gore ba dirisa Loops, Variables, Functions, Math le tse dingwe kgapetsakgapetsa." },
+          { title: "D. Khouto (Coding)", detail: "Re latela tiriso e e nonofileng ya Scratch, Blockly, Cryptography le Micro:bit — le gore bana ba dirisa diloop, diphetogo (variables), difankshene, Math le dikakanyo tse dingwe tsa khoutu kgapetsakgapetsa.", children: [
+            { title: "Go Khouta ka Scratch (Coding with Scratch)", detail: "Tikologo ya go khouta ka dibloke mo bana ba manyang dibloke tsa mebala go dira dipolelo, metshameko le dianimeshene. E aga bokgoni jwa tatelano, ditiragalo le diloop ntle le go kwala khoutu." },
+            { title: "Go Khouta ka Blockly (Coding with Blockly)", detail: "Morulaganyi wa khoutu ka dibloke mo bana ba gogang le go mannya dibloke go aga lenaneo — morulaganyi o o tsentsweng ga o tlhoke inthanete. E dira gore ditatelano, diloop, diphetogo (variables) le difankshene di bonale gore ngwana a di bale, a di fetole mme a di tlhalose." },
+            { title: "Cryptography", detail: "Go Tharabolola Ditlhaka go tswa mo Dipalong le Go Tharabolola Dipalo go tswa mo Ditlhakeng — kamano e dipalo di nang le yona le ditlhaka. Maikaelelo a nako e telele ke go kgontsha bana go fitlha tshedimosetso e e botlhokwa le go dira one-time passwords (OTPs)." },
+            { title: "Go Dirisa Micro:bit (Using a Micro:bit)", detail: "BBC micro:bit ke khomphiutha e nnye e bana ba e khoutang ka dibloke kgotsa JavaScript. Gridi ya yona ya LED ya 5×5, konopo A le B, maekorofouno, speaker, disentara le radio di kgontsha bana go bona khoutu ya bone e laola didiriswa tsa nnete." },
           ] },
           { title: "E. Go Rarabolola Mathata (Problem Solving)", children: [
             { title: "Patlisiso (Inquiry)", detail: "Bokgoni jwa go dirisa ditsamaiso le bokgoni jwa thekenoloji ka maitsholo le boikarabelo, ka maano a a maleba a tshedimosetso le puisano." },
