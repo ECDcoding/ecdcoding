@@ -141,7 +141,11 @@ const COPILOT_COPY = {
           { title: "Nature Smart" },
         ] },
         { title: "Inquiry", summary: "The overall process of coming up with ideas about the natural world and testing ideas through experimentation — or \"Science in Practice\". In the early years, children should be involved with investigation about science inquiry.", headingless: true, question: "What is the Inquiry index and how does science inquiry work in the early years?" },
-        { title: "Child Behavior", summary: "Links each learner's index to child behaviour observations — ages and stages, individuality, moods and school readiness.", headingless: true, question: "How does the Child Behavior index link to my child's behaviour observations?" },
+        { title: "Child Behavior", summary: "", headingless: true, question: "How does the Child Behavior index link to my child's behaviour observations?", items: [
+          { title: "Individuality", detail: "The ability to show a unique temperament, interests, strengths, pace and preferred ways of learning. Notice what your child keeps returning to and what they avoid." },
+          { title: "Mood Swings", detail: "The ability to notice and name changing emotions, and to settle with calm, supportive help. Observe what tends to trigger a shift, when it happens and what helps your child settle." },
+          { title: "School Readiness", detail: "The ability to manage the physical, emotional, attention, social and early number-sense demands of school, with family and school support." },
+        ] },
       ],
       behaviour: [
         { title: "Ages and Stages", summary: "A brief look at age-linked growth, communication, emotions and independence while recognising that every child develops differently.", question: "Please explain Ages and Stages for my child and help me understand what I may observe." },
@@ -304,7 +308,11 @@ const COPILOT_COPY = {
           { title: "Nature Smart" },
         ] },
         { title: "Patlisiso (Inquiry)", summary: "Tsamaiso ya kakaretso ya go tla ka dikakanyo ka lefatshe la tlholego le go leka dikakanyo ka diteko — kgotsa \"Saense mo Tirong\". Mo bongwaneng, bana ba tshwanetse go akarediwa mo dipatlisisong tsa saense.", headingless: true, question: "Sekekanyi sa Patlisiso ke eng, mme patlisiso ya saense e dira jang mo bongwaneng?" },
-        { title: "Boitshwaro jwa Ngwana", summary: "E golaganya sekekanyi sa moithuti le ditemogo tsa boitshwaro — dingwaga le dikgato, botho, maikutlo le go siamela sekolo.", headingless: true, question: "Sekekanyi sa Boitshwaro jwa Ngwana se golaganyang jang le ditemogo tsa boitshwaro jwa ngwana wa me?" },
+        { title: "Boitshwaro jwa Ngwana", summary: "", headingless: true, question: "Sekekanyi sa Boitshwaro jwa Ngwana se golaganyang jang le ditemogo tsa boitshwaro jwa ngwana wa me?", items: [
+          { title: "Botho (Individuality)", detail: "Bokgoni jwa go bontsha botho jo bo farologaneng, dilo tse a di ratang, maatla a gagwe, lebelo la gagwe le mekgwa ya go ithuta e a e ratang. Lemoga se ngwana a boelang go sone le se a se tilang." },
+          { title: "Maikutlo a a Fetofetogang (Mood Swings)", detail: "Bokgoni jwa go lemoga le go bitsa maikutlo a a fetofetogang, le go ritibala ka thuso e e ritibetseng. Lemoga se se simololang phetogo, nako ya yona le se se thusang ngwana go ritibala." },
+          { title: "Go Siamela Sekolo (School Readiness)", detail: "Bokgoni jwa go lekalekanya ditlhokego tsa mmele, maikutlo, tlhokomelo, setšhaba le kutlwisiso ya ntlha ya dipalo tsa sekolo, ka tshehetso ya lelapa le sekolo." },
+        ] },
       ],
       behaviour: [
         { title: "Dingwaga le Dikgato", summary: "Tebokakaretso ya kgolo, puisano, maikutlo le boikemelo go ya ka dingwaga, go dumela gore ngwana mongwe le mongwe o gola ka tsela ya gagwe.", question: "Tsweetswee tlhalosa Dingwaga le Dikgato tsa ngwana wa me le se nka se lemogang." },
