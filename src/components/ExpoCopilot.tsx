@@ -610,7 +610,8 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
     setIsLoading(true);
 
     try {
-      await streamChat(newMessages, context);
+      // only send messages with text: guide panels can hold an empty placeholder that the backend rejects
+      await streamChat(newMessages.filter((m) => m.content.trim().length > 0), context);
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : "Something went wrong.";
       toast.error(errMsg);
