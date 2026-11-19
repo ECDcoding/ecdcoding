@@ -36,10 +36,7 @@ const TECH_SKILLS_CHILDREN: GuideItem[] = [
   { title: "AI", detail: "How computers learn from examples, and how learners can ask an AI useful questions and check its answers." },
   {
     title: "Cryptography",
-    children: [
-      { title: "Alphabets in Numbers", detail: "Decoding each alphabet from a number that is directly linked to it, e.g. A is directly linked to number 1." },
-      { title: "Numbers in Alphabets", detail: "Decoding each number from an alphabet that is directly linked to it, e.g. 1 is directly linked to letter A." },
-    ],
+    detail: "Learners explore (a) Decoding in Alphabets from Number, and (b) Decoding in Numbers from Alphabets.\n\nHere we provide a relationship that numbers have with letters and vice versa, and the long term goal is to enable learners to be able to perform encryption of sensitive information through cryptography and creating one time passwords (OTPs).",
   },
 ];
 const GRADE_R_LESSONS: GuideItem[] = [
