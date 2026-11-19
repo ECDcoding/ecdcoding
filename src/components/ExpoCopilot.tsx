@@ -28,6 +28,7 @@ const GUIDE_DETAIL_CLASS = "whitespace-pre-line rounded-lg bg-black/20 px-3 py-2
 const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
 const GRADE_LESSONS =
   "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week";
+const GRADE_1_3_LESSONS = "Numeration\nLiteracy\nLife Skills\nTech Skills\nScience and Discovery";
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -893,7 +894,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                 }`}
                                 disabled={isLoading}
                                 onClick={() =>
-                                  showLocalGuide({ title: grade, summary: GRADE_LESSONS, headingless: true })
+                                  showLocalGuide({ title: grade, summary: grade === "Grade R" ? GRADE_LESSONS : GRADE_1_3_LESSONS, headingless: true })
                                 }
                               >
                                 {grade}
