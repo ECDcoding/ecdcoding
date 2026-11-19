@@ -32,7 +32,7 @@ const NUMERATION_CHILDREN: GuideItem[] = [
 ];
 /** Sub-list that opens when a learner clicks Tech Skills in any grade. */
 const TECH_SKILLS_CHILDREN: GuideItem[] = [
-  { title: "Coding", detail: "Writing step-by-step instructions a computer can follow, using blocks in Scratch or Blockly." },
+  { title: "Coding", detail: "Writing step-by-step instructions a computer can follow, using blocks in Scratch or Blockly.\n\nThe most effective way to develop the mental models and fluency to become skilled human programmers." },
   { title: "AI", detail: "How computers learn from examples, and how learners can ask an AI useful questions and check its answers." },
 ];
 const GRADE_R_LESSONS: GuideItem[] = [
