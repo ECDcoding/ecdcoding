@@ -40,22 +40,18 @@ const TECH_SKILLS_CHILDREN: GuideItem[] = [
   },
 ];
 const GRADE_R_LESSONS: GuideItem[] = [
-  { title: "Lesson of the Day" },
   { title: "Numeration", children: NUMERATION_CHILDREN },
   { title: "Literacy" },
   { title: "Transport" },
   { title: "Road Safety" },
   { title: "Life Skills" },
   { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
-  { title: "Science and Discovery" },
-  { title: "Note of the Week" },
 ];
 const GRADE_1_3_LESSONS: GuideItem[] = [
   { title: "Numeration", children: NUMERATION_CHILDREN },
   { title: "Literacy" },
   { title: "Life Skills" },
   { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
-  { title: "Science and Discovery" },
 ];
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
