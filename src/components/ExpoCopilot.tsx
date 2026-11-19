@@ -34,6 +34,13 @@ const NUMERATION_CHILDREN: GuideItem[] = [
 const TECH_SKILLS_CHILDREN: GuideItem[] = [
   { title: "Coding", detail: "Writing step-by-step instructions a computer can follow, using blocks in Scratch or Blockly.\n\nThe most effective way to develop the mental models and fluency to become skilled human programmers." },
   { title: "AI", detail: "How computers learn from examples, and how learners can ask an AI useful questions and check its answers." },
+  {
+    title: "Cryptography",
+    children: [
+      { title: "Alphabets in Numbers", detail: "Decoding each alphabet from a number that is directly linked to it, e.g. A is directly linked to number 1." },
+      { title: "Numbers in Alphabets", detail: "Decoding each number from an alphabet that is directly linked to it, e.g. 1 is directly linked to letter A." },
+    ],
+  },
 ];
 const GRADE_R_LESSONS: GuideItem[] = [
   { title: "Lesson of the Day" },
@@ -461,6 +468,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
   const [basicsExpanded, setBasicsExpanded] = useState(false);
   const [openGuideItem, setOpenGuideItem] = useState<string | null>(null);
   const [openGuideSubItem, setOpenGuideSubItem] = useState<string | null>(null);
+  const [openGuideSubSubItem, setOpenGuideSubSubItem] = useState<string | null>(null);
   const [attachment, setAttachment] = useState<{ name: string; text: string } | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -986,6 +994,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                           onClick={() => {
                                             setOpenGuideItem(isItemOpen ? null : key);
                                             setOpenGuideSubItem(null);
+                                            setOpenGuideSubSubItem(null);
                                           }}
                                           className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
                                         >
@@ -1008,7 +1017,10 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                                 <button
                                                   type="button"
                                                   aria-expanded={isChildOpen}
-                                                  onClick={() => setOpenGuideSubItem(isChildOpen ? null : childKey)}
+                                                  onClick={() => {
+                                                    setOpenGuideSubItem(isChildOpen ? null : childKey);
+                                                    setOpenGuideSubSubItem(null);
+                                                  }}
                                                   className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
                                                 >
                                                   <span className="flex-1">{child.title}</span>
@@ -1016,6 +1028,30 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                                 </button>
                                                 {isChildOpen && child.detail && (
                                                   <p className={`mx-1 mb-2 mt-1 ${GUIDE_DETAIL_CLASS}`}>{child.detail}</p>
+                                                )}
+                                                {isChildOpen && child.children && (
+                                                  <ul className="mb-2 ml-4 mt-1 space-y-1 border-l border-white/30 pl-2">
+                                                    {child.children.map((subChild) => {
+                                                      const subChildKey = `${childKey}:${subChild.title}`;
+                                                      const isSubChildOpen = openGuideSubSubItem === subChildKey;
+                                                      return (
+                                                        <li key={subChild.title}>
+                                                          <button
+                                                            type="button"
+                                                            aria-expanded={isSubChildOpen}
+                                                            onClick={() => setOpenGuideSubSubItem(isSubChildOpen ? null : subChildKey)}
+                                                            className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left font-medium text-white hover:bg-white/10"
+                                                          >
+                                                            <span className="flex-1">{subChild.title}</span>
+                                                            <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isSubChildOpen ? "rotate-180" : ""}`} />
+                                                          </button>
+                                                          {isSubChildOpen && subChild.detail && (
+                                                            <p className={`mx-1 mb-2 mt-1 ${GUIDE_DETAIL_CLASS}`}>{subChild.detail}</p>
+                                                          )}
+                                                        </li>
+                                                      );
+                                                    })}
+                                                  </ul>
                                                 )}
                                               </li>
                                             );
