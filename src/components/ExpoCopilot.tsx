@@ -777,6 +777,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
     setBasicsExpanded(false);
     setOpenGuideItem(null);
     setOpenGuideSubItem(null);
+    setOpenGuideSubSubItem(null);
     window.setTimeout(() => {
       setMessages((previous) => previous.map((m) =>
         m.summaryTitle === guide.title && !m.content && !m.items ? { ...m, content: guide.summary, items: guide.items } : m,
