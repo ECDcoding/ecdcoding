@@ -618,6 +618,12 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
     setDisplayedTopic(next);
     setTopic(next); // keep the selected topic in sync so questions use the right guidance
     setExpandedTopic(null); // user must click the rotated topic to open its sub-list
+    setBasicsExpanded(false);
+    // leaving a topic closes its dropdown, so its lesson list is removed too
+    setMessages((previous) => previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor));
+    setOpenGuideItem(null);
+    setOpenGuideSubItem(null);
+    setOpenGuideSubSubItem(null);
   }, [displayedTopic]);
 
   const toggleListening = () => {
@@ -753,6 +759,14 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
 
   if (!isVisible) return null;
 
+  // Closing (or re-toggling) a dropdown removes the lesson list it produced from the chat.
+  const clearLocalGuides = () => {
+    setMessages((previous) => previous.filter((message) => !message.summaryTitle && !message.followUp && !message.promptFor));
+    setOpenGuideItem(null);
+    setOpenGuideSubItem(null);
+    setOpenGuideSubSubItem(null);
+  };
+
   const showLocalGuide = (guide: { title: string; summary: string; headingless?: boolean; items?: GuideItem[] }) => {
     const t = displayedTopic;
     setTopic(t);
@@ -859,6 +873,8 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                       aria-expanded={expandedTopic === displayedTopic}
                       onClick={() => {
                         setTopic(displayedTopic);
+                        clearLocalGuides();
+                        setBasicsExpanded(false);
                         setExpandedTopic((current) => (current === displayedTopic ? null : displayedTopic));
                       }}
                       className={`h-12 flex-1 justify-between rounded-md px-3 text-sm ${topic === displayedTopic ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "bg-muted text-foreground hover:bg-muted/80"}`}
@@ -887,6 +903,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                           aria-expanded={displayedTopic === "library" && guide.title === "Learning the Basics" ? basicsExpanded : undefined}
                           onClick={() => {
                             if (displayedTopic === "library" && guide.title === "Learning the Basics") {
+                              clearLocalGuides();
                               setBasicsExpanded((current) => !current);
                               return;
                             }
