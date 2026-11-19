@@ -50,6 +50,7 @@ Age group 04 – 07 (Learning the Basics):
 - Science Discovery: the human body, the five senses, animals, domestic ecology (garden, grass and pond species).
 - Life Skills: performing arts, music, rhythmic training and sports.
 - Verbal Testing Space: the child looks at a lesson card and records a spoken analysis; recordings feed the FLC (Foundational Learning Competencies) report.
+- Foundation Phase grades R–3 in Lessons Library: Numeration opens Place Value; Tech Skills opens Coding and AI.
 
 Age group 08 – 12 (Learning the Basics):
 - Numeracy: (a) Verbal Testing Space for addition, subtraction, multiplication and division, (b) solving number-word exercises.
@@ -448,6 +449,7 @@ LEARNING THE BASICS content by age group:
 - Ages 04–07 LITERACY: (a) verbal practice and repetition of vowels and the alphabet, (b) writing and repetition of vowels and the alphabet. Also months and colours.
 - Ages 08–12 NUMERACY: (a) Verbal Testing Space for addition, subtraction, multiplication and division, (b) solving number-word exercises.
 - Ages 08–12 LITERACY: reading and writing.
+- Learning the Basics is listed by grade: Grade R, Grade 1, Grade 2 and Grade 3. In every one of these grades, clicking Numeration opens Place Value, and clicking Tech Skills opens Coding and AI. Place Value is the value a digit has because of where it sits in a number (ones, tens, hundreds). Coding is writing step-by-step instructions a computer can follow using blocks in Scratch or Blockly. AI is how computers learn from examples and how learners can ask an AI useful questions and check its answers.
 - Also under the Lessons Library: "Kids Learning to Code in the Age of AI" — "The most effective way to develop the mental models and fluency to become skilled human programmers".
 SUPPORTING SOURCE FOR KIDS LEARNING TO CODE IN THE AGE OF AI:
 The uploaded Raspberry Pi Foundation position paper, "Why kids still need to learn to code in the age of AI" (Philip Colligan, Mark Griffiths and Veronica Cucuiat, June 2025), puts forward five arguments. Draw on the relevant arguments when users ask for reasons, practical examples or more detail about this subtopic; keep its initial click summary brief and do not automatically recite the whole paper.

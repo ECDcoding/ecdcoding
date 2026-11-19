@@ -26,9 +26,33 @@ const GUIDE_PANEL_CLASS = "rounded-lg bg-[#3c6e71] px-3 py-2.5 text-sm leading-r
 const GUIDE_DETAIL_CLASS = "whitespace-pre-line rounded-lg bg-black/20 px-3 py-2 text-white";
 
 const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
-const GRADE_LESSONS =
-  "Lesson of the Day\nNumeration\nLiteracy\nTransport\nRoad Safety\nLife Skills\nTech Skills\nScience and Discovery\nNote of the Week";
-const GRADE_1_3_LESSONS = "Numeration\nLiteracy\nLife Skills\nTech Skills\nScience and Discovery";
+/** Sub-list that opens when a learner clicks Numeration in any grade. */
+const NUMERATION_CHILDREN: GuideItem[] = [
+  { title: "Place Value", detail: "The value a digit has because of where it sits in a number — ones, then tens, then hundreds." },
+];
+/** Sub-list that opens when a learner clicks Tech Skills in any grade. */
+const TECH_SKILLS_CHILDREN: GuideItem[] = [
+  { title: "Coding", detail: "Writing step-by-step instructions a computer can follow, using blocks in Scratch or Blockly." },
+  { title: "AI", detail: "How computers learn from examples, and how learners can ask an AI useful questions and check its answers." },
+];
+const GRADE_R_LESSONS: GuideItem[] = [
+  { title: "Lesson of the Day" },
+  { title: "Numeration", children: NUMERATION_CHILDREN },
+  { title: "Literacy" },
+  { title: "Transport" },
+  { title: "Road Safety" },
+  { title: "Life Skills" },
+  { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
+  { title: "Science and Discovery" },
+  { title: "Note of the Week" },
+];
+const GRADE_1_3_LESSONS: GuideItem[] = [
+  { title: "Numeration", children: NUMERATION_CHILDREN },
+  { title: "Literacy" },
+  { title: "Life Skills" },
+  { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
+  { title: "Science and Discovery" },
+];
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -894,7 +918,12 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                 }`}
                                 disabled={isLoading}
                                 onClick={() =>
-                                  showLocalGuide({ title: grade, summary: grade === "Grade R" ? GRADE_LESSONS : GRADE_1_3_LESSONS, headingless: true })
+                                  showLocalGuide({
+                                    title: grade,
+                                    summary: "",
+                                    headingless: true,
+                                    items: grade === "Grade R" ? GRADE_R_LESSONS : GRADE_1_3_LESSONS,
+                                  })
                                 }
                               >
                                 {grade}
