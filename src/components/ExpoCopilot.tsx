@@ -26,9 +26,20 @@ const GUIDE_PANEL_CLASS = "rounded-lg bg-[#3c6e71] px-3 py-2.5 text-sm leading-r
 const GUIDE_DETAIL_CLASS = "whitespace-pre-line rounded-lg bg-black/20 px-3 py-2 text-white";
 
 const GRADE_TITLES = ["Grade R", "Grade 1", "Grade 2", "Grade 3"];
-/** Sub-list that opens when a learner clicks Numeration in any grade. */
-const NUMERATION_CHILDREN: GuideItem[] = [
-  { title: "Place Value", detail: "The value a digit has because of where it sits in a number — ones, then tens, then hundreds." },
+/** Place Value Digits: the counting ability expected from learners in each grade. */
+const PLACE_VALUE_DIGITS: Record<string, GuideItem> = {
+  "Grade R": { title: "Place Value Digits: Single Units", detail: "The ability to count from 1 – 10, while exploring the possibility to move on to larger numbers, e.g. 10 – 20, 20 – 30." },
+  "Grade 1": { title: "Place Value Digits: Single Units", detail: "The ability to count from 1 – 100, while exploring the possibility to move on to larger numbers, e.g. 1 – 50, 60 – 100." },
+  "Grade 2": { title: "Place Value Digits: Tens & Units", detail: "The ability to count from 10 – 100, while exploring the possibility to move on to larger numbers, e.g. 10 – 50, 60 – 100." },
+  "Grade 3": { title: "Place Value Digits: Hundreds, Tens & Units", detail: "The ability to count from 100 – 1000, while exploring the possibility to move on to larger numbers, e.g. 100 – 500, 600 – 1000." },
+};
+/** Sub-list that opens when a learner clicks Numeration in a grade. */
+const numerationChildren = (grade: string): GuideItem[] => [
+  {
+    title: "Place Value",
+    detail: "The value a digit has because of where it sits in a number — ones, then tens, then hundreds.",
+    children: [PLACE_VALUE_DIGITS[grade]],
+  },
 ];
 /** Sub-list that opens when a learner clicks Tech Skills in any grade. */
 const TECH_SKILLS_CHILDREN: GuideItem[] = [
@@ -39,20 +50,23 @@ const TECH_SKILLS_CHILDREN: GuideItem[] = [
     detail: "Learners explore (a) Decoding in Alphabets from Number, and (b) Decoding in Numbers from Alphabets.\n\nHere we provide a relationship that numbers have with letters and vice versa, and the long term goal is to enable learners to be able to perform encryption of sensitive information through cryptography and creating one time passwords (OTPs).",
   },
 ];
-const GRADE_R_LESSONS: GuideItem[] = [
-  { title: "Numeration", children: NUMERATION_CHILDREN },
-  { title: "Literacy" },
-  { title: "Transport" },
-  { title: "Road Safety" },
-  { title: "Life Skills" },
-  { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
-];
-const GRADE_1_3_LESSONS: GuideItem[] = [
-  { title: "Numeration", children: NUMERATION_CHILDREN },
-  { title: "Literacy" },
-  { title: "Life Skills" },
-  { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
-];
+/** Learning the Basics list for a grade; Grade R also covers Transport and Road Safety. */
+const gradeLessons = (grade: string): GuideItem[] =>
+  grade === "Grade R"
+    ? [
+        { title: "Numeration", children: numerationChildren(grade) },
+        { title: "Literacy" },
+        { title: "Transport" },
+        { title: "Road Safety" },
+        { title: "Life Skills" },
+        { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
+      ]
+    : [
+        { title: "Numeration", children: numerationChildren(grade) },
+        { title: "Literacy" },
+        { title: "Life Skills" },
+        { title: "Tech Skills", children: TECH_SKILLS_CHILDREN },
+      ];
 type CopilotLanguage = "en" | "tn" | "af" | "zu" | "xh" | "ts" | "nso" | "st" | "ve" | "nr" | "ss";
 
 const LANGUAGES: { code: CopilotLanguage; label: string; voiceLang: string }[] = [
@@ -936,7 +950,7 @@ const ExpoCopilot = ({ context, contextLabel, hideLauncher, open, onOpenChange }
                                     title: grade,
                                     summary: "",
                                     headingless: true,
-                                    items: grade === "Grade R" ? GRADE_R_LESSONS : GRADE_1_3_LESSONS,
+                                    items: gradeLessons(grade),
                                   })
                                 }
                               >
